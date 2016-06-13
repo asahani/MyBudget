@@ -1,0 +1,224 @@
+// Place all the styles related to the Budgets controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+$box-shadow-li: 1px 2px 1px #333 inset;
+$box-shadow-navbar: 0px 2px 5px #333 inset;
+$box-shadow-div: 0px 2px 5px #999 inset;
+$box-shadow-summary-div: 0px 2px 2px #333 inset;
+$numeric-cell-border: 1px dotted #999;
+
+.fixed {
+  position: fixed;
+  z-index: 100;
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: #DCDCDC;
+  padding-bottom: 2px;
+  border-radius: 5px;
+}
+
+#budget-flip {
+	width: calc(100% - 20px);
+}
+
+.page-content .fixed {
+	width: calc(100%);
+}
+/*******************
+ * Budget Page Layout
+ *******************/
+.budget {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.col-md-4.budget-main-container {
+	margin-top: -5px;
+	padding: 0px;
+	top: 190px;
+	font-size: 11px;
+	background-color: #DCDCDC;
+	padding-bottom: 5px;
+	
+	table {
+		background-color: #FFF;
+	}
+}
+
+.budget-content-container {
+	margin: 4px;
+	border: 1px solid #666; 
+	border-radius: 7px;
+	-moz-box-shadow: $box-shadow-div;
+	-webkit-box-shadow: $box-shadow-div;
+	box-shadow: $box-shadow-div;
+}
+
+.col-md-4.budget-totals-container {
+	padding: 0px;
+}
+.col-md-3.budget-summary-container {
+	padding: 0px;
+}
+
+.budget-summary-content {
+	border: 1px inset #999; 
+	border-radius: 7px;
+	margin: 2px;
+	background-color: #3C464D;
+	height: 120px;
+	color: #999;
+	-moz-box-shadow: $box-shadow-summary-div;
+	-webkit-box-shadow: $box-shadow-summary-div;
+	box-shadow: $box-shadow-summary-div;
+}
+
+.budget-totals-content {
+	height: 50px;
+	color: #666;
+	font-size: 11px;
+	text-shadow: 0px 0px 1px #444;
+	margin: 4px;
+	border: 1px solid #777; 
+	background-color: #EEF5E7;
+	border-radius: 7px;
+	-moz-box-shadow: $box-shadow-div;
+	-webkit-box-shadow: $box-shadow-div;
+	box-shadow: $box-shadow-div;
+}
+
+#budget-summary-container {
+	height: 50px;
+	margin-top: 10px;
+	border: 1px solid #555;
+}
+
+/*******************
+ * Budget Navbar
+ *******************/
+#budget-nav-container{
+	margin-top: 10px;
+}
+
+#budget-actions-bar {
+	text-align: right;
+	padding: 5px;
+	display: inline-block;
+	width: 10%;
+}
+
+#budget-navbar {
+	text-align: centre;
+	padding-top: 3px;
+	display: inline-block;
+	margin: 0px 0px 10px 10px;
+  	top: 0;
+
+	ul {
+		width: 236px;
+		list-style: none;
+		background-color: none;
+		text-align: center;
+		padding: 0;
+		margin: 0;
+	}
+ 
+	li {
+		background-color: #49575E;
+		width: 59px;
+		border-bottom: none;
+		height: 30px;
+		line-height: 30px;
+		font-size: 1em;
+		display: inline-block;
+		margin-right: -4px;
+		-moz-box-shadow: $box-shadow-li;
+		-webkit-box-shadow: $box-shadow-li;
+		box-shadow: $box-shadow-li;
+	}
+
+	a {
+		text-decoration: none;
+		color: #bbb;
+		text-shadow: 0px 0px 2px #000;
+		display: block;
+		transition: .3s background-color;
+	}
+
+	a:hover{
+		height: 100%;
+		cursor: default;
+		background-color: #0082CB;
+		text-decoration: none;
+		color: #fff;
+		border-bottom-color: transparent;
+		-moz-box-shadow: $box-shadow-li;
+		-webkit-box-shadow: $box-shadow-li;
+		box-shadow: $box-shadow-li;
+	}
+
+	.active a{
+		height: 100%;
+		cursor: default;
+		background-color: #0082CB;
+		color: #FFFFFF;
+		border-bottom-color: transparent;
+		-moz-box-shadow: $box-shadow-li;
+		-webkit-box-shadow: $box-shadow-li;
+		box-shadow: $box-shadow-li;
+	}
+
+	.last{
+/*		border-right: 1px solid #111;*/
+	}
+	
+	.year-item{
+		height: 100%;
+		width: 100%;
+		cursor: default;
+		background-color: #333;
+		color: white;
+		text-shadow: 2px 2px 2px #000;
+	}
+}
+
+/*******************
+ * Totals Table
+ *******************/
+.budget-totals-table {
+	width: 100%;
+	height: 100%;
+}
+.budget-totals-table td {
+	border-left: $numeric-cell-border;
+	border-right: $numeric-cell-border;
+	padding-right: 5px;
+	text-align: right;
+}
+/*******************
+ * Budget Table
+ *******************/
+table.actions-table {margin: 2px;width: calc(100% - 3px);}
+table.actions-table th { padding: .5em; }
+table.actions-table td { padding: .5em;}
+table.actions-table td div.actions { visibility: hidden;}
+table.actions-table tr:hover td div.actions { visibility: visible; display: inline;}
+.master-cell {
+	border: none;
+	background: #E6F4FB;
+	font-weight: bold;
+	color: #666;
+}
+.numeric-cell {
+	text-align: right;
+	border: $numeric-cell-border;
+}
+.actions-cell {
+	text-align: right;
+	border: $numeric-cell-border;
+	border-top: $numeric-cell-border;
+	border-bottom: $numeric-cell-border;
+	border-left:none;
+	width:10%;
+}

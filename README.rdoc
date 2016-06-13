@@ -1,0 +1,116 @@
+== README
+
+This README would normally document whatever steps are necessary to get the
+application up and running.
+
+Things you may want to cover:
+
+* Ruby version
+
+* System dependencies
+
+* Configuration
+
+* Database creation
+
+* Database initialisation
+
+* How to run the test suite
+
+* Services (job queues, cache servers, search engines, etc.)
+
+* Deployment instructions
+
+* ...
+
+
+Please feel free to use a different markup language if you do not plan to run
+<tt>rake doc:app</tt>.
+
+TODO:
+
+
+Budget Screen
+=============
+- Top level balances
+- Separate credit card balances view
+
+
+EDIT ACCOUNT
+=============
+- Edit payee on edit of account
+- when non-active on edit then make payee non-active as well
+
+Reconciliation
+============
+- Way of indicating that budget needs reconciliation
+- Auto created are "not Cleared/reconciled"
+- Helps to know what payments need to be made to the bank
+
+Dashboard
+=============
+Months - Upcoming Events
+Report - Todo's
+
+Comments
+=============
+- Like TODO's
+
+Create Account
+=============
+- Mortgage offset as a savings account
+
+Reporting
+===========
+- Moneywiz reports / budget view
+- Savings target % + graph of trend
+---- =================52%
+     =============35%
+     ============================85%
+
+Overall
+=============
+- check new income transaction
+- check account transfer from import transfer screen. use the testimport.csv on desktop
+- Filter Account and Payee drop down like in transaction
+- REVIEW end to end account balance flow for 2-4 months
+- Any transactions edited or created should have transaction type attribute set. 
+	- REVIEW: Check for edit transaction in account transactions
+	- REVIEW: Also check in budget item transactions edit
+	
+Good to have
+==============
+- Feature - Interest free card and mortgage account balance reduction feature on payments
+- Feature - Badges
+- Feature - Transaction - Scheduled Transactions
+
+- Transaction - Add payee option in new transaction screen
+- Budget Item - Ability to create budget Items as well.
+- Create Budget - Send scheduled transactions to accounts. 
+				---- Create "on budget create" flag to schedule flag. Always uncleared
+				
+Refactor
+--------
+- active attribute in category is used for active as well as for differentiating system categories. Create another attribute called is_system to seperate the two concerns
+
+
+DONE
+==============
+DONE - Income -> Weekly salary sheet
+DONE - Budget Item -> Use flag to complete transaction. Helps to identify remaining expenses. 
+DONE - Create Account -> Create Payee automatically
+DONE - Create Account -> Create Budget Accounts for Current budget month as well if budget exists and if is_budget_account and if active
+DONE - After create - Budget Account -> set opening balance
+				-- get previous budgets opening balance plus current balance and set as opening balance
+				-- if previous budget is null and no budgets with account prior to start of current budget date then use initial account balance
+				-- else use opening balance plus current balance of last budget account found
+DONE - After update - Budget Account -> update future budget accounts
+				-- get all future budgets in order
+				-- use "set opening balance" method above for all future budget accounts recursively
+				-- update parent account balance
+DONE - Credit Income to accounts (should happen automatically now. Only check required.)
+DONE - Transactions - Refactor savings and expenses so that they act like account transfers with appropriate debits and credits from accounts and payees.
+DONE - Transactions - now have to consider payee type and credit/debit accounts accordingly
+DONE - Transactions - Fix list of transactions for each budget account. Calculations wrong and uncleared wrong and also the payee debit transactions are not shown
+DONE - Transactions - Manual transactions should have the option of being cleared or uncleared
+DONE - Import -Import summary screen with different budget summaries to assist with payments and categories

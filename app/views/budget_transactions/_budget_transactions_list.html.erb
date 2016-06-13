@@ -1,0 +1,48 @@
+<table class="table">
+	<%= form_for BudgetTransaction.new, remote: true do |f| %>
+	<%= f.hidden_field :budgeted ,:value => true%>
+	<%= f.hidden_field :scheduled, :value => true%>
+	<%= f.hidden_field :miscellaneous, :value => false%>
+	<%= f.hidden_field :savings, :value => false%>
+	<%= f.hidden_field :transaction_type, :value => 'budgeted'%>
+	<%= f.hidden_field :budget_item_id, :value => @budget_item.id%>
+	<%= f.hidden_field :budget_id, :value => @budget_item.budget.id%>
+	<%= f.hidden_field :category_id, :value => @budget_item.category.id%>
+	<th>
+		<td>Account</td>
+		<td>Payee</td>
+		<td>Date</td>
+		<td>Debit</td>
+		<td>Credit</td>
+		<td>Comments</td>
+		<td>Actions</td>
+	</th>	
+	<tr id="new-budgeted-transaction-row" style="display: none;">
+		<td><%= f.collection_select :account_id, Account.all, :id, :name, prompt: true %></td>
+		<td><%= f.collection_select :payee_id, Payee.where("category_id=?",@budget_item.category.id), :id, :name, prompt: true %></td>
+		<td><%= f.date_select :transaction_date %></td>
+		<td><%= f.number_field :debit %></td>
+		<td><%= f.number_field :credit %></td>
+		<td><%= f.text_field :comments %></td>
+		<td><%= f.submit "add" %></td>
+	</tr>	
+	<%end%>
+		<%@budget_item.budget_transactions.each do |budget_transaction|%>
+		<tr id=<%=budget_transaction.id%> >
+			<td><%=budget_transaction.account.name%></td>
+			<td><%=budget_transaction.payee.name%></td>
+			<td><%=budget_transaction.transaction_date%></td>
+			<td><%=budget_transaction.debit%></td>
+			<td><%=budget_transaction.credit%></td>
+			<td><%=budget_transaction.comments%></td>
+			<td><%=link_to "edit", edit_budget_item_transaction_path(budget_transaction),remote: true%></td>
+			<td>
+			<%= link_to budget_transaction, remote: true, method: :delete,  data: { confirm: 'Are you sure?' } do %>
+			  <button>X</button>
+			<% end %>
+			</td>
+		</tr>							
+		<%end%>
+	
+</table>
+

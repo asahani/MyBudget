@@ -1,0 +1,44 @@
+<!-- Modal -->
+<div class="modal-dialog" style="width: 1024px;">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			<h4 class="modal-title" id="transferImportedTxnModalLabel">Transfer Transaction</h4>
+		</div>
+		<%= form_for @imported_transaction, remote: true do |f| %>
+		<div class="modal-body">
+			<table class="table">
+				<th>
+					<td>Date</td>
+					<td>Description</td>
+					<td>Credit</td>
+					<td>Debit</td>
+					<td>Balance</td>
+				</th>	
+				<tr>
+					<td><%=@imported_transaction.txn_date%></td>
+					<td><%=@imported_transaction.description%></td>
+					<td><%=@imported_transaction.credit%></td>
+					<td><%=@imported_transaction.debit%></td>
+					<td><%=@imported_transaction.balance%></td>
+				</tr>
+			</table>
+			
+			<table class="table">
+				<th>
+					<td>Account</td>
+					<td>Payee</td>
+				</th>	
+				<tr>
+					<td><%= f.collection_select :account_id, Account.for_budget.active, :id, :name, prompt: true %></td>
+					<td><%= f.collection_select :payee_id, Payee.account_payees, :id, :name, prompt: true %></td>
+				</tr>
+			</table>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			<%= f.submit class: "btn btn-primary"%>
+		</div>
+		<%end%>
+	</div>
+</div>

@@ -1,0 +1,81 @@
+<!-- Modal -->
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			<h4 class="modal-title" id="newTransactionModalLabel">Edit <%=@transaction_type%> Transaction</h4>
+		</div>
+		<%= form_for @budget_transaction, format: :html do |f| %>
+		<%= f.hidden_field :budgeted ,:value => @budget_transaction.budgeted%>
+		<%= f.hidden_field :scheduled, :value => @budget_transaction.scheduled%>
+		<%= f.hidden_field :miscellaneous, :value => @budget_transaction.miscellaneous%>
+		<%= f.hidden_field :savings, :value => @budget_transaction.savings%>
+		<%= f.hidden_field :budget_id, :value => @budget_transaction.budget.id%>
+		<div class="modal-body">
+			<table class="table">
+				<tr>
+					<td>Account</td>
+					<%if @transaction_type == 'miscellaneous' || @transaction_type == 'account_transfer'%>
+						<td><%= f.collection_select :account_id, Account.for_budget.active, :id, :name, prompt: true %></td>
+					<%else%>	
+						<td><%= f.collection_select :account_id, Account.savings_account.for_budget.active, :id, :name, prompt: true %></td>
+					<%end%>	
+				</tr>
+				<tr>	
+					<%if @transaction_type == 'miscellaneous'%>
+						<td>Payee</td>
+						<td><%= f.collection_select :payee_id, Payee.external_payees, :id, :name, prompt: true %></td>
+					<%elsif @transaction_type == 'savings' || @transaction_type == 'account_transfer'%>
+						<td>From</td>
+						<td><%= f.collection_select :payee_id, Payee.account_payees, :id, :name, prompt: true %></td>
+					<%elsif @transaction_type == 'savings_expense'%>
+						<td>Payee</td>
+						<td><%= f.collection_select :payee_id, Payee.external_payees + Payee.account_payees, :id, :name, prompt: true %></td>	
+					<%end%>	
+				</tr>
+				<tr>	
+					<td>Date</td>
+					<td><%= f.text_field :transaction_date, class: 'datepicker'%></td>
+				</tr>
+				<%unless @transaction_type == 'savings' || @transaction_type == 'account_transfer'%>
+				<tr>	
+						<td>Debit</td>
+						<td><%= f.number_field :debit %></td>
+				</tr>
+				<%end%>
+				<%unless @transaction_type == 'savings_expense'%>
+				<tr>	
+						<td>Credit</td>
+						<td><%= f.number_field :credit %></td>
+				</tr>
+				<%end%>
+				
+				<tr>	
+					<td>Comments</td>
+					<td><%= f.text_field :comments %></td>
+				</tr>
+				<tr>
+					<td>Cleared?</td>	
+					<td><%= f.check_box :reconciled %></td>
+				</tr>
+			</table>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			<%= f.submit class: "btn btn-primary"%>
+		</div>
+		<%end%>
+	</div>
+</div>
+<script>
+$(function() {
+    $( ".datepicker").datepicker({dateFormat: 'dd-mm-yy' });
+  });
+
+$(function() {
+  $('#new-budgeted-transaction-button').click(function(event){
+    $('#new-budgeted-transaction-row').slideDown(1000);
+  });
+});
+</script>
+

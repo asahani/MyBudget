@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @income.description %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @income.amount %>
+</p>
+
+<p>
+  <strong>Recurring:</strong>
+  <%= @income.recurring %>
+</p>
+
+<p>
+  <strong>Weekly:</strong>
+  <%= @income.weekly %>
+</p>
+
+<p>
+  <strong>Fortnightly:</strong>
+  <%= @income.fortnightly %>
+</p>
+
+<p>
+  <strong>Monthly:</strong>
+  <%= @income.monthly %>
+</p>
+
+<p>
+  <strong>Budget:</strong>
+  <%= @income.budget_id %>
+</p>
+
+<p>
+  <strong>Account:</strong>
+  <%= @income.account_id %>
+</p>
+
+<%= link_to 'Edit', edit_income_path(@income) %> |
+<%= link_to 'Back', incomes_path %>

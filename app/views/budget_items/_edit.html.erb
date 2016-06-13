@@ -1,0 +1,81 @@
+<!-- Modal -->
+  <div class="modal-dialog" style="width: 1024px;">
+    <div class="modal-content">
+      <div class="modal-header">
+		<!--
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		-->
+		<%=link_to '<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>'.html_safe, @budget_item.budget,class: 'close'%>
+        <h4 class="modal-title" id="editBudgetItemModalLabel">Update Budget</h4>
+      </div>
+      <div class="modal-body">
+			<table class="table">
+				<tr>
+					<td><%=@budget_item.category.name%></td>
+					<td><%=@budget_item.budgeted_amount%></td>
+					<td><%=@budget_item.expenses%></td>
+					<td><%=@budget_item.balance%></td>
+					<td><%=@budget_item.payment_date%></td>
+					<td><%=@budget_item.comment%></td>
+				</tr>	
+			</table>
+			
+			<%= form_for @budget_item, html: {class: "form-horizontal", role: :form} do |f| %>
+			  <% if @budget_item.errors.any? %>
+			    <div id="error_explanation">
+					<div class="alert alert-danger" role="alert">
+					  <%= pluralize(@budget_item.errors.count, "error") %> prohibited this budget item from being saved:
+				      <% @budget_item.errors.full_messages.each do |message| %>
+				        <%= message %>
+				      <% end %>
+					</div>
+			    </div>
+			  <% end %>
+
+			  <div class="form-group">
+			    <%= f.label :budgeted_amount %><br>
+			    <%= f.number_field :budgeted_amount %>
+			  </div>
+			  <div class="form-group">
+			    <%= f.label :comment %><br>
+			    <%= f.text_field :comment %>
+			  </div>
+			  <div class="form-group">
+			    <%= f.label :payment_date %><br>
+			    <%= f.text_field :payment_date, class: 'datepicker'%>
+			  </div>
+			<div class="form-group">
+			    <%= f.label :complete %><br>
+			    <%= f.check_box :complete%>
+			  </div>
+			  <div class="form-group actions">
+			    <%= f.submit "Save Changes", class: "btn btn-primary" %>
+			  </div>
+			<% end %>
+			<div class="budget-item-transactions">
+				<%unless @budget_item.complete%>
+					<button id="new-budgeted-transaction-button">+</button>
+				<%end%>
+				<div id="budget-transactions-list">
+					<%=render("/budget_transactions/budget_transactions_list",:budget_item => @budget_item)%>
+				</div>
+			</div>	
+      </div>
+      <div class="modal-footer">
+		<%=link_to "close", @budget_item.budget,class: "btn btn-default"%>
+		
+        <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>-->
+      </div>
+    </div>
+  </div>
+<script>
+$(function() {
+    $( ".datepicker").datepicker({dateFormat: 'dd-mm-yy' });
+  });
+
+$(function() {
+  $('#new-budgeted-transaction-button').click(function(event){
+    $('#new-budgeted-transaction-row').slideDown(1000);
+  });
+});
+</script>

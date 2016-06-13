@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  account_id: 1
+  budget_idinteger: MyString
+  balance: 9.99
+
+two:
+  account_id: 1
+  budget_idinteger: MyString
+  balance: 9.99

@@ -1,0 +1,27 @@
+<h1>Listing account_types</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Budget account</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @account_types.each do |account_type| %>
+      <tr>
+        <td><%= account_type.name %></td>
+        <td><%= account_type.budget_account %></td>
+        <td><%= link_to 'Show', account_type %></td>
+        <td><%= link_to 'Edit', edit_account_type_path(account_type) %></td>
+        <td><%= link_to 'Destroy', account_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Account type', new_account_type_path %>

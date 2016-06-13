@@ -1,0 +1,3 @@
+var tr_id = "#<%= escape_javascript@budget_item.id.to_s%>"+"_details";
+$(tr_id).replaceWith("<%= escape_javascript(render '/budget_items/show')%>");
+$(tr_id).slideDown(1000);

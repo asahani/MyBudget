@@ -1,0 +1,54 @@
+<div class="non-budget-page-content">
+	<div id="import-preview-container" style="height: 100%;">
+		<div id="import-preview-header">
+			<h3>Import Summary</h3>
+		</div>	
+		<div id="import-preview-pane">
+			<div id="import-preview-pane-content" style="height: 585px;">
+				<%ImportedTransaction.all.group(:budget_id).count.each do |budget_id|%>
+					<div id="import-preview-table-header">
+						<table>
+							<tr>
+								<td style="width: 5%;">Check</td>
+								<td style="width: 50%;">Payee</td>
+								<td style="width: 15%;">Credit</td>
+								<td style="width: 15%;">Debit</td>
+								<td style="width: 15%;">Balance</td>
+							</tr>
+						</table>
+					</div>	
+					<%credits = ImportedTransaction.where('budget_id = ?',budget_id[0]).group(:category_id).sum(:credit)%>
+					<%debits = ImportedTransaction.where('budget_id = ?',budget_id[0]).group(:category_id).sum(:debit)%>
+					<table class="table table-striped">
+						<%budget = Budget.find(budget_id[0])%>
+						<tr><td colspan=5 style="font-weight: bold;"><%=Date::ABBR_MONTHNAMES[budget.month].upcase%>&nbsp;<%=budget.year%><td></tr>
+						<%debits.map.with_index do |summary,index|%>
+						<%category = Category.find(summary[0])%>
+							<tr>
+								<td style="width: 10%;padding-left: 5px !important;">
+									<%=check_box_tag 'check'%>
+								</td>
+								<td style="width: 45%;"><%=category.name%></td>
+								<td style="width: 15%;text-align: right;"><%=number_to_currency(credits[summary[0]], precision: 2)%></td>
+								<td style="width: 15%;text-align: right;"><%=number_to_currency(summary[1], precision: 2)%></td>
+								<td style="width: 15%;text-align: right;"><%=number_to_currency(summary[1].to_f + credits[summary[0]].to_f, precision: 2)%></td>
+							</tr>
+						<%end%>
+						<tr style="font-weight: bold;"><td>Total</td><td colspan=4 style="text-align: right;"><%=ImportedTransaction.where('budget_id = ?',budget_id[0]).sum(:debit) - ImportedTransaction.where('budget_id = ?',budget_id[0]).sum(:credit)%></td></tr>
+					</table>	
+				<%end%>
+			</div>	
+			<div id="import-preview-footer">
+				<div class="col-md-1" style="margin-left: -10px;">
+					&nbsp;
+				</div>
+				<div class="col-md-10">
+					&nbsp;
+				</div>
+				<div class="col-md-1">
+					<%= link_to "Close",@budget, class: "btn btn-default", style: "height: 100%;"%>
+				</div>
+			</div>
+		</div>	
+	</div>	
+</div>

@@ -1,0 +1,27 @@
+<h1>Listing master_categories</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Active</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @master_categories.each do |master_category| %>
+      <tr>
+        <td><%= master_category.name %></td>
+        <td><%= master_category.active %></td>
+        <td><%= link_to 'Show', master_category %></td>
+        <td><%= link_to 'Edit', edit_master_category_path(master_category) %></td>
+        <td><%= link_to 'Destroy', master_category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Master category', new_master_category_path %>

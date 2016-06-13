@@ -1,0 +1,209 @@
+<!-- Modal -->
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-body">
+			<div role="tabpanel">
+			  <!-- Nav tabs -->
+			  <ul class="nav nav-tabs" role="tablist">
+			    <li role="presentation" class="active"><a href="#misctxn" aria-controls="misctxn" role="tab" data-toggle="tab">Miscellaneous Transaction</a></li>
+			    <li role="presentation"><a href="#savingstxn" aria-controls="savingstxn" role="tab" data-toggle="tab">Savings</a></li>
+			    <li role="presentation"><a href="#savingsexpensetxn" aria-controls="savingsexpensetxn" role="tab" data-toggle="tab">Savings Expense </a></li>
+			    <li role="presentation"><a href="#transfertxn" aria-controls="transfertxn" role="tab" data-toggle="tab">Account Transfer</a></li>
+			  </ul>
+
+			  <!-- Tab panes -->
+			  <div class="tab-content">
+			    <div role="tabpanel" class="tab-pane fade in active" id="misctxn">
+			    	<%= form_for @budget_transaction, format: :html do |f| %>
+					<%= f.hidden_field :miscellaneous, :value => true%>
+					<%= f.hidden_field :savings, :value => false%>
+					<%= f.hidden_field :budget_id, :value => @budget_transaction.budget.id%>
+					<%= f.hidden_field :transaction_type, :value => "miscellaneous"%>
+
+					<table class="table">
+						<tr>
+							<td>From/To Account</td>
+							<td><%= f.collection_select :account_id, Account.for_budget.active, :id, :name, prompt: true %></td>
+						</tr>	
+						<tr>
+							<td>Payee</td>
+							<td><%= f.collection_select :payee_id, Payee.external_payees, :id, :name, prompt: true %></td>
+						</tr>
+						<tr>
+							<td>Transaction Date</td>	
+							<td><%= f.text_field :transaction_date, class: 'datepicker'%></td>
+						</tr>	
+						<tr>
+							<td>Debit</td>
+							<td><%= f.number_field :debit %></td>
+						</tr>
+						<tr>
+							<td>Credit</td>	
+							<td><%= f.number_field :credit %></td>
+						</tr>
+						<tr>
+							<td>Comments</td>	
+							<td><%= f.text_field :comments %></td>
+						</tr>
+						<tr>
+							<td>Cleared?</td>	
+							<td><%= f.check_box :reconciled %></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<%= f.submit 'Create Miscellaneous Transaction', class: "btn btn-primary"%>
+							</td>
+						</tr>	
+					</table>
+					
+					<%end%>								
+			    </div>
+			    <div role="tabpanel" class="tab-pane fade" id="savingstxn">
+			    	<%= form_for @budget_transaction, format: :html do |f| %>
+					<%= f.hidden_field :miscellaneous, :value => false%>
+					<%= f.hidden_field :savings, :value => true%>
+					<%= f.hidden_field :budget_id, :value => @budget_transaction.budget.id%>
+					<%= f.hidden_field :transaction_type, :value => "savings"%>
+					<%= f.hidden_field :debit, :value => 0.0%>
+					
+					<table class="table">
+						<tr>
+							<td>To Account</td>
+							<td><%= f.collection_select :account_id, Account.savings_account.for_budget.active, :id, :name, prompt: true %></td>
+						</tr>	
+						<tr>
+							<td>From Account</td>
+							<td><%= f.collection_select :payee_id, Payee.account_payees, :id, :name, prompt: true %></td>
+						</tr>
+						<tr>
+							<td>Transaction Date</td>	
+							<td><%= f.text_field :transaction_date, class: 'datepicker'%></td>
+						</tr>	
+						<tr>
+							<td>Amount</td>	
+							<td><%= f.number_field :credit %></td>
+						</tr>
+						<tr>
+							<td>Comments</td>	
+							<td><%= f.text_field :comments %></td>
+						</tr>
+						<tr>
+							<td>Cleared?</td>	
+							<td><%= f.check_box :reconciled %></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<%= f.submit 'Create Savings Transaction', class: "btn btn-primary"%>
+							</td>
+						</tr>	
+					</table>
+					
+					<%end%>								
+			    </div>
+			    <div role="tabpanel" class="tab-pane fade" id="savingsexpensetxn">
+			    	<%= form_for @budget_transaction, format: :html do |f| %>
+					<%= f.hidden_field :miscellaneous, :value => false%>
+					<%= f.hidden_field :savings, :value => true%>
+					<%= f.hidden_field :budget_id, :value => @budget_transaction.budget.id%>
+					<%= f.hidden_field :transaction_type, :value => "savings_expense"%>
+					<%= f.hidden_field :credit, :value => 0.0%>
+					
+					<table class="table">
+						<tr>
+							<td>From Account</td>
+							<td><%= f.collection_select :account_id, Account.savings_account.for_budget.active, :id, :name, prompt: true %></td>
+						</tr>	
+						<tr>
+							<td>Payee</td>
+							<td><%= f.collection_select :payee_id, Payee.external_payees + Payee.account_payees, :id, :name, prompt: true %></td>
+						</tr>
+						<tr>
+							<td>Transaction Date</td>	
+							<td><%= f.text_field :transaction_date, class: 'datepicker'%></td>
+						</tr>	
+						<tr>
+							<td>Amount</td>
+							<td><%= f.number_field :debit %></td>
+						</tr>
+						<tr>
+							<td>Comments</td>	
+							<td><%= f.text_field :comments %></td>
+						</tr>
+						<tr>
+							<td>Cleared?</td>	
+							<td><%= f.check_box :reconciled %></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<%= f.submit 'Create Savings Expense Transaction', class: "btn btn-primary"%>
+							</td>
+						</tr>	
+					</table>
+					
+					<%end%>								
+			    </div>
+			    <div role="tabpanel" class="tab-pane fade" id="transfertxn">
+			    	<%= form_for @budget_transaction, format: :html do |f| %>
+					<%= f.hidden_field :miscellaneous, :value => false%>
+					<%= f.hidden_field :savings, :value => false%>
+					<%= f.hidden_field :budget_id, :value => @budget_transaction.budget.id%>
+					<%= f.hidden_field :transaction_type, :value => "account_transfer"%>
+					<%= f.hidden_field :debit, :value => 0.0%>
+					
+					<table class="table">
+						<tr>
+							<td>To Account</td>
+							<td><%= f.collection_select :account_id, Account.for_budget.active, :id, :name, prompt: true %></td>
+						</tr>	
+						<tr>
+							<td>From Payee</td>
+							<td><%= f.collection_select :payee_id, Payee.account_payees, :id, :name, prompt: true %></td>
+						</tr>
+						<tr>
+							<td>Transaction Date</td>	
+							<td><%= f.text_field :transaction_date, class: 'datepicker'%></td>
+						</tr>	
+						<tr>
+							<td>Amount</td>	
+							<td><%= f.number_field :credit %></td>
+						</tr>
+						<tr>
+							<td>Comments</td>	
+							<td><%= f.text_field :comments %></td>
+						</tr>
+						<tr>
+							<td>Cleared?</td>	
+							<td><%= f.check_box :reconciled %></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<%= f.submit 'Account Transfer Transaction', class: "btn btn-primary"%>
+							</td>
+						</tr>	
+					</table>
+					
+					<%end%>								
+			    </div>
+			  </div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		</div>
+	</div>
+</div>
+<script>
+$(function() {
+    $( ".datepicker").datepicker({dateFormat: 'dd-mm-yy' });
+  });
+
+$(function() {
+  $('#new-budgeted-transaction-button').click(function(event){
+    $('#new-budgeted-transaction-row').slideDown(1000);
+  });
+});
+</script>

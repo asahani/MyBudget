@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: MyString
+  amount: 9.99
+  recurring: false
+  weekly: false
+  fortnightly: false
+  monthly: false
+  budget_id: 1
+  account_id: 1
+
+two:
+  description: MyString
+  amount: 9.99
+  recurring: false
+  weekly: false
+  fortnightly: false
+  monthly: false
+  budget_id: 1
+  account_id: 1

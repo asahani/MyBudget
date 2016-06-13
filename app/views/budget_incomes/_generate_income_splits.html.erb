@@ -1,0 +1,19 @@
+<%= form_tag generate_income_splits_path(@budget_income), remote: true do %>
+<div class="modal-body">
+	<table class="table">
+		<th>
+			<td>First Income Week</td>
+			<td>Income</td>
+		</th>	
+		<tr>
+			<td><%= text_field_tag :first_income_date, nil, class: 'datepicker'%></td>
+			<td><%= number_field_tag :amount,0.0%></td>
+		</tr>
+	</table>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	<%= submit_tag "Generate", class: "btn btn-primary"%>
+</div>
+<%end%>
+

@@ -1,0 +1,29 @@
+<%income_remaining = 0%>
+<div class="modal-body">
+	<table class="table">
+		<th>
+			<td>Income Date</td>
+			<td>Amount</td>
+			<td>Total So Far</td>
+		</th>	
+		<%@income_splits.each do |income_split|%>
+		<%if income_split.income_split_date < Time.now%>
+		<tr style="color: red;">
+		<%else%>
+		<tr>
+		<%income_remaining += income_split.amount%>	
+		<%end%>	
+			<td><%=income_split.income_split_date%></td>
+			<td><%=income_split.amount%></td>
+			<td><%=income_split.total_received%></td>
+		</tr>
+		<%end%>
+		<tr>
+			<td colspan=2>Income Remaining to Receive</td>
+			<td><%=income_remaining%></td>
+		</tr>	
+	</table>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>

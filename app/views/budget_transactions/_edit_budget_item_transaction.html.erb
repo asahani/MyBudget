@@ -1,0 +1,12 @@
+<tr id=<%=@budget_transaction.id%>>
+		<td><%= form_for(@budget_transaction, remote: true) do |f| %>
+			<%= f.collection_select :account_id, Account.all, :id, :name, prompt: true %>
+		</td>
+		<td><%= f.collection_select :payee_id, Payee.where("category_id=?",@budget_transaction.budget_item.category.id), :id, :name, prompt: true %></td>
+		<td><%= f.date_select :transaction_date %></td>
+		<td><%= f.number_field :debit %></td>
+		<td><%= f.number_field :credit %></td>
+		<td><%= f.text_field :comments %></td>
+		<td><%= f.submit "update"%><%end%></td>
+</tr>	
+

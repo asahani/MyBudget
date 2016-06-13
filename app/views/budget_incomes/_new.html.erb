@@ -1,0 +1,41 @@
+<!-- Modal -->
+<div class="modal-dialog" style="width: 1024px;">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			<h4 class="modal-title" id="newTransactionModalLabel">New Transaction</h4>
+		</div>
+		<%= form_for @budget_income, format: :html do |f| %>
+		<%= f.hidden_field :budget_id, :value => @budget_income.budget.id%>
+		<div class="modal-body">
+			<table class="table">
+				<th>
+					<td>Account</td>
+					<td>Description</td>
+					<td>Amount</td>
+				</th>	
+				<tr>
+					<td><%= f.collection_select :account_id, Account.all, :id, :name, prompt: true %></td>
+					<td><%= f.text_field :description %></td>
+					<td><%= f.number_field :amount %></td>
+				</tr>
+			</table>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			<%= f.submit class: "btn btn-primary"%>
+		</div>
+		<%end%>
+	</div>
+</div>
+<script>
+$(function() {
+    $( ".datepicker").datepicker({dateFormat: 'dd-mm-yy' });
+  });
+
+$(function() {
+  $('#new-budgeted-transaction-button').click(function(event){
+    $('#new-budgeted-transaction-row').slideDown(1000);
+  });
+});
+</script>

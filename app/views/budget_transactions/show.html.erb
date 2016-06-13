@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Credit:</strong>
+  <%= @budget_transaction.credit %>
+</p>
+
+<p>
+  <strong>Debit:</strong>
+  <%= @budget_transaction.debit %>
+</p>
+
+<p>
+  <strong>Transaction date:</strong>
+  <%= @budget_transaction.transaction_date %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+  <%= @budget_transaction.comments %>
+</p>
+
+<p>
+  <strong>Manual:</strong>
+  <%= @budget_transaction.manual %>
+</p>
+
+<p>
+  <strong>Scheduled:</strong>
+  <%= @budget_transaction.scheduled %>
+</p>
+
+<p>
+  <strong>Budgeted:</strong>
+  <%= @budget_transaction.budgeted %>
+</p>
+
+<p>
+  <strong>Account:</strong>
+  <%= @budget_transaction.account_id %>
+</p>
+
+<p>
+  <strong>Budget item:</strong>
+  <%= @budget_transaction.budget_item_id %>
+</p>
+
+<p>
+  <strong>Payee:</strong>
+  <%= @budget_transaction.payee_id %>
+</p>
+
+<%= link_to 'Edit', edit_budget_transaction_path(@budget_transaction) %> |
+<%= link_to 'Back', budget_transactions_path %>

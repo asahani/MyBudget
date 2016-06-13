@@ -1,0 +1,19 @@
+<% if @budget.errors.any? %>
+  <div class="alert alert-danger alert-dismissible" role="alert">
+<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <h2><%= pluralize(@budget.errors.count, "error") %> prohibited this budget from being saved:</h2>
+
+    <ul>
+    <% @budget.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<%end%>
+
+<h1>New budget</h1>
+No budget exists for <%=I18n.t("date.abbr_month_names")[params[:month].to_i].capitalize%> <%=params[:year]%>
+
+click here to create a new budget <%= link_to "New", budgets_path(:year => params[:year],:month => params[:month]), method: :post %>
+
+<%= link_to 'Back', budgets_path %>

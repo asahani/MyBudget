@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  budget_id: 1
+  budgeted_amount: 9.99
+  expenses: 9.99
+  balance: 9.99
+  category_id: 1
+  comment: MyText
+
+two:
+  budget_id: 1
+  budgeted_amount: 9.99
+  expenses: 9.99
+  balance: 9.99
+  category_id: 1
+  comment: MyText

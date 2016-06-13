@@ -1,0 +1,2 @@
+module MasterCategoriesHelper
+end

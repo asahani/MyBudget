@@ -1,0 +1,27 @@
+<!-- Modal -->
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			<h4 class="modal-title" id="newTransactionModalLabel">Income Splits</h4>
+		</div>
+		<div id="income-splits-container">
+			<%unless @income_splits.nil? || @income_splits.count < 1%>
+				<%=render 'show_income_splits'%>
+			<%else%>	
+				<%=render 'generate_income_splits'%>
+			<%end%>
+		</div>
+	</div>
+</div>
+<script>
+$(function() {
+    $( ".datepicker").datepicker({dateFormat: 'dd-mm-yy' });
+  });
+
+$(function() {
+  $('#new-budgeted-transaction-button').click(function(event){
+    $('#new-budgeted-transaction-row').slideDown(1000);
+  });
+});
+</script>

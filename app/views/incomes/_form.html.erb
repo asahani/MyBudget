@@ -1,0 +1,49 @@
+<%= form_for(@income) do |f| %>
+  <% if @income.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@income.errors.count, "error") %> prohibited this income from being saved:</h2>
+
+      <ul>
+      <% @income.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_field :description %>
+  </div>
+  <div class="field">
+    <%= f.label :amount %><br>
+    <%= f.text_field :amount %>
+  </div>
+  <div class="field">
+    <%= f.label :recurring %><br>
+    <%= f.check_box :recurring %>
+  </div>
+  <div class="field">
+    <%= f.label :weekly %><br>
+    <%= f.check_box :weekly %>
+  </div>
+  <div class="field">
+    <%= f.label :fortnightly %><br>
+    <%= f.check_box :fortnightly %>
+  </div>
+  <div class="field">
+    <%= f.label :monthly %><br>
+    <%= f.check_box :monthly %>
+  </div>
+  <div class="field">
+    <%= f.label :budget_id %><br>
+    <%= f.number_field :budget_id %>
+  </div>
+  <div class="field">
+    <%= f.label :account_id %><br>
+    <%= f.number_field :account_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

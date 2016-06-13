@@ -1,0 +1,28 @@
+<%
+	income_rows = 0
+%>
+<div id="budget-flip">
+	<div class="front" id="budget-flip-front">
+		<div class="fixed" >
+			<%=render 'show_budget_summary'%>
+			<%=render 'show_budget_totals'%>
+		</div>	
+		<%=render 'show_budget_details'%>
+	</div>
+	<div class="back" id="budget-flip-back">
+		<div>
+			<%= high_chart("my_id4", @chart)  %>
+			<%= high_chart("my_id6", @chart3) %>
+			<%= high_chart("my_id5", @chart2) do |c| %>
+			          <%= raw "options.tooltip.formatter = function() {return '<b> YUPI!! '+ this.point.name +'</b>: '+ this.y +' %';}"  %>
+			          <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
+			      <% end %>
+			
+		</div>
+	</div>	
+</div>
+<div class="modal fade" id="importTransactionsModal" tabindex="-1" role="dialog" aria-labelledby="importTransactionsModalLabel" aria-hidden="true"></div>
+<div class="modal fade" id="incomeSplitsModal" tabindex="-1" role="dialog" aria-labelledby="incomeSplitsModalLabel" aria-hidden="true"></div>	
+<div class="modal fade" id="editBudgetItemModal" tabindex="-1" role="dialog" aria-labelledby="editBudgetItemModalLabel" aria-hidden="true"></div>
+<div class="modal fade" id="newTransactionModal" tabindex="-1" role="dialog" aria-labelledby="newTransactionModalLabel" aria-hidden="true"></div>
+<div class="modal fade" id="newBudgetIncomeModal" tabindex="-1" role="dialog" aria-labelledby="newBudgetIncomeModalLabel" aria-hidden="true"></div>

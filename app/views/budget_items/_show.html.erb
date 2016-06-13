@@ -1,0 +1,27 @@
+<tr id=<%=@budget_item.id.to_s + '_details'%> >
+	<td colspan=8>
+		<table>
+		<tr><td colspan=8><button id="<%=@budget_item.id.to_s + '_close'%>">X</button></td></tr>	
+		<%@budget_item.budget_transactions.each do |budget_transaction|%>
+		<tr>
+			<td><%=budget_transaction.account.name%></td>
+			<td><%=budget_transaction.payee.name%></td>
+			<td><%=budget_transaction.transaction_date%></td>
+			<td><%=budget_transaction.debit%></td>
+			<td><%=budget_transaction.credit%></td>
+			<td><%=budget_transaction.comments%></td>
+		</tr>
+		<%end%>
+		</table>
+	</td>
+</tr>
+
+<script>
+$(function() {
+  var btn_id = "#<%= escape_javascript@budget_item.id.to_s%>"+"_close";
+  var tr_id = "#<%= escape_javascript@budget_item.id.to_s%>"+"_details";
+  $(btn_id).click(function(event){
+	$(tr_id).hide();
+  });
+});
+</script>

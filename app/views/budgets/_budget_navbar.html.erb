@@ -1,0 +1,37 @@
+<div>
+	<div id="budget-navbar">
+	    <ul>
+			<li class="year-item">
+				<%=@budget.year%>
+			</li>	
+			<%I18n.t("date.abbr_month_names").drop(1).map.with_index { |month_name,index|%>
+				<%
+					active = false
+					last = false
+					if month_name == I18n.t("date.abbr_month_names")[month]
+						active = true
+				  	end	
+					if index == 11
+						last = true
+					end
+				%>	
+	
+				<%if active && last%>
+					<li class="active last">
+				<%elsif active && !last%>
+					<li class="active">
+				<%elsif !active && last%>
+					<li class="last">
+				<%else%>
+					<li>
+				<%end%>
+
+				<%=link_to month_name, show_or_create_budget_path(month: index+1,year: @budget.year)%></li>
+			<%}%>
+	    </ul>
+	</div>
+	<div id="budget-actions-bar">
+		<%= link_to raw("<span class='glyphicon glyphicon-import' style='color: #999;' aria-hidden='true'></span>"),
+		 	import_transactions_open_file_path(budget_id: @budget.id), {:remote => true, class: 'import-transactions-modal-link'} %>
+	</div>
+</div><!-- /.navbar-collapse -->

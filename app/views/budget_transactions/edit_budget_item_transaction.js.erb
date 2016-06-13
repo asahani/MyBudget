@@ -1,0 +1,2 @@
+var tr_id = "#<%= escape_javascript@budget_transaction.id.to_s%>" 
+$(tr_id).replaceWith("<%= escape_javascript(render '/budget_transactions/edit_budget_item_transaction') %>");
