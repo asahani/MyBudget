@@ -4,7 +4,7 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Active</th>
+      <th>Display</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -13,7 +13,7 @@
     <% @master_categories.each do |master_category| %>
       <tr>
         <td><%= master_category.name %></td>
-        <td><%= master_category.active %></td>
+        <td><%= master_category.display %></td>
         <td><%= link_to 'Show', master_category %></td>
         <td><%= link_to 'Edit', edit_master_category_path(master_category) %></td>
         <td><%= link_to 'Destroy', master_category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
