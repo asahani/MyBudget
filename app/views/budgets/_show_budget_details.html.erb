@@ -101,7 +101,11 @@
 							<div class="actions">
 								<%= link_to raw("<span class='glyphicon glyphicon-pencil' style='color: #999;' aria-hidden='true'></span>"),
 								 	edit_budget_transaction_path(misc_txn,transaction_type: 'miscellaneous'), {:remote => true, class: 'new-transaction-modal-link'} %>
-								<%= link_to raw("<span class='glyphicon glyphicon-remove-circle' style='color: #999;' aria-hidden='true'></span>"), misc_txn, method: :delete,  data: { confirm: 'Are you sure?' }%>
+								<% unless misc_txn.reconciled%> 	 	
+									<%= link_to raw("<span class='glyphicon glyphicon-remove-circle' style='color: #999;' aria-hidden='true'></span>"), misc_txn, method: :delete,  data: { confirm: 'Are you sure?' }%>
+								<% else -%>
+									<%=image_tag 'cleared-icon.png'%>	
+								<% end -%>	
 							</div>
 						</td>
 					</tr>
@@ -150,7 +154,11 @@
 							<div class="actions">
 								<%= link_to raw("<span class='glyphicon glyphicon-pencil' style='color: #999;' aria-hidden='true'></span>"),
 								 	edit_budget_transaction_path(sav_txn,transaction_type: 'savings'), {:remote => true, class: 'new-transaction-modal-link'} %>
-								<%= link_to raw("<span class='glyphicon glyphicon-remove-circle' style='color: #999;' aria-hidden='true'></span>"), sav_txn, method: :delete,  data: { confirm: 'Are you sure?' }%>
+								<% unless sav_txn.reconciled%> 	
+									<%= link_to raw("<span class='glyphicon glyphicon-remove-circle' style='color: #999;' aria-hidden='true'></span>"), sav_txn, method: :delete,  data: { confirm: 'Are you sure?' }%>
+								<% else -%>
+									<%=image_tag 'cleared-icon.png'%>	
+								<% end -%>								
 							</div>
 						</td>
 					</tr>
@@ -178,7 +186,11 @@
 						<div class="actions">
 							<%= link_to raw("<span class='glyphicon glyphicon-pencil' style='color: #999;' aria-hidden='true'></span>"),
 							 	edit_budget_transaction_path(sav_exp_txn,transaction_type: 'savings_expense'), {:remote => true, class: 'new-transaction-modal-link'} %>
-							<%= link_to raw("<span class='glyphicon glyphicon-remove-circle' style='color: #999;' aria-hidden='true'></span>"), sav_exp_txn, method: :delete,  data: { confirm: 'Are you sure?' }%>
+							<% unless sav_exp_txn.reconciled%> 	
+								<%= link_to raw("<span class='glyphicon glyphicon-remove-circle' style='color: #999;' aria-hidden='true'></span>"), sav_exp_txn, method: :delete,  data: { confirm: 'Are you sure?' }%>
+							<% else -%>
+								<%=image_tag 'cleared-icon.png'%>	
+							<% end -%>
 						</div>
 					</td>
 				</tr>

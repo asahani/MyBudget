@@ -37,9 +37,13 @@
 			<td><%=budget_transaction.comments%></td>
 			<td><%=link_to "edit", edit_budget_item_transaction_path(budget_transaction),remote: true%></td>
 			<td>
-			<%= link_to budget_transaction, remote: true, method: :delete,  data: { confirm: 'Are you sure?' } do %>
-			  <button>X</button>
-			<% end %>
+			<% unless budget_transaction.reconciled%> 		
+				<%= link_to budget_transaction, remote: true, method: :delete,  data: { confirm: 'Are you sure?' } do %>
+				  <button>X</button>
+				<% end %>
+			<% else	-%>
+				<%=image_tag 'cleared-icon.png'%>	
+			<% end -%>
 			</td>
 		</tr>							
 		<%end%>
