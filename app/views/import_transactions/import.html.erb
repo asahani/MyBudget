@@ -34,7 +34,7 @@
 								<td style="width: 15%;text-align: right;"><%=number_to_currency(summary[1].to_f + credits[summary[0]].to_f, precision: 2)%></td>
 							</tr>
 						<%end%>
-						<tr style="font-weight: bold;"><td>Total</td><td colspan=4 style="text-align: right;"><%=ImportedTransaction.where('budget_id = ?',budget_id[0]).sum(:debit) - ImportedTransaction.where('budget_id = ?',budget_id[0]).sum(:credit)%></td></tr>
+						<tr style="font-weight: bold;"><td>Total</td><td colspan=4 style="text-align: right;"><%=ImportedTransaction.where('budget_id = ?',budget_id[0]).sum(:debit) + ImportedTransaction.where('budget_id = ?',budget_id[0]).sum(:credit)%></td></tr>
 					</table>	
 				<%end%>
 			</div>	
