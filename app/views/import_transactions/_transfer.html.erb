@@ -3,7 +3,7 @@
 	<div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-			<h4 class="modal-title" id="transferImportedTxnModalLabel">Transfer Transaction</h4>
+			<h4 class="modal-title" id="transferImportedTxnModalLabel">Account Transfer Transaction</h4>
 		</div>
 		<%= form_for @imported_transaction, remote: true do |f| %>
 		<div class="modal-body">
@@ -30,7 +30,11 @@
 					<td>Payee</td>
 				</th>	
 				<tr>
-					<td><%= f.collection_select :account_id, Account.for_budget.active, :id, :name, prompt: true %></td>
+					<td>
+						<%= @imported_transaction.account.name%>
+						<%= f.hidden_field :account_id, :value => @imported_transaction.account_id%>
+					</td>
+
 					<td><%= f.collection_select :payee_id, Payee.account_payees, :id, :name, prompt: true %></td>
 				</tr>
 			</table>

@@ -31,18 +31,19 @@ TODO:
 Main Screen
 ==============
 - Create new Payee if it does not exist in dropdown
+- Setup screen
+- Admin and Settings screen
 
 Import Screen
 ==============
 - Formats for Bank
-- Transfer to account in CC import should have the account drop down disabled.
-- imported accont transfer transactions shold be automatically reconciled
+
+- imported account transfer transactions shold be automatically reconciled
 
 Budget Screen
 =============
 - Top level balances
 - Separate credit card balances view
-- On cancelling transaction from say miscellaneous - reinstate transaction
 
 
 EDIT ACCOUNT
@@ -126,3 +127,4 @@ DONE - Transactions - Fix list of transactions for each budget account. Calculat
 DONE - Transactions - Manual transactions should have the option of being cleared or uncleared
 DONE - Import -Import summary screen with different budget summaries to assist with payments and categories
 DONE - Reconciliation - Reconciled transactions cant be deleted
+DONE - Transfer to account in CC import should have the account drop down disabled.
