@@ -19,7 +19,7 @@
 	</th>	
 	<tr id="new-budgeted-transaction-row" style="display: none;">
 		<td><%= f.collection_select :account_id, Account.all, :id, :name, prompt: true %></td>
-		<td><%= f.collection_select :payee_id, Payee.where("category_id=?",@budget_item.category.id), :id, :name, prompt: true %></td>
+		<td><%= f.collection_select :payee_id, Payee.all, :id, :name, prompt: true %></td>
 		<td><%= f.date_select :transaction_date %></td>
 		<td><%= f.number_field :debit %></td>
 		<td><%= f.number_field :credit %></td>
