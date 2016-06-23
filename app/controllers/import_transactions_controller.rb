@@ -10,31 +10,45 @@ class ImportTransactionsController < ApplicationController
     session[:budget_id] = @budget.id 
     
     ImportedTransaction.destroy_all
-    account_id = params[:account_id]
+    account = Account.find(params[:account_id])
     
     CSV.foreach(params[:file].path, headers: false) do |row|
-      imported_transaction, payee, credit, debit, category_id, payee_id = nil
-      
+      imported_transaction, txn_date, txn_amount, txn_description, txn_balance,txn_date_format, payee, credit, debit, category_id, payee_id = nil
+
       payeeDescription = PayeeDescription.find_by_description(row[5])
       unless payeeDescription.nil?
         payee = payeeDescription.payee
       end 
-      
-      unless row[0].nil?
+
+
+      unless account.import_txn_date_col.nil?
+        txn_date = row[account.import_txn_date_col] unless account.import_txn_date_col.nil?
+        txn_amount = row[account.import_txn_amount_col] 
+        txn_description = row[account.import_txn_description_col] 
+        txn_balance = row[account.import_txn_balance_col] unless account.import_txn_balance_col.nil?
+        txn_date_format = account.import_txn_date_format
+
         unless payee.nil?
           payee_id = payee.id
           category_id= payee.category.id
         end
-        if row[1].to_f > 0
-          credit = row[1].to_f
-          puts credit
+
+        if account.is_debit_negetive
+          if txn_amount.to_f > 0
+            credit = txn_amount.to_f
+          else
+            debit = txn_amount.to_f
+          end    
         else
-          debit = row[1].to_f
-          puts debit
-        end    
-        
-        imported_transaction = ImportedTransaction.new(raw_data: row.to_s, credit: credit, debit: debit, txn_date: Date.strptime(row[0].to_s,"%e-%b-%y"),
-         description: row[5], balance: row[6], account_id: account_id, payee_id: payee_id, category_id: category_id)
+          if txn_amount.to_f > 0
+            debit = txn_amount.to_f * -1
+          else
+            credit = txn_amount.to_f.abs
+          end 
+        end
+
+        imported_transaction = ImportedTransaction.new(raw_data: row.to_s, credit: credit, debit: debit, txn_date: Date.strptime(txn_date.to_s,txn_date_format),
+         description: txn_description, balance: txn_balance, account_id: account.id, payee_id: payee_id, category_id: category_id)
       
         budget_transaction = BudgetTransaction.find_by_raw_data(row.to_s)
       

@@ -83,9 +83,10 @@ class PayeesController < ApplicationController
       respond_to do |format|
         unless params[:imported_txn_id].nil?
           imported_txn = ImportedTransaction.find(params[:imported_txn_id])
-          payee_description = PayeeDescription.new(:description => imported_txn.description, :payee_id => @payee)
+          payee_description = PayeeDescription.new(:description => imported_txn.description, :payee_id => @payee.id)
 
-          if @payee.save
+          if @payee.save!
+            payee_description.save!
             ImportedTransaction.where('description = ? ', payee_description.description).update_all(payee_id: @payee.id,category_id: @payee.category.id)
             format.js { render '/import_transactions/preview'}
           end 

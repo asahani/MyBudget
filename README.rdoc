@@ -30,6 +30,7 @@ Please feel free to use a different markup language if you do not plan to run
 TODO:
 Main Screen
 ==============
+- create misc payee in seed
 - Create new Payee if it does not exist in dropdown
 - Setup screen
 - Admin and Settings screen
@@ -37,6 +38,7 @@ Main Screen
 Import Screen
 ==============
 - Formats for Bank
+- edit category
 - Add statement balance field in file upload screen to do balance reconcilliation for accounts that dont have balance
 
 

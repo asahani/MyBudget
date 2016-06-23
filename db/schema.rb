@@ -32,10 +32,11 @@ ActiveRecord::Schema.define(version: 20160623072132) do
     t.string   "hint"
     t.boolean  "is_active",                                           default: true
     t.boolean  "is_debit_negetive",                                   default: true
-    t.integer  "import_txn_date_row"
-    t.integer  "import_txn_amount_row"
-    t.integer  "import_txn_description_row"
-    t.integer  "import_txn_balance_row"
+    t.integer  "import_txn_date_col"
+    t.integer  "import_txn_amount_col"
+    t.integer  "import_txn_description_col"
+    t.integer  "import_txn_balance_col"
+    t.string   "import_txn_date_format"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

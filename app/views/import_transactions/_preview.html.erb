@@ -45,8 +45,8 @@
 						</td>
 						<td style="width: 10%;">
 							<%if txn.payee.nil?%>
-								<%=form_tag payees_select_payee_path(imported_txn_id: txn.id),{:remote => true, :id => "import_txn"} do%>
-									<%= select_tag "id", options_from_collection_for_select(Payee.all, :id, :name),{ :prompt => "Select Payee...",:onchange => "$('#import_txn').submit();" }%>
+								<%=form_tag payees_select_payee_path(imported_txn_id: txn.id),{:remote => true, :id => "import_txn_#{txn.id}"} do%>
+									<%= select_tag "id", options_from_collection_for_select(Payee.all, :id, :name),{ :prompt => "Select Payee...",:onchange => "$('#import_txn_#{txn.id}').submit();" }%>
 								<%end%>
 							<%else%>
 								<%=txn.payee.name%>
@@ -104,7 +104,11 @@
 							<td>-</td>
 							<td><%=number_to_currency(ImportedTransaction.first.balance , precision: 2)%></td>
 							<td>=</td>
-							<td><%=number_to_currency((ImportedTransaction.all.sum(:debit) +ImportedTransaction.all.sum(:credit))- ImportedTransaction.first.balance, precision: 2)%></td>
+							<td>
+								<%unless ImportedTransaction.first.balance.nil?%>
+								<%=number_to_currency((ImportedTransaction.all.sum(:debit) +ImportedTransaction.all.sum(:credit))- ImportedTransaction.first.balance, precision: 2)%>
+								<%end%>
+							</td>
 						</tr>	
 					</table>	
 				</div>
