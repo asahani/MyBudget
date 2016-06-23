@@ -11,6 +11,7 @@ MasterCategory.create!(name: 'Income', display: false) #Should always be first
 MasterCategory.create!(name: 'Account Transfer', display: false) #Should always be second
 MasterCategory.create!(name: 'Savings', display: false) #Should always be third
 MasterCategory.create!(name: 'Miscellaneous', display: false)#Should always be fourth
+MasterCategory.create!(name: 'Cash', display: false)#Should always be fifth
 #---------------------------
 
 #Mandatory Categories
@@ -18,11 +19,13 @@ Category.create!(name: 'Income', active: false, budget_amount: 0.0,master_catego
 Category.create!(name: 'Account Transfer', active: false, budget_amount: 0.0,master_category_id: 2,mandatory: false,miscellaneous: false,savings: false) #Should always be second
 Category.create!(name: 'Savings', active: false, budget_amount: 0.0,master_category_id: 3,mandatory: true,miscellaneous: false,savings: true) #Should always be third
 Category.create!(name: 'Miscellaneous', active: false, budget_amount: 1000.00,master_category_id: 4,mandatory: true,miscellaneous: true,savings: false) #Should always be fourth
+Category.create!(name: 'Cash', active: false, budget_amount: 0.0,master_category_id: 5,mandatory: false,miscellaneous: false,savings: false) #Should always be fifth
 #---------------------------
 
 # Mandatory Payees
 Payee.create!(name: 'Income', description: 'Income', category_id: 1,is_system: true) #Should always be first
 Payee.create!(name: 'Savings', description: 'Savings', category_id: 3,is_system: true) #Should always be Second
+Payee.create!(name: 'Cash', description: 'Cash', category_id: 5,is_system: true) #Should always be Third
 #---------------------------
 
 MasterCategory.create!(name: 'God Charity', display: true)
@@ -78,7 +81,9 @@ Account.create!(name: 'GO Mastercard', initial_balance: -3500.00, balance: -3500
 Payee.create!(name: 'Telstra', description: 'Telstra', category_id: 18)
 Payee.create!(name: 'MYKI', description: 'MYKI.                    DOCKLANDS', category_id: 25) 
 Payee.create!(name: 'Itunes Apps', description: 'ITUNES MUSIC STSYDNEY', category_id: 26) 
-Payee.create!(name: 'Safeway', description: 'SAFEWAY 3128 DONCASTER VIDONCASTER', category_id: 9) 
+Payee.create!(name: 'Safeway', description: 'SAFEWAY', category_id: 10) 
 
-Income.create!(description: 'Shruti Salary',amount: 7000.00, weekly: false, fortnightly: false, monthly: true, account_id: 1)
-Income.create!(description: 'Aman Salary',amount: 1718.50, weekly: true, fortnightly: false, monthly: false, account_id: 2)
+PayeeDescription.create!(description: 'SAFEWAY 3128 DONCASTER VIDONCASTER', payee: Payee.find_by_name("Safeway"))
+
+Income.create!(description: 'Shruti Salary',amount: 4000.00, weekly: false, fortnightly: false, monthly: true, account_id: 1)
+Income.create!(description: 'Aman Salary',amount: 1018.50, weekly: true, fortnightly: false, monthly: false, account_id: 2)

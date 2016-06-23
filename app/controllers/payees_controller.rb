@@ -1,5 +1,5 @@
 class PayeesController < ApplicationController
-  before_action :set_payee, only: [:show, :edit, :update, :destroy]
+  before_action :set_payee, only: [:show, :edit, :update, :destroy,:select_payee]
 
   # GET /payees
   # GET /payees.json
@@ -78,6 +78,21 @@ class PayeesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def select_payee
+      respond_to do |format|
+        unless params[:imported_txn_id].nil?
+          imported_txn = ImportedTransaction.find(params[:imported_txn_id])
+          payee_description = PayeeDescription.new(:description => imported_txn.description, :payee_id => @payee)
+
+          if @payee.save
+            ImportedTransaction.where('description = ? ', payee_description.description).update_all(payee_id: @payee.id,category_id: @payee.category.id)
+            format.js { render '/import_transactions/preview'}
+          end 
+        end 
+      end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

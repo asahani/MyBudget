@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141226074724) do
+ActiveRecord::Schema.define(version: 20160623072132) do
 
   create_table "account_types", force: true do |t|
     t.string   "name"
@@ -22,15 +22,20 @@ ActiveRecord::Schema.define(version: 20141226074724) do
 
   create_table "accounts", force: true do |t|
     t.string   "name"
-    t.decimal  "initial_balance", precision: 10, scale: 2, default: 0.0
-    t.decimal  "balance",         precision: 10, scale: 2, default: 0.0
-    t.integer  "account_type",                             default: 0
-    t.boolean  "budget_account",                           default: true
+    t.decimal  "initial_balance",            precision: 10, scale: 2, default: 0.0
+    t.decimal  "balance",                    precision: 10, scale: 2, default: 0.0
+    t.integer  "account_type",                                        default: 0
+    t.boolean  "budget_account",                                      default: true
     t.integer  "bsb_number"
     t.integer  "card_number"
     t.integer  "username"
     t.string   "hint"
-    t.boolean  "is_active",                                default: true
+    t.boolean  "is_active",                                           default: true
+    t.boolean  "is_debit_negetive",                                   default: true
+    t.integer  "import_txn_date_row"
+    t.integer  "import_txn_amount_row"
+    t.integer  "import_txn_description_row"
+    t.integer  "import_txn_balance_row"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -153,6 +158,13 @@ ActiveRecord::Schema.define(version: 20141226074724) do
   create_table "master_categories", force: true do |t|
     t.string   "name"
     t.boolean  "display",    default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "payee_descriptions", force: true do |t|
+    t.string   "description"
+    t.integer  "payee_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -43,7 +43,15 @@
 							<%end%>
 							&nbsp;<%=txn.account.name unless txn.account.nil?%>
 						</td>
-						<td style="width: 10%;"><%=txn.payee.name unless txn.payee.nil?%></td>
+						<td style="width: 10%;">
+							<%if txn.payee.nil?%>
+								<%=form_tag payees_select_payee_path(imported_txn_id: txn.id),{:remote => true, :id => "import_txn"} do%>
+									<%= select_tag "id", options_from_collection_for_select(Payee.all, :id, :name),{ :prompt => "Select Payee...",:onchange => "$('#import_txn').submit();" }%>
+								<%end%>
+							<%else%>
+								<%=txn.payee.name%>
+							<%end%>	
+						</td>
 						<td style="width: 10%;"><%=txn.category.name unless txn.category.nil?%></td>
 						<td style="width: 7%;"><%=txn.txn_date%></td>
 						<td style="width: 34%;"><%=txn.description%></td>

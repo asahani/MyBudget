@@ -37,8 +37,8 @@ Main Screen
 Import Screen
 ==============
 - Formats for Bank
+- Add statement balance field in file upload screen to do balance reconcilliation for accounts that dont have balance
 
-- imported account transfer transactions shold be automatically reconciled
 
 Budget Screen
 =============
@@ -100,7 +100,8 @@ Good to have
 - Budget Item - Ability to create budget Items as well.
 - Create Budget - Send scheduled transactions to accounts. 
 				---- Create "on budget create" flag to schedule flag. Always uncleared
-				
+- Import Screen - imported account transfer transactions shold be automatically reconciled
+
 Refactor
 --------
 - active attribute in category is used for active as well as for differentiating system categories. Create another attribute called is_system to seperate the two concerns

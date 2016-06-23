@@ -14,7 +14,11 @@ class ImportTransactionsController < ApplicationController
     
     CSV.foreach(params[:file].path, headers: false) do |row|
       imported_transaction, payee, credit, debit, category_id, payee_id = nil
-      payee = Payee.find_by_description(row[5])
+      
+      payeeDescription = PayeeDescription.find_by_description(row[5])
+      unless payeeDescription.nil?
+        payee = payeeDescription.payee
+      end 
       
       unless row[0].nil?
         unless payee.nil?
