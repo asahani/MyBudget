@@ -16,7 +16,7 @@ class PayeesController < ApplicationController
   def new
     @payee = Payee.new
     @payee.called_from_import_txn = params[:called_from_import_txn]
-    
+
     unless params[:imported_txn_id].nil?
       imported_txn = ImportedTransaction.find(params[:imported_txn_id])
       @payee.description = imported_txn.description
@@ -31,13 +31,13 @@ class PayeesController < ApplicationController
   # POST /payees.json
   def create
     @payee = Payee.new(payee_params)
-    
+
     if @payee.called_from_import_txn
       respond_to do |format|
         if @payee.save
           ImportedTransaction.where('description = ? ', @payee.description).update_all(payee_id: @payee.id,category_id: @payee.category.id)
           format.js { render '/import_transactions/preview'}
-        end  
+        end
       end
     else
       respond_to do |format|
@@ -85,12 +85,11 @@ class PayeesController < ApplicationController
           imported_txn = ImportedTransaction.find(params[:imported_txn_id])
           payee_description = PayeeDescription.new(:description => imported_txn.description, :payee_id => @payee.id)
 
-          if @payee.save!
-            payee_description.save!
+          if payee_description.save!
             ImportedTransaction.where('description = ? ', payee_description.description).update_all(payee_id: @payee.id,category_id: @payee.category.id)
             format.js { render '/import_transactions/preview'}
-          end 
-        end 
+          end
+        end
       end
   end
 
