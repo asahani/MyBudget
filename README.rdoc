@@ -1,19 +1,30 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
+This README documents whatever steps are necessary to get the
 application up and running.
 
-Things you may want to cover:
 
 * Ruby version
+<tt>ruby 2.1.8p440 (2015-12-16 revision 53160) [x86_64-darwin15.0]</tt>
+
+
+* Rails version
+<tt>Rails 4.1.7</tt>
+
+* RVM Setup
+<tt>rvm 2.1.8@mybudget</tt>
+
 
 * System dependencies
 
 * Configuration
 
-* Database creation
+* Database creation & initialization
+<tt>rake db:drop</tt>
+<tt>rake db:create</tt>
+<tt>rake db:migrate</tt>
+<tt>rake db:seed</tt>
 
-* Database initialisation
 
 * How to run the test suite
 
@@ -38,7 +49,7 @@ Import Screen
 ==============
 - edit category
 - Split transactions
-- Add statement balance field in file upload screen to do balance reconcilliation for accounts that dont have balance
+- Add statement balance field in file upload screen to do balance reconciliation for accounts that dont have balance
 
 
 Budget Screen
@@ -87,7 +98,7 @@ Overall
 - Filter Account and Payee drop down like in transaction
 - REVIEW any reconciled transactions should not be deleted
 - REVIEW end to end account balance flow for 2-4 months
-- Any transactions edited or created should have transaction type attribute set. 
+- Any transactions edited or created should have transaction type attribute set.
 	- REVIEW: Check for edit transaction in account transactions
 	- REVIEW: Also check in budget item transactions edit
 
@@ -99,7 +110,7 @@ Good to have
 
 - Transaction - Add payee option in new transaction screen
 - Budget Item - Ability to create budget Items as well.
-- Create Budget - Send scheduled transactions to accounts. 
+- Create Budget - Send scheduled transactions to accounts.
 				---- Create "on budget create" flag to schedule flag. Always uncleared
 - Import Screen - imported account transfer transactions shold be automatically reconciled
 
@@ -111,7 +122,7 @@ Refactor
 DONE
 ==============
 DONE - Income -> Weekly salary sheet
-DONE - Budget Item -> Use flag to complete transaction. Helps to identify remaining expenses. 
+DONE - Budget Item -> Use flag to complete transaction. Helps to identify remaining expenses.
 DONE - Create Account -> Create Payee automatically
 DONE - Create Account -> Create Budget Accounts for Current budget month as well if budget exists and if is_budget_account and if active
 DONE - After create - Budget Account -> set opening balance

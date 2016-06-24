@@ -1,121 +1,137 @@
 <div id="import-preview-pane">
-	<%if ImportedTransaction.all.count < 1%>
-		<div style="font-size: 13px;" class="alert alert-warning" role="alert">
-			<span class="glyphicon glyphicon-exclamation-sign"></span> 
-			The are no transactions to import.
-		</div>
-		<div style="text-align: right;">
-			<%= link_to "Close",import_transactions_cancel_path(), class: "btn btn-default", style: "height: 100%;"%>
-		</div>
-	<%else%>
-		<%non_payee_txns = ImportedTransaction.where("payee_id IS NULL").count%>
-		<%if non_payee_txns > 0%>
-		<div style="font-size: 13px;" class="alert alert-warning" role="alert">
-			<span class="glyphicon glyphicon-exclamation-sign"></span> <strong>Warning!</strong>
-			<%=non_payee_txns%> transactions do not have a Payee. Please add Payees.
-		</div>	
-		<%end%>
-	
-		<div id="import-preview-table-header">
-			<table>
-				<tr>
-					<td style="width: 10%;">Account</td>
-					<td style="width: 10%;">Payee</td>
-					<td style="width: 10%;">Category</td>
-					<td style="width: 7%;">Date</td>
-					<td style="width: 34%;">Description</td>
-					<td style="width: 8%">Credit</td>
-					<td style="width: 8%;">Debit</td>
-					<td style="width: 8%;border-right: none;">Balance</td>
-					<td style="width: 5%;border: none;box-shadow: none;">&nbsp;</td>
-				</tr>
-			</table>
-		</div>	
-		<div id="import-preview-pane-content">
-			<table class="table table-striped">
-				<%ImportedTransaction.all.each do |txn|%>
-					<tr>
-						<td style="width: 10%;padding-left: 5px !important;">
-							<%if txn.payee.nil?%>
-								<span style="color: #a94442;" class="glyphicon glyphicon-exclamation-sign"></span>
-							<%else%>
-								&nbsp;&nbsp;&nbsp;&nbsp;
-							<%end%>
-							&nbsp;<%=txn.account.name unless txn.account.nil?%>
-						</td>
-						<td style="width: 10%;">
-							<%if txn.payee.nil?%>
-								<%=form_tag payees_select_payee_path(imported_txn_id: txn.id),{:remote => true, :id => "import_txn_#{txn.id}"} do%>
-									<%= select_tag "id", options_from_collection_for_select(Payee.all, :id, :name),{ :prompt => "Select Payee...",:onchange => "$('#import_txn_#{txn.id}').submit();" }%>
+  <%if ImportedTransaction.all.count < 1%>
+    <div style="font-size: 13px;" class="alert alert-warning" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign"></span>
+      The are no transactions to import.
+    </div>
+    <div style="text-align: right;">
+      <%= link_to "Close",import_transactions_cancel_path(), class: "btn btn-default", style: "height: 100%;"%>
+    </div>
+  <%else%>
+    <%non_payee_txns = ImportedTransaction.where("payee_id IS NULL").count%>
+    <%if non_payee_txns > 0%>
+    <div style="font-size: 13px;" class="alert alert-warning" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign"></span> <strong>Warning!</strong>
+      <%=non_payee_txns%> transactions do not have a Payee. Please add Payees.
+    </div>
+    <%end%>
+
+    <div id="import-preview-table-header">
+      <table>
+        <tr>
+          <td style="width: 10%;">Account</td>
+          <td style="width: 10%;">Payee</td>
+          <td style="width: 10%;">Category</td>
+          <td style="width: 7%;">Date</td>
+          <td style="width: 34%;">Description</td>
+          <td style="width: 8%">Credit</td>
+          <td style="width: 8%;">Debit</td>
+          <td style="width: 8%;border-right: none;">Balance</td>
+          <td style="width: 5%;border: none;box-shadow: none;">&nbsp;</td>
+        </tr>
+      </table>
+    </div>
+    <div id="import-preview-pane-content">
+      <table class="table table-striped">
+        <%ImportedTransaction.all.each do |txn|%>
+          <tr>
+            <td style="width: 10%;padding-left: 5px !important;">
+              <%if txn.payee.nil?%>
+                <span style="color: #a94442;" class="glyphicon glyphicon-exclamation-sign"></span>
+              <%else%>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+              <%end%>
+              &nbsp;<%=txn.account.name unless txn.account.nil?%>
+            </td>
+            <td style="width: 10%;">
+              <%if txn.payee.nil?%>
+                <%=form_tag payees_select_payee_path(imported_txn_id: txn.id),{:remote => true, :id => "import_txn_#{txn.id}"} do%>
+                  <%= select_tag "id", options_from_collection_for_select(Payee.all, :id, :name),{ :prompt => "Select Payee...",:onchange => "$('#import_txn_#{txn.id}').submit();" }%>
+                <%end%>
+              <%else%>
+                <%=txn.payee.name%>
+              <%end%>
+            </td>
+            <td style="width: 10%;">
+							<div id="imported_txn_category_row_<%=txn.id%>">
+								<%unless txn.category.nil?%>
+									<table style="background-color: transparent !important;">
+										<tr>
+											<td style="width: 10%;padding:0px !important;">
+												<div class="actions">
+													<%= link_to raw("<span class='glyphicon glyphicon-pencil' style='color: #999;' aria-hidden='true'></span>"),
+				                   edit_transaction_category_path(id: txn.category.id,imported_txn_id: txn.id), {:remote => true} %>
+												</div>
+											</td>
+											<td style="width: 90%; padding:0px !important;">&nbsp;<%=txn.category.name%></td>
+										</tr>
+									</table>
 								<%end%>
-							<%else%>
-								<%=txn.payee.name%>
-							<%end%>	
-						</td>
-						<td style="width: 10%;"><%=txn.category.name unless txn.category.nil?%></td>
-						<td style="width: 7%;"><%=txn.txn_date%></td>
-						<td style="width: 34%;"><%=txn.description%></td>
-						<td style="width: 8%;text-align: right;"><%=number_to_currency(txn.credit, precision: 2)%></td>
-						<td style="width: 8%;text-align: right;"><%=number_to_currency(txn.debit, precision: 2)%></td>
-						<td style="width: 8%;border-right: none;text-align: right;"><%=number_to_currency(txn.balance, precision: 2)%></td>
-						<td style="width: 5%;">
-							<div class="actions">
-								<%if txn.payee.nil?%>
-									<%= link_to raw("<span class='glyphicon glyphicon-user' style='color: #999;' aria-hidden='true'></span>"),
-								 	new_payee_path(imported_txn_id: txn.id,called_from_import_txn: true), {:remote => true, class: 'new_payee-modal-link'} %>
-								<%end%>
-								<%= link_to raw("<span class='glyphicon glyphicon-transfer' style='color: #999;' aria-hidden='true'></span>"),
-							 	transfer_imported_transaction_path(txn.id), {:remote => true, class: 'new_payee-modal-link'} %>
-								<%= link_to raw("<span class='glyphicon glyphicon-remove' style='color: #999;' aria-hidden='true'></span>"), destroy_imported_transaction_path(txn.id), method: :delete, data: { confirm: 'Are you sure?' , :remote => true}%>
 							</div>
-						</td>
-					</tr>
-				<%end%>
-			</table>	
-		</div>	
-		<div id="import-preview-footer">
-			<div class="col-md-1" style="margin-left: -10px;">
-				<%= link_to "Cancel",import_transactions_cancel_path(), class: "btn btn-default", style: "height: 100%;"%>
-			</div>
-			<div class="col-md-10">
-				<div id="import-totals-content">
-					<table style="width:100%;height: 100%;">
-						<tr>
-							<td style="width: 15%;">Credit</td>
-							<td>&nbsp;</td>
-							<td style="width: 15%;">Debit</td>
-							<td>&nbsp;</td>
-							<td style="width: 15%">Balance</td>
-							<td style="border-left: 1px dotted #333;">&nbsp;</td>
-							<td style="width: 15%;">Due Amount</td>
-							<td>&nbsp;</td>
-							<td style="width: 15%;">Statement Balance</td>
-							<td>&nbsp;</td>
-							<td style="width: 15%;">Reconciled Amount</td>
-						</tr>	
-						<tr style="font-size: 14px;">
-							<td><%=number_to_currency(ImportedTransaction.all.sum(:credit), precision: 2)%></td>
-							<td>-</td>
-							<td><%=number_to_currency(ImportedTransaction.all.sum(:debit), precision: 2)%></td>
-							<td>=</td>
-							<td><%=number_to_currency(ImportedTransaction.all.sum(:debit) +ImportedTransaction.all.sum(:credit) , precision: 2)%></td>
-							<td style="border-left: 1px dotted #333;">&nbsp;</td>
-							<td><%=number_to_currency(ImportedTransaction.all.sum(:debit) +ImportedTransaction.all.sum(:credit) , precision: 2)%></td>
-							<td>-</td>
-							<td><%=number_to_currency(ImportedTransaction.first.balance , precision: 2)%></td>
-							<td>=</td>
-							<td>
-								<%unless ImportedTransaction.first.balance.nil?%>
-								<%=number_to_currency((ImportedTransaction.all.sum(:debit) +ImportedTransaction.all.sum(:credit))- ImportedTransaction.first.balance, precision: 2)%>
-								<%end%>
-							</td>
-						</tr>	
-					</table>	
-				</div>
-			</div>
-			<div class="col-md-1">
-				<%= link_to "Import",import_transactions_import_path(), class: "btn btn-primary", style: "height: 100%;"%>
-			</div>
-		</div>
-	<%end%>
-</div>	
+            </td>
+            <td style="width: 7%;"><%=txn.txn_date%></td>
+            <td style="width: 34%;"><%=txn.description%></td>
+            <td style="width: 8%;text-align: right;"><%=number_to_currency(txn.credit, precision: 2)%></td>
+            <td style="width: 8%;text-align: right;"><%=number_to_currency(txn.debit, precision: 2)%></td>
+            <td style="width: 8%;border-right: none;text-align: right;"><%=number_to_currency(txn.balance, precision: 2)%></td>
+            <td style="width: 5%;">
+              <div class="actions">
+                <%if txn.payee.nil?%>
+                  <%= link_to raw("<span class='glyphicon glyphicon-user' style='color: #999;' aria-hidden='true'></span>"),
+                   new_payee_path(imported_txn_id: txn.id,called_from_import_txn: true), {:remote => true, class: 'new_payee-modal-link'} %>
+                <%end%>
+                <%= link_to raw("<span class='glyphicon glyphicon-transfer' style='color: #999;' aria-hidden='true'></span>"),
+                 transfer_imported_transaction_path(txn.id), {:remote => true, class: 'new_payee-modal-link'} %>
+                <%= link_to raw("<span class='glyphicon glyphicon-remove' style='color: #999;' aria-hidden='true'></span>"), destroy_imported_transaction_path(txn.id), method: :delete, data: { confirm: 'Are you sure?' , :remote => true}%>
+              </div>
+            </td>
+          </tr>
+        <%end%>
+      </table>
+    </div>
+    <div id="import-preview-footer">
+      <div class="col-md-1" style="margin-left: -10px;">
+        <%= link_to "Cancel",import_transactions_cancel_path(), class: "btn btn-default", style: "height: 100%;"%>
+      </div>
+      <div class="col-md-10">
+        <div id="import-totals-content">
+          <table style="width:100%;height: 100%;">
+            <tr>
+              <td style="width: 15%;">Credit</td>
+              <td>&nbsp;</td>
+              <td style="width: 15%;">Debit</td>
+              <td>&nbsp;</td>
+              <td style="width: 15%">Balance</td>
+              <td style="border-left: 1px dotted #333;">&nbsp;</td>
+              <td style="width: 15%;">Due Amount</td>
+              <td>&nbsp;</td>
+              <td style="width: 15%;">Statement Balance</td>
+              <td>&nbsp;</td>
+              <td style="width: 15%;">Reconciled Amount</td>
+            </tr>
+            <tr style="font-size: 14px;">
+              <td><%=number_to_currency(ImportedTransaction.all.sum(:credit), precision: 2)%></td>
+              <td>-</td>
+              <td><%=number_to_currency(ImportedTransaction.all.sum(:debit), precision: 2)%></td>
+              <td>=</td>
+              <td><%=number_to_currency(ImportedTransaction.all.sum(:debit) +ImportedTransaction.all.sum(:credit) , precision: 2)%></td>
+              <td style="border-left: 1px dotted #333;">&nbsp;</td>
+              <td><%=number_to_currency(ImportedTransaction.all.sum(:debit) +ImportedTransaction.all.sum(:credit) , precision: 2)%></td>
+              <td>-</td>
+              <td><%=number_to_currency(ImportedTransaction.first.balance , precision: 2)%></td>
+              <td>=</td>
+              <td>
+                <%unless ImportedTransaction.first.balance.nil?%>
+                <%=number_to_currency((ImportedTransaction.all.sum(:debit) +ImportedTransaction.all.sum(:credit))- ImportedTransaction.first.balance, precision: 2)%>
+                <%end%>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-1">
+        <%= link_to "Import",import_transactions_import_path(), class: "btn btn-primary", style: "height: 100%;"%>
+      </div>
+    </div>
+  <%end%>
+</div>

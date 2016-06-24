@@ -1,0 +1,3 @@
+<%=form_tag categories_select_transaction_category_path(imported_txn_id: @txn.id),{:remote => true, :id => "import_txn_category_#{@txn.id}"} do%>
+  <%= select_tag "id", options_from_collection_for_select(Category.all, :id, :name,@category.id),{ :prompt => "Select Category...",:onchange => "$('#import_txn_category_#{@txn.id}').submit();" }%>
+<%end%>

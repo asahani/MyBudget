@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-  before_action :set_category, only: [:show, :edit, :update, :destroy]
+  before_action :set_category, only: [:show, :edit, :update, :destroy,:edit_transaction_category,:select_transaction_category]
 
   # GET /categories
   # GET /categories.json
@@ -58,6 +58,20 @@ class CategoriesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to categories_url, notice: 'Category was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def edit_transaction_category
+    @txn = ImportedTransaction.find(params[:imported_txn_id])
+  end
+
+  def select_transaction_category
+    respond_to do |format|
+      unless params[:imported_txn_id].nil?
+        imported_txn = ImportedTransaction.find(params[:imported_txn_id])
+        imported_txn.update(category_id: @category.id)
+        format.js { render '/import_transactions/preview'}
+      end
     end
   end
 

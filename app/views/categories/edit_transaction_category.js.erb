@@ -1,0 +1,2 @@
+var tr_id = "#imported_txn_category_row_<%= escape_javascript@txn.id.to_s%>"
+$(tr_id).replaceWith("<%= escape_javascript(render '/categories/edit_transaction_category',:locals => {:obj => @category}) %>");

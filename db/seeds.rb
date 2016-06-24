@@ -79,10 +79,10 @@ Account.create!(name: 'NAB Offset', initial_balance: 300000.00, balance: 300000.
 Account.create!(name: 'Comsec', initial_balance: 45000.00,balance: 45000.00, account_type: 4,budget_account: false)
 Account.create!(name: 'GO Mastercard', initial_balance: -3500.00, balance: -3500.00, account_type: 5,budget_account: false)
 
-Payee.create!(name: 'Telstra', description: 'Telstra', category_id: 18)
-Payee.create!(name: 'MYKI', description: 'MYKI.                    DOCKLANDS', category_id: 25) 
-Payee.create!(name: 'Itunes Apps', description: 'ITUNES MUSIC STSYDNEY', category_id: 26) 
-Payee.create!(name: 'Safeway', description: 'SAFEWAY', category_id: 10) 
+Payee.create!(name: 'Telstra', description: 'Telstra', category_id: 19)
+Payee.create!(name: 'MYKI', description: 'MYKI.                    DOCKLANDS', category_id: 26)
+Payee.create!(name: 'Itunes Apps', description: 'ITUNES MUSIC STSYDNEY', category_id: 27)
+Payee.create!(name: 'Safeway', description: 'SAFEWAY', category_id: 10)
 
 PayeeDescription.create!(description: 'SAFEWAY 3128 DONCASTER VIDONCASTER', payee: Payee.find_by_name("Safeway"))
 
