@@ -8,8 +8,9 @@
 		<%= form_tag import_transactions_process_file_path, multipart: true do %>
 		<div class="modal-body">
 			<%= hidden_field_tag :budget_id, @budget.id%>
-			<%= select_tag :account_id, options_from_collection_for_select(Account.all, :id, :name)%>
-		    <%= file_field_tag :file %>
+			Import for Account: <%= select_tag :account_id, options_from_collection_for_select(Account.all, :id, :name)%>
+			Balance Due: <%= number_field_tag :import_balance_due, nil, :step => 0.01 %>
+		  IMport File: <%= file_field_tag :file %>
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

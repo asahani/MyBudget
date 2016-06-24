@@ -73,7 +73,7 @@ Category.create!(name: 'Shoes', active: true, budget_amount: 0.00,master_categor
 Account.create!(name: 'Citi Shruti', initial_balance: 0.00, balance: 0.00, account_type: 0,budget_account: true)
 Account.create!(name: 'Citi Aman', initial_balance: 0.00, balance: 0.00, account_type: 0,budget_account: true)
 Account.create!(name: 'Citi Savings', initial_balance: 12000.00, balance: 12000.00, account_type: 1,budget_account: true)
-Account.create!(name: 'Citi Platinum', initial_balance: 0.00, balance: 0.00, account_type: 5,budget_account: true,is_debit_negetive: false,import_txn_date_col: 0,import_txn_amount_col: 1, import_txn_description_col: 5,import_txn_balance_col: 6,import_txn_date_format: '%e-%b-%y')
+Account.create!(name: 'Citi Platinum', initial_balance: 0.00, balance: 0.00, account_type: 5,budget_account: true,is_debit_negetive: true,import_txn_date_col: 0,import_txn_amount_col: 1, import_txn_description_col: 5,import_txn_balance_col: 6,import_txn_date_format: '%e-%b-%y')
 Account.create!(name: 'Amex Aman', initial_balance: 0.00, balance: 0.00, account_type: 5,budget_account: true,is_debit_negetive: false,import_txn_date_col: 0,import_txn_amount_col: 1, import_txn_description_col: 2,import_txn_date_format: '%d/%m/%Y')
 Account.create!(name: 'NAB Offset', initial_balance: 300000.00, balance: 300000.00,balance: 300000.00, account_type: 2,budget_account: false)
 Account.create!(name: 'Comsec', initial_balance: 45000.00,balance: 45000.00, account_type: 4,budget_account: false)

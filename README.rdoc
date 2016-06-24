@@ -47,9 +47,6 @@ Main Screen
 
 Import Screen
 ==============
-- edit category
-- Split transactions
-- Add statement balance field in file upload screen to do balance reconciliation for accounts that dont have balance
 
 
 Budget Screen
@@ -113,6 +110,7 @@ Good to have
 - Create Budget - Send scheduled transactions to accounts.
 				---- Create "on budget create" flag to schedule flag. Always uncleared
 - Import Screen - imported account transfer transactions shold be automatically reconciled
+- Import Screen - Split transactions
 
 Refactor
 --------
@@ -141,3 +139,5 @@ DONE - Transactions - Manual transactions should have the option of being cleare
 DONE - Import -Import summary screen with different budget summaries to assist with payments and categories
 DONE - Reconciliation - Reconciled transactions cant be deleted
 DONE - Transfer to account in CC import should have the account drop down disabled.
+DONE - Imported Transactions - edit category
+DONE - Imported Transactions - Add statement balance field in file upload screen to do balance reconciliation for accounts that dont have balance
