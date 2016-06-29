@@ -1,4 +1,4 @@
-== README
+README
 
 This README documents whatever steps are necessary to get the
 application up and running.
@@ -39,56 +39,63 @@ Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
 
 TODO:
-Main Screen
+Main
 ==============
-- Create new Payee if it does not exist in dropdown
-- Setup screen
+- Monthly actions feature which tells you what to do at the start of the month
 - Admin and Settings screen
+  - Edit payee on edit of account
+  - when non-active on account edit then make payee non-active as well
 
-Import Screen
+Good to have
 ==============
+- Budget Items one-click pay (by adding default payee etc to budget item)
+- Feature: Transactions: Scheduled Transactions
+  - Auto created Transactions are "not Cleared/reconciled"
+  - Create Budget: Send scheduled transactions to accounts.
+    - Create "on budget create" flag to schedule flag. Always uncleared
+- Transaction - Add payee option in new transaction screen
+- Budget Item - Ability to create budget Items as well.
+- Import Screen - imported account transfer transactions should be automatically reconciled
+- Import Screen - Split transactions
+- Different account type features
+  - Feature: Interest free card and mortgage account balance reduction feature on payments
+  - Mortgage offset as a savings account
+  - Account view
+- Setup screen
 
+RE-DESIGN LAYOUT
+=================
+- Feature: Badges
+- Dashboard
+  - YTD Summary
+  - Monthly dashboard
+    - Upcoming Events
 
-Budget Screen
+- Reports
+  - Financial Summary
+  - Todo's
+  - Moneywiz reports / budget view
+  - Savings target % + graph of trend
+  ---- =================52%
+       =============35%
+       ============================85%
+
+- Comments
+  - Like ToDo's
+
+- Budget
+  - Top level balances
+  - Separate credit card balances view
+
+- Reconciliation
+  - Way of indicating that budget needs reconciliation
+  - Helps to know what payments need to be made to the bank
+
+Refactor
 =============
-- Top level balances
-- Separate credit card balances view
+- active attribute in category is used for active as well as for differentiating system categories. Create another attribute called is_system to separate the two concerns
 
-
-EDIT ACCOUNT
-=============
-- Edit payee on edit of account
-- when non-active on edit then make payee non-active as well
-
-Reconciliation
-============
-- Way of indicating that budget needs reconciliation
-- Auto created are "not Cleared/reconciled"
-- Helps to know what payments need to be made to the bank
-
-
-Dashboard
-=============
-Months - Upcoming Events
-Report - Todo's
-
-Comments
-=============
-- Like TODO's
-
-Create Account
-=============
-- Mortgage offset as a savings account
-
-Reporting
-===========
-- Moneywiz reports / budget view
-- Savings target % + graph of trend
----- =================52%
-     =============35%
-     ============================85%
-
-Overall
+Pre-Golive Review
 =============
 - check new income transaction
 - check account transfer from import transfer screen. use the testimport.csv on desktop
@@ -99,45 +106,26 @@ Overall
 	- REVIEW: Check for edit transaction in account transactions
 	- REVIEW: Also check in budget item transactions edit
 
-Good to have
-==============
-- Feature - Interest free card and mortgage account balance reduction feature on payments
-- Feature - Badges
-- Feature - Transaction - Scheduled Transactions
-
-- Transaction - Add payee option in new transaction screen
-- Budget Item - Ability to create budget Items as well.
-- Create Budget - Send scheduled transactions to accounts.
-				---- Create "on budget create" flag to schedule flag. Always uncleared
-- Import Screen - imported account transfer transactions shold be automatically reconciled
-- Import Screen - Split transactions
-
-Refactor
---------
-- active attribute in category is used for active as well as for differentiating system categories. Create another attribute called is_system to seperate the two concerns
-
-
 DONE
 ==============
-DONE - Income -> Weekly salary sheet
-DONE - Budget Item -> Use flag to complete transaction. Helps to identify remaining expenses.
-DONE - Create Account -> Create Payee automatically
-DONE - Create Account -> Create Budget Accounts for Current budget month as well if budget exists and if is_budget_account and if active
-DONE - After create - Budget Account -> set opening balance
-				-- get previous budgets opening balance plus current balance and set as opening balance
-				-- if previous budget is null and no budgets with account prior to start of current budget date then use initial account balance
-				-- else use opening balance plus current balance of last budget account found
-DONE - After update - Budget Account -> update future budget accounts
-				-- get all future budgets in order
-				-- use "set opening balance" method above for all future budget accounts recursively
-				-- update parent account balance
-DONE - Credit Income to accounts (should happen automatically now. Only check required.)
-DONE - Transactions - Refactor savings and expenses so that they act like account transfers with appropriate debits and credits from accounts and payees.
-DONE - Transactions - now have to consider payee type and credit/debit accounts accordingly
-DONE - Transactions - Fix list of transactions for each budget account. Calculations wrong and uncleared wrong and also the payee debit transactions are not shown
-DONE - Transactions - Manual transactions should have the option of being cleared or uncleared
-DONE - Import -Import summary screen with different budget summaries to assist with payments and categories
-DONE - Reconciliation - Reconciled transactions cant be deleted
-DONE - Transfer to account in CC import should have the account drop down disabled.
-DONE - Imported Transactions - edit category
-DONE - Imported Transactions - Add statement balance field in file upload screen to do balance reconciliation for accounts that dont have balance
+- Income -> Weekly salary sheet
+- Budget Item -> Use flag to complete transaction. Helps to identify remaining expenses.
+- Create Account -> Create Payee automatically
+- Create Account -> Create Budget Accounts for Current budget month as well if budget exists and if is_budget_account and if active
+- After create - Budget Account -> set opening balance
+	- get previous budgets opening balance plus current balance and set as opening balance
+	- if previous budget is null and no budgets with account prior to start of current budget date then use initial account balance else use opening balance plus current balance of last budget account found
+- After update - Budget Account -> update future budget accounts
+	- get all future budgets in order
+	- use "set opening balance" method above for all future budget accounts recursively
+	- update parent account balance
+- Credit Income to accounts (should happen automatically now. Only check required.)
+- Transactions - Refactor savings and expenses so that they act like account transfers with appropriate debits and credits from accounts and payees.
+- Transactions - now have to consider payee type and credit/debit accounts accordingly
+- Transactions - Fix list of transactions for each budget account. Calculations wrong and uncleared wrong and also the payee debit transactions are not shown
+- Transactions - Manual transactions should have the option of being cleared or uncleared
+- Import -Import summary screen with different budget summaries to assist with payments and categories
+- Reconciliation - Reconciled transactions cant be deleted
+- Transfer to account in CC import should have the account drop down disabled.
+- Imported Transactions - edit category
+- Imported Transactions - Add statement balance field in file upload screen to do balance reconciliation for accounts that dont have balance
