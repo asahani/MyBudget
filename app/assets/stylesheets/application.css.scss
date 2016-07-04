@@ -12,7 +12,8 @@
  *
  *= require jquery-ui
  *= require_tree .
- *= stub "admin"
+ *= stub admin
+ *= stub dashboard
  *= require_self
  */
 @import "bootstrap-sprockets";

@@ -1,199 +1,34 @@
 /*
- * Base structure
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require jquery-ui
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/fontawesome/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/summernote/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/codemirror/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/nvd3/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/mcustomscrollbar/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/fullcalendar/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/blueimp/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/rickshaw/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/dropzone/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/introjs/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/animate/.
+ *= require atlant/rtl
+ *= require atlant/theme-dark
+ *= require_self
  */
+@import "bootstrap-sprockets";
+@import "bootstrap";
 
-/* Move down content because we have a fixed navbar that is 50px tall */
 body {
-/*  padding-top: 50px; use only if you use top-navbar*/
-	background-color: #2896C9 !important;
-/*	background-color: #222 !important;*/
-	font-family: 'Open Sans';
-	font-weight: 300;
-	color: #505458;
-}
-
-
-/*
- * Global add-ons
- */
-
-.sub-header {
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
-}
-
-/*
- * Top navigation
- * Hide default border to remove 1px line.
- */
-.navbar-fixed-top {
-  border: 0;
-}
-
-/*
- * Main content
- */
-
-.main {
-  padding: 20px;
-}
-
-#main-wrapper {
-  padding-left: 250px;
-/*  margin-top: 10px;*/
-  transition: all 0.4s ease 0s;
-}
-
-@media (min-width: 768px) {
-  .main {
-    padding-right: 40px;
-    padding-left: 40px;
-  }
-}
-
-.main .page-header {
-  margin-top: 0;
-}
-
-/* Sidebar navigation */
-
-#sidebar-wrapper {
-	overflow-x: hidden;
-	overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-/*	background-color: #f5f5f5;*/
-	background-color: #2896C9; 
-/*	background-color: #222 !important;*/
-	border-right: 1px solid #2896C9;
-	margin-left: -250px;
-	left: 250px;
-	width: 250px;
-	position: fixed;
-	height: 100%;
-	overflow-y: auto;
-	z-index: 1000;
-	transition: all 0.4s ease 0s;
-}
-
-.sidebar-panel {
-  margin: 0px 0px 10px 10px;
-  padding: 0px 10px 10px 15px;
-  top: 0;
-  background-color: #116D9F;
-  border-radius: 5px;
-}
-
-.nav-sidebar {
-  margin-right: -20px;
-  margin-bottom: 20px;
-  margin-left: -15px;
-}
-.nav-sidebar > li > a {
-	margin: 1px;
-  padding-right: 0px;
-  padding-left: 0px;
-  color: #FFF;
-}
-
-.nav-sidebar > .active > a,
-.nav-sidebar > .active > a:hover,
-.nav-sidebar > .active > a:focus {
-  color: #FFF;
-  background-color: #083E68 !important;
-
-}
-
-.nav-sidebar > li > a.collapsed > .caret {
-	border-left: 4px solid #FFF; 
-	border-right: 0; 
-	border-top: 4px solid transparent; 
-	border-bottom: 4px solid transparent;
-}
-
-.nav-sidebar .inner-nav {
-  	margin-left: 1px;
-	margin-right: 1px;
-}
-.nav-sidebar .inner-nav > li{
-	height: 35px;
-}
-
-.nav-sidebar .inner-nav > li > a {
-  	padding: 5px 15px 5px 20px;
-	height: 100%;
-	font-size: 12px;
-}
-
-.sidebar-footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 40px;
-  background: #101010;
-  padding-top: 10px;
-  border-bottom: 1px solid #101010;
-
-}
-
-@media (max-width:767px) {
-
-    #wrapper {
-      padding-left: 0;
-    }
-	#main-wrapper {
-      padding-left: 0;
-    }
-
-    #sidebar-wrapper {
-      display: none;
-    }
-
-	.budget-nav {
-      display: none;
-    }
-    #wrapper.active {
-      position: relative;
-      left: 230px;
-    }
-
-    #wrapper.active #sidebar-wrapper {
-      left: 250px;
-      width: 250px;
-      transition: all 0.4s ease 0s;
-    }
-
-}
-
-/*
- * Main Content Panel
- */
-
-.page-content {
-}
-
-#page-content-wrapper {
-	background-color: #2896C9;
-}
-
-/*
- * Placeholder dashboard ideas
- */
-
-.placeholders {
-  margin-bottom: 30px;
-  text-align: center;
-}
-.placeholders h4 {
-  margin-bottom: 0;
-}
-.placeholder {
-  margin-bottom: 20px;
-}
-.placeholder img {
-  display: inline-block;
-  border-radius: 50%;
-}
-
-.alert {
-	margin-bottom: 10px !important;
+	font-size: small;
 }
