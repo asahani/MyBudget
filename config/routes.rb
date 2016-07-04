@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'admin/index'
+
   get 'import_transactions/open_file'
 
   post 'import_transactions/process_file'

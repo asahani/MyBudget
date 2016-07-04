@@ -14,11 +14,13 @@
 //= require jquery-ui
 //= require jquery_ujs
 //= require turbolinks
-//= require highcharts/highcharts                                                           
-//= require highcharts/highcharts-more                                                         
+//= require highcharts/highcharts
+//= require highcharts/highcharts-more
 //= require highcharts/highstock
 //= require bootstrap-sprockets
 //= require_tree .
+//= require_self
+
 
 $(document).ready(function() {
   var clickOnBudgetModal = function(){
@@ -26,7 +28,7 @@ $(document).ready(function() {
       $('#editBudgetItemModal').modal('show');
     });
   }
-  
+
   clickOnBudgetModal();
 
   var clickOnNewTransactionModal = function(){
@@ -34,9 +36,7 @@ $(document).ready(function() {
       $('#newTransactionModal').modal('show');
     });
   }
-  
+
   clickOnNewTransactionModal();
 
 });
-
-
