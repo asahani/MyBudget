@@ -25,15 +25,19 @@
  *= require_tree ../../../vendor/assets/stylesheets/atlant/jstree/.
  *= require_tree ../../../vendor/assets/stylesheets/atlant/mcustomscrollbar/.
  *= require_tree ../../../vendor/assets/stylesheets/atlant/nvd3/.
- *= require_tree ../../../vendor/assets/stylesheets/atlant/rickshaw/.
  *= require_tree ../../../vendor/assets/stylesheets/atlant/summernote/.
  *= require atlant/rtl
- *= require atlant/theme-default
  *= require_self
  */
-@import "bootstrap-sprockets";
-@import "bootstrap";
 
-body {
-	font-size: small;
+ @import "bootstrap-sprockets";
+ @import "bootstrap";
+
+.table.table-actions td {
+	padding: 5px 8px!important;
+}
+
+.alert {
+	width: 99%!important;
+	margin: 10px;
 }

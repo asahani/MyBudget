@@ -1,10 +1,11 @@
 class MasterCategoriesController < ApplicationController
+  layout "admin"
   before_action :set_master_category, only: [:show, :edit, :update, :destroy]
 
   # GET /master_categories
   # GET /master_categories.json
   def index
-    @master_categories = MasterCategory.all
+    @master_categories = MasterCategory.all.user_editable
   end
 
   # GET /master_categories/1
@@ -42,7 +43,7 @@ class MasterCategoriesController < ApplicationController
   def update
     respond_to do |format|
       if @master_category.update(master_category_params)
-        format.html { redirect_to @master_category, notice: 'Master category was successfully updated.' }
+        format.html { redirect_to master_categories_url, notice: 'Master category was successfully updated.' }
         format.json { render :show, status: :ok, location: @master_category }
       else
         format.html { render :edit }

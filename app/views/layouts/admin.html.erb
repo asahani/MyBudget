@@ -358,24 +358,31 @@
                     <!-- END LANG BAR -->
                 </ul>
                 <!-- END X-NAVIGATION VERTICAL -->
-
-                <!-- START BREADCRUMB -->
-                <ul class="breadcrumb">
-                    <li><a href="#">Home</a></li>
-                    <li class="active">Dashboard</li>
-                </ul>
-                <!-- END BREADCRUMB -->
-
-                <!-- PAGE CONTENT WRAPPER -->
-                <div class="page-content-wrap">
-                  <%=yield%>
-                </div>
-                <!-- END PAGE CONTENT WRAPPER -->
+                <%=yield%>
             </div>
             <!-- END PAGE CONTENT -->
         </div>
         <!-- END PAGE CONTAINER -->
-
+        
+        <!-- MESSAGE BOX-->
+        <div class="message-box animated fadeIn" data-sound="alert" id="mb-remove-row">
+            <div class="mb-container">
+                <div class="mb-middle">
+                    <div class="mb-title"><span class="fa fa-times"></span> Remove <strong>Data</strong> ?</div>
+                    <div class="mb-content">
+                        <p>Are you sure you want to remove this row?</p>
+                        <p>Press Yes if you sure.</p>
+                    </div>
+                    <div class="mb-footer">
+                        <div class="pull-right">
+                            <button class="btn btn-success btn-lg mb-control-yes">Yes</button>
+                            <button class="btn btn-default btn-lg mb-control-close">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END MESSAGE BOX-->
         <!-- MESSAGE BOX-->
         <div class="message-box animated fadeIn" data-sound="alert" id="mb-signout">
             <div class="mb-container">
@@ -400,5 +407,6 @@
         <!-- <audio id="audio-alert" src="audio/alert.mp3" preload="auto"></audio>
         <audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio> -->
         <%= javascript_include_tag 'atlant/settings', 'data-turbolinks-track'  => true %>
+        <%= stylesheet_link_tag    'atlant/theme-default', media: 'all', 'data-turbolinks-track' => true %>
     </body>
 </html>

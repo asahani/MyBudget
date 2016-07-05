@@ -21,13 +21,12 @@
 //= require atlant/plugins/morris/raphael-min
 //= require atlant/plugins/morris/morris.min
 //= require atlant/plugins/rickshaw/d3.v3
-//= require atlant/plugins/rickshaw/rickshaw.min
 //= require atlant/plugins/jvectormap/jquery-jvectormap-1.2.2.min
 //= require atlant/plugins/jvectormap/jquery-jvectormap-world-mill-en
 //= require atlant/plugins/bootstrap/bootstrap-datepicker
 //= require atlant/plugins/owl/owl.carousel.min
 //= require atlant/plugins/moment.min
 //= require atlant/plugins/daterangepicker/daterangepicker
+//= require atlant/demo_tables
 //= require atlant/plugins
 //= require atlant/actions
-//= require atlant/demo_dashboard
