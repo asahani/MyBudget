@@ -1,10 +1,11 @@
 class CategoriesController < ApplicationController
+  layout "admin", only: [:index, :new, :edit]
   before_action :set_category, only: [:show, :edit, :update, :destroy,:edit_transaction_category,:select_transaction_category]
 
   # GET /categories
   # GET /categories.json
   def index
-    @categories = Category.where('active = ?',true)
+    @categories = Category.all.non_system
   end
 
   # GET /categories/1

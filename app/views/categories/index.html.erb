@@ -1,29 +1,75 @@
-<h1>Listing categories</h1>
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb push-down-0">
+  <li><%=link_to "Admin",admin_index_path -%></li>
+  <li class="active">Categories</li>
+</ul>
+<!-- END BREADCRUMB -->
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Active</th>
-      <th>Budget amount</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<div class="content-frame">
 
-  <tbody>
-    <% @categories.each do |category| %>
-      <tr>
-        <td><%= category.name %></td>
-        <td><%= category.display %></td>
-        <td><%= category.budget_amount %></td>
-        <td><%= link_to 'Show', category %></td>
-        <td><%= link_to 'Edit', edit_category_path(category) %></td>
-        <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <!-- START PAGE HEAD -->
+  <div class="content-frame-top">
+    <div class="page-title">
+      <h2><span class="fa fa-bookmark"></span> Categories</h2>
+    </div>
+    <div class="pull-right">
+      <%= link_to raw("<span class='fa fa-plus'></span> New"), new_category_path, class: "btn btn-success btn-rounded" %>
+    </div>
+  </div>
+  <!-- END PAGE HEAD -->
 
-<br>
+  <%= render 'right_content_panel' %>
 
-<%= link_to 'New Category', new_category_path %>
+  <div class="content-frame-body content-frame-body-left" style="height: 846px;">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">List of Categories</h3>
+        <ul class="panel-controls">
+          <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+          <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+          <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+        </ul>
+      </div>
+      <div class="panel-body panel-body-table">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-actions table-hover">
+            <thead>
+                <tr>
+                    <th width="50">id</th>
+                    <th>name</th>
+                    <th width="100">Budget</th>
+                    <th width="100">Master Catgory</th>
+                    <th width="100">Mandatory</th>
+                    <th width="100">Budgeted</th>
+                    <th width="100">Misc</th>
+                    <th width="100">Savings</th>
+                    <th width="120">actions</th>
+                </tr>
+            </thead>
+            <tbody>
+              <% @categories.each_with_index do |category,index| %>
+                <tr id="trow_<%=index+1-%>">
+                  <td class="text-center"><%=index+1-%></td>
+                  <td><%= category.name %></td>
+                  <td><%= category.budget_amount %></td>
+                  <td><%= category.master_category.name %></td>
+                  <td><%= category.mandatory %></td>
+                  <td><%= category.budgeted %></td>
+                  <td><%= category.miscellaneous %></td>
+                  <td><%= category.savings %></td>
+                  <td>
+                    <%= link_to raw("<span class='fa fa-pencil'></span>"), edit_category_path(category), :class=>"btn btn-default btn-rounded btn-condensed btn-sm" %>
+                    <%= link_to raw("<span class='fa fa-times'></span>"), category, class: "btn btn-danger btn-rounded btn-condensed btn-sm", method: :delete, data: { confirm: 'Are you sure?'}, onClick: "delete_row('trow_#{index+1}');"%>
+                 </td>
+               </tr>
+              <% end %>
+            </tbody>
+          </table>
+      </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
