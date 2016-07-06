@@ -5,7 +5,7 @@ class MasterCategoriesController < ApplicationController
   # GET /master_categories
   # GET /master_categories.json
   def index
-    @master_categories = MasterCategory.all.user_editable
+    @master_categories = MasterCategory.all.non_system
   end
 
   # GET /master_categories/1
@@ -29,7 +29,7 @@ class MasterCategoriesController < ApplicationController
 
     respond_to do |format|
       if @master_category.save
-        format.html { redirect_to redirect_to master_categories_url, notice: 'Master category was successfully created.' }
+        format.html { redirect_to master_categories_url, notice: 'Master category was successfully created.' }
         format.json { render :show, status: :created, location: @master_category }
       else
         format.html { render :new }

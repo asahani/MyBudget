@@ -7,6 +7,6 @@ class MasterCategory < ActiveRecord::Base
   ##################################
   # Scoped Methods
   ##################################
-  scope :user_editable, -> { where('display = ?',true)}
+  scope :non_system, -> { where('display = ?',true)}
 
 end

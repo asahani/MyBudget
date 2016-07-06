@@ -1,37 +1,35 @@
 <!-- START ALERTS -->
-<% if flash[:error]%>
+<% if @master_category.errors.any? %>
   <div class="alert alert-danger" role="alert">
       <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <strong>Warning!</strong> <%= flash[:error]%>
-  </div>
-<%end%>
-<% if flash[:notice]%>
-  <div class="alert alert-success" role="alert">
-      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <strong>Success!</strong> <%= flash[:notice]%>
-  </div>
-<%end%>
-<!-- END ALERTS -->
-
-<%= form_for(@master_category) do |f| %>
-  <% if @master_category.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@master_category.errors.count, "error") %> prohibited this master_category from being saved:</h2>
-
+      <strong>Warning!</strong> <%= pluralize(@master_category.errors.count, "error") %> prohibited this master_category from being saved:
       <ul>
       <% @master_category.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
   </div>
+<%end%>
+<!-- END ALERTS -->
 
-  <div class="actions">
-    <%= f.submit %>
+<%= form_for(@master_category,html: {class: "form-horizontal"}) do |f| %>
+<div class="panel-body">
+
+  <div class="form-group">
+      <%= f.label :name, {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+          <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+              <%= f.text_field :name, {class: "form-control"} %>
+          </div>
+          <span class="help-block">This is sample of text field</span>
+      </div>
   </div>
+</div>
+
+<div class="panel-footer">
+    <%= link_to 'Back', master_categories_path, {class: "btn btn-default"} %>
+    <%= f.submit nil, {class: "btn btn-primary pull-right"} %>
+</div>
+
 <% end %>

@@ -1,16 +1,5 @@
 <!-- START ALERTS -->
-<% if flash[:error]%>
-  <div class="alert alert-danger" role="alert">
-      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <strong>Warning!</strong> <%= flash[:error]%>
-  </div>
-<%end%>
-<% if flash[:notice]%>
-  <div class="alert alert-success" role="alert">
-      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <strong>Success!</strong> <%= flash[:notice]%>
-  </div>
-<%end%>
+<%=render 'layouts/alerts'-%>
 <!-- END ALERTS -->
 
 <!-- START BREADCRUMB -->
@@ -33,15 +22,8 @@
   </div>
   <!-- END PAGE HEAD -->
 
-  <div class="content-frame-right" style="height: 786px;">
-    <div class="">
-      <h4>Master Category Description</h4>
-    </div>
-    <div class="">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam bibendum erat eget libero pretium, vestibulum egestas metus pretium. Nam non ipsum diam. Phasellus augue neque, cursus mollis tincidunt a, viverra eget nisl. Nunc luctus scelerisque viverra. Quisque molestie cursus augue, ut porttitor massa tempus eu. Curabitur sit amet facilisis arcu. Aenean dictum dictum dignissim. Sed mollis, nisl at ullamcorper consectetur, turpis leo volutpat metus, quis iaculis nibh magna ut lectus. Donec tristique volutpat pharetra. Fusce quis sem in dui bibendum egestas. Fusce euismod venenatis fermentum. Aenean non lobortis magna. Sed placerat finibus elementum. Aliquam a pretium nulla. Aliquam at pretium nulla.</p>
-      <p>Nulla ullamcorper, velit ac molestie molestie, ex turpis vehicula magna, in porta nisl massa at nulla. In a nulla eu nibh mattis volutpat. Cras auctor congue ligula, eu porta nisl. Nunc tempus nunc quis enim ullamcorper egestas. Donec molestie luctus est. In sit amet nulla nunc. Duis ac fringilla quam. Integer ac ante non felis imperdiet elementum viverra vitae enim. Nulla sed magna cursus, ultrices metus eget, convallis quam. Ut ut placerat purus. Sed porta id neque sit amet venenatis.</p>
-    </div>
-  </div>
+  <%= render 'right_content_panel' %>
+
   <div class="content-frame-body content-frame-body-left" style="height: 846px;">
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -67,7 +49,7 @@
                 <% @master_categories.each_with_index do |master_category,index| %>
                   <tr id="trow_<%=index+1-%>">
                     <td class="text-center"><%=index+1-%></td>
-                    <td><strong><%= master_category.name %></strong></td>
+                    <td><%= master_category.name %></td>
                     <td><%= master_category.display %></td>
                     <td>
                       <%= link_to raw("<span class='fa fa-pencil'></span>"), edit_master_category_path(master_category), :class=>"btn btn-default btn-rounded btn-condensed btn-sm" %>

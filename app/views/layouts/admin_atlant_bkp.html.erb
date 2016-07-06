@@ -10,7 +10,7 @@
         <link rel="icon" href="favicon.ico" type="image/x-icon" />
         <!-- END META SECTION -->
         <%= stylesheet_link_tag    'admin', media: 'all', 'data-turbolinks-track' => true %>
-        <%= javascript_include_tag 'admin', 'data-turbolinks-track'  => true %>
+        <%= javascript_include_tag 'admin', 'data-turbolinks-track'  => false %>
         <%= csrf_meta_tags %>
 
     </head>
@@ -745,7 +745,7 @@
             </div>
         </div>
         <!-- END MESSAGE BOX-->
-        
+
         <!-- MESSAGE BOX-->
         <div class="message-box animated fadeIn" data-sound="alert" id="mb-signout">
             <div class="mb-container">
@@ -769,6 +769,7 @@
         <!-- START PRELOADS -->
         <!-- <audio id="audio-alert" src="audio/alert.mp3" preload="auto"></audio>
         <audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio> -->
-        <%= javascript_include_tag 'atlant/settings', 'data-turbolinks-track'  => true %>
+        <%= javascript_include_tag 'atlant/settings', 'data-turbolinks-track'  => false %>
+        <%= stylesheet_link_tag    'atlant/theme-default', media: 'all', 'data-turbolinks-track' => true %>
     </body>
 </html>
