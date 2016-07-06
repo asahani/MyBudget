@@ -1,3 +1,18 @@
+<!-- START ALERTS -->
+<% if flash[:error]%>
+  <div class="alert alert-danger" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <strong>Warning!</strong> <%= flash[:error]%>
+  </div>
+<%end%>
+<% if flash[:notice]%>
+  <div class="alert alert-success" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <strong>Success!</strong> <%= flash[:notice]%>
+  </div>
+<%end%>
+<!-- END ALERTS -->
+
 <%= form_for(@master_category) do |f| %>
   <% if @master_category.errors.any? %>
     <div id="error_explanation">

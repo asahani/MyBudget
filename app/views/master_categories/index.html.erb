@@ -28,8 +28,7 @@
       <h2><span class="fa fa-bookmark-o"></span> Master Categories</h2>
     </div>
     <div class="pull-right">
-      <button class="btn btn-success btn-rounded"><span class="fa fa-plus"></span> New</button>
-      <%= link_to 'New Master category', new_master_category_path %>
+      <%= link_to raw("<span class='fa fa-plus'></span> New"), new_master_category_path, class: "btn btn-success btn-rounded" %>
     </div>
   </div>
   <!-- END PAGE HEAD -->

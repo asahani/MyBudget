@@ -29,7 +29,7 @@ class MasterCategoriesController < ApplicationController
 
     respond_to do |format|
       if @master_category.save
-        format.html { redirect_to @master_category, notice: 'Master category was successfully created.' }
+        format.html { redirect_to redirect_to master_categories_url, notice: 'Master category was successfully created.' }
         format.json { render :show, status: :created, location: @master_category }
       else
         format.html { render :new }
