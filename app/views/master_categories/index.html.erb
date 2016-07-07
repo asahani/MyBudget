@@ -50,7 +50,13 @@
                   <tr id="trow_<%=index+1-%>">
                     <td class="text-center"><%=index+1-%></td>
                     <td><%= master_category.name %></td>
-                    <td><%= master_category.display %></td>
+                    <td class="table-center">
+                        <% if master_category.display %>
+                          <span class="fa fa-check-square-o"></span>
+                        <%else%>
+                          <span class="fa fa-times"></span>
+                        <%end%>
+                    </td>
                     <td>
                       <%= link_to raw("<span class='fa fa-pencil'></span>"), edit_master_category_path(master_category), :class=>"btn btn-default btn-rounded btn-condensed btn-sm" %>
                       <!-- <%= link_to raw("<span class='fa fa-times'></span>"), master_category, class: "btn btn-danger btn-rounded btn-condensed btn-sm", method: :delete, data: { confirm: 'Are you sure?'}, onClick: "delete_row('trow_#{index+1}');"%> -->

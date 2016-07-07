@@ -55,12 +55,36 @@
                 <tr id="trow_<%=index+1-%>">
                   <td class="text-center"><%=index+1-%></td>
                   <td><%= category.name %></td>
-                  <td><%= category.budget_amount %></td>
+                  <td class="table-right"><%= number_to_currency(category.budget_amount) %></td>
                   <td><%= category.master_category.name %></td>
-                  <td><%= category.mandatory %></td>
-                  <td><%= category.budgeted %></td>
-                  <td><%= category.miscellaneous %></td>
-                  <td><%= category.savings %></td>
+                  <td class="table-center">
+                      <% if category.mandatory %>
+                        <span class="fa fa-check-square-o"></span>
+                      <%else%>
+                        <span class="fa fa-times"></span>
+                      <%end%>
+                  </td>
+                  <td class="table-center">
+                      <% if category.budgeted %>
+                        <span class="fa fa-check-square-o"></span>
+                      <%else%>
+                        <span class="fa fa-times"></span>
+                      <%end%>
+                  </td>
+                  <td class="table-center">
+                      <% if category.miscellaneous %>
+                        <span class="fa fa-check-square-o"></span>
+                      <%else%>
+                        <span class="fa fa-times"></span>
+                      <%end%>
+                  </td>
+                  <td class="table-center">
+                      <% if category.savings %>
+                        <span class="fa fa-check-square-o"></span>
+                      <%else%>
+                        <span class="fa fa-times"></span>
+                      <%end%>
+                  </td>
                   <td>
                     <%= link_to raw("<span class='fa fa-pencil'></span>"), edit_category_path(category), :class=>"btn btn-default btn-rounded btn-condensed btn-sm" %>
                     <!-- <%= link_to raw("<span class='fa fa-times'></span>"), category, class: "btn btn-danger btn-rounded btn-condensed btn-sm", method: :delete, data: { confirm: 'Are you sure?'}, onClick: "delete_row('trow_#{index+1}');"%> -->
