@@ -17,7 +17,7 @@ class Account < ActiveRecord::Base
   ##################################
   # Callbacks
   ##################################
-  after_create  :create_account_transfer_payee, :create_budget_account_for_current_budget
+  after_create :set_initial_balance_as_balance, :create_account_transfer_payee, :create_budget_account_for_current_budget
   after_update :update_payee_details
   ##################################
   # Scoped Methods
@@ -34,6 +34,11 @@ class Account < ActiveRecord::Base
   end
 
   private
+
+  def set_initial_balance_as_balance
+    self.balance = self.initial_balance
+    self.save!
+  end
 
   def create_account_transfer_payee
     category = Category.find_by_name("Account Transfer")

@@ -1,25 +1,139 @@
-<%= form_for(@account) do |f| %>
-  <% if @account.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@account.errors.count, "error") %> prohibited this account from being saved:</h2>
-
+<!-- START ALERTS -->
+<% if @account.errors.any? %>
+  <div class="alert alert-danger" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <strong>Warning!</strong> <%= pluralize(@account.errors.count, "error") %> prohibited this category from being saved:
       <ul>
       <% @account.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
-    </div>
-  <% end %>
+  </div>
+<%end%>
+<!-- END ALERTS -->
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+<%= form_for(@account,html: {class: "form-horizontal"}) do |f| %>
+<div class="panel-body">
+
+  <div class="form-group">
+      <%= f.label :name, {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+          <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-credit-card"></span></span>
+              <%= f.text_field :name, {class: "form-control"} %>
+          </div>
+          <span class="help-block">Account name</span>
+      </div>
   </div>
-  <div class="field">
-    <%= f.label :balance %><br>
-    <%= f.text_field :balance %>
+
+  <% unless f.object.persisted?%>
+  <div class="form-group">
+      <%= f.label :initial_balance, {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+          <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-dollar"></span></span>
+              <%= f.number_field :initial_balance, {class: "form-control"} %>
+          </div>
+          <span class="help-block">The initial amount at the time of opening this account</span>
+      </div>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+
+  <div class="form-group">
+      <label class="col-md-3 col-xs-12 control-label">Select</label>
+      <div class="col-md-6 col-xs-12">
+        <%= f.select "account_type_id", options_from_collection_for_select(AccountType.all, :id, :name),{ :prompt => "Select Account Type..."},{ class: "form-control select"}%>
+        <span class="help-block">Please select account type</span>
+      </div>
   </div>
+  <%end%>
+
+  <div class="form-group">
+      <%= f.label :budget_account, {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+        <label class="check">
+            <%= f.radio_button :budget_account, true, {class: "iradio"}-%>
+            True
+        </label>
+        <label class="check">
+            <%= f.radio_button :budget_account, false,{class: "iradio"}-%>
+            False
+        </label>
+        <span class="help-block">Required for display on the budget sheet</span>
+      </div>
+  </div>
+
+  <% if f.object.persisted?%>
+  <div class="form-group">
+      <%= f.label :is_active, {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+        <label class="check">
+            <%= f.radio_button :is_active, true, {class: "iradio"}-%>
+            True
+        </label>
+        <label class="check">
+            <%= f.radio_button :is_active, false,{class: "iradio"}-%>
+            False
+        </label>
+        <span class="help-block">Is the account active?</span>
+      </div>
+  </div>
+  <%end%>
+  <hr>
+  <div class="form-group">
+      <span class="fa fa-table col-md-3 col-xs-12" style="text-align: right;"></span>
+
+      <div class="col-md-9 col-xs-12">
+          <%= f.label "Transaction CSV Fisle Import Rules", {class: "control-label"}%>
+      </div>
+  </div>
+
+  <div class="form-group">
+      <%= f.label "Debit amount negetive", {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+        <label class="check">
+            <%= f.radio_button :is_debit_negetive, true, {class: "iradio"}-%>
+            True
+        </label>
+        <label class="check">
+            <%= f.radio_button :is_debit_negetive, false,{class: "iradio"}-%>
+            False
+        </label>
+        <span class="help-block">Specify if the debit amount in the CSV file is negetive or positive</span>
+      </div>
+  </div>
+
+  <div class="form-group">
+      <%= f.label "CSV Columns and Formats", {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-9 col-xs-12">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Description</th>
+                    <th>Balance</th>
+                    <th>Date Format</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                  <td><%= f.number_field(:import_txn_date_col,{style: "width:100%;"})%></td>
+                  <td><%= f.number_field(:import_txn_amount_col,{style: "width:100%;"})%></td>
+                  <td><%= f.number_field(:import_txn_description_col,{style: "width:100%;"})%></td>
+                  <td><%= f.number_field(:import_txn_balance_col,{style: "width:100%;"})%></td>
+                  <td><%= f.text_field :import_txn_date_format,{style: "width:100%;"}%></td>
+               </tr>
+            </tbody>
+          </table>
+        </div>
+        <span class="help-block">Specify the column numbers of the above values in the CSV file for this account. * First column is 0.</span>
+      </div>
+    </div>
+</div>
+<div class="panel-footer">
+    <%= link_to 'Back', accounts_path, {class: "btn btn-default"} %>
+    <%= f.submit nil, {class: "btn btn-success pull-right"} %>
+</div>
+
 <% end %>
