@@ -14,6 +14,10 @@
 //= require jquery-ui
 //= require jquery_ujs
 //= require bootstrap-sprockets
+//= require atlant/plugins/bootstrap/bootstrap-colorpicker
+//= require atlant/plugins/bootstrap/bootstrap-datepicker
+//= require atlant/plugins/bootstrap/bootstrap-file-input
+//= require atlant/plugins/bootstrap/bootstrap-select
 //= require atlant/plugins/icheck/icheck.min
 //= require atlant/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min
 //= require atlant/plugins/scrolltotop/scrolltopcontrol
@@ -30,3 +34,19 @@
 //= require atlant/demo_tables
 //= require atlant/plugins
 //= require atlant/actions
+//= require_self
+
+$(document).ready(function() {
+  $('#category-radio-budgeted-true').on('ifChecked', function(event){
+    $('#category-radio-misc-true,#category-radio-savings-true').iCheck('uncheck');
+    $('#category-radio-misc-false,#category-radio-savings-false').iCheck('check');
+  });
+  $('#category-radio-misc-true').on('ifChecked', function(event){
+    $('#category-radio-budgeted-true,#category-radio-savings-true').iCheck('uncheck');
+    $('#category-radio-budgeted-false,#category-radio-savings-false').iCheck('check');
+  });
+  $('#category-radio-savings-true').on('ifChecked', function(event){
+    $('#category-radio-misc-true,#category-radio-budgeted-true').iCheck('uncheck');
+    $('#category-radio-misc-false,#category-radio-budgeted-false').iCheck('check');
+  });
+});
