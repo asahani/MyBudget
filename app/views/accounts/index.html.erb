@@ -56,7 +56,7 @@
                 <tr id="trow_<%=index+1-%>">
                   <td class="text-center"><%=index+1-%></td>
                   <td><%= account.name%></td>
-                  <td></td>
+                  <td><%= account.account_type.name%></td>
                   <td class="table-right"><%= number_to_currency(account.balance) %></td>
                   <td class="table-right"><%= number_to_currency(account.initial_balance) %></td>
                   <td class="table-center">
