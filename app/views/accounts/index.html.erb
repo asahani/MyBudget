@@ -1,27 +1,96 @@
-<h1>Listing accounts</h1>
+<!-- START ALERTS -->
+<%=render 'layouts/alerts'-%>
+<!-- END ALERTS -->
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Balance</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb push-down-0">
+  <li><%=link_to "Admin",admin_index_path -%></li>
+  <li class="active">Accounts</li>
+</ul>
+<!-- END BREADCRUMB -->
 
-  <tbody>
-    <% @accounts.each do |account| %>
-      <tr>
-        <td><%= account.name %></td>
-        <td><%= account.balance %></td>
-        <td><%= link_to 'Show', account %></td>
-        <td><%= link_to 'Edit', edit_account_path(account) %></td>
-        <td><%= link_to 'Destroy', account, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="content-frame">
 
-<br>
+  <!-- START PAGE HEAD -->
+  <div class="content-frame-top">
+    <div class="page-title">
+      <h2><span class="fa fa-credit-card"></span> Accounts</h2>
+    </div>
+    <div class="pull-right">
+      <%= link_to raw("<span class='fa fa-plus'></span> New"), new_account_path, class: "btn btn-success btn-rounded" %>
+    </div>
+  </div>
+  <!-- END PAGE HEAD -->
 
-<%= link_to 'New Account', new_account_path %>
+  <%= render 'right_content_panel' %>
+
+  <div class="content-frame-body content-frame-body-left" style="height: 846px;">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">List of Accounts</h3>
+        <ul class="panel-controls">
+          <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+          <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+          <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+        </ul>
+      </div>
+      <div class="panel-body panel-body-table">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-actions table-hover">
+            <thead>
+                <tr>
+                    <th width="50">id</th>
+                    <th>name</th>
+                    <th width="100">Account Type</th>
+                    <th width="100">Initial Balance</th>
+                    <th width="100">Current Balance</th>
+                    <th width="100">For Budget</th>
+                    <th width="100">BSB</th>
+                    <th width="100">Number</th>
+                    <th width="50">Active</th>
+                    <th width="120">actions</th>
+                </tr>
+            </thead>
+            <tbody>
+              <% @accounts.each_with_index do |account,index| %>
+                <tr id="trow_<%=index+1-%>">
+                  <td class="text-center"><%=index+1-%></td>
+                  <td><%= account.name%></td>
+                  <td></td>
+                  <td class="table-right"><%= number_to_currency(account.balance) %></td>
+                  <td class="table-right"><%= number_to_currency(account.initial_balance) %></td>
+                  <td class="table-center">
+                      <%if account.budget_account %>
+                        <span class="fa fa-check-square-o"></span>
+                      <%else%>
+                        <span class="fa fa-times"></span>
+                      <%end%>
+                  </td>
+                  <td><%= account.bsb_number %></td>
+                  <td><%= account.card_number %></td>
+                  <td class="table-center">
+                      <% if account.is_active %>
+                        <span class="fa fa-check-square-o"></span>
+                      <%else%>
+                        <span class="fa fa-times"></span>
+                      <%end%>
+                  </td>
+                  <td>
+                    <%= link_to raw("<span class='fa fa-pencil'></span>"), edit_account_path(account), :class=>"btn btn-default btn-rounded btn-condensed btn-sm" %>
+                    <%= link_to raw("<span class='fa fa-times'></span>"), account, class: "btn btn-danger btn-rounded btn-condensed btn-sm", method: :delete, data: { confirm: 'Are you sure?'}, onClick: "delete_row('trow_#{index+1}');"%>
+                    <%unless account.import_txn_date_col.nil?%>
+                      <span class="fa fa-table"></span>
+                    <%end%>
+                 </td>
+               </tr>
+              <% end %>
+            </tbody>
+          </table>
+      </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

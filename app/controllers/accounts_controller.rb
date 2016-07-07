@@ -1,4 +1,5 @@
 class AccountsController < ApplicationController
+  layout "admin", only: [:index, :new, :edit,:create,:update]
   before_action :set_account, only: [:show, :edit, :update, :destroy]
 
   # GET /accounts
