@@ -26,6 +26,7 @@
 //= require atlant/plugins/owl/owl.carousel.min
 //= require atlant/plugins/moment.min
 //= require atlant/plugins/daterangepicker/daterangepicker
+//= require atlant/plugins/tagsinput/jquery.tagsinput.min
 //= require atlant/demo_tables
 //= require atlant/plugins
 //= require atlant/actions

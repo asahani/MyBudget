@@ -1,29 +1,73 @@
-<%= form_for(@category) do |f| %>
-  <% if @category.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@category.errors.count, "error") %> prohibited this category from being saved:</h2>
-
+<!-- START ALERTS -->
+<% if @category.errors.any? %>
+  <div class="alert alert-danger" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <strong>Warning!</strong> <%= pluralize(@category.errors.count, "error") %> prohibited this category from being saved:
       <ul>
       <% @category.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
-    </div>
-  <% end %>
+  </div>
+<%end%>
+<!-- END ALERTS -->
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+<%= form_for(@category,html: {class: "form-horizontal"}) do |f| %>
+<div class="panel-body">
+
+  <div class="form-group">
+      <%= f.label :name, {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+          <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+              <%= f.text_field :name, {class: "form-control"} %>
+          </div>
+          <span class="help-block">Category name</span>
+      </div>
   </div>
-  <div class="field">
-    <%= f.label :active %><br>
-    <%= f.check_box :active %>
+
+  <div class="form-group">
+      <%= f.label :mandatory, {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+        <label class="check"><input type="checkbox" class="icheckbox" checked="checked"/> Checkbox title</label>
+
+          <label class="check">
+            <%= f.radio_button :mandatory, true, {class: "iradio"}-%>
+            True
+          </label>
+          <label class="check">
+            <%= f.radio_button :mandatory, false,{class: "iradio"}-%>
+            False
+          </label>
+          <span class="help-block">Required for display on the budget sheet</span>
+      </div>
   </div>
-  <div class="field">
-    <%= f.label :budget_amount %><br>
-    <%= f.text_field :budget_amount %>
+  <div class="form-group">
+      <div class="col-md-4">
+          <label class="check"><input type="radio" class="iradio" name="iradio"/> Default</label>
+      </div>
+      <div class="col-md-4">
+          <label class="check"><input type="radio" class="iradio" name="iradio" checked="checked"/> Checked</label>
+      </div>
+      <div class="col-md-4">
+          <label class="check"><input type="radio" class="iradio" name="iradio" disabled/> Disabled</label>
+      </div>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-group">
+      <%= f.label :budget_amount, {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+          <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+              <%= f.text_field :budget_amount, {class: "form-control"} %>
+          </div>
+          <span class="help-block">The amount allocated per month</span>
+      </div>
   </div>
+</div>
+
+<div class="panel-footer">
+    <%= link_to 'Back', categories_path, {class: "btn btn-default"} %>
+    <%= f.submit nil, {class: "btn btn-success pull-right"} %>
+</div>
+
 <% end %>
