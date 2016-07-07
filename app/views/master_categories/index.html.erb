@@ -53,7 +53,7 @@
                     <td><%= master_category.display %></td>
                     <td>
                       <%= link_to raw("<span class='fa fa-pencil'></span>"), edit_master_category_path(master_category), :class=>"btn btn-default btn-rounded btn-condensed btn-sm" %>
-                      <%= link_to raw("<span class='fa fa-times'></span>"), master_category, class: "btn btn-danger btn-rounded btn-condensed btn-sm", method: :delete, data: { confirm: 'Are you sure?'}, onClick: "delete_row('trow_#{index+1}');"%>
+                      <!-- <%= link_to raw("<span class='fa fa-times'></span>"), master_category, class: "btn btn-danger btn-rounded btn-condensed btn-sm", method: :delete, data: { confirm: 'Are you sure?'}, onClick: "delete_row('trow_#{index+1}');"%> -->
                    </td>
                  </tr>
                 <% end %>

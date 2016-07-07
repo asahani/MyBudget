@@ -77,7 +77,7 @@
                   </td>
                   <td>
                     <%= link_to raw("<span class='fa fa-pencil'></span>"), edit_account_path(account), :class=>"btn btn-default btn-rounded btn-condensed btn-sm" %>
-                    <%= link_to raw("<span class='fa fa-times'></span>"), account, class: "btn btn-danger btn-rounded btn-condensed btn-sm", method: :delete, data: { confirm: 'Are you sure?'}, onClick: "delete_row('trow_#{index+1}');"%>
+                    <!-- <%= link_to raw("<span class='fa fa-times'></span>"), account, class: "btn btn-danger btn-rounded btn-condensed btn-sm", method: :delete, data: { confirm: 'Are you sure?'}, onClick: "delete_row('trow_#{index+1}');"%> -->
                     <%unless account.import_txn_date_col.nil?%>
                       <span class="fa fa-table"></span>
                     <%end%>
