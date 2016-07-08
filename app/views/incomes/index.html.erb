@@ -1,39 +1,103 @@
-<h1>Listing incomes</h1>
+<!-- START ALERTS -->
+<%=render 'layouts/alerts'-%>
+<!-- END ALERTS -->
 
-<table>
-  <thead>
-    <tr>
-      <th>Description</th>
-      <th>Amount</th>
-      <th>Recurring</th>
-      <th>Weekly</th>
-      <th>Fortnightly</th>
-      <th>Monthly</th>
-      <th>Budget</th>
-      <th>Account</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb push-down-0">
+  <li><%=link_to "Admin",admin_index_path -%></li>
+  <li class="active">Recurring Incomes</li>
+</ul>
+<!-- END BREADCRUMB -->
 
-  <tbody>
-    <% @incomes.each do |income| %>
-      <tr>
-        <td><%= income.description %></td>
-        <td><%= income.amount %></td>
-        <td><%= income.recurring %></td>
-        <td><%= income.weekly %></td>
-        <td><%= income.fortnightly %></td>
-        <td><%= income.monthly %></td>
-        <td><%= income.budget_id %></td>
-        <td><%= income.account_id %></td>
-        <td><%= link_to 'Show', income %></td>
-        <td><%= link_to 'Edit', edit_income_path(income) %></td>
-        <td><%= link_to 'Destroy', income, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="content-frame">
 
-<br>
+  <!-- START PAGE HEAD -->
+  <div class="content-frame-top">
+    <div class="page-title">
+      <h2><span class="fa fa-usd"></span> Recurring Incomes</h2>
+    </div>
+    <div class="pull-right">
+      <%= link_to raw("<span class='fa fa-plus'></span> New"), new_income_path, class: "btn btn-success btn-rounded" %>
+    </div>
+  </div>
+  <!-- END PAGE HEAD -->
 
-<%= link_to 'New Income', new_income_path %>
+  <%= render 'right_content_panel' %>
+
+  <div class="content-frame-body content-frame-body-left" style="height: 846px;">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">List of Recurring Incomes</h3>
+        <ul class="panel-controls">
+          <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+          <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+          <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+        </ul>
+      </div>
+      <div class="panel-body panel-body-table">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-actions table-hover">
+            <thead>
+                <tr>
+                    <th width="50">id</th>
+                    <th>Description</th>
+                    <th width="100">Amount</th>
+                    <th width="100">To Account</th>
+                    <th width="100">Weekly</th>
+                    <th width="100">Fortnightly</th>
+                    <th width="100">Monthly</th>
+                    <th width="100">Active</th>
+                    <th width="120">actions</th>
+                </tr>
+            </thead>
+            <tbody>
+              <% @incomes.each_with_index do |income,index| %>
+                <tr id="trow_<%=index+1-%>">
+                  <td class="text-center"><%=index+1-%></td>
+                  <td><%= income.description %></td>
+                  <td class="table-right"><%= number_to_currency(income.amount) %></td>
+                  <td><%= income.account.name %></td>
+                  <td class="table-center">
+                      <% if income.weekly %>
+                        <span class="fa fa-check-square-o"></span>
+                      <%else%>
+                        <span class="fa fa-times"></span>
+                      <%end%>
+                  </td>
+                  <td class="table-center">
+                      <% if income.fortnightly %>
+                        <span class="fa fa-check-square-o"></span>
+                      <%else%>
+                        <span class="fa fa-times"></span>
+                      <%end%>
+                  </td>
+                  <td class="table-center">
+                      <% if income.monthly %>
+                        <span class="fa fa-check-square-o"></span>
+                      <%else%>
+                        <span class="fa fa-times"></span>
+                      <%end%>
+                  </td>
+                  <td class="table-center">
+                      <% if income.is_active %>
+                        <span class="fa fa-check-square-o"></span>
+                      <%else%>
+                        <span class="fa fa-times"></span>
+                      <%end%>
+                  </td>
+                  <td>
+                    <%= link_to raw("<span class='fa fa-pencil'></span>"), edit_income_path(income), :class=>"btn btn-default btn-rounded btn-condensed btn-sm" %>
+                    <%= link_to raw("<span class='fa fa-times'></span>"), income, class: "btn btn-danger btn-rounded btn-condensed btn-sm", method: :delete, data: { confirm: 'Are you sure?'}, onClick: "delete_row('trow_#{index+1}');"%>
+                 </td>
+               </tr>
+              <% end %>
+            </tbody>
+          </table>
+      </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

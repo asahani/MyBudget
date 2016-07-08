@@ -1,4 +1,5 @@
 class IncomesController < ApplicationController
+  layout "admin", only: [:index, :new, :edit,:create,:update]
   before_action :set_income, only: [:show, :edit, :update, :destroy]
 
   # GET /incomes
