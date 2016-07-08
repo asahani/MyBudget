@@ -1,10 +1,12 @@
 class PayeesController < ApplicationController
+  layout "admin", only: [:index, :new, :edit,:create,:update]
   before_action :set_payee, only: [:show, :edit, :update, :destroy,:select_payee]
 
   # GET /payees
   # GET /payees.json
   def index
-    @payees = Payee.all
+    @external_payees = Payee.external_payees
+    @account_payees = Payee.all_account_payees
   end
 
   # GET /payees/1
@@ -36,14 +38,14 @@ class PayeesController < ApplicationController
       respond_to do |format|
         if @payee.save
           ImportedTransaction.where('description = ? ', @payee.description).update_all(payee_id: @payee.id,category_id: @payee.category.id)
-          format.js { render '/import_transactions/preview'}
+          format.js { render '/import_transactions/preview', layout: "application"}
         end
       end
     else
       respond_to do |format|
         if @payee.save
           @imported_transactions = ImportedTransaction.all
-          format.html { redirect_to @payee, notice: 'Payee was successfully created.' }
+          format.html { redirect_to payees_url, notice: 'Payee was successfully created.' }
           format.json { render :show, status: :created, location: @payee }
           format.js
         else
@@ -60,7 +62,7 @@ class PayeesController < ApplicationController
   def update
     respond_to do |format|
       if @payee.update(payee_params)
-        format.html { redirect_to @payee, notice: 'Payee was successfully updated.' }
+        format.html { redirect_to payees_url, notice: 'Payee was successfully updated.' }
         format.json { render :show, status: :ok, location: @payee }
       else
         format.html { render :edit }
@@ -87,7 +89,7 @@ class PayeesController < ApplicationController
 
           if payee_description.save!
             ImportedTransaction.where('description = ? ', payee_description.description).update_all(payee_id: @payee.id,category_id: @payee.category.id)
-            format.js { render '/import_transactions/preview'}
+            format.js { render '/import_transactions/preview', layout: "application"}
           end
         end
       end
@@ -102,6 +104,6 @@ class PayeesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def payee_params
-      params.require(:payee).permit(:name, :description, :category_id,:is_account,:account_id,:called_from_import_txn)
+      params.require(:payee).permit(:name, :description, :category_id,:is_account,:is_system,:account_id,:called_from_import_txn)
     end
 end

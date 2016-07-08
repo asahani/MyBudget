@@ -39,6 +39,13 @@ Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
 
 TODO:
+admin
+==============
+- Add icons to categories and master_categories
+- Add info of show modal to all models in Admin
+- review right content pane and helper texts
+- possibly: edit & remove additional payee in edit payee
+
 Main
 ==============
 - Monthly actions feature which tells you what to do at the start of the month
