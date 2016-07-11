@@ -40,7 +40,11 @@
   <div class="form-group">
       <label class="col-md-3 col-xs-12 control-label">Select</label>
       <div class="col-md-6 col-xs-12">
-        <%= f.select "account_id", options_from_collection_for_select(Account.all.active, :id, :name,@income.account.id),{ :prompt => "Select Account..."},{ class: "form-control select"}%>
+        <% if f.object.persisted?%>
+          <%= f.select "account_id", options_from_collection_for_select(Account.all.active, :id, :name,@income.account.id),{ :prompt => "Select Account..."},{ class: "form-control select"}%>
+        <%else%>
+          <%= f.select "account_id", options_from_collection_for_select(Account.all.active, :id, :name),{ :prompt => "Select Account..."},{ class: "form-control select"}%>
+        <%end%>
         <span class="help-block">Account where the income is to be credited</span>
       </div>
   </div>
