@@ -44,7 +44,7 @@ admin
 - Add icons to categories and master_categories
 - Add info of show modal to all models in Admin
 - review right content pane and helper texts and error messages
-- possibly: edit & remove additional payee in edit payee
+- possibly: edit & remove additional payee description in edit payee
 
 Main
 ==============
