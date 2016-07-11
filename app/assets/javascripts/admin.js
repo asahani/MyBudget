@@ -49,4 +49,17 @@ $(document).ready(function() {
     $('#category-radio-misc-true,#category-radio-budgeted-true').iCheck('uncheck');
     $('#category-radio-misc-false,#category-radio-budgeted-false').iCheck('check');
   });
+
+  $('#income-radio-weekly-true').on('ifChecked', function(event){
+    $('#income-radio-fortnightly-true,#income-radio-monthly-true').iCheck('uncheck');
+    $('#income-radio-fortnightly-false,#income-radio-monthly-false').iCheck('check');
+  });
+  $('#income-radio-fortnightly-true').on('ifChecked', function(event){
+    $('#income-radio-weekly-true,#income-radio-monthly-true').iCheck('uncheck');
+    $('#income-radio-weekly-false,#income-radio-monthly-false').iCheck('check');
+  });
+  $('#income-radio-monthly-true').on('ifChecked', function(event){
+    $('#income-radio-weekly-true,#income-radio-fortnightly-true').iCheck('uncheck');
+    $('#income-radio-weekly-false,#income-radio-fortnightly-false').iCheck('check');
+  });
 });
