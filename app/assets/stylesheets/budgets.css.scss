@@ -14,7 +14,6 @@ $numeric-cell-border: 1px dotted #999;
 .col-md-4.budget-main-container {
 	padding: 0px;
 	font-size: 11px;
-	background-color: #DCDCDC;
 	padding-bottom: 5px;
 
 	table {
@@ -88,11 +87,9 @@ $numeric-cell-border: 1px dotted #999;
 	text-align: centre;
 	padding-top: 3px;
 	display: inline-block;
-	margin: 0px 0px 10px 10px;
-  	top: 0;
+  top: 0;
 
 	ul {
-		width: 236px;
 		list-style: none;
 		background-color: none;
 		text-align: center;
@@ -102,13 +99,10 @@ $numeric-cell-border: 1px dotted #999;
 
 	li {
 		background-color: #49575E;
-		width: 59px;
+		width: 25%;
 		border-bottom: none;
-		height: 30px;
-		line-height: 30px;
 		font-size: 1em;
 		display: inline-block;
-		margin-right: -4px;
 		-moz-box-shadow: $box-shadow-li;
 		-webkit-box-shadow: $box-shadow-li;
 		box-shadow: $box-shadow-li;
@@ -120,10 +114,10 @@ $numeric-cell-border: 1px dotted #999;
 		text-shadow: 0px 0px 2px #000;
 		display: block;
 		transition: .3s background-color;
+    padding: 15%;
 	}
 
 	a:hover{
-		height: 100%;
 		cursor: default;
 		background-color: #0082CB;
 		text-decoration: none;
@@ -135,7 +129,6 @@ $numeric-cell-border: 1px dotted #999;
 	}
 
 	.active a{
-		height: 100%;
 		cursor: default;
 		background-color: #0082CB;
 		color: #FFFFFF;
@@ -150,7 +143,7 @@ $numeric-cell-border: 1px dotted #999;
 	}
 
 	.year-item{
-		height: 100%;
+		padding: 5%;
 		width: 100%;
 		cursor: default;
 		background-color: #333;
@@ -199,4 +192,24 @@ table.actions-table tr:hover td div.actions { visibility: visible; display: inli
 	border-bottom: $numeric-cell-border!important;
 	border-left:none!important;
 	width:10%!important;
+}
+
+/***********************
+* X-Dashboard Content tabs
+***********************/
+.page-container .page-content .page-content-wrap {
+  background: #F9FAFB;
+}
+.page-container .page-content .page-content-wrap .budget-tabs{
+  background: #F9FAFB;
+  margin-top: 15px;
+}
+
+.page-container .page-content .page-content-wrap .x-content-footer {
+  float: left;
+  width: 100%;
+  padding: 20px;
+  background: #E8EBF0;
+  font-size: 12px;
+  color: #526C7F;
 }
