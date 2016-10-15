@@ -16,7 +16,3 @@
 /tmp
 
 vendor/assets/.DS_Store
-
-.DS_Store
-
-vendor/assets/javascripts/.DS_Store
