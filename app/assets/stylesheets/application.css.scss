@@ -11,9 +11,23 @@
  * file per style scope.
  *
  *= require jquery-ui
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/animate/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/blueimp/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/codemirror/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/cropper/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/dropzone/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/fontawesome/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/fonts/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/forms-material/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/fullcalendar/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/introjs/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/ion/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/jstree/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/mcustomscrollbar/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/nvd3/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/summernote/.
+ *= require atlant/rtl
  *= require_tree .
- *= stub admin
- *= stub dashboard
  *= require_self
  */
 @import "bootstrap-sprockets";

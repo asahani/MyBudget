@@ -8,39 +8,15 @@ $box-shadow-div: 0px 2px 5px #999 inset;
 $box-shadow-summary-div: 0px 2px 2px #333 inset;
 $numeric-cell-border: 1px dotted #999;
 
-.fixed {
-  position: fixed;
-  z-index: 100;
-  margin-left: 10px;
-  margin-right: 10px;
-  background-color: #DCDCDC;
-  padding-bottom: 2px;
-  border-radius: 5px;
-}
-
-#budget-flip {
-	width: calc(100% - 20px);
-}
-
-.page-content .fixed {
-	width: calc(100%);
-}
 /*******************
  * Budget Page Layout
  *******************/
-.budget {
-	margin-left: 10px;
-	margin-right: 10px;
-}
-
 .col-md-4.budget-main-container {
-	margin-top: -5px;
 	padding: 0px;
-	top: 190px;
 	font-size: 11px;
 	background-color: #DCDCDC;
 	padding-bottom: 5px;
-	
+
 	table {
 		background-color: #FFF;
 	}
@@ -48,7 +24,7 @@ $numeric-cell-border: 1px dotted #999;
 
 .budget-content-container {
 	margin: 4px;
-	border: 1px solid #666; 
+	border: 1px solid #666;
 	border-radius: 7px;
 	-moz-box-shadow: $box-shadow-div;
 	-webkit-box-shadow: $box-shadow-div;
@@ -63,7 +39,7 @@ $numeric-cell-border: 1px dotted #999;
 }
 
 .budget-summary-content {
-	border: 1px inset #999; 
+	border: 1px inset #999;
 	border-radius: 7px;
 	margin: 2px;
 	background-color: #3C464D;
@@ -80,7 +56,7 @@ $numeric-cell-border: 1px dotted #999;
 	font-size: 11px;
 	text-shadow: 0px 0px 1px #444;
 	margin: 4px;
-	border: 1px solid #777; 
+	border: 1px solid #777;
 	background-color: #EEF5E7;
 	border-radius: 7px;
 	-moz-box-shadow: $box-shadow-div;
@@ -123,7 +99,7 @@ $numeric-cell-border: 1px dotted #999;
 		padding: 0;
 		margin: 0;
 	}
- 
+
 	li {
 		background-color: #49575E;
 		width: 59px;
@@ -172,7 +148,7 @@ $numeric-cell-border: 1px dotted #999;
 	.last{
 /*		border-right: 1px solid #111;*/
 	}
-	
+
 	.year-item{
 		height: 100%;
 		width: 100%;
@@ -193,6 +169,8 @@ $numeric-cell-border: 1px dotted #999;
 .budget-totals-table td {
 	border-left: $numeric-cell-border;
 	border-right: $numeric-cell-border;
+  border-top: none!important;
+  border-bottom: none!important;
 	padding-right: 5px;
 	text-align: right;
 }
@@ -201,24 +179,24 @@ $numeric-cell-border: 1px dotted #999;
  *******************/
 table.actions-table {margin: 2px;width: calc(100% - 3px);}
 table.actions-table th { padding: .5em; }
-table.actions-table td { padding: .5em;}
+table.actions-table td { padding: 3px!important;border-top: $numeric-cell-border!important; border-color: #999!important;font-size: 12px!important;}
 table.actions-table td div.actions { visibility: hidden;}
 table.actions-table tr:hover td div.actions { visibility: visible; display: inline;}
 .master-cell {
 	border: none;
-	background: #E6F4FB;
-	font-weight: bold;
-	color: #666;
+	background: #E6F4FB!important;
+	font-weight: bold!important;
+	color: #666!important;
 }
 .numeric-cell {
-	text-align: right;
-	border: $numeric-cell-border;
+	text-align: right!important;
+	border: $numeric-cell-border!important;
 }
 .actions-cell {
-	text-align: right;
-	border: $numeric-cell-border;
-	border-top: $numeric-cell-border;
-	border-bottom: $numeric-cell-border;
-	border-left:none;
-	width:10%;
+	text-align: right!important;
+	border: $numeric-cell-border!important;
+	border-top: $numeric-cell-border!important;
+	border-bottom: $numeric-cell-border!important;
+	border-left:none!important;
+	width:10%!important;
 }
