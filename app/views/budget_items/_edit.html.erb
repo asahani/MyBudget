@@ -17,9 +17,9 @@
 					<td><%=@budget_item.balance%></td>
 					<td><%=@budget_item.payment_date%></td>
 					<td><%=@budget_item.comment%></td>
-				</tr>	
+				</tr>
 			</table>
-			
+
 			<%= form_for @budget_item, html: {class: "form-horizontal", role: :form} do |f| %>
 			  <% if @budget_item.errors.any? %>
 			    <div id="error_explanation">
@@ -56,14 +56,14 @@
 				<%unless @budget_item.complete%>
 					<button id="new-budgeted-transaction-button">+</button>
 				<%end%>
-				<div id="budget-transactions-list">
+
 					<%=render("/budget_transactions/budget_transactions_list",:budget_item => @budget_item)%>
-				</div>
-			</div>	
+
+			</div>
       </div>
       <div class="modal-footer">
 		<%=link_to "close", @budget_item.budget,class: "btn btn-default"%>
-		
+
         <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>-->
       </div>
     </div>
