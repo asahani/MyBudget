@@ -1,7 +1,7 @@
 <tr id=<%=@budget_item.id.to_s + '_details'%> >
 	<td colspan=8>
-		<table>
-		<tr><td colspan=8><button id="<%=@budget_item.id.to_s + '_close'%>">X</button></td></tr>	
+		<table style="width: 100%;">
+		<tr><td colspan=8><ul class="panel-controls"><li><a href="#" id="<%=@budget_item.id.to_s + '_close'%>" class="panel-remove"><span class="fa fa-times"></span></a></li></ul></td></tr>
 		<%@budget_item.budget_transactions.each do |budget_transaction|%>
 		<tr>
 			<td><%=budget_transaction.account.name%></td>
