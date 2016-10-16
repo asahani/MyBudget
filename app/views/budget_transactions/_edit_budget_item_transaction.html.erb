@@ -1,13 +1,19 @@
-<%= form_for(@budget_transaction, remote: true) do |f| %>
 <tr id=<%=@budget_transaction.id%>>
-		<td>
-			<%= f.collection_select :account_id, Account.all, :id, :name, prompt: true %>
-		</td>
-		<td><%= f.collection_select :payee_id, Payee.all, :id, :name, prompt: true %></td>
-		<td><%= f.date_select :transaction_date %></td>
-		<td><%= f.number_field :debit %></td>
-		<td><%= f.number_field :credit %></td>
-		<td><%= f.text_field :comments %></td>
-		<td><%= f.submit "update"%></td>
+	<td colspan="7">
+		<%= form_for(@budget_transaction, remote: true) do |f| %>
+		<table>
+		<tr id=<%=@budget_transaction.id%>>
+				<td width="100">
+					<%= f.collection_select :account_id, Account.all, :id, :name, prompt: true %>
+				</td>
+				<td><%= f.collection_select :payee_id, Payee.all, :id, :name, prompt: true %></td>
+				<td><%= f.date_select :transaction_date %></td>
+				<td><%= f.number_field :debit %></td>
+				<td><%= f.number_field :credit %></td>
+				<td><%= f.text_field :comments %></td>
+				<td><%= f.submit "update", class: "btn btn-primary btn-rounded pull-right"%></td>
+		</tr>
+	</table>
+		<%end%>
+	</td>
 </tr>
-<%end%>

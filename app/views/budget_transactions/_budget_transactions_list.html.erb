@@ -1,57 +1,61 @@
+<!-- START RESPONSIVE TABLES -->
 <div id="budget-transactions-list">
-<div id="new-budgeted-transaction-row" style="display: none;">
-	<% @new_tran = BudgetTransaction.new%>
-	<%= form_for @new_tran, method: :post, remote: true do |f| %>
-	<%= f.hidden_field :budgeted ,:value => true%>
-	<%= f.hidden_field :scheduled, :value => true%>
-	<%= f.hidden_field :miscellaneous, :value => false%>
-	<%= f.hidden_field :savings, :value => false%>
-	<%= f.hidden_field :transaction_type, :value => 'budgeted'%>
-	<%= f.hidden_field :budget_item_id, :value => @budget_item.id%>
-	<%= f.hidden_field :budget_id, :value => @budget_item.budget.id%>
-	<%= f.hidden_field :category_id, :value => @budget_item.category.id%>
+	<div class="panel panel-default">
 
+			<div class="panel-heading">
+					<h3 class="panel-title"><%=@budget_item.category.name -%> Transactions</h3>
+			</div>
 
-		<%= f.collection_select :account_id, Account.all, :id, :name, prompt: true %>
-		<%= f.collection_select :payee_id, Payee.all, :id, :name, prompt: true %>
-		<%= f.date_select :transaction_date %>
-		<%= f.number_field :debit %>
-		<%= f.number_field :credit %>
-		<%= f.text_field :comments %>
-		<%= f.submit "add" %>
+			<div class="panel-body panel-body-table">
 
-	<%end%>
-</div>
-	<table>
-		<th>
-			<td>Account</td>
-			<td>Payee</td>
-			<td>Date</td>
-			<td>Debit</td>
-			<td>Credit</td>
-			<td>Comments</td>
-			<td>Actions</td>
-		</th>
-		<%@budget_item.budget_transactions.each do |budget_transaction|%>
-		<tr id=<%=budget_transaction.id%> >
-			<td><%=budget_transaction.account.name%></td>
-			<td><%=budget_transaction.payee.name%></td>
-			<td><%=budget_transaction.transaction_date%></td>
-			<td><%=budget_transaction.debit%></td>
-			<td><%=budget_transaction.credit%></td>
-			<td><%=budget_transaction.comments%></td>
-			<td><%=link_to "edit", edit_budget_item_transaction_path(budget_transaction),remote: true%></td>
-			<td>
-			<% unless budget_transaction.reconciled%>
-				<%= link_to budget_transaction, remote: true, method: :delete,  data: { confirm: 'Are you sure?' } do %>
-				  <button>X</button>
-				<% end %>
-			<% else	-%>
-				<%=image_tag 'cleared-icon.png'%>
-			<% end -%>
-			</td>
-		</tr>
-		<%end%>
+					<div class="table-responsive">
+							<table class="table table-bordered table-striped table-actions">
+									<thead>
+											<tr>
+													<th>From account</th>
+													<th>To payee</th>
+													<th width="100">Date</th>
+													<th width="100">Debit</th>
+													<th width="100">Credit</th>
+													<th width="300">Comments</th>
+													<th width="120">actions</th>
+											</tr>
+									</thead>
+									<tbody>
+											<%@budget_item.budget_transactions.each do |budget_transaction|%>
+											<tr id=<%=budget_transaction.id%> >
+												<td><strong><%=budget_transaction.account.name%></strong></td>
+												<td><strong><%=budget_transaction.payee.name%></strong></td>
+												<td><%=budget_transaction.transaction_date%></td>
+												<td><%=number_to_currency(budget_transaction.debit)%></td>
+												<td><%=number_to_currency(budget_transaction.credit)%></td>
+												<td><%=budget_transaction.comments%></td>
+												<td>
+														<%unless @budget_item.complete%>
+															<%=link_to edit_budget_item_transaction_path(budget_transaction),remote: true, class: "btn btn-default btn-rounded btn-condensed btn-sm" do %>
+																<span class="fa fa-pencil"></span>
+															<%end%>
+														<% unless budget_transaction.reconciled%>
+															<%= link_to budget_transaction, remote: true, method: :delete,  data: { confirm: 'Are you sure?' },class: "btn btn-danger btn-rounded btn-condensed btn-sm" do %>
+															  <span class="fa fa-times"></span>
+															<% end %>
+														<% else	-%>
+															<%=image_tag 'cleared-icon.png'%>
+														<% end -%>
+														<%else -%>
+															<span class="fa fa-lock"></span>
+															<% if budget_transaction.reconciled%>
+																<%=image_tag 'cleared-icon.png'%>
+															<%end%>
+														<%end%>
+												</td>
+											</tr>
+											<%end%>
+									</tbody>
+							</table>
+					</div>
 
-</table>
+			</div>
+	</div>
+	<!-- END RESPONSIVE TABLES -->
 </div>
