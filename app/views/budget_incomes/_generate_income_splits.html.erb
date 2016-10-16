@@ -4,7 +4,7 @@
 		<th>
 			<td>First Income Week</td>
 			<td>Income</td>
-		</th>	
+		</th>
 		<tr>
 			<td><%= text_field_tag :first_income_date, nil, class: 'datepicker'%></td>
 			<td><%= number_field_tag :amount,0.0%></td>
@@ -17,3 +17,8 @@
 </div>
 <%end%>
 
+<script>
+$(function() {
+    $( ".datepicker").datepicker({format: 'dd-mm-yyyy' });
+  });
+</script>

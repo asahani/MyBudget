@@ -13,7 +13,7 @@
 					<td>Account</td>
 					<td>Description</td>
 					<td>Amount</td>
-				</th>	
+				</th>
 				<tr>
 					<td><%= f.collection_select :account_id, Account.all, :id, :name, prompt: true %></td>
 					<td><%= f.text_field :description %></td>
@@ -30,7 +30,7 @@
 </div>
 <script>
 $(function() {
-    $( ".datepicker").datepicker({dateFormat: 'dd-mm-yy' });
+    $( ".datepicker").datepicker({format: 'dd-mm-yyyy' });
   });
 
 $(function() {
