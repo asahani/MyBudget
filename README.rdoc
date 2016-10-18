@@ -45,6 +45,7 @@ admin
 - Add info of show modal to all models in Admin
 - review right content pane and helper texts and error messages
 - possibly: edit & remove additional payee description in edit payee
+- Update Radio buttons and check boxes as per new UI
 
 Main
 ==============
@@ -52,6 +53,11 @@ Main
 - Admin and Settings screen
   - Edit payee on edit of account
   - when non-active on account edit then make payee non-active as well
+- Tasks
+- Scheduled Transactions with calendar view
+- Error pages
+- Budget dashboard including progress map
+
 
 Good to have
 ==============
@@ -67,8 +73,20 @@ Good to have
 - Different account type features
   - Feature: Interest free card and mortgage account balance reduction feature on payments
   - Mortgage offset as a savings account
+  - Investments
   - Account view
+  - Account Image
 - Setup screen
+- Payees - Icons or images
+- Transaction tags for searching
+- Payee details like Address book UI
+- Timeline for year
+- Calendar
+- Lock screen for no access
+- Login and registration
+- Goals
+- Other people sheets like pravesh and rajat
+- Loans
 
 RE-DESIGN LAYOUT
 =================
