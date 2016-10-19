@@ -1,29 +1,37 @@
 <%income_remaining = 0%>
 <div class="modal-body">
-	<table class="table">
-		<th>
-			<td>Income Date</td>
-			<td>Amount</td>
-			<td>Total So Far</td>
-		</th>	
-		<%@income_splits.each do |income_split|%>
-		<%if income_split.income_split_date < Time.now%>
-		<tr style="color: red;">
-		<%else%>
-		<tr>
-		<%income_remaining += income_split.amount%>	
-		<%end%>	
-			<td><%=income_split.income_split_date%></td>
-			<td><%=income_split.amount%></td>
-			<td><%=income_split.total_received%></td>
-		</tr>
-		<%end%>
-		<tr>
-			<td colspan=2>Income Remaining to Receive</td>
-			<td><%=income_remaining%></td>
-		</tr>	
-	</table>
-</div>
-<div class="modal-footer">
-	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+	<!-- START CONTEXTUAL CLASSES TABLE SAMPLE -->
+	<p>The incomes already recieved are highlighted in red.</p>
+	<div class="table-responsive">
+			<table class="table table-bordered">
+					<thead>
+							<tr>
+									<th>Income Date</th>
+									<th>Amount</th>
+									<th>Total Received</th>
+							</tr>
+					</thead>
+					<tbody>
+							<%@income_splits.each do |income_split|%>
+								<%if income_split.income_split_date < Time.now%>
+									<tr class="danger">
+								<%else%>
+									<tr class="success">
+										<%income_remaining += income_split.amount%>
+								<%end%>
+									<td><%=income_split.income_split_date%></td>
+									<td style="text-align: right;"><%=number_to_currency(income_split.amount)%></td>
+									<td style="text-align: right;"><%=number_to_currency(income_split.total_received)%></td>
+								</tr>
+								<%end%>
+								<tr class="active">
+									<td colspan=2>Income Remaining to Receive</td>
+									<td style="text-align: right;"><span class="label label-success"><%=number_to_currency(income_remaining)%></span></td>
+								</tr>
+					</tbody>
+			</table>
+	</div>
+
+	<!-- END CONTEXTUAL CLASSES TABLE SAMPLE -->
 </div>

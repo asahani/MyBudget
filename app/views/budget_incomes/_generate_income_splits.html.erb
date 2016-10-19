@@ -1,21 +1,35 @@
-<%= form_tag generate_income_splits_path(@budget_income), remote: true do %>
-<div class="modal-body">
-	<table class="table">
-		<th>
-			<td>First Income Week</td>
-			<td>Income</td>
-		</th>
-		<tr>
-			<td><%= text_field_tag :first_income_date, nil, class: 'datepicker'%></td>
-			<td><%= number_field_tag :amount,0.0%></td>
-		</tr>
-	</table>
+<!-- START INLINE FORM SAMPLE -->
+<div class="panel panel-default">
+		<div class="panel-body">
+
+				<%= form_tag generate_income_splits_path(@budget_income), remote: true, class: "form-inline" do %>
+					<div class="form-group">
+						<div><label>First Income Date</label></div>
+						<div>
+							<div class="input-group date">
+									<%= text_field_tag :first_income_date, Time.now, class: 'form-control datepicker'%>
+									<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div><label>Income</label></div>
+						<div>
+							<%= number_field_tag :amount,0.0, class: "form-control"%>
+						</div>
+					</div>
+					<div class="form-group">
+						<div><label>Actions</label></div>
+						<div>
+							<%= button_tag(type: 'submit', class: "btn btn-primary btn-rounded pull-right") do %>
+							 <i class='fa fa-columns'></i>&nbsp;Generate Splits
+							<% end %>
+						</div>
+					</div>
+				<%end%>
+		</div>
 </div>
-<div class="modal-footer">
-	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	<%= submit_tag "Generate", class: "btn btn-primary"%>
-</div>
-<%end%>
+<!-- END INLINE FORM SAMPLE -->
 
 <script>
 $(function() {
