@@ -3,39 +3,65 @@
 	<div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-			<h4 class="modal-title" id="newTransactionModalLabel">New Transaction</h4>
+			<h4 class="modal-title" id="newTransactionModalLabel">Budget Income</h4>
 		</div>
-		<%= form_for @budget_income, format: :html do |f| %>
-		<%= f.hidden_field :budget_id, :value => @budget_income.budget.id%>
+
 		<div class="modal-body">
-			<table class="table">
-				<th>
-					<td>Account</td>
-					<td>Description</td>
-					<td>Amount</td>
-				</th>
-				<tr>
-					<td><%= f.collection_select :account_id, Account.all, :id, :name, prompt: true %></td>
-					<td><%= f.text_field :description %></td>
-					<td><%= f.number_field :amount %></td>
-				</tr>
-			</table>
+
+
+			<%= form_for @budget_income, format: :html, html: {class: "form-horizontal", role: :form} do |f| %>
+			<%= f.hidden_field :budget_id, :value => @budget_income.budget.id%>
+
+			<div>
+					<div class="panel-body">
+							<h3><span class="fa fa-pencil"></span> Create/Update Transaction</h3>
+							<p>Create or Update an income for the current budget month.</p>
+					</div>
+
+					<div class="panel-body form-group-separated">
+							<div class="form-group">
+									<label class="col-md-3 col-xs-5 control-label">To Account</label>
+									<div class="col-md-9 col-xs-7">
+											<div class="input-group">
+													<%= f.collection_select :account_id, Account.all, :id, :name, {prompt: true}, {class: "form-control select"} %>
+											</div>
+									</div>
+							</div>
+							<div class="form-group">
+									<label class="col-md-3 col-xs-5 control-label">Description</label>
+									<div class="col-md-9 col-xs-7">
+											<div class="input-group">
+													<%= f.text_field :description, class: "form-control" %>
+													<span class="input-group-addon"><span class="fa fa-comment"></span></span>
+											</div>
+									</div>
+							</div>
+							<div class="form-group">
+									<label class="col-md-3 col-xs-5 control-label">Amount</label>
+									<div class="col-md-9 col-xs-7">
+										<div class="input-group">
+											<%= f.number_field :amount, class: "form-control" %>
+											<span class="input-group-addon"><span class="fa fa-usd"></span></span>
+										</div>
+									</div>
+							</div>
+							<div class="form-group">
+									<div class="col-md-12 col-xs-5">
+											<%= f.submit class: "btn btn-primary btn-rounded pull-right" %>
+									</div>
+							</div>
+					</div>
+			</div>
+			<% end %>
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			<%= f.submit class: "btn btn-primary"%>
 		</div>
-		<%end%>
 	</div>
 </div>
+
 <script>
 $(function() {
     $( ".datepicker").datepicker({format: 'dd-mm-yyyy' });
   });
-
-$(function() {
-  $('#new-budgeted-transaction-button').click(function(event){
-    $('#new-budgeted-transaction-row').slideDown(1000);
-  });
-});
 </script>
