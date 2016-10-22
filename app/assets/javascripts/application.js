@@ -34,6 +34,8 @@
 //= require atlant/demo_tables
 //= require atlant/plugins
 //= require atlant/actions
+//= require highcharts/highcharts
+//= require_tree .
 //= require_self
 
 $(document).ready(function() {

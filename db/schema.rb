@@ -43,11 +43,12 @@ ActiveRecord::Schema.define(version: 20160623072132) do
   create_table "budget_accounts", force: true do |t|
     t.integer  "account_id"
     t.integer  "budget_id"
-    t.decimal  "opening_balance", precision: 10, scale: 2, default: 0.0
-    t.decimal  "balance",         precision: 10, scale: 2, default: 0.0
-    t.boolean  "paid",                                     default: false
-    t.boolean  "reconciled",                               default: false
-    t.boolean  "documented",                               default: false
+    t.decimal  "opening_balance",   precision: 10, scale: 2, default: 0.0
+    t.decimal  "balance",           precision: 10, scale: 2, default: 0.0
+    t.decimal  "statement_balance", precision: 10, scale: 2, default: 0.0
+    t.boolean  "paid",                                       default: false
+    t.boolean  "reconciled",                                 default: false
+    t.boolean  "documented",                                 default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

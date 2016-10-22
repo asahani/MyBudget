@@ -1,7 +1,6 @@
 <%
 	income_rows = 0
 %>
-
 <div class="panel panel-default tabs">
 	<div class="budget-tabs">
 		<ul class="nav nav-tabs" role="tablist">
@@ -13,6 +12,7 @@
 		<div class="panel-body tab-content">
 				<div class="tab-pane fade in active" id="tab-first">
 					<p>Donec tristique eu sem et aliquam. Proin sodales elementum urna et euismod. Quisque nisl nisl, venenatis eget dignissim et, adipiscing eu tellus. Sed nulla massa, luctus id orci sed, elementum consequat est. Proin dictum odio quis diam gravida facilisis. Sed pharetra dolor a tempor tristique. Sed semper sed urna ac dignissim. Aenean fermentum leo at posuere mattis. Etiam vitae quam in magna viverra dictum. Curabitur feugiat ligula in dui luctus, sed aliquet neque posuere.</p>
+					<%= content_tag :div," ",id: "annual4"%>
 					<%=render 'budget_dashboard'%>
 				</div>
 				<div class="tab-pane" id="tab-second">
@@ -21,7 +21,13 @@
 					<%=render 'show_budget_details'%>
 				</div>
 				<div class="tab-pane" id="tab-third">
+					<div class="panel panel-default">
 						<p>Vestibulum cursus augue sed leo tempor, at aliquam orci dictum. Sed mattis metus id velit aliquet, et interdum nulla porta. Etiam euismod pellentesque purus, in fermentum eros venenatis ut. Praesent vitae nibh ac augue gravida lacinia non a ipsum. Aenean vestibulum eu turpis eu posuere. Sed eget lacus lacinia, mollis urna et, interdum dui. Donec sed diam ut metus imperdiet malesuada. Maecenas tincidunt ultricies ipsum, lobortis pretium dolor sodales ut. Donec nec fringilla nulla. In mattis sapien lorem, nec tincidunt elit scelerisque tempus.</p>
+						<%= content_tag :div," ",id: "annual", data: {budgetitems: budget_items_chart_data}%>
+						<%= content_tag :div," ",id: "annual2", data: {budgetcategories: budget_categories_chart_data,amount: budget_amount_chart_data,expenses: budget_expenses_chart_data,balance: budget_balance_chart_data}%>
+						<%= content_tag :div," ",id: "annual3", data: {budgetcategories: budget_categories_chart_data,amount: budget_amount_chart_data,expenses: budget_expenses_chart_data,balance: budget_balance_chart_data}%>
+
+					</div>
 				</div>
 				<div class="tab-pane" id="tab-fourth">
 						<p>In mattis sapien lorem, nec tincidunt elit scelerisque tempus. Quisque nisl nisl, venenatis eget dignissim et, adipiscing eu tellus. Sed nulla massa, luctus id orci sed, elementum consequat est. Proin dictum odio quis diam gravida facilisis. Sed pharetra dolor a tempor tristique. Sed semper sed urna ac dignissim. Aenean fermentum leo at posuere mattis. Etiam vitae quam in magna viverra dictum. Curabitur feugiat ligula in dui luctus, sed aliquet neque posuere.</p>
@@ -41,3 +47,11 @@
 	<%= link_to raw("<span class='glyphicon glyphicon-pencil' style='color: #999;' aria-hidden='true'></span>"),
 			new_budget_transaction_path(transaction_type: 'miscellaneous',budget_id: @budget.id), {:remote => true, class: 'new-transaction-modal-link'} %>
 <%end%>
+<script>
+$('ul.nav a').on('shown.bs.tab', function (e) {
+    mb.redraw();
+		ml.redraw();
+    $('svg').css({ width: '100%' });
+});
+
+</script>

@@ -125,15 +125,23 @@ class BudgetsController < ApplicationController
 
   def update_progress
     budget_account = BudgetAccount.find(params[:budget_account_id])
+
     unless (params[:is_paid].nil?)
       budget_account.update_attribute(:paid,params[:is_paid])
     end
+
     unless (params[:is_reconciled].nil?)
       budget_account.update_attribute(:reconciled,params[:is_reconciled])
     end
+
     unless (params[:is_documented].nil?)
       budget_account.update_attribute(:documented,params[:is_documented])
     end
+
+    unless (params[:statement_balance].nil?)
+      budget_account.update_attribute(:statement_balance,params[:statement_balance].to_f)
+    end
+
   end
 
   private

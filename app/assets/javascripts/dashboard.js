@@ -30,4 +30,3 @@
 //= require atlant/plugins/daterangepicker/daterangepicker
 //= require atlant/plugins
 //= require atlant/actions
-//= require atlant/demo_dashboard_x_dark
