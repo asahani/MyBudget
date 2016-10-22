@@ -31,6 +31,7 @@
 //= require atlant/plugins/moment.min
 //= require atlant/plugins/daterangepicker/daterangepicker
 //= require atlant/plugins/tagsinput/jquery.tagsinput.min
+//= require atlant/plugins/dropzone/dropzone.min
 //= require atlant/demo_tables
 //= require atlant/plugins
 //= require atlant/actions

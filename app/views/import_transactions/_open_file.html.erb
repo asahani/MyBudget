@@ -10,7 +10,14 @@
 			<%= hidden_field_tag :budget_id, @budget.id%>
 			Import for Account: <%= select_tag :account_id, options_from_collection_for_select(Account.all, :id, :name)%>
 			Balance Due: <%= number_field_tag :import_balance_due, nil, :step => 0.01 %>
-		  IMport File: <%= file_field_tag :file %>
+		  IMport File: <%= file_field_tag :file,class: "" %>
+			<div class="panel panel-default">
+					<div class="panel-body">
+							<h3><span class="fa fa-download"></span> Mini dropzone</h3>
+							<p>Add form with class <code>dropzone dropzone-mini</code> to get mini dropzone box</p>
+							<form action="#" class="dropzone dropzone-mini"></form>
+					</div>
+			</div>
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
