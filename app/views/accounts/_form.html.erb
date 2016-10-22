@@ -88,17 +88,17 @@
   </div>
 
   <div class="form-group">
-      <%= f.label "Debit amount negetive", {class: "col-md-3 col-xs-12 control-label"}%>
+      <%= f.label "Debit amount", {class: "col-md-3 col-xs-12 control-label"}%>
       <div class="col-md-6 col-xs-12">
         <label class="check">
             <%= f.radio_button :is_debit_negetive, true, {class: "iradio"}-%>
-            True
+            (-) Negative
         </label>
         <label class="check">
             <%= f.radio_button :is_debit_negetive, false,{class: "iradio"}-%>
-            False
+            (+) Positive
         </label>
-        <span class="help-block">Specify if the debit amount in the CSV file is negetive or positive</span>
+        <span class="help-block">Specify if the debit amount in the CSV file is a negative value or a positive value</span>
       </div>
   </div>
 
