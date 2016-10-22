@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(version: 20160623072132) do
 
   create_table "account_types", force: true do |t|
     t.string   "name"
-    t.boolean  "budget_account", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -24,7 +23,7 @@ ActiveRecord::Schema.define(version: 20160623072132) do
     t.string   "name"
     t.decimal  "initial_balance",            precision: 10, scale: 2, default: 0.0
     t.decimal  "balance",                    precision: 10, scale: 2, default: 0.0
-    t.integer  "account_type",                                        default: 0
+    t.integer  "account_type_id",                                     default: 1
     t.boolean  "budget_account",                                      default: true
     t.integer  "bsb_number"
     t.integer  "card_number"
@@ -147,9 +146,9 @@ ActiveRecord::Schema.define(version: 20160623072132) do
   create_table "incomes", force: true do |t|
     t.string   "description"
     t.decimal  "amount",      precision: 10, scale: 2, default: 0.0
-    t.boolean  "weekly"
-    t.boolean  "fortnightly"
-    t.boolean  "monthly"
+    t.boolean  "weekly",                               default: false
+    t.boolean  "fortnightly",                          default: false
+    t.boolean  "monthly",                              default: true
     t.integer  "account_id"
     t.boolean  "is_active",                            default: true
     t.datetime "created_at"
