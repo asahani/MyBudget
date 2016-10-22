@@ -20,7 +20,7 @@
                     <label class="col-md-3 col-xs-5 control-label">Budgeted Amount</label>
                     <div class="col-md-9 col-xs-7">
                         <div class="input-group">
-                            <%= f.number_field :budgeted_amount, class: "form-control" %>
+                            <%= f.number_field :budgeted_amount,step: :any, class: "form-control" %>
                             <span class="input-group-addon"><span class="fa fa-usd"></span></span>
                         </div>
                     </div>
@@ -110,12 +110,12 @@
         							<div class="form-group">
         								<div><label>Debit</label></div>
         								<div>
-                          <%= f.number_field :debit , class: "form-control"%>
+                          <%= f.number_field :debit ,step: :any, class: "form-control"%>
                         </div>
         							</div>
         							<div class="form-group">
         								<div><label>Credit</label></div>
-        								<div><%= f.number_field :credit, class: "form-control" %></div>
+        								<div><%= f.number_field :credit,step: :any, class: "form-control" %></div>
         							</div>
         							<div class="form-group">
         								<div><label>Comments</label></div>

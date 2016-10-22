@@ -32,7 +32,7 @@
       <div class="col-md-6 col-xs-12">
           <div class="input-group">
               <span class="input-group-addon"><span class="fa fa-dollar"></span></span>
-              <%= f.number_field :initial_balance, {class: "form-control"} %>
+              <%= f.number_field :initial_balance, value: number_to_currency(f.object.initial_balance.to_f, delimiter: '', unit: ''), step: :any, {class: "form-control"} %>
           </div>
           <span class="help-block">The initial amount at the time of opening this account</span>
       </div>

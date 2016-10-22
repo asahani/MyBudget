@@ -8,8 +8,8 @@
 				</td>
 				<td><%= f.collection_select :payee_id, Payee.all, :id, :name, prompt: true %></td>
 				<td><%= f.date_select :transaction_date %></td>
-				<td><%= f.number_field :debit %></td>
-				<td><%= f.number_field :credit %></td>
+				<td><%= f.number_field :debit,step: :any %></td>
+				<td><%= f.number_field :credit,step: :any %></td>
 				<td><%= f.text_field :comments %></td>
 				<td><%= f.submit "update", class: "btn btn-primary btn-rounded pull-right"%></td>
 		</tr>

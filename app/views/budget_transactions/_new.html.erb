@@ -62,7 +62,7 @@
 													<label class="col-md-3 col-xs-5 control-label">Debit</label>
 													<div class="col-md-9 col-xs-7">
 														<div class="input-group">
-															<%= f.number_field :debit, class: "form-control" %>
+															<%= f.number_field :debit, step: :any, class: "form-control" %>
 															<span class="input-group-addon"><span class="fa fa-usd"></span></span>
 														</div>
 													</div>
@@ -71,7 +71,7 @@
 													<label class="col-md-3 col-xs-5 control-label">Credit</label>
 													<div class="col-md-9 col-xs-7">
 														<div class="input-group">
-															<%= f.number_field :credit, class: "form-control" %>
+															<%= f.number_field :credit, step: :any, class: "form-control" %>
 															<span class="input-group-addon"><span class="fa fa-usd"></span></span>
 														</div>
 													</div>
@@ -149,7 +149,7 @@
 														<label class="col-md-3 col-xs-5 control-label">Credit</label>
 														<div class="col-md-9 col-xs-7">
 															<div class="input-group">
-																<%= f.number_field :credit, class: "form-control" %>
+																<%= f.number_field :credit, step: :any, class: "form-control" %>
 																<span class="input-group-addon"><span class="fa fa-usd"></span></span>
 															</div>
 														</div>
@@ -226,7 +226,7 @@
 														<label class="col-md-3 col-xs-5 control-label">Debit Amount</label>
 														<div class="col-md-9 col-xs-7">
 															<div class="input-group">
-																<%= f.number_field :debit, class: "form-control" %>
+																<%= f.number_field :debit, step: :any, class: "form-control" %>
 																<span class="input-group-addon"><span class="fa fa-usd"></span></span>
 															</div>
 														</div>
@@ -303,7 +303,7 @@
 														<label class="col-md-3 col-xs-5 control-label">Amount</label>
 														<div class="col-md-9 col-xs-7">
 															<div class="input-group">
-																<%= f.number_field :credit, class: "form-control" %>
+																<%= f.number_field :credit,step: :any, class: "form-control" %>
 																<span class="input-group-addon"><span class="fa fa-usd"></span></span>
 															</div>
 														</div>

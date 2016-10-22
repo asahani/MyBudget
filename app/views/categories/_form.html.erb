@@ -31,7 +31,7 @@
       <div class="col-md-6 col-xs-12">
           <div class="input-group">
               <span class="input-group-addon"><span class="fa fa-dollar"></span></span>
-              <%= f.number_field :budget_amount, {class: "form-control"} %>
+              <%= f.number_field :budget_amount, step: :any, {class: "form-control"} %>
           </div>
           <span class="help-block">The amount allocated per month</span>
       </div>
