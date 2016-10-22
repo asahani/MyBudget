@@ -33,8 +33,13 @@ Rails.application.routes.draw do
 
   resources :account_types
 
-  resources :budgets
+  resources :budgets do
+    member do
+      post :update_progress
+    end
+  end
   match "budgets/show_or_create/:month" => "budgets#show_or_create", :via => :get, :as => 'show_or_create_budget'
+
 
   resources :budget_items, :only => [:edit,:show,:update]
 
