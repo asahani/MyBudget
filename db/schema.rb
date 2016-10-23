@@ -186,7 +186,9 @@ ActiveRecord::Schema.define(version: 20161023110836) do
 
   create_table "tasks", force: true do |t|
     t.integer  "budget_id"
+    t.string   "title"
     t.text     "description"
+    t.integer  "priority"
     t.date     "due_by"
     t.boolean  "completed",   default: false
     t.datetime "created_at"
