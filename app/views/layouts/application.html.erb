@@ -99,6 +99,7 @@
                             <li><%= link_to raw("<span class='xn-text'>Incomes</span>"), incomes_path%>
                         </ul>
                     </li>
+                    <%unless @budget.nil?%>
                     <li class="xn-openable">
                       <a href="#">
                         <span class="fa fa-credit-card"></span>
@@ -146,6 +147,7 @@
         								<%end%>
         					      </ul>
                     </li>
+
                     <!-- ACCCOUNTS LIST -->
                     <li class="xn-openable active">
                       <a href="#">
@@ -192,8 +194,15 @@
                       </ul>
                     </li>
                     <!-- END ACCCOUNTS LIST -->
+                    <%end%>
                 </ul>
                 <!-- END X-NAVIGATION -->
+                <%unless @budget.nil?%>
+                	<%= link_to raw("<span class='glyphicon glyphicon-import' style='color: #999;' aria-hidden='true'></span>"),
+                			import_transactions_open_file_path(budget_id: @budget.id), {:remote => true, class: 'import-transactions-modal-link'} %>
+                	<%= link_to raw("<span class='glyphicon glyphicon-pencil' style='color: #999;' aria-hidden='true'></span>"),
+                			new_budget_transaction_path(transaction_type: 'miscellaneous',budget_id: @budget.id), {:remote => true, class: 'new-transaction-modal-link'} %>
+                <%end%>
             </div>
             <!-- END PAGE SIDEBAR -->
 
@@ -206,6 +215,11 @@
                   <!-- END X-NAVIGATION VERTICAL -->
                   <%=yield%>
 
+                  <div class="modal fade" id="importTransactionsModal" tabindex="-1" role="dialog" aria-labelledby="importTransactionsModalLabel" aria-hidden="true"></div>
+                  <div class="modal fade" id="incomeSplitsModal" tabindex="-1" role="dialog" aria-labelledby="incomeSplitsModalLabel" aria-hidden="true"></div>
+                  <div class="modal fade" id="editBudgetItemModal" tabindex="-1" role="dialog" aria-labelledby="editBudgetItemModalLabel" aria-hidden="true"></div>
+                  <div class="modal fade" id="newTransactionModal" tabindex="-1" role="dialog" aria-labelledby="newTransactionModalLabel" aria-hidden="true"></div>
+                  <div class="modal fade" id="newBudgetIncomeModal" tabindex="-1" role="dialog" aria-labelledby="newBudgetIncomeModalLabel" aria-hidden="true"></div>
                 <div class="x-content-footer">
                     Copyright © 2015 ATLANT. All rights reserved
                 </div>

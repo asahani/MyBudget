@@ -35,12 +35,6 @@
 		</div>
 	</div>
 </div>
-
-<div class="modal fade" id="importTransactionsModal" tabindex="-1" role="dialog" aria-labelledby="importTransactionsModalLabel" aria-hidden="true"></div>
-<div class="modal fade" id="incomeSplitsModal" tabindex="-1" role="dialog" aria-labelledby="incomeSplitsModalLabel" aria-hidden="true"></div>
-<div class="modal fade" id="editBudgetItemModal" tabindex="-1" role="dialog" aria-labelledby="editBudgetItemModalLabel" aria-hidden="true"></div>
-<div class="modal fade" id="newTransactionModal" tabindex="-1" role="dialog" aria-labelledby="newTransactionModalLabel" aria-hidden="true"></div>
-<div class="modal fade" id="newBudgetIncomeModal" tabindex="-1" role="dialog" aria-labelledby="newBudgetIncomeModalLabel" aria-hidden="true"></div>
 <%unless @budget.nil?%>
 	<%= link_to raw("<span class='glyphicon glyphicon-import' style='color: #999;' aria-hidden='true'></span>"),
 			import_transactions_open_file_path(budget_id: @budget.id), {:remote => true, class: 'import-transactions-modal-link'} %>
