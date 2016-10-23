@@ -4,8 +4,7 @@ class BudgetsController < ApplicationController
   # GET /budgets
   # GET /budgets.json
   def index
-    #TODO: get Start Date from config
-    month_start_day = 15
+    month_start_day = Rails.application.config.start_of_the_month
     year = Time.now.year
     month = Time.now.month
 
