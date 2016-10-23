@@ -1,8 +1,24 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
+mb = "new"
+ml = "new2"
 jQuery ->
-  Morris.Bar
+  $('ul.nav a').on 'shown.bs.tab', (e) ->
+    morrisTypes = $(this).attr('data-morris')
+    morrisTypesArray = morrisTypes.split(',')
+    $.each morrisTypesArray, (key, value) ->
+      eval value + '.redraw()'
+      return
+
+    highchartTypes = $(this).attr('data-highcharts')
+    highchartTypesArray = highchartTypes.split(',')
+    $.each highchartTypesArray, (key, value) ->
+      eval value + '.highcharts().reflow()'
+      return
+    return
+
+  mb = Morris.Bar
     element: 'annual'
     data: $('#annual').data('budgetitems')
     xkey: 'category'
@@ -11,7 +27,7 @@ jQuery ->
 
   console.log $('#annual2').data('amount')
   console.log $('#annual2').data('budgetcategories')
-  $('#annual2').highcharts
+  c1 = $('#annual2').highcharts
     chart:
       renderTo: 'annual2'
       type: 'bar'
@@ -32,7 +48,7 @@ jQuery ->
       }
     ]
 
-  $('#annual3').highcharts
+  c2 = $('#annual3').highcharts
     chart:
       renderTo: 'annual3'
       type: 'bar'
@@ -52,7 +68,7 @@ jQuery ->
       }
     ]
 
-  Morris.Line
+  ml = Morris.Line
     element: 'annual4'
     data: [
       {
