@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :tasks
+
   get 'admin/index'
 
   get 'import_transactions/open_file'

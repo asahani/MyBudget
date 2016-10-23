@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160623072132) do
+ActiveRecord::Schema.define(version: 20161023110836) do
 
   create_table "account_types", force: true do |t|
     t.string   "name"
@@ -180,6 +180,15 @@ ActiveRecord::Schema.define(version: 20160623072132) do
     t.boolean  "is_system",   default: false
     t.boolean  "is_account",  default: false
     t.integer  "account_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tasks", force: true do |t|
+    t.integer  "budget_id"
+    t.text     "description"
+    t.date     "due_by"
+    t.boolean  "completed",   default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
