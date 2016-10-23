@@ -39,8 +39,7 @@ class BudgetsController < ApplicationController
     year = params[:year].to_i
 
     if year == 0
-      #TODO: get Start Date from config
-      month_start_day = 15
+      month_start_day = Rails.application.config.start_of_the_month
       year = Time.now.year
       month = Time.now.month
 
@@ -78,8 +77,7 @@ class BudgetsController < ApplicationController
   # POST /budgets
   # POST /budgets.json
   def create
-    #TODO: get Start Date from config
-    month_start_day = 15
+    month_start_day = Rails.application.config.start_of_the_month
     start_date = Date.new(params[:year].to_i,params[:month].to_i,month_start_day)
     end_date = start_date.next_month.prev_day
 
