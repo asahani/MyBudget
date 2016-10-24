@@ -26,6 +26,7 @@
  *= require_tree ../../../vendor/assets/stylesheets/atlant/mcustomscrollbar/.
  *= require_tree ../../../vendor/assets/stylesheets/atlant/nvd3/.
  *= require_tree ../../../vendor/assets/stylesheets/atlant/summernote/.
+ *= require atlant/theme-default
  *= require atlant/rtl
  *= require_tree .
  *= require_self
@@ -43,4 +44,166 @@ body {
 
 .inside-sidebar {
 	margin: 5px 10px 0px 10px;
+}
+
+/* X-Content */
+.x-block {
+  float: left;
+  width: 100%;
+}
+.panel .x-block .panel-body {
+	padding:0px!important;
+}
+.x-block .x-block-head {
+  float: left;
+  width: 100%;
+  height: 15px;
+  margin-bottom: 20px;
+}
+.x-block .x-block-head h3 {
+  float: left;
+  line-height: 35px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.x-block .x-block-head .btn {
+  padding: 7px 15px 6px;
+  font-size: 12px;
+}
+.x-block .x-block-head .btn.btn-default {
+  color: #1F1F1F;
+  background: transparent;
+}
+.x-block .x-block-content {
+  float: left;
+  width: 100%;
+  background: #FFF;
+}
+
+.x-block .x-block-content.x-todo .x-todo-header {
+  float: left;
+  width: 100%;
+  line-height: 40px;
+  padding: 15px 20px;
+  border-bottom: 1px solid #EAEDF2;
+}
+.x-block .x-block-content.x-todo .x-todo-header label {
+  float: left;
+  margin: 8px 10px 0px 0px;
+}
+.x-block .x-block-content.x-todo .x-todo-header h3 {
+  float: left;
+  font-size: 13px;
+  color: #93ABB9;
+  margin: 0px;
+  line-height: 35px;
+  padding: 0px;
+}
+.x-block .x-block-content.x-todo .x-todo-header .btn {
+  padding: 7px 15px 6px;
+  font-size: 12px;
+}
+.x-block .x-block-content.x-todo .x-todo-content {
+  float: left;
+  width: 100%;
+}
+.x-block .x-block-content.x-todo .x-todo-content .item {
+  float: left;
+  width: 100%;
+  padding: 5px 0px 0px 0px;
+  border-bottom: 1px solid #EAEDF2;
+}
+.x-block .x-block-content.x-todo .x-todo-content a {
+	color: #656d78;
+}
+.x-block .x-block-content.x-todo .x-todo-content .item .head {
+  float: left;
+  width: 100%;
+  // line-height: 20px;
+  color: #526C7F;
+  padding: 5px 20px;
+  // margin-bottom: 20px;
+}
+.x-block .x-block-content.x-todo .x-todo-content .item .head .pull-left {
+  margin-right: 20px;
+}
+.x-block .x-block-content.x-todo .x-todo-content .item .head .pull-right {
+  color: #93ABB9;
+}
+.x-block .x-block-content.x-todo .x-todo-content .item .head .status {
+  float: left;
+  width: 10px;
+  height: 10px;
+  margin-right: 10px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  background: #CCC;
+  border: 0px;
+}
+.x-block .x-block-content.x-todo .x-todo-content .item .head .status.status-high {
+  background: #E34724;
+}
+.x-block .x-block-content.x-todo .x-todo-content .item .head .status.status-medium {
+  background: #95B75D;
+}
+.x-block .x-block-content.x-todo .x-todo-content .item .head .status.status-low {
+  background: #3FBAE4;
+}
+.x-block .x-block-content.x-todo .x-todo-content .item .title {
+  float: left;
+  width: 100%;
+  padding: 5px 20px;
+}
+.x-block .x-block-content.x-todo .x-todo-content .item .title h4 {
+  color: #1F1F1F;
+  font-size: 14px;
+  font-weight: 600;
+  float: left;
+  margin: 0px;
+  padding: 0px;
+  line-height: 20px;
+}
+.x-block .x-block-content.x-todo .x-todo-content .item .title label {
+  float: left;
+  margin: 0px;
+  margin-right: 10px;
+}
+.x-block .x-block-content.x-todo .x-todo-content .item .content {
+  float: left;
+  width: 100%;
+  padding: 10px 20px;
+  font-size: 13px;
+  color: #526C7F;
+}
+.x-block .x-block-content.x-todo .x-todo-content .item .footer {
+  float: left;
+  width: 100%;
+  // line-height: 20px;
+	// background-color: #F5F5F5;
+  color: #526C7F;
+  padding: 0px 20px 5px 20px;
+	border: 1px soild #EAEDF2;
+}
+.x-block .x-block-content.x-todo .x-todo-content .item .footer .pull-left {
+  margin-right: 20px;
+	color: #93ABB9;
+}
+.x-block .x-block-content.x-todo .x-todo-content .item .footer .pull-right {
+  color: #93ABB9;
+}
+
+
+.x-block .x-block-content.x-todo .x-todo-footer {
+  height: 45px;
+  line-height: 45px;
+  padding: 0px 20px;
+}
+.x-block .x-block-content.x-todo .x-todo-footer a {
+  font-size: 13px;
+  color: #92ABB8;
+  font-weight: 600;
+}
+.x-block .x-block-content.x-todo .x-todo-footer a span {
+  margin-right: 5px;
 }
