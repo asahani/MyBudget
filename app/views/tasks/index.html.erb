@@ -1,31 +1,217 @@
-<h1>Listing tasks</h1>
+<!-- START ALERTS -->
+<%=render 'layouts/alerts'-%>
+<!-- END ALERTS -->
 
-<table>
-  <thead>
-    <tr>
-      <th>Description</th>
-      <th>Due by</th>
-      <th>Completed</th>
-      <th>Budget</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb push-down-0">
+  <li><%=link_to "Budget",budgets_path -%></li>
+  <li class="active">Tasks</li>
+</ul>
+<!-- END BREADCRUMB -->
 
-  <tbody>
-    <% @tasks.each do |task| %>
-      <tr>
-        <td><%= task.description %></td>
-        <td><%= task.due_by %></td>
-        <td><%= task.completed %></td>
-        <td><%= task.budget_id %></td>
-        <td><%= link_to 'Show', task %></td>
-        <td><%= link_to 'Edit', edit_task_path(task) %></td>
-        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<!-- START CONTENT FRAME -->
+<div class="content-frame">
+    <!-- START CONTENT FRAME TOP -->
+    <div class="content-frame-top">
+        <div class="page-title">
+            <h2><span class="fa fa-arrow-circle-o-left"></span> Tasks</h2>
+        </div>
+        <div class="pull-right">
+            <button class="btn btn-default content-frame-left-toggle"><span class="fa fa-bars"></span></button>
+        </div>
+        <div class="pull-right" style="width: 100px; margin-right: 5px;">
+            <select class="form-control select">
+                <option>All</option>
+                <option>Work</option>
+                <option>Home</option>
+                <option>Friends</option>
+                <option>Closed</option>
+            </select>
+        </div>
 
-<br>
+    </div>
+    <div class="content-frame-left">
+        <div class="form-group">
+            <h4>Add new task:</h4>
+            <textarea class="form-control push-down-10" id="new_task" rows="4" placeholder="Your task text here..."></textarea>
+            <button class="btn btn-primary" id="add_new_task"><span class="fa fa-edit"></span> Add</button>
+        </div>
+        <div class="form-group push-up-10">
+            <h4>Searh in tasks:</h4>
+            <div class="input-group">
+                <div class="input-group-addon"><span class="fa fa-search"></span></div>
+                <input type="text" class="form-control" placeholder="keyword..."/>
+            </div>
+        </div>
+        <div class="form-group">
+            <h4>Task groups:</h4>
+            <div class="list-group border-bottom">
+                <a href="#" class="list-group-item"><span class="fa fa-circle text-primary"></span> Project #1</a>
+                <a href="#" class="list-group-item"><span class="fa fa-circle text-success"></span> Personal</a>
+                <a href="#" class="list-group-item"><span class="fa fa-circle text-warning"></span> Project #2</a>
+                <a href="#" class="list-group-item"><span class="fa fa-circle text-danger"></span> Meetings</a>
+                <a href="#" class="list-group-item"><span class="fa fa-circle text-info"></span> Work</a>
+            </div>
+        </div>
+        <div class="form-group">
+            <h4>Tags:</h4>
+            <ul class="list-tags">
+                <li><a href="#"><span class="fa fa-tag"></span> amet</a></li>
+                <li><a href="#"><span class="fa fa-tag"></span> rutrum</a></li>
+                <li><a href="#"><span class="fa fa-tag"></span> nunc</a></li>
+                <li><a href="#"><span class="fa fa-tag"></span> tempor</a></li>
+                <li><a href="#"><span class="fa fa-tag"></span> eros</a></li>
+                <li><a href="#"><span class="fa fa-tag"></span> suspendisse</a></li>
+                <li><a href="#"><span class="fa fa-tag"></span> dolor</a></li>
+            </ul>
+        </div>
 
-<%= link_to 'New Task', new_task_path %>
+    </div>
+    <!-- END CONTENT FRAME TOP -->
+
+    <!-- START CONTENT FRAME BODY -->
+    <div class="content-frame-body">
+
+        <div class="row push-up-10">
+          <div class="x-block">
+              <div class="x-block-head">
+                  <h3>TO DO LIST</h3>
+                  <div class="pull-right">
+                      <button class="btn btn-default">ACTIONS <span class="fa fa-angle-down" style="margin-left: 20px;"></span></button>
+                  </div>
+              </div>
+              <div class="x-block-content x-todo">
+                  <div class="x-todo-header">
+                      <label class="check"><input type="checkbox" class="icheckbox"></label>
+                      <h3>7 NEW TASKS FOR TODAY</h3>
+                      <button class="btn btn-default pull-right">TODAY: 14 SEP. 2015 <span class="fa fa-angle-down"></span></button>
+                  </div>
+                  <div class="x-todo-content scroll" style="height: 550px;">
+                      <div class="item">
+                          <div class="head">
+                              <div class="pull-left"><span class="status status-high"></span> Priority: High</div>
+                              <div class="pull-left">Project: ATLANT Template</div>
+                              <div class="pull-right"><span class="fa fa-clock-o"></span> added few minutes ago</div>
+                          </div>
+                          <div class="title">
+                              <label class="check"><input type="checkbox" class="icheckbox"></label>
+                              <h4>MAKE NEW ATLANT DASHBOARD</h4>
+                          </div>
+                          <div class="content">
+                              Donec porta suscipit odio et luctus. Mauris vel velit dignissim, lobortis mauris non, ultricies sapien
+                          </div>
+                      </div>
+                      <div class="item">
+                          <div class="head">
+                              <div class="pull-left"><span class="status status-low"></span> Priority: Low</div>
+                              <div class="pull-left">Project: New awesome projec</div>
+                              <div class="pull-right"><span class="fa fa-clock-o"></span> added 15 minutes ago</div>
+                          </div>
+                          <div class="title">
+                              <label class="check"><input type="checkbox" class="icheckbox"></label>
+                              <h4>CALL MARTIN PHILLIPS ABOUT NEW PROJECT </h4>
+                          </div>
+                          <div class="content">
+                              Fusce eu nunc nisl. Duis tincidunt dui lectus. Suspendisse urna dolor, venenatis eu bibendum ut, placerat id sem. Nulla iaculis augue in nulla rutrum
+                          </div>
+                      </div>
+                      <div class="item">
+                          <div class="head">
+                              <div class="pull-left"><span class="status status-low"></span> Priority: Low</div>
+                              <div class="pull-left">Project: Imaginary Shop</div>
+                              <div class="pull-right"><span class="fa fa-clock-o"></span> added 3 hours ago</div>
+                          </div>
+                          <div class="title">
+                              <label class="check"><input type="checkbox" class="icheckbox"></label>
+                              <h4>PRINT THE INOVOISES FOR BRIAN DAWSON</h4>
+                          </div>
+                          <div class="content">
+                              Donec porta suscipit odio et luctus. Mauris vel velit dignissim, lobortis mauris non, ultricies sapien
+                          </div>
+                      </div>
+                      <div class="item">
+                          <div class="head">
+                              <div class="pull-left"><span class="status status-low"></span> Priority: Low</div>
+                              <div class="pull-left">Project: Imaginary Shop</div>
+                              <div class="pull-right"><span class="fa fa-clock-o"></span> added 3 hours ago</div>
+                          </div>
+                          <div class="title">
+                              <label class="check"><input type="checkbox" class="icheckbox"></label>
+                              <h4>PRINT THE INOVOISES FOR BRIAN DAWSON</h4>
+                          </div>
+                          <div class="content">
+                              Donec porta suscipit odio et luctus. Mauris vel velit dignissim, lobortis mauris non, ultricies sapien
+                          </div>
+                      </div>
+                      <div class="item">
+                          <div class="head">
+                              <div class="pull-left"><span class="status status-low"></span> Priority: Low</div>
+                              <div class="pull-left">Project: Imaginary Shop</div>
+                              <div class="pull-right"><span class="fa fa-clock-o"></span> added 3 hours ago</div>
+                          </div>
+                          <div class="title">
+                              <label class="check"><input type="checkbox" class="icheckbox"></label>
+                              <h4>PRINT THE INOVOISES FOR BRIAN DAWSON</h4>
+                          </div>
+                          <div class="content">
+                              Donec porta suscipit odio et luctus. Mauris vel velit dignissim, lobortis mauris non, ultricies sapien
+                          </div>
+                      </div>
+                      <div class="item">
+                          <div class="head">
+                              <div class="pull-left"><span class="status status-low"></span> Priority: Low</div>
+                              <div class="pull-left">Project: Imaginary Shop</div>
+                              <div class="pull-right"><span class="fa fa-clock-o"></span> added 3 hours ago</div>
+                          </div>
+                          <div class="title">
+                              <label class="check"><input type="checkbox" class="icheckbox"></label>
+                              <h4>PRINT THE INOVOISES FOR BRIAN DAWSON</h4>
+                          </div>
+                          <div class="content">
+                              Donec porta suscipit odio et luctus. Mauris vel velit dignissim, lobortis mauris non, ultricies sapien
+                          </div>
+                      </div>
+                      <div class="item">
+                          <div class="head">
+                              <div class="pull-left"><span class="status status-medium"></span> Priority: Medium</div>
+                              <div class="pull-left">Project: Landing page for Themeforest</div>
+                              <div class="pull-right"><span class="fa fa-clock-o"></span> added 7 hours ago</div>
+                          </div>
+                          <div class="title">
+                              <label class="check"><input type="checkbox" class="icheckbox"></label>
+                              <h4>NEW ATLANT DASHBOARD</h4>
+                          </div>
+                          <div class="content">
+                              Donec porta suscipit odio et luctus. Mauris vel velit dignissim, lobortis mauris non, ultricies sapien
+                          </div>
+                      </div>
+                      <div class="item">
+                          <div class="head">
+                              <div class="pull-left"><span class="status status-low"></span> Priority: Medium</div>
+                              <div class="pull-left">Project: Shop for Themeforest</div>
+                              <div class="pull-right"><span class="fa fa-clock-o"></span> added 8 hours ago</div>
+                          </div>
+                          <div class="title">
+                              <label class="check"><input type="checkbox" class="icheckbox"></label>
+                              <h4>OS-COMMERCE SHOP TEMPLATE</h4>
+                          </div>
+                          <div class="content">
+                              Donec porta suscipit odio et luctus. Mauris vel velit dignissim, lobortis mauris non, ultricies sapien
+                          </div>
+                      </div>
+                  </div>
+                  <div class="x-todo-footer">
+                      <div class="pull-right">
+                          <a href="#"><span class="fa fa-plus"></span> Add new task</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+        </div>
+
+    </div>
+    <!-- END CONTENT FRAME BODY -->
+
+</div>
+<!-- END CONTENT FRAME -->

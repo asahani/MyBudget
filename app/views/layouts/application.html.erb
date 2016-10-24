@@ -75,6 +75,20 @@
                         </div>
                     </li>
                     <li class="xn-title">Navigation</li>
+                    <li class="xn-openable">
+                        <a href="#"><span class="fa fa-dashboard"></span> <span class="xn-text">Dashboards</span></a>
+                        <ul>
+                            <li class="active"><a href="index.html"><span class="xn-text">Dashboard 1</span></a></li>
+                            <li><a href="dashboard.html"><span class="xn-text">Dashboard 2</span></a><div class="informer informer-danger">New!</div></li>
+                            <li><a href="dashboard-dark.html"><span class="xn-text">Dashboard 3</span></a><div class="informer informer-danger">New!</div></li>
+                            <li><%= link_to raw("<span class='xn-text'>Tasks</span>"), tasks_path%>
+                            <li><%= link_to raw("<span class='xn-text'>Master Categories</span>"), master_categories_path%>
+                            <li><%= link_to raw("<span class='xn-text'>Categories</span>"), categories_path%>
+                            <li><%= link_to raw("<span class='xn-text'>Accounts</span>"), accounts_path%>
+                            <li><%= link_to raw("<span class='xn-text'>Payees</span>"), payees_path%>
+                            <li><%= link_to raw("<span class='xn-text'>Incomes</span>"), incomes_path%>
+                        </ul>
+                    </li>
                     <li class="xn-openable active">
                       <div class="form-group inside-sidebar">
                           <div class="list-group border-bottom">
@@ -86,41 +100,8 @@
                           </div>
                       </div>
                     </li>
-                    <li class="xn-openable active">
-                      <div class="form-group inside-sidebar">
-                          <div class="list-group border-bottom">
-                              <a href="#" class="list-group-item">
-                                <input type="checkbox" class="icheckbox"/>
-                                <span class="fa fa-circle text-primary"></span> Project #1
-                                <span class="badge">14</span>
-                              </a>
-                              <a href="#" class="list-group-item">
-                                <div class="task-item task-primary">
-                                    <div class="task-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris rutrum velit vel erat fermentum, a dignissim dolor malesuada.</div>
-                                    <div class="task-footer">
-                                        <div class="pull-left"><span class="fa fa-clock-o"></span> 1h 30min</div>
-                                    </div>
-                                </div>
-                              </a>
-                              <a href="#" class="list-group-item"><span class="fa fa-circle text-warning"></span> Project #2</a>
-                              <a href="#" class="list-group-item"><span class="fa fa-circle text-danger"></span> Meetings</a>
-                              <a href="#" class="list-group-item"><span class="fa fa-circle text-info"></span> Work</a>
-                          </div>
-                      </div>
-                    </li>
-                    <li class="xn-openable">
-                        <a href="#"><span class="fa fa-dashboard"></span> <span class="xn-text">Dashboards</span></a>
-                        <ul>
-                            <li class="active"><a href="index.html"><span class="xn-text">Dashboard 1</span></a></li>
-                            <li><a href="dashboard.html"><span class="xn-text">Dashboard 2</span></a><div class="informer informer-danger">New!</div></li>
-                            <li><a href="dashboard-dark.html"><span class="xn-text">Dashboard 3</span></a><div class="informer informer-danger">New!</div></li>
-                            <li><%= link_to raw("<span class='xn-text'>Master Categories</span>"), master_categories_path%>
-                            <li><%= link_to raw("<span class='xn-text'>Categories</span>"), categories_path%>
-                            <li><%= link_to raw("<span class='xn-text'>Accounts</span>"), accounts_path%>
-                            <li><%= link_to raw("<span class='xn-text'>Payees</span>"), payees_path%>
-                            <li><%= link_to raw("<span class='xn-text'>Incomes</span>"), incomes_path%>
-                        </ul>
-                    </li>
+
+
                     <%unless @budget.nil?%>
                     <li class="xn-openable">
                       <a href="#">
