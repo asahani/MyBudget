@@ -57,7 +57,7 @@
 
             <div class="form-group">
               <div class="input-group">
-                  <%= f.select :priority, options_for_select([["High", 1],["Medium", 2], ["Low", 3]]), {prompt: false}, {class: "form-control select"} %>
+                  <%= f.select :priority, options_for_select([["Low", 3],["Medium", 2],["High", 1]]), {prompt: false}, {class: "form-control select"} %>
               </div>
             </div>
 
@@ -116,6 +116,7 @@
                           <div class="content">
                               <%=task.description%>
                           </div>
+                          
                           <div class="footer">
                             <%unless task.due_by.nil?%>
                               <div class="pull-left"><span class="fa fa-clock-o"></span> due <%=distance_of_time_in_words_to_now(task.due_by)%></div>
