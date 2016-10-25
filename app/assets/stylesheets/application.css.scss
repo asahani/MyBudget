@@ -119,10 +119,10 @@ body {
 .x-block .x-block-content.x-todo .x-todo-content .item .head {
   float: left;
   width: 100%;
-  // line-height: 20px;
+  line-height: 20px;
   color: #526C7F;
   padding: 5px 20px;
-  // margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .x-block .x-block-content.x-todo .x-todo-content .item .head .pull-left {
   margin-right: 20px;
@@ -153,7 +153,26 @@ body {
 .x-block .x-block-content.x-todo .x-todo-content .item .title {
   float: left;
   width: 100%;
+  padding: 10px 20px;
+}
+.x-block .x-block-content.x-todo .x-todo-content .item .widget-title {
+  float: left;
+  width: 100%;
   padding: 5px 20px;
+}
+.x-block .x-block-content.x-todo .x-todo-content .item .widget-title h4 {
+  color: #1F1F1F;
+  font-size: 14px;
+  font-weight: 600;
+  float: left;
+  margin: 0px;
+  padding: 0px;
+  line-height: 20px;
+}
+.x-block .x-block-content.x-todo .x-todo-content .item .widget-title label {
+  float: left;
+  margin: 0px;
+  margin-right: 10px;
 }
 .x-block .x-block-content.x-todo .x-todo-content .item .title h4 {
   color: #1F1F1F;
@@ -176,13 +195,29 @@ body {
   font-size: 13px;
   color: #526C7F;
 }
-.x-block .x-block-content.x-todo .x-todo-content .item .footer {
+.x-block .x-block-content.x-todo .x-todo-content .item .widget-footer {
   float: left;
   width: 100%;
   // line-height: 20px;
 	// background-color: #F5F5F5;
   color: #526C7F;
   padding: 0px 20px 5px 20px;
+	border: 1px soild #EAEDF2;
+}
+.x-block .x-block-content.x-todo .x-todo-content .item .widget-footer .pull-left {
+  margin-right: 20px;
+	color: #93ABB9;
+}
+.x-block .x-block-content.x-todo .x-todo-content .item .footer .widget-pull-right {
+  color: #93ABB9;
+}
+.x-block .x-block-content.x-todo .x-todo-content .item .footer {
+  float: left;
+  width: 100%;
+	line-height: 20px;
+	// background-color: #F5F5F5;
+  color: #526C7F;
+  padding: 10px 20px;
 	border: 1px soild #EAEDF2;
 }
 .x-block .x-block-content.x-todo .x-todo-content .item .footer .pull-left {

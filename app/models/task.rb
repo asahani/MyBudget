@@ -2,7 +2,7 @@ class Task < ActiveRecord::Base
   ##################################
   # Relationships
   ##################################
-
+  belongs_to :budget
   ##################################
   # Validations
   ##################################
@@ -17,6 +17,10 @@ class Task < ActiveRecord::Base
   ##################################
   # Scoped Methods
   ##################################
+  scope :open, -> { where(completed: false)}
+  scope :low_priority, -> { where("priority = ?",3)}
+  scope :normal_priority, -> { where("priority = ?",2)}
+  scope :high_priority, -> { where("priority = ?",1)}
 
   ##################################
   # Class Methods
@@ -25,7 +29,7 @@ class Task < ActiveRecord::Base
   ##################################
   # Instance Methods
   ##################################
-  def age
-    Time.now.to_date - self.created_at.to_date
+  def agein_days
+    ((Time.now - self.created_at)/60).to_i #Time lapsed in minutes
   end
 end

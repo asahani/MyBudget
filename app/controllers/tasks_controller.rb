@@ -4,7 +4,7 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.all
+    @tasks = Task.open.order(created_at: :desc)
   end
 
   # GET /tasks/1
@@ -15,6 +15,7 @@ class TasksController < ApplicationController
   # GET /tasks/new
   def new
     @task = Task.new
+    @budget = Budget.find(params[:budget_id])
   end
 
   # GET /tasks/1/edit
@@ -28,10 +29,14 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       if @task.save
-        format.html { redirect_to @task, notice: 'Task was successfully created.' }
+        format.html { redirect_to request.referer, notice: 'Task was successfully created.' }
         format.json { render :show, status: :created, location: @task }
       else
-        format.html { render :new }
+        @tasks = Task.open.order(created_at: :desc)
+        format.html {
+          flash[:error] = "The task could not be saved. Please enter mandatory information."
+          render :index , locals: {tasks: @tasks}
+        }
         format.json { render json: @task.errors, status: :unprocessable_entity }
       end
     end
@@ -69,6 +74,6 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:description, :due_by, :completed, :budget_id)
+      params.require(:task).permit(:description, :due_by, :completed, :budget_id,:title,:priority)
     end
 end

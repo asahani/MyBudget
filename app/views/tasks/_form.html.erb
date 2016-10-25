@@ -1,33 +1,52 @@
-<%= form_for(@task) do |f| %>
-  <% if @task.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
-
-      <ul>
-      <% @task.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= form_for @task, html: {class: "form-horizontal", role: :form} do |f|%>
+<%unless @budget.nil?%>
+    <%=f.hidden_field :budget_id, :value => @budget.id%>
+<%end%>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h3><span class="fa fa-pencil"></span> New Task</h3>
+        <p>Create a new task / ToDo item.</p>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description %>
-  </div>
-  <div class="field">
-    <%= f.label :due_by %><br>
-    <%= f.date_select :due_by %>
-  </div>
-  <div class="field">
-    <%= f.label :completed %><br>
-    <%= f.check_box :completed %>
-  </div>
-  <div class="field">
-    <%= f.label :budget_id %><br>
-    <%= f.number_field :budget_id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label class="col-md-3 col-xs-5 control-label">Title</label>
+            <div class="col-md-9 col-xs-7">
+                <div class="input-group">
+                    <%= f.text_field :title,value: @task.title, class: "form-control" %>
+                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 col-xs-5 control-label">Priority</label>
+            <div class="col-md-9 col-xs-7">
+                <%= f.select :priority, options_for_select([["High", 1],["Medium", 2], ["Low", 3]]), {prompt: false}, {class: "form-control select"} %>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 col-xs-5 control-label">Payment Date</label>
+            <div class="col-md-9 col-xs-7">
+                <div class="input-group date">
+                    <%= f.text_field :due_by, class: "form-control datepicker",value: Time.now %>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 col-xs-5 control-label">Description</label>
+            <div class="col-md-9 col-xs-7">
+                <div class="input-group">
+                    <%= f.text_field :description,value: @task.description, class: "form-control" %>
+                    <span class="input-group-addon"><span class="fa fa-align-justify"></span></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12 col-xs-5">
+                <%= f.submit "Create Task", class: "btn btn-primary btn-rounded pull-right" %>
+            </div>
+        </div>
+    </div>
+</div>
 <% end %>
