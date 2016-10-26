@@ -1,0 +1,66 @@
+<div id="tasks_list" class="row push-up-10">
+  <div class="x-block">
+      <div class="x-block-head">
+          <h3>TASKS LIST</h3>
+      </div>
+      <div class="x-block-content x-todo">
+          <div class="x-todo-header">
+              <h3>OPEN TASKS</h3>
+          </div>
+          <div class="x-todo-content scroll" style="height: 500px;">
+            <%
+              @tasks.each do |task|
+                if task.priority == 1
+                  priority_class = "status status-high"
+                elsif task.priority == 2
+                  priority_class = "status status-medium"
+                else
+                  priority_class = "status status-low"
+                end
+            %>
+              <div class="item">
+                  <div class="head">
+                      <div class="pull-left"><span class="<%=priority_class%>"></span> Priority: High</div>
+                      <%unless task.budget.nil?%><div class="pull-left">Budget: <%=task.budget.start_date.strftime("%B, %Y")%></div><%end%>
+                      <div class="pull-right"><span class="fa fa-clock-o"></span> added <%=distance_of_time_in_words_to_now(task.created_at)%> ago</div>
+                  </div>
+                  <div class="title">
+                      <label class="check">
+                        <%= check_box_tag "completed", task.completed, task.completed,{onchange: "$(this).data('params', 'completed=' + this.checked)",
+                          data: {
+                            remote: true,
+                            url: url_for(controller: :tasks, action: :complete_task, id: task.id),
+                            method: "POST"
+                          },style: "display: inline-block;
+                          *display: inline;
+                          vertical-align: middle;
+                          margin-top: 2px;
+                          padding: 0;
+                          width: 20px;
+                          height: 20px;
+                          background: url('#{asset_path('assets/img/icheck/grey.png')}') no-repeat;
+                          border: none;
+                          cursor: pointer;"}%>
+                      </label>
+                      <h4><%=task.title.upcase%></h4>
+                  </div>
+                  <div class="content">
+                      <%=task.description%>
+                  </div>
+
+                  <div class="footer">
+                    <%unless task.due_by.nil?%>
+                      <div class="pull-left"><span class="fa fa-clock-o"></span> due <%=distance_of_time_in_words_to_now(task.due_by)%></div>
+                      <div class="pull-right"><span class="fa fa-calendar"></span> Due by: <%=task.due_by.strftime("%b %d, %Y") unless task.due_by.nil?%></div>
+                    <%end%>
+                  </div>
+              </div>
+            <%end%>
+          </div>
+          <div class="x-todo-footer">
+              <div class="pull-right">&nbsp;</div>
+          </div>
+      </div>
+  </div>
+
+</div>

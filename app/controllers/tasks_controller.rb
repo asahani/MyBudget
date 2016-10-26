@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_task, only: [:show, :edit, :update, :destroy, :complete_task, :complete_task_widget]
 
   # GET /tasks
   # GET /tasks.json
@@ -64,6 +64,34 @@ class TasksController < ApplicationController
       format.html { redirect_to tasks_url, notice: 'Task was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def complete_task
+    unless (params[:completed].nil?)
+      @task.update_attribute(:completed,params[:completed])
+    end
+
+    @tasks = Task.open.order(created_at: :desc)
+
+    respond_to do |format|
+      format.js
+    end
+
+  end
+
+  def complete_task_widget
+    unless (params[:budget_id].nil?)
+      @budget = Budget.find(params["budget_id"])
+      @tasks = Task.open.where('budget_id = ?',@budget.id).order(created_at: :desc)
+    end
+    unless (params[:completed].nil?)
+      @task.update_attribute(:completed,params[:completed])
+    end
+
+    respond_to do |format|
+      format.js
+    end
+
   end
 
   private

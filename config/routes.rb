@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  resources :tasks
+  resources :tasks do
+    member do
+      post :complete_task
+      post :complete_task_widget
+    end
+  end
 
   get 'admin/index'
 

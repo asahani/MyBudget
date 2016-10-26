@@ -67,15 +67,7 @@
         </div>
         <%end%>
 
-        <div class="form-group">
-            <h4>Task groups:</h4>
-            <div class="list-group border-bottom">
-                <a href="/tasks" class="list-group-item"><span class="fa fa-circle text-primary"></span> Total Tasks<span class="badge badge-primary"><%=Task.open.count%></span></a>
-                <a href="/tasks" class="list-group-item"><span class="fa fa-circle text-danger"></span> High priority<span class="badge badge-danger"><%=Task.open.high_priority.count%></span></a>
-                <a href="/tasks" class="list-group-item"><span class="fa fa-circle text-success"></span> Normal priority<span class="badge badge-success"><%=Task.open.normal_priority.count%></span></a>
-                <a href="/tasks" class="list-group-item"><span class="fa fa-circle text-info"></span> Low priority<span class="badge badge-info"><%=Task.open.low_priority.count%></span></a>
-            </div>
-        </div>
+        <%=render "tasks_count"%>
 
     </div>
     <!-- END CONTENT FRAME TOP -->
@@ -83,56 +75,7 @@
     <!-- START CONTENT FRAME BODY -->
     <div class="content-frame-body">
 
-        <div class="row push-up-10">
-          <div class="x-block">
-              <div class="x-block-head">
-                  <h3>TASKS LIST</h3>
-              </div>
-              <div class="x-block-content x-todo">
-                  <div class="x-todo-header">
-                      <h3>OPEN TASKS</h3>
-                  </div>
-                  <div class="x-todo-content scroll" style="height: 500px;">
-                    <%
-                      @tasks.each do |task|
-                        if task.priority == 1
-                          priority_class = "status status-high"
-                        elsif task.priority == 2
-                          priority_class = "status status-medium"
-                        else
-                          priority_class = "status status-low"
-                        end
-                    %>
-                      <div class="item">
-                          <div class="head">
-                              <div class="pull-left"><span class="<%=priority_class%>"></span> Priority: High</div>
-                              <%unless task.budget.nil?%><div class="pull-left">Budget: <%=task.budget.start_date.strftime("%B, %Y")%></div><%end%>
-                              <div class="pull-right"><span class="fa fa-clock-o"></span> added <%=distance_of_time_in_words_to_now(task.created_at)%> ago</div>
-                          </div>
-                          <div class="title">
-                              <label class="check"><input type="checkbox" class="icheckbox"></label>
-                              <h4><%=task.title.upcase%></h4>
-                          </div>
-                          <div class="content">
-                              <%=task.description%>
-                          </div>
-                          
-                          <div class="footer">
-                            <%unless task.due_by.nil?%>
-                              <div class="pull-left"><span class="fa fa-clock-o"></span> due <%=distance_of_time_in_words_to_now(task.due_by)%></div>
-                              <div class="pull-right"><span class="fa fa-calendar"></span> Due by: <%=task.due_by.strftime("%b %d, %Y") unless task.due_by.nil?%></div>
-                            <%end%>
-                          </div>
-                      </div>
-                    <%end%>
-                  </div>
-                  <div class="x-todo-footer">
-                      <div class="pull-right">&nbsp;</div>
-                  </div>
-              </div>
-          </div>
-
-        </div>
+        <%= render "tasks_list"%>
 
     </div>
     <!-- END CONTENT FRAME BODY -->

@@ -1,0 +1,64 @@
+<div id="tasks_widget" class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title"><span class="fa fa-tasks"></span> Tasks</h3>
+        <ul class="panel-controls">
+            <li>
+                <%= link_to raw("<span class='fa fa-plus' aria-hidden='true'></span>"),
+                  new_task_path(budget_id: @budget.id), {:remote => true, class: 'new-task-modal-link'} %>
+            </li>
+        </ul>
+    </div>
+
+      <div class="x-block ">
+      <div class="panel-body x-block-content x-todo">
+
+          <div class="x-todo-content scroll" style="max-height: 350px;">
+            <%
+              @tasks.each do |task|
+                if task.priority == 1
+                  priority_class = "fa fa-circle text-danger"
+                elsif task.priority == 2
+                  priority_class = "fa fa-circle text-success"
+                else
+                  priority_class = "fa fa-circle text-info"
+                end
+            %>
+
+                <div class="item">
+                  <div class="widget-title">
+                    <label class="check"><span class="<%=priority_class%>"></span></label>
+                    <label class="check">
+                      <%= check_box_tag "completed", task.completed, task.completed,{onchange: "$(this).data('params', 'completed=' + this.checked)",
+                        data: {
+                          remote: true,
+                          url: url_for(controller: :tasks, action: :complete_task_widget, id: task.id, budget_id: @budget.id),
+                          method: "POST"
+                        },style: "display: inline-block;
+                        *display: inline;
+                        vertical-align: middle;
+                        margin-top: 2px;
+                        padding: 0;
+                        width: 20px;
+                        height: 20px;
+                        background: url('#{asset_path('assets/img/icheck/grey.png')}') no-repeat;
+                        border: none;
+                        cursor: pointer;"}%>
+                    </label>
+                    <span style="margin-left: 5px;"><%=task.title%></span>
+                  </div>
+                  <div class="footer">
+                    <div class="pull-left"><span class="fa fa-clock-o"></span> added <%=distance_of_time_in_words_to_now(task.created_at)%> ago</div>
+                    <div class="pull-right"><span class="fa fa-calendar"></span> <%=task.due_by.strftime("%b %d, %Y") unless task.due_by.nil?%></div>
+                  </div>
+              </div>
+
+            <%end%>
+          </div>
+          <div class="x-todo-footer">
+              <div class="pull-right">
+                  <a href="/tasks"><span class="fa fa-plus-square-o"></span> Show all tasks</a>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>

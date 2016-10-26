@@ -1,5 +1,15 @@
 <!-- START PROJECTS BLOCK -->
 <div id="update_budget_progress" class="panel panel-default">
+  <label class="switch">
+  <%= check_box_tag "completed1", "test", false,{onchange: "$(this).data('params', 'completed=' + this.checked)",
+    data: {
+      remote: true,
+      url: url_for(controller: :tasks, action: :complete_task, id: 1, budget_id: @budget.id),
+      method: "POST"
+    }}
+  %>
+  <span></span>
+</label>
     <div class="panel-heading">
         <div class="panel-title-box">
             <h3>Budget Clearing Status</h3>
