@@ -1,15 +1,5 @@
 <!-- START PROJECTS BLOCK -->
 <div id="update_budget_progress" class="panel panel-default">
-  <label class="switch">
-  <%= check_box_tag "completed1", "test", false,{onchange: "$(this).data('params', 'completed=' + this.checked)",
-    data: {
-      remote: true,
-      url: url_for(controller: :tasks, action: :complete_task, id: 1, budget_id: @budget.id),
-      method: "POST"
-    }}
-  %>
-  <span></span>
-</label>
     <div class="panel-heading">
         <div class="panel-title-box">
             <h3>Budget Clearing Status</h3>
@@ -56,7 +46,7 @@
                             },style: "text_align: right;border: none; background: inherit;"}%>
                       </td>
                       <td>
-                          <label class="switch">
+                          <label class="switch switch-small">
                             <%= check_box_tag "is_paid", budget_account.paid, budget_account.paid,{onchange: "$(this).data('params', 'is_paid=' + this.checked)",
                               data: {
                                 remote: true,
@@ -67,7 +57,7 @@
                           </label>
                       </td>
                       <td>
-                        <label class="switch">
+                        <label class="switch switch-small">
                           <%= check_box_tag "is_reconciled", budget_account.reconciled, budget_account.reconciled,{onchange: "$(this).data('params', 'is_reconciled=' + this.checked)",
                             data: {
                               remote: true,
@@ -78,7 +68,7 @@
                         </label>
                       </td>
                       <td>
-                        <label class="switch">
+                        <label class="switch switch-small">
                           <%= check_box_tag "is_documented", budget_account.documented, budget_account.documented,{onchange: "$(this).data('params', 'is_documented=' + this.checked)",
                             data: {
                               remote: true,
