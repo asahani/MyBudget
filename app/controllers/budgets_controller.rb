@@ -31,7 +31,7 @@ class BudgetsController < ApplicationController
   # GET /budgets/1.json
   def show
     @misc_budget_item = BudgetItem.find_by_budget_id_and_category_id(@budget.id,Category.find_by_miscellaneous_and_mandatory(true,true).id)
-    @tasks = Task.open.where('budget_id = ?',@budget.id).order(created_at: :desc)
+    @tasks = Task.open.where('budget_id = ?',@budget.id).order(created_at: :desc).limit(3)
   end
 
   # GET /budgets/1

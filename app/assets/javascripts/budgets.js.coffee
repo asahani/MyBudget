@@ -6,15 +6,17 @@ ml = "new2"
 jQuery ->
   $('ul.nav a').on 'shown.bs.tab', (e) ->
     morrisTypes = $(this).attr('data-morris')
-    morrisTypesArray = morrisTypes.split(',')
+    morrisTypesArray = morrisTypes.split(',') || [""]
     $.each morrisTypesArray, (key, value) ->
-      eval value + '.redraw()'
+      if value != "none"
+        eval value + '.redraw()'
       return
 
     highchartTypes = $(this).attr('data-highcharts')
     highchartTypesArray = highchartTypes.split(',')
     $.each highchartTypesArray, (key, value) ->
-      eval value + '.highcharts().reflow()'
+      if value != "none"
+        eval value + '.highcharts().reflow()'
       return
     return
 

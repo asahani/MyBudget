@@ -1,6 +1,6 @@
 <div id="tasks_widget" class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title"><span class="fa fa-tasks"></span> Tasks</h3>
+        <h3 class="panel-title"><span class="fa fa-tasks"></span> Tasks (<%=@tasks.count%>)</h3>
         <ul class="panel-controls">
             <li>
                 <%= link_to raw("<span class='fa fa-plus' aria-hidden='true'></span>"),
@@ -12,7 +12,7 @@
       <div class="x-block ">
       <div class="panel-body x-block-content x-todo">
 
-          <div class="x-todo-content scroll" style="max-height: 350px;">
+          <div class="x-todo-content" style="max-height: 350px;">
             <%
               @tasks.each do |task|
                 if task.priority == 1

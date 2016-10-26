@@ -82,7 +82,7 @@ class TasksController < ApplicationController
   def complete_task_widget
     unless (params[:budget_id].nil?)
       @budget = Budget.find(params["budget_id"])
-      @tasks = Task.open.where('budget_id = ?',@budget.id).order(created_at: :desc)
+      @tasks = Task.open.where('budget_id = ?',@budget.id).order(created_at: :desc).limit(3)
     end
     unless (params[:completed].nil?)
       @task.update_attribute(:completed,params[:completed])
