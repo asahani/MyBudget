@@ -27,6 +27,7 @@
 //= require atlant/plugins/jvectormap/jquery-jvectormap-1.2.2.min
 //= require atlant/plugins/jvectormap/jquery-jvectormap-world-mill-en
 //= require atlant/plugins/bootstrap/bootstrap-datepicker
+//= require atlant/plugins/knob/jquery.knob.min
 //= require atlant/plugins/owl/owl.carousel.min
 //= require atlant/plugins/moment.min
 //= require atlant/plugins/daterangepicker/daterangepicker

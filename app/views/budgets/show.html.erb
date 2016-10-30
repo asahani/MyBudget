@@ -11,6 +11,20 @@
 		</ul>
 		<div class="panel-body tab-content">
 				<div class="tab-pane fade in active" id="tab-first">
+
+					<div class="row">
+						<%=render 'budget_dashboard_widgets'%>
+					</div>
+
+					<div class="row">
+							<div class="col-md-9">
+								<%=render 'budget_dashboard_progress'%>
+							</div>
+							<div class="col-md-3">
+								<%=render 'budget_calendar_widget'%>
+							</div>
+					</div>
+
 					<div class="row">
 							<div class="col-md-3">
 
@@ -65,45 +79,11 @@
 								<%= render partial: "/tasks/tasks_widget", locals: { budget: @budget }%>
 							</div>
 					</div>
-
 					<div class="row">
-						<div class="col-md-4">
-							<div class="calendar hidden-print">
-								<header>
-									<h2 class="month"></h2>
-									<span class="btn-prev fa fa-angle-left pull-left"></span>
-									<span class="btn-next fa fa-angle-right pull-right"></span>
-								</header>
-								<%= content_tag :div," ",id: "calendar_data", data: {eventsdata: get_calendar_events}%>
-
-								<table>
-									<thead class="event-days">
-										<tr></tr>
-									</thead>
-									<tbody class="event-calendar">
-										<tr class="1"></tr>
-										<tr class="2"></tr>
-										<tr class="3"></tr>
-										<tr class="4"></tr>
-										<tr class="5"></tr>
-									</tbody>
-								</table>
-								<div class="list">
-
-								</div>
+							<div class="col-md-12">
+								<%=render 'budget_dashboard_progress'%>
 							</div>
-						</div>
-						<div class="col-md-8">
-							<label class="print pull-right">
-							<span class="print-btn hidden-print">Print your list!</span>
-							</label>
-							<h2>Personal list</h2>
-							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-							<div class="person-list"></div>
-						</div>
 					</div>
-
-
 				</div>
 				<div class="tab-pane" id="tab-second">
 					<%=render 'show_budget_summary'%>
@@ -123,7 +103,6 @@
 						<p>In mattis sapien lorem, nec tincidunt elit scelerisque tempus. Quisque nisl nisl, venenatis eget dignissim et, adipiscing eu tellus. Sed nulla massa, luctus id orci sed, elementum consequat est. Proin dictum odio quis diam gravida facilisis. Sed pharetra dolor a tempor tristique. Sed semper sed urna ac dignissim. Aenean fermentum leo at posuere mattis. Etiam vitae quam in magna viverra dictum. Curabitur feugiat ligula in dui luctus, sed aliquet neque posuere.</p>
 						<p>Donec tristique eu sem et aliquam. Proin sodales elementum urna et euismod. Quisque nisl nisl, venenatis eget dignissim et, adipiscing eu tellus. Sed nulla massa, luctus id orci sed, elementum consequat est. Proin dictum odio quis diam gravida facilisis. Sed pharetra dolor a tempor tristique. Sed semper sed urna ac dignissim. Aenean fermentum leo at posuere mattis. Etiam vitae quam in magna viverra dictum. Curabitur feugiat ligula in dui luctus, sed aliquet neque posuere.</p>
 						<%= content_tag :div," ",id: "annual4"%>
-						<%=render 'budget_dashboard'%>
 				</div>
 		</div>
 	</div>
