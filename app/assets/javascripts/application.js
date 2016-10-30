@@ -36,6 +36,7 @@
 //= require atlant/plugins
 //= require atlant/actions
 //= require highcharts/highcharts
+//= require simplecalendar
 //= require_tree .
 //= require_self
 
@@ -55,5 +56,7 @@ $(document).ready(function() {
   }
 
   clickOnNewTransactionModal();
+
+  calendar.init('ajax');
 
 });
