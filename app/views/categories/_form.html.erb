@@ -31,7 +31,7 @@
       <div class="col-md-6 col-xs-12">
           <div class="input-group">
               <span class="input-group-addon"><span class="fa fa-dollar"></span></span>
-              <%= f.number_field :budget_amount, step: :any, {class: "form-control"} %>
+              <%= f.number_field :budget_amount, class: "form-control",step: :any %>
           </div>
           <span class="help-block">The amount allocated per month</span>
       </div>
@@ -98,6 +98,102 @@
       <span class="help-block">Required for display on the budget sheet</span>
     </div>
 </div>
+
+<div class="form-group">
+    <%= f.label "Direct Debit", {class: "col-md-3 col-xs-12 control-label"}%>
+    <div class="col-md-6 col-xs-12">
+      <label class="check">
+          <%= f.radio_button :direct_debit, true, {class: "iradio"}-%>
+          True
+      </label>
+      <label class="check">
+          <%= f.radio_button :direct_debit, false,{class: "iradio"}-%>
+          False
+      </label>
+      <span class="help-block">Does the category have a potential Direct Debit Transaction?</span>
+    </div>
+</div>
+
+<hr>
+<div class="form-group">
+    <span class="fa fa-calendar col-md-3 col-xs-12" style="text-align: right;"></span>
+
+    <div class="col-md-9 col-xs-12">
+        <%= f.label "Scheduled Transaction for Category", class: "control-label"%>
+    </div>
+</div>
+
+<div class="form-group">
+    <%= f.label "Scheduled Transactions", {class: "col-md-3 col-xs-12 control-label"}%>
+    <div class="col-md-6 col-xs-12">
+      <label class="check">
+          <%= f.radio_button :scheduled, true, {class: "iradio"}-%>
+          True
+      </label>
+      <label class="check">
+          <%= f.radio_button :scheduled, false,{class: "iradio"}-%>
+          False
+      </label>
+      <span class="help-block">Does the category have a monthly scheduled Transaction?</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <%= f.label :scheduled_day, {class: "col-md-3 col-xs-12 control-label"}%>
+    <div class="col-md-6 col-xs-12">
+        <div class="input-group">
+            <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+            <%= f.number_field :scheduled_day, class: "form-control",step: :any, max: 31 %>
+        </div>
+        <span class="help-block">The day every month when this category will have a scheduled transaction</span>
+    </div>
+</div>
+
+<hr>
+<div class="form-group">
+    <span class="fa fa-hand-o-up col-md-3 col-xs-12" style="text-align: right;"></span>
+
+    <div class="col-md-9 col-xs-12">
+        <%= f.label "1-Click Template Transaction for Category", {class: "control-label"}%>
+    </div>
+</div>
+
+<div class="form-group">
+    <%= f.label "Template Transaction", {class: "col-md-3 col-xs-12 control-label"}%>
+    <div class="col-md-6 col-xs-12">
+      <label class="check">
+          <%= f.radio_button :has_template_transaction, true, {class: "iradio"}-%>
+          True
+      </label>
+      <label class="check">
+          <%= f.radio_button :has_template_transaction, false,{class: "iradio"}-%>
+          False
+      </label>
+      <span class="help-block">Does the category have a potential 1-click template Transaction?</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <%= f.label "Debit amount", {class: "col-md-3 col-xs-12 control-label"}%>
+    <div class="col-md-6 col-xs-12">
+      <div class="input-group">
+          <%= f.collection_select :account_id, Account.active, :id, :name, {prompt: true}, {class: "form-control select"} %>
+      </div>
+      <span class="help-block">The account to debit for the 1-click transaction</span>
+    </div>
+</div>
+
+
+<div class="form-group">
+    <%= f.label "Debit amount", {class: "col-md-3 col-xs-12 control-label"}%>
+    <div class="col-md-6 col-xs-12">
+      <div class="input-group">
+          <%= f.collection_select :payee_id, Payee.non_system, :id, :name, {prompt: true}, {class: "form-control select"} %>
+      </div>
+      <span class="help-block">The Payee to credit for the 1-click transaction</span>
+    </div>
+</div>
+
 </div>
 <div class="panel-footer">
     <%= link_to 'Back', categories_path, {class: "btn btn-default"} %>

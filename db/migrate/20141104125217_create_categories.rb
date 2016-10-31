@@ -9,7 +9,13 @@ class CreateCategories < ActiveRecord::Migration
       t.boolean :budgeted, :default => false
       t.boolean :miscellaneous, :default => false
       t.boolean :savings, :default => false
-      
+      t.boolean :direct_debit, :default => false
+      t.boolean :scheduled, :default => false
+      t.integer :scheduled_day
+      t.boolean :has_template_transaction, :default => false
+      t.integer :account_id
+      t.integer :payee_id
+
       t.timestamps
     end
   end

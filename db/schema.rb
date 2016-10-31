@@ -110,13 +110,19 @@ ActiveRecord::Schema.define(version: 20161023110836) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
-    t.boolean  "active",                                      default: true
-    t.decimal  "budget_amount",      precision: 10, scale: 2
+    t.boolean  "active",                                            default: true
+    t.decimal  "budget_amount",            precision: 10, scale: 2
     t.integer  "master_category_id"
-    t.boolean  "mandatory",                                   default: false
-    t.boolean  "budgeted",                                    default: false
-    t.boolean  "miscellaneous",                               default: false
-    t.boolean  "savings",                                     default: false
+    t.boolean  "mandatory",                                         default: false
+    t.boolean  "budgeted",                                          default: false
+    t.boolean  "miscellaneous",                                     default: false
+    t.boolean  "savings",                                           default: false
+    t.boolean  "direct_debit",                                      default: false
+    t.boolean  "scheduled",                                         default: false
+    t.integer  "scheduled_day"
+    t.boolean  "has_template_transaction",                          default: false
+    t.integer  "account_id"
+    t.integer  "payee_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
