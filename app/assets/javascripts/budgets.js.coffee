@@ -3,6 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 mb = "new"
 ml = "new2"
+misc_top_spending = "misc"
 jQuery ->
   $('ul.nav a').on 'shown.bs.tab', (e) ->
     morrisTypes = $(this).attr('data-morris')
@@ -20,12 +21,46 @@ jQuery ->
       return
     return
 
+  console.log $('#annual').data('budgetitems')
   mb = Morris.Bar
     element: 'annual'
     data: $('#annual').data('budgetitems')
     xkey: 'category'
     ykeys: ['budgeted_amount']
     labels: ['budgeted_amount']
+
+  console.log $('#misc').data('misctopexpenses')
+  misc_top_spending = Morris.Bar
+    element: 'misc'
+    data: $('#misc').data('misctopexpenses')
+    xkey: 'category'
+    ykeys: ['spend']
+    labels: ['total_expenses']
+
+  console.log $('#expensebreakdownchart').data('budgetbreakdowndata')
+  total_pie = $('#expensebreakdownchart').highcharts
+    chart:
+      renderTo: 'expensebreakdownchart'
+      plotBackgroundColor: null
+      plotBorderWidth: null
+      plotShadow: false
+      type: 'pie'
+      backgroundColor: 'transparent'
+    title: text: 'Expense Breakdown Chart'
+    tooltip: pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    plotOptions: pie:
+      allowPointSelect: true
+      cursor: 'pointer'
+      dataLabels:
+        enabled: false
+        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+        style: color: Highcharts.theme and Highcharts.theme.contrastTextColor or 'black'
+      showInLegend: true
+    series: [ {
+      name: 'Expense'
+      colorByPoint: true
+      data: $('#expensebreakdownchart').data('budgetbreakdowndata')
+    } ]
 
   console.log $('#annual2').data('amount')
   console.log $('#annual2').data('budgetcategories')

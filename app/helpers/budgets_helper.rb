@@ -1,4 +1,36 @@
 module BudgetsHelper
+
+  def budget_breakdown_pie_data
+    puts 'entering here--------------------------------------------'
+    total_allocated = @savings + @expenses
+    total_remaining = (@income - total_allocated) > 0 ? (@income - total_allocated).to_f : 0
+    total = (total_allocated + total_remaining).to_f
+    misc_expenses = @budget.budget_transactions.miscellaneous_transactions.sum(:debit).to_f
+    budgeted_expenses = (@expenses - misc_expenses).to_f
+
+    data_array = Array.new
+    data_array << {"name" => "Savings","y" => (@savings/total).to_f.round(2) * 100}
+    data_array << {"name" => "Budgeted Expenses","y" => (budgeted_expenses/total).to_f.round(2) * 100}
+    data_array << {"name" => "Misc Expenses","y" =>(misc_expenses/total).to_f.round(2) * 100}
+    data_array << {"name" => "Remaining","y" =>(total_remaining/total).to_f.round(2) * 100}
+
+    puts data_array.to_a.to_json
+    puts 'exiting--------------------------------------------'
+    return data_array.to_a.to_json
+  end
+
+  def top_spending_categories
+    top_expenses = BudgetTransaction.total_miscellaneous_grouped_by_master_category(@budget.id)
+    puts '-----------------------'
+    puts top_expenses
+    top_expenses.map do |txn|
+      {
+        category: txn.name,
+        spend: txn.total_expense
+      }
+    end
+  end
+
   def budget_items_chart_data
     @budget.budget_items.map do |budget_item| {
       budgeted_amount: budget_item.budgeted_amount,
