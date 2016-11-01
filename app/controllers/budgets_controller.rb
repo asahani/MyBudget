@@ -35,13 +35,22 @@ class BudgetsController < ApplicationController
 
     #Budget Dashboard Elements
     @budget_consumption = 0
-    expenses = @budget.budget_items.sum(:expenses)
-    budgeted_amount = @budget.budget_items.sum(:budgeted_amount)
-    income = @budget.budget_incomes.sum(:amount)
+    @income_consumption = 0
+    @expenses = @budget.budget_items.sum(:expenses)
+    @budgeted_amount = @budget.budget_items.sum(:budgeted_amount)
+    @income = @budget.budget_incomes.sum(:amount)
+    @savings = @budget.budget_transactions.savings_transactions.sum(:credit)
 
-    if (expenses > 0)
-      @budget_consumption = ((expenses/budgeted_amount)/100).to_i
+    if (@expenses > 0)
+      @budget_consumption = ((@expenses/@budgeted_amount)/100).to_i
+      @income_consumption = ((@expenses/@income)/100).to_i
     end
+
+    @days_remaining = (@budget.end_date.to_date - Time.now.to_date).to_i
+    if Time.now.to_date >= @budget.end_date
+      @days_remaining = 0
+    end
+
   end
 
   # GET /budgets/1
