@@ -32,7 +32,10 @@
 							<%if budget_item.complete%>
 								<span class="glyphicon glyphicon-lock" style='color: #999;' aria-hidden="true"></span>
 							<%end%>
-							<%if !budget_item.complete && (budget_item.comment.nil? || budget_item.comment.length < 1)%>
+							<%if budget_item.category.direct_debit%>
+								<span style='color: blue;font-weight: bold;' aria-hidden="true">DD</span>
+							<%end%>
+							<%if !budget_item.complete && (budget_item.comment.nil? || budget_item.comment.length < 1) && !budget_item.category.direct_debit%>
 								&nbsp;&nbsp;&nbsp;
 							<%end%>
 							<%=budget_item.category.name%>
