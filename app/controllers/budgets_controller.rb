@@ -32,6 +32,16 @@ class BudgetsController < ApplicationController
   def show
     @misc_budget_item = BudgetItem.find_by_budget_id_and_category_id(@budget.id,Category.find_by_miscellaneous_and_mandatory(true,true).id)
     @tasks = Task.open.where('budget_id = ?',@budget.id).order(created_at: :desc).limit(3)
+
+    #Budget Dashboard Elements
+    @budget_consumption = 0
+    expenses = @budget.budget_items.sum(:expenses)
+    budgeted_amount = @budget.budget_items.sum(:budgeted_amount)
+    income = @budget.budget_incomes.sum(:amount)
+
+    if (expenses > 0)
+      @budget_consumption = ((expenses/budgeted_amount)/100).to_i
+    end
   end
 
   # GET /budgets/1

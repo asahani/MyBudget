@@ -49,12 +49,12 @@
 
     <div class="widget widget-info widget-padding-sm">
         <div class="widget-item-left">
-            <input class="knob" data-width="100" data-height="100" data-min="0" data-max="100" data-displayInput=false data-bgColor="#d6f4ff" data-fgColor="#FFF" value="80%" data-readOnly="true" data-thickness=".2"/>
+            <input class="knob" data-width="100" data-height="100" data-min="0" data-max="100" data-displayInput=false data-bgColor="#d6f4ff" data-fgColor="#FFF" value="<%=@budget_consumption%>%" data-readOnly="true" data-thickness=".2"/>
         </div>
         <div class="widget-data">
-            <div class="widget-big-int"><span class="num-count">80</span>%</div>
-            <div class="widget-title">Disk Space</div>
-            <div class="widget-subtitle">Total free space</div>
+            <div class="widget-big-int"><span class="num-count"><%=@budget_consumption%></span>%</div>
+            <div class="widget-title">Budget</div>
+            <div class="widget-subtitle">Percentage Consumed</div>
         </div>
         <div class="widget-controls">
             <a href="#" class="widget-control-right"><span class="fa fa-times"></span></a>
