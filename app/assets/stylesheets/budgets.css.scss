@@ -9,6 +9,13 @@ $box-shadow-summary-div: 0px 2px 2px #333 inset;
 $numeric-cell-border: 1px dotted #999;
 
 /*******************
+ * General
+ *******************/
+.negative {
+	color: #DC3715!important;
+}
+
+/*******************
  * Budget Page Layout
  *******************/
 .col-md-4.budget-main-container {
