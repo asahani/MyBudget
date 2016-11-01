@@ -49,6 +49,7 @@ Rails.application.routes.draw do
 
 
   resources :budget_items, :only => [:edit,:show,:update]
+  match "budget_items/:id/one_click_transaction" => "budget_items#one_click_transaction", :via => :post, :as => 'one_click_transaction'
 
   resources :dashboard, :only => [:index]
 

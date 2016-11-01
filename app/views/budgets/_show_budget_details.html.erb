@@ -47,10 +47,14 @@
 						<td class="numeric-cell" style="border-right:none!important;;"><%=number_to_currency(budget_item.balance, precision: 1)%></td>
 						<td class="actions-cell">
 							<div class="actions">
-							<%= link_to raw("<span class='glyphicon glyphicon-pencil' style='color: #999;' aria-hidden='true'></span>"),
-							 	edit_budget_item_path(budget_item), {:remote => true, class: 'edit-budget-item-modal-link'} %>
-							<%= link_to raw("<span class='caret' style='color: #999;'></span>"),
-								budget_item_path(budget_item), {:remote => true} %>
+								<%if budget_item.category.has_template_transaction && !budget_item.category.account_id.nil? && !budget_item.category.payee_id.nil? && !budget_item.complete?%>
+									<%= link_to raw("<span class='fa fa-check-circle-o' style='color: #999;'></span>"),
+										one_click_transaction_path(budget_item), method: :post%>
+								<%end%>
+								<%= link_to raw("<span class='glyphicon glyphicon-pencil' style='color: #999;' aria-hidden='true'></span>"),
+							 		edit_budget_item_path(budget_item), {:remote => true, class: 'edit-budget-item-modal-link'} %>
+								<%= link_to raw("<span class='caret' style='color: #999;'></span>"),
+									budget_item_path(budget_item), {:remote => true} %>
 							</div>
 						</td>
 					</tr>
