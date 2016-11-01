@@ -37,13 +37,24 @@ class BudgetTransaction < ActiveRecord::Base
   # Class Methods
   ##################################
 
-  def self.total_miscellaneous_grouped_by_master_category(budget_id)
+  def self.total_miscellaneous_grouped_by_master_category(budget_id,limit=10)
+    txns = where(budget_id: budget_id)
+    txns = txns.miscellaneous_transactions
+    txns = txns.joins(category: :master_category)
+    txns = txns.group("master_categories.name")
+    txns = txns.select("master_categories.name as name, sum(debit) as total_expense")
+    txns = txns.order("total_expense DESC").first(limit)
+    # txns.group_by { |t| t.category.name}
+  end
+
+
+  def self.total_miscellaneous_grouped_by_category(budget_id, limit=10)
     txns = where(budget_id: budget_id)
     txns = txns.miscellaneous_transactions
     txns = txns.joins(:category)
     txns = txns.group("categories.name")
-    txns = txns.select("categories.name as name, sum(debit) as total_expense")
-    txns = txns.order("total_expense DESC").first(10)
+    txns = txns.select("categories.name as name, sum(debit) as total_expense , sum(total_expense) as total_spend")
+    txns = txns.order("total_expense DESC").first(limit)
     # txns.group_by { |t| t.category.name}
   end
 

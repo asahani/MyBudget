@@ -42,8 +42,8 @@ class BudgetsController < ApplicationController
     @savings = @budget.budget_transactions.savings_transactions.sum(:credit)
 
     if (@expenses > 0)
-      @budget_consumption = ((@expenses/@budgeted_amount)/100).to_i
-      @income_consumption = ((@expenses/@income)/100).to_i
+      @budget_consumption = ((@expenses/@budgeted_amount)*100).to_i
+      @income_consumption = ((@expenses/@income)*100).to_i
     end
 
     @days_remaining = (@budget.end_date.to_date - Time.now.to_date).to_i

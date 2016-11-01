@@ -4,7 +4,7 @@
 <div class="panel panel-default tabs">
 	<div class="budget-tabs">
 		<ul class="nav nav-tabs" role="tablist">
-				<li><a href="#tab-first" role="tab" data-toggle="tab"  data-morris="misc_top_spending" data-highcharts="total_pie"><span class="fa fa-dashboard"></span>&nbsp;<%=Date::ABBR_MONTHNAMES[@budget.month].upcase%>&nbsp;<%=@budget.year%></a></li>
+				<li><a href="#tab-first" role="tab" data-toggle="tab"  data-morris="misc_top_spending" data-highcharts="total_pie,misc_pie"><span class="fa fa-dashboard"></span>&nbsp;<%=Date::ABBR_MONTHNAMES[@budget.month].upcase%>&nbsp;<%=@budget.year%></a></li>
 				<li class="active"><a href="#tab-second" role="tab" data-toggle="tab"  data-morris="none" data-highcharts="none"><span class="fa fa-table"></span>&nbsp;Budget Worksheet</a></li>
 				<li><a href="#tab-third" role="tab" data-toggle="tab" data-morris="mb" data-highcharts="c1,c2"><span class="fa fa-bar-chart-o"></span>&nbsp;Charts</a></li>
 				<li><a href="#tab-fourth" role="tab" data-toggle="tab" data-morris="ml" data-highcharts="none"><span class="fa fa-desktop"></span>&nbsp;Fourth</a></li>
@@ -112,7 +112,9 @@
 						<div class="col-md-4">
 							<%= content_tag :div," ",id: "expensebreakdownchart", data: {budgetbreakdowndata: budget_breakdown_pie_data}%>
 						</div>
-
+						<div class="col-md-4">
+							<%= content_tag :div," ",id: "miscmasterexpenseschart", data: {miscpiedata: top_misc_spending_master_categories_as_percentage}%>
+						</div>
 					</div>
 
 					<div class="row">

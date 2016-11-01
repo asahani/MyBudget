@@ -1,7 +1,6 @@
 module BudgetsHelper
 
   def budget_breakdown_pie_data
-    puts 'entering here--------------------------------------------'
     total_allocated = @savings + @expenses
     total_remaining = (@income - total_allocated) > 0 ? (@income - total_allocated).to_f : 0
     total = (total_allocated + total_remaining).to_f
@@ -15,19 +14,29 @@ module BudgetsHelper
     data_array << {"name" => "Remaining","y" =>(total_remaining/total).to_f.round(2) * 100}
 
     puts data_array.to_a.to_json
-    puts 'exiting--------------------------------------------'
+
     return data_array.to_a.to_json
   end
 
   def top_spending_categories
     top_expenses = BudgetTransaction.total_miscellaneous_grouped_by_master_category(@budget.id)
-    puts '-----------------------'
-    puts top_expenses
     top_expenses.map do |txn|
       {
         category: txn.name,
         spend: txn.total_expense
       }
+    end
+  end
+
+  def top_misc_spending_master_categories_as_percentage
+    top_expenses = BudgetTransaction.total_miscellaneous_grouped_by_master_category(@budget.id)
+    total_spend = BudgetTransaction.where(budget_id: @budget.id).miscellaneous_transactions.sum(:debit).to_f
+
+    top_expenses.map do |txn|
+    {
+      name: txn.name,
+      y: ((txn.total_expense/total_spend).to_f.round(2) * 100)
+    }
     end
   end
 

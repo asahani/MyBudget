@@ -28,6 +28,7 @@ jQuery ->
     xkey: 'category'
     ykeys: ['budgeted_amount']
     labels: ['budgeted_amount']
+    preUnits: '$'
 
   console.log $('#misc').data('misctopexpenses')
   misc_top_spending = Morris.Bar
@@ -35,7 +36,33 @@ jQuery ->
     data: $('#misc').data('misctopexpenses')
     xkey: 'category'
     ykeys: ['spend']
-    labels: ['total_expenses']
+    labels: ['Expense']
+    preUnits: '$'
+
+  console.log $('#miscmasterexpenseschart').data('miscpiedata')
+  misc_pie = $('#miscmasterexpenseschart').highcharts
+    chart:
+      renderTo: 'miscmasterexpenseschart'
+      plotBackgroundColor: null
+      plotBorderWidth: null
+      plotShadow: false
+      type: 'pie'
+      backgroundColor: 'transparent'
+    title: text: 'Expense Breakdown Chart'
+    tooltip: pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    plotOptions: pie:
+      allowPointSelect: true
+      cursor: 'pointer'
+      dataLabels:
+        enabled: false
+        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+        style: color: Highcharts.theme and Highcharts.theme.contrastTextColor or 'black'
+      showInLegend: true
+    series: [ {
+      name: 'Expense'
+      colorByPoint: true
+      data: $('#miscmasterexpenseschart').data('miscpiedata')
+    } ]
 
   console.log $('#expensebreakdownchart').data('budgetbreakdowndata')
   total_pie = $('#expensebreakdownchart').highcharts
