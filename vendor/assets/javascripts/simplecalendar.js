@@ -9,7 +9,7 @@ var calendar = {
           // loop json & append to dom
           for (var i = 0; i < events.length; i++) {
 						console.log(events[i].day);
-            $('.list').append('<div class="day-event" date-day="'+ events[i].day +'" date-month="' + events[i].month +'" date-year="'+ events[i].year +'" data-number="'+ i +'"><span class="close fa fa-remove pull-right"></span><p>'+ events[i].description +'</p><label class="check-btn"><input type="checkbox" class="save" id="save" name="" value=""/><span>Save to personal list!</span></label></div>');
+            $('.list').append('<div class="day-event" date-day="'+ events[i].day +'" date-month="' + events[i].month +'" date-year="'+ events[i].year +'" data-number="'+ i +'"><span class="close fa fa-remove pull-right"></span><p>'+ events[i].description +'</p></div>');
 
 
 					}
