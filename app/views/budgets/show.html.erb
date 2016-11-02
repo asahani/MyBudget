@@ -11,123 +11,13 @@
 		</ul>
 		<div class="panel-body tab-content">
 				<div class="tab-pane fade in" id="tab-first">
-
-					<div class="row">
-						<%=render 'budget_dashboard_widgets'%>
-					</div>
-
-					<div class="row">
-							<div class="col-md-9">
-								<%=render 'budget_dashboard_progress'%>
-							</div>
-							<div class="col-md-3">
-								<%=render 'budget_calendar_widget'%>
-							</div>
-					</div>
-
-					<div class="row">
-							<div class="col-md-3">
-
-									<!-- LIST GROUP WITH BADGES -->
-									<div class="panel panel-default">
-											<div class="panel-heading">
-													<h3 class="panel-title">With Badges</h3>
-											</div>
-											<div class="panel-body">
-													<ul class="list-group border-bottom">
-															<li class="list-group-item">Lorem ipsum dolor sit amet<span class="badge">14</span></li>
-															<li class="list-group-item">Mauris placerat justo ut augue<span class="badge badge-danger">8</span></li>
-															<li class="list-group-item">Donec ac venenatis elit<span class="badge badge-info">7</span></li>
-															<li class="list-group-item">Maecenas mauris diam<span class="badge badge-success">25</span></li>
-															<li class="list-group-item">Curabitur porttitor massa justo<span class="badge badge-warning">58</span></li>
-													</ul>
-											</div>
-									</div>
-									<!-- END LIST GROUP WITH BADGES -->
-
-							</div>
-
-							<div class="col-md-4">
-
-									<!-- CONTACTS -->
-									<div class="panel panel-default">
-											<div class="panel-heading">
-													<h3 class="panel-title">Contacts</h3>
-													<ul class="panel-controls">
-															<li><a href="#"><span class="fa fa-plus"></span></a></li>
-													</ul>
-											</div>
-											<div class="panel-body list-group list-group-contacts">
-													<a href="#" class="list-group-item">
-															<span class="contacts-title">John Doe</span>
-															<p>UI/UX Designer</p>
-													</a>
-													<a href="#" class="list-group-item">
-															<span class="contacts-title">Dmitry Ivaniuk</span>
-															<p>Web Developer/Designer</p>
-													</a>
-													<a href="#" class="list-group-item">
-															<span class="contacts-title">Nadia Ali</span>
-															<p>Singer-Songwriter</p>
-													</a>
-											</div>
-									</div>
-									<!-- END CONTACTS -->
-
-							</div>
-							<div class="col-md-5">
-								<%= render partial: "/tasks/tasks_widget", locals: { budget: @budget }%>
-							</div>
-					</div>
-					<div class="row">
-							<div class="col-md-12">
-								<%=render 'budget_dashboard_progress'%>
-							</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3">
-
-						    <!-- START WIDGET CLOCK -->
-						    <div class="widget widget-danger widget-padding-sm">
-						        <div class="widget-big-int plugin-clock">00:00</div>
-						        <div class="widget-subtitle plugin-date">Loading...</div>
-						        <div class="widget-controls">
-						            <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="left" title="Remove Widget"><span class="fa fa-times"></span></a>
-						        </div>
-						        <div class="widget-buttons widget-c3">
-						            <div class="col">
-						                <a href="#"><span class="fa fa-clock-"></span></a>
-						            </div>
-						            <div class="col">
-						                <a href="#"><span class="fa fa-bell"></span></a>
-						            </div>
-						            <div class="col">
-						                <a href="#"><span class="fa fa-calendar"></span></a>
-						            </div>
-						        </div>
-						    </div>
-						    <!-- END WIDGET CLOCK -->
-
-						</div>
-						<div class="col-md-4">
-							<%= content_tag :div," ",id: "expensebreakdownchart", data: {budgetbreakdowndata: budget_breakdown_pie_data}%>
-						</div>
-						<div class="col-md-4">
-							<%= content_tag :div," ",id: "miscmasterexpenseschart", data: {miscpiedata: top_misc_spending_master_categories_as_percentage}%>
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-md-4">
-						<%= content_tag :div," ",id: "misc", data: {misctopexpenses: top_spending_categories}%>
-					</div>
-					</div>
-
+					<%=render "budgets/dashboard/budget_dashboard"%>
 				</div>
+
 				<div class="tab-pane active" id="tab-second">
-					<%=render 'show_budget_summary'%>
-					<%=render 'show_budget_totals'%>
-					<%=render 'show_budget_details'%>
+					<%=render 'budgets/worksheet/show_budget_summary'%>
+					<%=render 'budgets/worksheet/show_budget_totals'%>
+					<%=render 'budgets/worksheet/show_budget_details'%>
 				</div>
 				<div class="tab-pane" id="tab-third">
 					<div class="panel panel-default">
