@@ -90,8 +90,8 @@
 				<%misc_rows += 1%>
 					<tr>
 						<td style="width:30%;">
-							<%unless misc_txn.comments.nil?%>
-								<span class="glyphicon glyphicon-tag" style='color: #999;' aria-hidden="true"></span>
+							<%unless misc_txn.comments.nil? || misc_txn.comments.length < 1%>
+								<span class="fa fa-comment-o" style='color: #999;' aria-hidden="true"></span>
 							<%else%>
 								&nbsp;&nbsp;&nbsp;
 							<%end%>
