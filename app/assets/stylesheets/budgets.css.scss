@@ -47,6 +47,19 @@ $numeric-cell-border: 1px dotted #999;
 	padding: 0px;
 }
 
+.budget-summary-widget-content {
+	// border: 1px inset #999;
+	// border-radius: 7px;
+	margin: 2px;
+	// background-color: #3C464D;
+	height: 120px;
+	// color: #999;
+	// -moz-box-shadow: $box-shadow-summary-div;
+	// -webkit-box-shadow: $box-shadow-summary-div;
+	// box-shadow: $box-shadow-summary-div;
+}
+
+
 .budget-summary-content {
 	border: 1px inset #999;
 	border-radius: 7px;
