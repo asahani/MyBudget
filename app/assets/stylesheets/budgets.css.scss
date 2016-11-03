@@ -53,12 +53,14 @@ $numeric-cell-border: 1px dotted #999;
 	margin: 2px;
 	// background-color: #3C464D;
 	height: 120px;
-	// color: #999;
 	// -moz-box-shadow: $box-shadow-summary-div;
 	// -webkit-box-shadow: $box-shadow-summary-div;
 	// box-shadow: $box-shadow-summary-div;
 }
 
+.budget-summary-widget-content table {
+	color: #999!important;
+}
 
 .budget-summary-content {
 	border: 1px inset #999;
