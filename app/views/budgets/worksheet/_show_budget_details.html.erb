@@ -10,6 +10,7 @@
 			<table class="table table-condensed table-hover actions-table">
 				<thead>
 					<th style="width:30%;">Category</th>
+					<th style="width:5%;">&nbsp;</th>
 					<th style="width:13%;">Date</th>
 					<th>Budget</th>
 					<th>Expense</th>
@@ -22,12 +23,15 @@
 					<td class="master-cell" style="width:33%;">
 						<%=display_item.master_category.name%>
 					</td>
-					<td class="master-cell" style="width:13%;">
+					<td class="master-cell" style="width:5%;">
+						&nbsp;
+					</td>
+					<td class="numeric-cell master-cell" style="width:13%;">
 						&nbsp;
 					</td>
 					<td class="numeric-cell master-cell"><%=number_to_currency(display_item.budgeted, precision: 1) %></td>
 					<td class="numeric-cell master-cell"><%=number_to_currency(display_item	.expenses, precision: 1)%></td>
-					<td class="numeric-cell master-cell" style="border-right:none!important;"><%=number_to_currency(display_item.balance, precision: 1)%></td>
+					<td class="numeric-cell master-cell"><%=number_to_currency(display_item.balance, precision: 1)%></td>
 					<td class="actions-cell master-cell" style="">
 						&nbsp;
 					</td>
@@ -35,37 +39,40 @@
 				<%display_item.categorised_items.each do |budget_item|%>
 				<%budget_rows += 1%>
 					<tr>
-						<td style="width:33%;">
-							<%if budget_item.complete%>
-								<span class="fa fa-lock" style='color: #999;' aria-hidden="true"></span>
-							<%end%>
+						<td style="width:33%;padding-left: 20px!important;">
+							<%=budget_item.category.name%>
+						</td>
+						<td style="width: 5%;font-size: 15px!important; text-align: right!important;">
 							<%unless budget_item.comment.nil? || budget_item.comment.length < 1%>
-								<span class="fa fa-comment-o" style='color: #999;' aria-hidden="true"></span>
+								<span class="fa fa-comment-o" style='color: #999;' aria-hidden="true">&nbsp;</span>
 							<%end%>
 							<%if budget_item.category.direct_debit%>
-								<span class="fa fa-credit-card" style='color: #999;' aria-hidden="true"></span>
+								<span class="fa fa-credit-card" style='color: #999;' aria-hidden="true">&nbsp;</span>
+							<%end%>
+							<%if budget_item.complete%>
+								<span class="fa fa-lock" style='color: #999;' aria-hidden="true">&nbsp;</span>
 							<%end%>
 							<%if !budget_item.complete && (budget_item.comment.nil? || budget_item.comment.length < 1) && !budget_item.category.direct_debit%>
 								&nbsp;&nbsp;&nbsp;
 							<%end%>
-							<%=budget_item.category.name%>
 						</td>
-						<td style="width:13%;">
+						<td class="numeric-cell" style="width:13%; text-align:center!important;">
 							<%unless budget_item.payment_date.nil?%>
 								<%=budget_item.payment_date.to_formatted_s(:short)%>
 							<%end%>
 						</td>
+
 						<td class="numeric-cell"><%=number_to_currency(budget_item.budgeted_amount, precision: 1) %></td>
 						<td class="numeric-cell"><%=number_to_currency(budget_item.expenses, precision: 1)%></td>
-						<td class="numeric-cell <%= 'negative' if budget_item.balance < 0 %>" style="border-right:none!important;"><%=number_to_currency(budget_item.balance, precision: 1)%></td>
+						<td class="numeric-cell <%= 'negative' if budget_item.balance < 0 %>" ><%=number_to_currency(budget_item.balance, precision: 1)%></td>
 						<td class="actions-cell">
 							<div class="actions">
 								<%if budget_item.category.has_template_transaction && !budget_item.category.account_id.nil? && !budget_item.category.payee_id.nil? && !budget_item.complete?%>
 									<%= link_to raw("<span class='fa fa-check-circle-o' style='color: #999;'></span>"),
-										one_click_transaction_path(budget_item), method: :post%>
+										one_click_transaction_path(budget_item), method: :post%>&nbsp;
 								<%end%>
 								<%= link_to raw("<span class='glyphicon glyphicon-pencil' style='color: #999;' aria-hidden='true'></span>"),
-							 		edit_budget_item_path(budget_item), {:remote => true, class: 'edit-budget-item-modal-link'} %>
+							 		edit_budget_item_path(budget_item), {:remote => true, class: 'edit-budget-item-modal-link'} %>&nbsp;
 								<%= link_to raw("<span class='caret' style='color: #999;'></span>"),
 									budget_item_path(budget_item), {:remote => true} %>
 							</div>
@@ -234,7 +241,7 @@
 					<tr id=<%=misc_txn.id.to_s + '_misc_txn_details'%> style="display:none;"></tr>
 				<%end%>
 			<%end%>
-			<%blank_rows = budget_rows - (misc_rows+((savings_expense_rows == 0 ? 1 : savings_expense_rows) + (savings_rows == 0 ? 1 : savings_rows) + 5))%>
+			<%blank_rows = budget_rows - (misc_rows+((savings_expense_rows == 0 ? 1 : savings_expense_rows) + (savings_rows == 0 ? 1 : savings_rows) + 1))%>
 			<%if blank_rows > 0%>
 				<% (1..blank_rows).each do |i| %>
 					<tr>
