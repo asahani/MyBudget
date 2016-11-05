@@ -3,9 +3,9 @@ var calendar = {
 	init: function(ajax) {
 
 		if (ajax) {
-					console.log($('#calendar_data').data('eventsdata'));
+					// console.log($('#calendar_data').data('eventsdata'));
           var events = $('#calendar_data').data('eventsdata');
-					console.log(events);
+					// console.log(events);
           // loop json & append to dom
           for (var i = 0; i < events.length; i++) {
 						console.log(events[i].day);
@@ -131,6 +131,7 @@ var calendar = {
 			};
 			$(getDaysInMonth(monthNumber - 1, yearNumber)).each(function(index) {
 				var index = index + 1;
+
 				if (index < 8) {
 					$('tbody.event-calendar tr.1').append('<td date-month="' + monthNumber + '" date-day="' + index + '" date-year="' + yearNumber + '">' + index + '</td>');
 				} else if (index < 15) {
@@ -144,6 +145,7 @@ var calendar = {
 				}
 				i++;
 			});
+
 			var date = new Date();
 			var month = date.getMonth() + 1;
 			var thisyear = new Date().getFullYear();

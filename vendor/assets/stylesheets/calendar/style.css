@@ -9,7 +9,7 @@
 }
 
 .calendar {
-    text-align: center;
+    width: 100%;
 }
 
 .calendar header {
@@ -18,6 +18,14 @@
 
 .calendar h2 {
     text-transform: uppercase;
+}
+
+.calendar table {
+    width: 100%;
+}
+
+.calendar tr {
+    width: 100%;
 }
 
 .calendar thead {
@@ -41,10 +49,11 @@
     border: 2px solid transparent;
     border-radius: 50%;
     display: inline-block;
+    width: 14%;
     height: 44px;
     line-height: 44px;
     text-align: center;
-    width: 44px;
+    /*width: 44px;*/
 }
 
 .current-day {
