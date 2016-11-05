@@ -8,6 +8,22 @@
 				<li><a href="#tab-second" role="tab" data-toggle="tab"  data-morris="none" data-highcharts="none"><span class="fa fa-table"></span>&nbsp;Budget Worksheet</a></li>
 				<li><a href="#tab-third" role="tab" data-toggle="tab" data-morris="mb" data-highcharts="c1,c2"><span class="fa fa-bar-chart-o"></span>&nbsp;Charts</a></li>
 				<li><a href="#tab-fourth" role="tab" data-toggle="tab" data-morris="ml" data-highcharts="none"><span class="fa fa-desktop"></span>&nbsp;Fourth</a></li>
+				<li class="pull-right" style="height: 100%;">
+					<%unless @budget.nil?%>
+					<ul class="panel-controls">
+							<li>
+								<%= link_to raw("<span class='fa fa-download fa-lg'></span>"),
+										import_transactions_open_file_path(budget_id: @budget.id), {:remote => true, class: 'import-transactions-modal-link'} %>
+							</li>
+							<li>
+								<%= link_to raw("<span class='fa fa-plus fa-lg'></span>"),
+										new_budget_transaction_path(transaction_type: 'miscellaneous',budget_id: @budget.id), {:remote => true, class: 'new-transaction-modal-link'} %>
+							</li>
+					</ul>
+					<%end%>
+
+				</li>
+
 		</ul>
 		<div class="panel-body tab-content">
 				<div class="tab-pane fade in active" id="tab-first">
@@ -36,9 +52,3 @@
 		</div>
 	</div>
 </div>
-<%unless @budget.nil?%>
-	<%= link_to raw("<span class='glyphicon glyphicon-import' style='color: #999;' aria-hidden='true'></span>"),
-			import_transactions_open_file_path(budget_id: @budget.id), {:remote => true, class: 'import-transactions-modal-link'} %>
-	<%= link_to raw("<span class='glyphicon glyphicon-pencil' style='color: #999;' aria-hidden='true'></span>"),
-			new_budget_transaction_path(transaction_type: 'miscellaneous',budget_id: @budget.id), {:remote => true, class: 'new-transaction-modal-link'} %>
-<%end%>
