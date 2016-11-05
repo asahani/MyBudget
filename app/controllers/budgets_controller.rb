@@ -30,17 +30,25 @@ class BudgetsController < ApplicationController
   # GET /budgets/1
   # GET /budgets/1.json
   def show
-    @misc_budget_item = BudgetItem.find_by_budget_id_and_category_id(@budget.id,Category.find_by_miscellaneous_and_mandatory(true,true).id)
+    # @misc_budget_item = BudgetItem.find_by_budget_id_and_category_id(@budget.id,Category.find_by_miscellaneous_and_mandatory(true,true).id)
+    @misc_budget_item = @budget.budget_items.joins(:category).where("categories.name = ?","Miscellaneous").first
     @tasks = Task.open.where('budget_id = ?',@budget.id).order(created_at: :desc).limit(3)
 
     #Budget Dashboard Elements
     @budget_consumption = 0
     @income_consumption = 0
-    @expenses = @budget.budget_items.sum(:expenses)
+
     @budgeted_amount = @budget.budget_items.sum(:budgeted_amount)
     @income = @budget.budget_incomes.sum(:amount)
     @savings = @budget.budget_transactions.savings_transactions.sum(:credit)
 
+    @expenses = @budget.budget_items.sum(:expenses)
+    @miscellaneous_expenses = @budget.budget_transactions.miscellaneous_transactions.sum(:debit)
+    @savings_expenses = @budget.budget_transactions.savings_expense_transactions.sum(:debit)
+
+    @income_remaining = @income - (@expenses+@savings)
+    @expenses_remaining = @budget.budget_items.where("balance > 0").sum(:balance)
+    
     if (@expenses > 0)
       @budget_consumption = ((@expenses/@budgeted_amount)*100).to_i
       @income_consumption = ((@expenses/@income)*100).to_i
