@@ -42,7 +42,7 @@
 						<td style="width:33%;padding-left: 20px!important;">
 							<%=budget_item.category.name%>
 						</td>
-						<td style="width: 5%;font-size: 15px!important; text-align: right!important;">
+						<td style="width: 5%; text-align: right!important;">
 							<%unless budget_item.comment.nil? || budget_item.comment.length < 1%>
 								<span class="fa fa-comment-o" style='color: #999;' aria-hidden="true">&nbsp;</span>
 							<%end%>
@@ -185,7 +185,7 @@
 		</div>
 
 		<!-- Miscellaneous Transactions Container -->
-		<div class="budget-content-container" style="margin-top: 10px;">
+		<div class="budget-content-container" style="margin-top: 12px;">
 			<table class="table table-condensed table-hover actions-table">
 				<thead>
 					<th style="width:30%;">Category</th>
@@ -241,7 +241,7 @@
 					<tr id=<%=misc_txn.id.to_s + '_misc_txn_details'%> style="display:none;"></tr>
 				<%end%>
 			<%end%>
-			<%blank_rows = budget_rows - (misc_rows+((savings_expense_rows == 0 ? 1 : savings_expense_rows) + (savings_rows == 0 ? 1 : savings_rows) + 1))%>
+			<%blank_rows = budget_rows - (misc_rows+((savings_expense_rows == 0 ? 1 : savings_expense_rows) + (savings_rows == 0 ? 1 : savings_rows) + 5))%>
 			<%if blank_rows > 0%>
 				<% (1..blank_rows).each do |i| %>
 					<tr>

@@ -37,6 +37,10 @@ $numeric-cell-border: 1px dotted #999;
 }
 
 .col-md-8.budget-main-container {
+	padding: 0px;
+	font-size: 11px;
+	padding-bottom: 5px;
+
 	th {
 		border-bottom: 1px solid #CCC;
 		text-align: center;
