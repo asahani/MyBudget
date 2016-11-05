@@ -3,73 +3,66 @@
 </div>
 
 <div class="row">
-		<div class="col-md-9">
-			<%=render 'budgets/dashboard/budget_dashboard_progress'%>
-		</div>
-		<div class="col-md-3">
-			<%=render 'budgets/dashboard/budget_calendar_widget'%>
-		</div>
-</div>
-
-<div class="row">
-		<div class="col-md-3">
-
-				<!-- LIST GROUP WITH BADGES -->
-				<div class="panel panel-default">
-						<div class="panel-heading">
-								<h3 class="panel-title">With Badges</h3>
-						</div>
-						<div class="panel-body">
-								<ul class="list-group border-bottom">
-										<li class="list-group-item">Lorem ipsum dolor sit amet<span class="badge">14</span></li>
-										<li class="list-group-item">Mauris placerat justo ut augue<span class="badge badge-danger">8</span></li>
-										<li class="list-group-item">Donec ac venenatis elit<span class="badge badge-info">7</span></li>
-										<li class="list-group-item">Maecenas mauris diam<span class="badge badge-success">25</span></li>
-										<li class="list-group-item">Curabitur porttitor massa justo<span class="badge badge-warning">58</span></li>
-								</ul>
-						</div>
-				</div>
-				<!-- END LIST GROUP WITH BADGES -->
-
-		</div>
-
-		<div class="col-md-4">
-
-				<!-- CONTACTS -->
-				<div class="panel panel-default">
-						<div class="panel-heading">
-								<h3 class="panel-title">Contacts</h3>
-								<ul class="panel-controls">
-										<li><a href="#"><span class="fa fa-plus"></span></a></li>
-								</ul>
-						</div>
-						<div class="panel-body list-group list-group-contacts">
-								<a href="#" class="list-group-item">
-										<span class="contacts-title">John Doe</span>
-										<p>UI/UX Designer</p>
-								</a>
-								<a href="#" class="list-group-item">
-										<span class="contacts-title">Dmitry Ivaniuk</span>
-										<p>Web Developer/Designer</p>
-								</a>
-								<a href="#" class="list-group-item">
-										<span class="contacts-title">Nadia Ali</span>
-										<p>Singer-Songwriter</p>
-								</a>
-						</div>
-				</div>
-				<!-- END CONTACTS -->
-
-		</div>
-		<div class="col-md-5">
-			<%= render partial: "/tasks/tasks_widget", locals: { budget: @budget }%>
-		</div>
-</div>
-<div class="row">
 		<div class="col-md-12">
 			<%=render 'budgets/dashboard/budget_dashboard_progress'%>
 		</div>
 </div>
+
+<div class="row">
+		<div class="col-md-4">
+			<!-- INCOME DISTRIBUTION CHART -->
+			<div class="panel panel-default">
+					<div class="panel-body" style="padding: 0px!important;">
+							<%= content_tag :div," ",id: "expensebreakdownchart", data: {budgetbreakdowndata: budget_breakdown_pie_data}%>
+					</div>
+			</div>
+		</div>
+
+		<div class="col-md-4">
+			<!-- MISCELLANEOUS CHART -->
+			<div class="panel panel-default">
+					<div class="panel-body" style="padding: 0px!important;">
+						<%= content_tag :div," ",id: "miscmasterexpenseschart", data: {miscpiedata: top_misc_spending_master_categories_as_percentage}%>
+					</div>
+			</div>
+		</div>
+
+		<div class="col-md-4">
+				<!-- CALENDAR WIDGET -->
+				<div class="panel panel-default">
+						<div class="panel-heading">
+								<h3 class="panel-title">Schedule Calendar</h3>
+						</div>
+						<div class="panel-body" style="text-align: center!important;">
+							<%=render 'budgets/dashboard/budget_calendar_widget'%>
+						</div>
+				</div>
+		</div>
+</div>
+
+<div class="row">
+
+		<div class="col-md-8">
+				<!-- MISCELLANEOUS MASTER CATEGORIES BAR CHART -->
+				<div class="panel panel-default">
+						<div class="panel-heading">
+								<h3 class="panel-title">Miscellanous Master Categories</h3>
+								<ul class="panel-controls">
+										<li><a href="#"><span class="fa fa-plus"></span></a></li>
+								</ul>
+						</div>
+						<div class="panel-body">
+								<%= content_tag :div," ",id: "misc", data: {misctopexpenses: top_spending_categories}%>
+						</div>
+				</div>
+		</div>
+
+		<div class="col-md-4">
+			<!-- MONTHLY TASKS -->
+			<%= render partial: "/tasks/tasks_widget", locals: { budget: @budget }%>
+		</div>
+</div>
+
 <div class="row">
 	<div class="col-md-3">
 
@@ -96,15 +89,15 @@
 
 	</div>
 	<div class="col-md-4">
-		<%= content_tag :div," ",id: "expensebreakdownchart", data: {budgetbreakdowndata: budget_breakdown_pie_data}%>
+
 	</div>
 	<div class="col-md-4">
-		<%= content_tag :div," ",id: "miscmasterexpenseschart", data: {miscpiedata: top_misc_spending_master_categories_as_percentage}%>
+
 	</div>
 </div>
 
 <div class="row">
 	<div class="col-md-4">
-		<%= content_tag :div," ",id: "misc", data: {misctopexpenses: top_spending_categories}%>
+
 	</div>
 </div>

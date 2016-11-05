@@ -21,7 +21,7 @@ jQuery ->
       return
     return
 
-  console.log $('#annual').data('budgetitems')
+
   mb = Morris.Bar
     element: 'annual'
     data: $('#annual').data('budgetitems')
@@ -30,7 +30,7 @@ jQuery ->
     labels: ['budgeted_amount']
     preUnits: '$'
 
-  console.log $('#misc').data('misctopexpenses')
+
   misc_top_spending = Morris.Bar
     element: 'misc'
     data: $('#misc').data('misctopexpenses')
@@ -39,7 +39,6 @@ jQuery ->
     labels: ['Expense']
     preUnits: '$'
 
-  console.log $('#miscmasterexpenseschart').data('miscpiedata')
   misc_pie = $('#miscmasterexpenseschart').highcharts
     chart:
       renderTo: 'miscmasterexpenseschart'
@@ -48,7 +47,7 @@ jQuery ->
       plotShadow: false
       type: 'pie'
       backgroundColor: 'transparent'
-    title: text: 'Expense Breakdown Chart'
+    title: text: 'Top Miscellaneous Expenses'
     tooltip: pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
     plotOptions: pie:
       allowPointSelect: true
@@ -73,7 +72,7 @@ jQuery ->
       plotShadow: false
       type: 'pie'
       backgroundColor: 'transparent'
-    title: text: 'Expense Breakdown Chart'
+    title: text: 'Income Distribution'
     tooltip: pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
     plotOptions: pie:
       allowPointSelect: true
@@ -90,7 +89,7 @@ jQuery ->
     } ]
 
   console.log $('#annual2').data('amount')
-  console.log $('#annual2').data('budgetcategories')
+
   c1 = $('#annual2').highcharts
     chart:
       renderTo: 'annual2'

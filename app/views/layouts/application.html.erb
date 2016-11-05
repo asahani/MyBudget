@@ -89,7 +89,7 @@
                             <li><%= link_to raw("<span class='xn-text'>Incomes</span>"), incomes_path%>
                         </ul>
                     </li>
-                    <li class="xn-openable active">
+                    <!-- <li class="xn-openable active">
                       <div class="form-group inside-sidebar">
                           <div class="list-group border-bottom">
                               <a href="#" class="list-group-item"><span class="fa fa-circle text-primary"></span> Project #1</a>
@@ -99,11 +99,11 @@
                               <a href="#" class="list-group-item"><span class="fa fa-circle text-info"></span> Work</a>
                           </div>
                       </div>
-                    </li>
+                    </li> -->
 
 
                     <%unless @budget.nil?%>
-                    <li class="xn-openable">
+                    <li class="xn-openable active">
                       <a href="#">
                         <span class="fa fa-credit-card"></span>
                         <span class="xn-text">Accounts</span>
@@ -152,7 +152,7 @@
                     </li>
 
                     <!-- ACCCOUNTS LIST -->
-                    <li class="xn-openable active">
+                    <li class="xn-openable">
                       <a href="#">
                         <span class="fa fa-money"></span>
                         <span class="xn-text">Accounts</span>
