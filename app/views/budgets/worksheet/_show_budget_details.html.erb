@@ -160,10 +160,10 @@
 					<td class="numeric-cell" style="color: red;border-right:none;width: 17%;"><%=number_to_currency(sav_exp_txn.debit, precision: 1) %></td>
 					<td class="actions-cell" style="">
 						<div class="actions">
-							<%= link_to raw("<span class='glyphicon glyphicon-pencil' style='color: #999;' aria-hidden='true'></span>"),
+							<%= link_to raw("<span class='glyphicon glyphicon-pencil'></span>"),
 								edit_budget_transaction_path(sav_exp_txn,transaction_type: 'savings_expense'), {:remote => true, class: 'new-transaction-modal-link'} %>
 							<% unless sav_exp_txn.reconciled%>
-								<%= link_to raw("<span class='fa fa-trash-o' style='color: #999;' aria-hidden='true'></span>"), sav_exp_txn, method: :delete,  data: { confirm: 'Are you sure?' }%>
+								<%= link_to raw("<span class='fa fa-trash-o text-danger'></span>"), sav_exp_txn, method: :delete,  data: { confirm: 'Are you sure?' }%>
 							<% else -%>
 								<%=image_tag 'cleared-icon.png'%>
 							<% end -%>
@@ -228,10 +228,10 @@
 						<td class="numeric-cell" style="border-right:none;width: 17%;"><%=number_to_currency(misc_txn.debit-misc_txn.credit, precision: 1) %></td>
 						<td class="actions-cell" style="">
 							<div class="actions">
-								<%= link_to raw("<span class='glyphicon glyphicon-pencil' style='color: #999;' aria-hidden='true'></span>"),
+								<%= link_to raw("<span class='glyphicon glyphicon-pencil'></span>"),
 								 	edit_budget_transaction_path(misc_txn,transaction_type: 'miscellaneous'), {:remote => true, class: 'new-transaction-modal-link'} %>
 								<% unless misc_txn.reconciled%>
-									<%= link_to raw("<span class='fa fa-trash-o' style='color: #999;' aria-hidden='true'></span>"), misc_txn, method: :delete,  data: { confirm: 'Are you sure?' }%>
+									<%= link_to raw("<span class='fa fa-trash-o text-danger'></span>"), misc_txn, method: :delete,  data: { confirm: 'Are you sure?' }%>
 								<% else -%>
 									<%=image_tag 'cleared-icon.png'%>
 								<% end -%>
