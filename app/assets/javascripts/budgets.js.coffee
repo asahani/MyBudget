@@ -21,7 +21,8 @@ jQuery ->
       return
     return
 
-
+# Morris Charts
+# ===============
   mb = Morris.Bar
     element: 'annual'
     data: $('#annual').data('budgetitems')
@@ -39,6 +40,44 @@ jQuery ->
     labels: ['Expense']
     preUnits: '$'
 
+  ml = Morris.Line
+    element: 'annual4'
+    data: [
+      {
+        y: '2012'
+        a: 100
+      }
+      {
+        y: '2011'
+        a: 80
+      }
+      {
+        y: '2010'
+        a: 75
+      }
+      {
+        y: '2009'
+        a: 70
+      }
+      {
+        y: '2008'
+        a: 65
+      }
+      {
+        y: '2007'
+        a: 60
+      }
+      {
+        y: '2006'
+        a: 55
+      }
+    ]
+    xkey: 'y'
+    ykeys: [ 'a' ]
+    labels: [ 'Series A' ]
+
+# Highcharts
+# ===============
   misc_pie = $('#miscmasterexpenseschart').highcharts
     chart:
       renderTo: 'miscmasterexpenseschart'
@@ -94,6 +133,7 @@ jQuery ->
     chart:
       renderTo: 'annual2'
       type: 'bar'
+      height: '600'
     title: text: 'Stacked bar chart'
     xAxis: categories: $('#annual2').data('budgetcategories')
     yAxis:
@@ -115,6 +155,7 @@ jQuery ->
     chart:
       renderTo: 'annual3'
       type: 'bar'
+      height: '600'
     title: text: 'Stacked bar chart'
     xAxis: categories: $('#annual3').data('budgetcategories')
     yAxis:
@@ -130,39 +171,3 @@ jQuery ->
       data: $('#annual3').data('amount')
       }
     ]
-
-  ml = Morris.Line
-    element: 'annual4'
-    data: [
-      {
-        y: '2012'
-        a: 100
-      }
-      {
-        y: '2011'
-        a: 80
-      }
-      {
-        y: '2010'
-        a: 75
-      }
-      {
-        y: '2009'
-        a: 70
-      }
-      {
-        y: '2008'
-        a: 65
-      }
-      {
-        y: '2007'
-        a: 60
-      }
-      {
-        y: '2006'
-        a: 55
-      }
-    ]
-    xkey: 'y'
-    ykeys: [ 'a' ]
-    labels: [ 'Series A' ]
