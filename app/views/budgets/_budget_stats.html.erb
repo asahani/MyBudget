@@ -1,25 +1,207 @@
-<div class="panel panel-default">
+<div class="row">
+  <div  class="col-md-8">
+    <div class="panel panel-default">
+      <div class="col-md-3 chart-summary-panel no-padding" style="height:300px;">
+        <div class="padding-15">
+          <ul class="chart-mini-stats">
+            <li class="col-md-12 col-sm-4 col-xs-4 no-padding">
+  						<div class="sparkline-bar">
+                <span class="sparkline" sparkType="bar" sparkBarColor="#444" sparkWidth="100" sparkHeight="30" sparkBarWidth="5">4,5,6,6,7,8,6,5</span>
+  						</div>
+  						<div class="values">
+  							<strong>$18304</strong>
+  							Sales
+  						</div>
+  					</li>
+          </ul>
 
-  <div class="row">
-    <div class="col-md-4">
-      <p>Vestibulum cursus augue sed leo tempor, at aliquam orci dictum. Sed mattis metus id velit aliquet, et interdum nulla porta. Etiam euismod pellentesque purus, in fermentum eros venenatis ut. Praesent vitae nibh ac augue gravida lacinia non a ipsum. Aenean vestibulum eu turpis eu posuere. Sed eget lacus lacinia, mollis urna et, interdum dui. Donec sed diam ut metus imperdiet malesuada. Maecenas tincidunt ultricies ipsum, lobortis pretium dolor sodales ut. Donec nec fringilla nulla. In mattis sapien lorem, nec tincidunt elit scelerisque tempus.</p>
+        </div>
+      </div>
+
+      <div class="col-md-9" style="height:300px;">
+        <%= content_tag :div," ",id: "summarybarchart", data: {income: @income.to_i, expenses: @expenses.to_i,savings: @savings.to_i,misc: @miscellaneous_expenses.to_i,budgetmonth: Date::ABBR_MONTHNAMES[@budget.month].upcase}%>
+      </div>
     </div>
-
-    <div class="col-md-8">
-      <%= content_tag :div," ",id: "annual", data: {budgetitems: budget_items_chart_data}%>
+  </div>
+  <div class="col-md-4" style="height:300px;">
+    <div class="panel chart-details-panel no-padding">
     </div>
+  </div>
+</div>
 
+<div class="row no-padding">
+
+  <div class="col-md-6">
+
+    <div class="panel panel-bricky">
+      <div class="panel-heading chart-heading-merged">
+          <h4 class="panel-title">Miscellaneous Category Spend</h4>
+      </div>
+			<div class="panel-body" style="height:300px;">
+				<div class="row">
+					<div class="col-md-6"  style="top: -15px;">
+						<%= content_tag :div," ",id: "misccategoriespiechart", data: {misccategoriesdata: miscellaneous_categories_as_percentage}%>
+					</div>
+					<div class="col-md-6">
+            <div class="chart-spend-info">
+							<h4>Top 5 Expenses</h4>
+						</div>
+						<div class="chart-spend-info">
+              <span class="text-light pull-left">Supply acc. for Emea Region</span>
+							<h4 class="pull-right">32.16K €</h4>
+							<div class="clearfix"></div>
+						</div>
+            <div class="chart-spend-info">
+              <span class="text-light pull-left">Supply acc. for Emea Region</span>
+							<h4 class="pull-right">32.16K €</h4>
+							<div class="clearfix"></div>
+						</div>
+            <div class="chart-spend-info">
+              <span class="text-light pull-left">Supply acc. for Emea Region</span>
+							<h4 class="pull-right">32.16K €</h4>
+							<div class="clearfix"></div>
+						</div>
+            <div class="chart-spend-info">
+              <span class="text-light pull-left">Supply acc. for Emea Region</span>
+							<h4 class="pull-right">32.16K €</h4>
+							<div class="clearfix"></div>
+						</div>
+            <div class="chart-spend-info">
+              <span class="text-light pull-left">Supply acc. for Emea Region</span>
+							<h4 class="pull-right">32.16K €</h4>
+							<div class="clearfix"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
   </div>
 
-  <div class="row">
+  <div class="col-md-6">
 
-    <div class="col-md-6">
-      <%= content_tag :div," ",id: "annual2", data: {budgetcategories: budget_categories_chart_data,amount: budget_amount_chart_data,expenses: budget_expenses_chart_data,balance: budget_balance_chart_data}%>
-    </div>
-    <div class="col-md-6">
-      <%= content_tag :div," ",id: "annual3", data: {budgetcategories: budget_categories_chart_data,amount: budget_amount_chart_data,expenses: budget_expenses_chart_data,balance: budget_balance_chart_data}%>
-    </div>
-
+    <div class="panel panel-bricky">
+      <div class="panel-heading chart-heading-merged">
+          <h4 class="panel-title">Miscellaneous Master Category Spend</h4>
+      </div>
+			<div class="panel-body" style="height:300px;">
+				<div class="row">
+					<div class="col-md-6"  style="top: -15px;">
+						<%= content_tag :div," ",id: "miscmastercategoriespiechart", data: {miscmastercategoriesdata: top_misc_spending_master_categories_as_percentage}%>
+					</div>
+					<div class="col-md-6">
+            <div class="chart-spend-info">
+							<h4>Top 5 Expenses</h4>
+						</div>
+						<div class="chart-spend-info">
+              <span class="text-light pull-left">Supply acc. for Emea Region</span>
+							<h4 class="pull-right">32.16K €</h4>
+							<div class="clearfix"></div>
+						</div>
+            <div class="chart-spend-info">
+              <span class="text-light pull-left">Supply acc. for Emea Region</span>
+							<h4 class="pull-right">32.16K €</h4>
+							<div class="clearfix"></div>
+						</div>
+            <div class="chart-spend-info">
+              <span class="text-light pull-left">Supply acc. for Emea Region</span>
+							<h4 class="pull-right">32.16K €</h4>
+							<div class="clearfix"></div>
+						</div>
+            <div class="chart-spend-info">
+              <span class="text-light pull-left">Supply acc. for Emea Region</span>
+							<h4 class="pull-right">32.16K €</h4>
+							<div class="clearfix"></div>
+						</div>
+            <div class="chart-spend-info">
+              <span class="text-light pull-left">Supply acc. for Emea Region</span>
+							<h4 class="pull-right">32.16K €</h4>
+							<div class="clearfix"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
   </div>
 
 </div>
+
+<div class="row no-padding">
+  <div class="panel panel-default">
+    <div class="panel-heading chart-heading">
+        <h4 class="panel-title">Miscellanesous Expenses</h4>
+    </div>
+    <div class="panel-body">
+      <%= content_tag :div," ",id: "miscexpenses", data: {miscexpenses: miscellaneous_categories}%>
+    </div>
+  </div>
+
+</div>
+
+<div class="row no-padding">
+
+  <div class="col-md-6">
+
+    <div class="panel panel-bricky">
+      <div class="panel-heading chart-heading-merged">
+          <h4 class="panel-title">Payee Spend</h4>
+      </div>
+			<div class="panel-body" style="height:300px;">
+				<div class="row">
+					<div class="col-md-6"  style="top: -15px;">
+						<%= content_tag :div," ",id: "payeepiechart", data: {payeepiechartdata: payee_spend_as_percentage}%>
+					</div>
+					<div class="col-md-6">
+            <div class="chart-spend-info">
+							<h4>Top 5 Expenses</h4>
+						</div>
+						<div class="chart-spend-info">
+              <span class="text-light pull-left">Supply acc. for Emea Region</span>
+							<h4 class="pull-right">32.16K €</h4>
+							<div class="clearfix"></div>
+						</div>
+            <div class="chart-spend-info">
+              <span class="text-light pull-left">Supply acc. for Emea Region</span>
+							<h4 class="pull-right">32.16K €</h4>
+							<div class="clearfix"></div>
+						</div>
+            <div class="chart-spend-info">
+              <span class="text-light pull-left">Supply acc. for Emea Region</span>
+							<h4 class="pull-right">32.16K €</h4>
+							<div class="clearfix"></div>
+						</div>
+            <div class="chart-spend-info">
+              <span class="text-light pull-left">Supply acc. for Emea Region</span>
+							<h4 class="pull-right">32.16K €</h4>
+							<div class="clearfix"></div>
+						</div>
+            <div class="chart-spend-info">
+              <span class="text-light pull-left">Supply acc. for Emea Region</span>
+							<h4 class="pull-right">32.16K €</h4>
+							<div class="clearfix"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+  </div>
+
+  <div class="col-md-6">
+
+    <%= content_tag :div," ",id: "payeespendbarchart", data: {payeespenddata: payee_spend}%>
+  </div>
+
+</div>
+
+
+
+<div class="row">
+
+  <div class="col-md-6">
+    <%= content_tag :div," ",id: "annual2", data: {budgetcategories: budget_categories_chart_data,amount: budget_amount_chart_data,expenses: budget_expenses_chart_data,balance: budget_balance_chart_data}%>
+  </div>
+  <div class="col-md-6">
+    <%= content_tag :div," ",id: "annual3", data: {budgetcategories: budget_categories_chart_data,amount: budget_amount_chart_data,expenses: budget_expenses_chart_data,balance: budget_balance_chart_data}%>
+  </div>
+
+</div>
+<%= content_tag :div," ",id: "annual", data: {budgetitems: budget_items_chart_data}%>

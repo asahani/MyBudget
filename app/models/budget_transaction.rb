@@ -53,7 +53,17 @@ class BudgetTransaction < ActiveRecord::Base
     txns = txns.miscellaneous_transactions
     txns = txns.joins(:category)
     txns = txns.group("categories.name")
-    txns = txns.select("categories.name as name, sum(debit) as total_expense , sum(total_expense) as total_spend")
+    txns = txns.select("categories.name as name, sum(debit) as total_expense")
+    txns = txns.order("total_expense DESC").first(limit)
+    # txns.group_by { |t| t.category.name}
+  end
+
+  def self.total_grouped_by_external_payee(budget_id, limit=10)
+    txns = where(budget_id: budget_id)
+    txns = txns.miscellaneous_transactions
+    txns = txns.joins(:payee).where('is_system = ? && is_account = ?',false,false)
+    txns = txns.group("payees.name")
+    txns = txns.select("payees.name as name, sum(debit) as total_expense")
     txns = txns.order("total_expense DESC").first(limit)
     # txns.group_by { |t| t.category.name}
   end

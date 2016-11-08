@@ -28,6 +28,28 @@ module BudgetsHelper
     end
   end
 
+  def miscellaneous_categories
+    top_expenses = BudgetTransaction.total_miscellaneous_grouped_by_category(@budget.id)
+    top_expenses.map do |txn|
+      {
+        category: txn.name,
+        spend: txn.total_expense
+      }
+    end
+  end
+
+  def miscellaneous_categories_as_percentage(limit = 10)
+    expenses = BudgetTransaction.total_miscellaneous_grouped_by_category(@budget.id,limit)
+    total_spend = BudgetTransaction.where(budget_id: @budget.id).miscellaneous_transactions.sum(:debit).to_f
+
+    expenses.map do |txn|
+      {
+        name: txn.name,
+        y: ((txn.total_expense/total_spend).to_f.round(2) * 100)
+      }
+    end
+  end
+
   def top_misc_spending_master_categories_as_percentage
     top_expenses = BudgetTransaction.total_miscellaneous_grouped_by_master_category(@budget.id)
     total_spend = BudgetTransaction.where(budget_id: @budget.id).miscellaneous_transactions.sum(:debit).to_f
@@ -37,6 +59,29 @@ module BudgetsHelper
       name: txn.name,
       y: ((txn.total_expense/total_spend).to_f.round(2) * 100)
     }
+    end
+  end
+
+  def payee_spend(limit = 10)
+    expenses = BudgetTransaction.total_grouped_by_external_payee(@budget.id,limit)
+    expenses.map do |txn|
+      {
+        payee: txn.name,
+        spend: txn.total_expense
+      }
+    end
+  end
+
+  def payee_spend_as_percentage(limit = 10)
+    expenses = BudgetTransaction.total_grouped_by_external_payee(@budget.id,limit)
+    total_spend = 0
+    expenses.map do |x| total_spend = total_spend + x.total_expense end
+
+    expenses.map do |txn|
+      {
+        name: txn.name,
+        y: ((txn.total_expense/total_spend).to_f.round(2) * 100)
+      }
     end
   end
 
@@ -64,13 +109,6 @@ module BudgetsHelper
     @budget.budget_items.collect { |budget_item| budget_item.balance.to_f }.to_json
   end
 
-  def budget_items_chart_data
-    @budget.budget_items.map do |budget_item| {
-      budgeted_amount: budget_item.budgeted_amount,
-      category: budget_item.category.name
-    }
-    end
-  end
 
   def get_calendar_events
     event_array = Array.new

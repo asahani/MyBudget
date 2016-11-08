@@ -31,11 +31,30 @@ jQuery ->
     labels: ['budgeted_amount']
     preUnits: '$'
 
-
-  misc_top_spending = Morris.Bar
+  # BugetDashboard: Miscellaneous Master Categrories Chart
+  misc_master_expenses_bar = Morris.Bar
     element: 'misc'
     data: $('#misc').data('misctopexpenses')
     xkey: 'category'
+    ykeys: ['spend']
+    labels: ['Expense']
+    preUnits: '$'
+
+  #Stats Page: Miscellaneous Expenses bar graph
+  misc_expenses_bar = Morris.Bar
+    element: 'miscexpenses'
+    data: $('#miscexpenses').data('miscexpenses')
+    xkey: 'category'
+    ykeys: ['spend']
+    labels: ['Expense']
+    preUnits: '$'
+
+  #Stats Page: Payee Expenses bar graph
+  console.log $('#payeespendbarchart').data('payeespenddata')
+  payee_spend_bar = Morris.Bar
+    element: 'payeespendbarchart'
+    data: $('#payeespendbarchart').data('payeespenddata')
+    xkey: 'payee'
     ykeys: ['spend']
     labels: ['Expense']
     preUnits: '$'
@@ -102,7 +121,9 @@ jQuery ->
       data: $('#miscmasterexpenseschart').data('miscpiedata')
     } ]
 
-  console.log $('#expensebreakdownchart').data('budgetbreakdowndata')
+  # console.log $('#expensebreakdownchart').data('budgetbreakdowndata')
+
+  # Budget Dashboard: Income vs Expenses Percentage breakdown pie chart
   total_pie = $('#expensebreakdownchart').highcharts
     chart:
       renderTo: 'expensebreakdownchart'
@@ -127,7 +148,7 @@ jQuery ->
       data: $('#expensebreakdownchart').data('budgetbreakdowndata')
     } ]
 
-  console.log $('#annual2').data('amount')
+  # console.log $('#annual2').data('amount')
 
   c1 = $('#annual2').highcharts
     chart:
@@ -171,3 +192,161 @@ jQuery ->
       data: $('#annual3').data('amount')
       }
     ]
+
+  # Stats Page: Income vs Expenses Summary Chart
+  stats_summary_bar = $('#summarybarchart').highcharts
+    chart:
+      renderTo: 'summarybarchart'
+      type: 'column'
+      height: '300'
+    title: text: null
+    xAxis:
+      categories: [
+        $('#summarybarchart').data('budgetmonth')
+      ]
+      crosshair: true
+    yAxis:
+      min: 0
+      title: text: 'Amount ($)'
+    tooltip:
+      headerFormat: '<span style="font-size:10px">{point.key}</span><table>'
+      pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' + '<td style="padding:0"><b>${point.y:.1f}</b></td></tr>'
+      footerFormat: '</table>'
+      shared: true
+      useHTML: true
+    plotOptions: column:
+      pointPadding: 0.2
+      borderWidth: 0
+    series: [
+      {
+        name: 'Income'
+        data: [
+          $('#summarybarchart').data('income')
+        ]
+      }
+      {
+        name: 'Expenses'
+        data: [
+          $('#summarybarchart').data('expenses')
+        ]
+      }
+      {
+        name: 'Miscellaneous'
+        data: [
+          $('#summarybarchart').data('misc')
+        ]
+      }
+      {
+        name: 'Savings'
+        data: [
+          $('#summarybarchart').data('savings')
+        ]
+      }
+    ]
+  # Stats Page: Miscellaneous Categories Pie Chart (top 10)
+  console.log $('#misccategoriespiechart').data('misccategoriesdata')
+  stats_misc_categories_pie = $('#misccategoriespiechart').highcharts
+    chart:
+      renderTo: 'misccategoriespiechart'
+      plotBackgroundColor: null
+      plotBorderWidth: null
+      plotShadow: false
+      type: 'pie'
+      backgroundColor: 'transparent'
+      height: '300'
+    title: text: null
+    tooltip: pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    plotOptions: pie:
+      allowPointSelect: true
+      cursor: 'pointer'
+      colors: do ->
+        colors = []
+        base = '#FFAFAF'
+        i = undefined
+        i = 0
+        while i < 10
+          colors.push Highcharts.Color(base).brighten((i - 3) / 7).get()
+          i += 1
+        colors
+      dataLabels:
+        enabled: false
+        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+        style: color: Highcharts.theme and Highcharts.theme.contrastTextColor or 'black'
+      showInLegend: true
+    series: [ {
+      name: 'Expense'
+      colorByPoint: true
+      data: $('#misccategoriespiechart').data('misccategoriesdata')
+    } ]
+
+  # Stats Page: Miscellaneous Categories Pie Chart (top 10)
+  # console.log $('#misccategoriespiechart').data('misccategoriesdata')
+  stats_misc_master_categories_pie = $('#miscmastercategoriespiechart').highcharts
+    chart:
+      renderTo: 'miscmastercategoriespiechart'
+      plotBackgroundColor: null
+      plotBorderWidth: null
+      plotShadow: false
+      type: 'pie'
+      backgroundColor: 'transparent'
+      height: '300'
+    title: text: null
+    tooltip: pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    plotOptions: pie:
+      allowPointSelect: true
+      cursor: 'pointer'
+      colors: do ->
+        colors = []
+        base = '#FFAFAF'
+        i = undefined
+        i = 0
+        while i < 10
+          colors.push Highcharts.Color(base).brighten((i - 3) / 7).get()
+          i += 1
+        colors
+      dataLabels:
+        enabled: false
+        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+        style: color: Highcharts.theme and Highcharts.theme.contrastTextColor or 'black'
+      showInLegend: true
+    series: [ {
+      name: 'Expense'
+      colorByPoint: true
+      data: $('#miscmastercategoriespiechart').data('miscmastercategoriesdata')
+    } ]
+
+  # Stats Page: Miscellaneous Categories Pie Chart (top 10)
+  # console.log $('#payeepiechart').data('payeepiechartdata')
+  payee_spend_pie = $('#payeepiechart').highcharts
+    chart:
+      renderTo: 'payeepiechart'
+      plotBackgroundColor: null
+      plotBorderWidth: null
+      plotShadow: false
+      type: 'pie'
+      backgroundColor: 'transparent'
+      height: '300'
+    title: text: null
+    tooltip: pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    plotOptions: pie:
+      allowPointSelect: true
+      cursor: 'pointer'
+      colors: do ->
+        colors = []
+        base = '#FFAFAF'
+        i = undefined
+        i = 0
+        while i < 10
+          colors.push Highcharts.Color(base).brighten((i - 3) / 7).get()
+          i += 1
+        colors
+      dataLabels:
+        enabled: false
+        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+        style: color: Highcharts.theme and Highcharts.theme.contrastTextColor or 'black'
+      showInLegend: true
+    series: [ {
+      name: 'Expense'
+      colorByPoint: true
+      data: $('#payeepiechart').data('payeepiechartdata')
+    } ]

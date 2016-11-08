@@ -38,6 +38,103 @@
 body {
 	font-size: small;
 }
+.no-padding {
+	padding: 0 !important;
+}
+.padding-15 {
+	padding: 15px !important;
+}
+
+/*******************
+ * Charting Panels
+ *******************/
+.panel-bricky {
+	background-color: #894550;
+  background-image: linear-gradient(to bottom, #9a4e5a 0px, #894550 100%);
+	color: #ffffff;
+}
+
+.chart-heading {
+	background: #fff!important;
+	color: #8B91A0!important;
+}
+
+.chart-heading h4{
+	color: #8B91A0!important;
+}
+
+.chart-heading-merged {
+	background: inherit!important;
+	color: #fff!important;
+}
+
+.chart-heading-merged h4{
+	color: #ffffff!important;
+}
+
+.chart-summary-panel {
+		background-color: #1FBBA6;
+		background-image: linear-gradient(to bottom, #23d1b9 0px, #1fbba6 100%);
+		color: #ffffff;
+		height: 100%;
+}
+
+.chart-details-panel {
+	background-color: #5F8295;
+	background-image: linear-gradient(to bottom, #6c8fa1 0px, #5f8295 100%);
+	color: #ffffff;
+	height: 100%;
+}
+
+.chart-mini-stats {
+	list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.chart-mini-stats li {
+	text-align: center;
+	margin-bottom: 8px;
+	margin-top: 8px;
+}
+.chart-mini-stats .sparkline-bar {
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+}
+.chart-mini-stats .values {
+	font-size: 12px;
+  padding: 10px 0;
+}
+
+.chart-mini-stats .values strong{
+	display: block;
+	font-size: 18px;
+	margin-bottom: 2px;
+	line-height: 18px;
+}
+
+.chart-spend-info {
+	padding-top: 5px !important;
+	margin-bottom: 10px !important;
+	clear: both;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-color: rgba(255, 255, 255, 0.2) !important;
+}
+.chart-spend-info h4 {
+	color: inherit;
+	// font-weight: 300;
+}
+
+.chart-spend-info .text-light {
+	color: rgba(255, 255, 255, 0.6);
+}
+
+/*******************
+ * X-container customisation of atlant
+ *******************/
+
 .x-navigation-container {
 	height: 50px;
 	box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.5);
