@@ -121,6 +121,11 @@ class ImportTransactionsController < ApplicationController
             raise 'Payee cannot be blank. Please select or add a new payee.'
           end
 
+          existing_budget_transaction = BudgetTransaction.find_by_raw_data(txn.raw_data)
+          unless (existing_budget_transaction.nil?)
+            raise 'Duplicate transaction import detected. txn: ' + txn.raw_data.to_s
+          end
+
           unless (txn.credit.nil?)
             credit_val = txn.credit.abs
           end
