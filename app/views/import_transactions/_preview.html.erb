@@ -16,23 +16,19 @@
     </div>
     <%end%>
 
-    <div id="import-preview-table-header">
-      <table>
-        <tr>
-          <td style="width: 10%;">Account</td>
-          <td style="width: 10%;">Payee</td>
-          <td style="width: 10%;">Category</td>
-          <td style="width: 7%;">Date</td>
-          <td style="width: 34%;">Description</td>
-          <td style="width: 8%">Credit</td>
-          <td style="width: 8%;">Debit</td>
-          <td style="width: 8%;border-right: none;">Balance</td>
-          <td style="width: 5%;border: none;box-shadow: none;">&nbsp;</td>
-        </tr>
-      </table>
-    </div>
     <div id="import-preview-pane-content">
       <table class="table table-striped">
+        <thead>
+          <th style="width: 10%;">Account</th>
+          <th style="width: 10%;">Payee</th>
+          <th style="width: 10%;">Category</th>
+          <th style="width: 7%;">Date</th>
+          <th style="width: 34%;">Description</th>
+          <th style="width: 8%;text-align: right!important;">Credit</th>
+          <th style="width: 8%;text-align: right!important;">Debit</th>
+          <th style="width: 8%;text-align: right!important;border-right: none;">Balance</th>
+          <th style="width: 5%;text-align: right!important;border: none;box-shadow: none;">Actions</th>
+        </thead>
         <%ImportedTransaction.all.each do |txn|%>
           <tr>
             <td style="width: 10%;padding-left: 5px !important;">
@@ -57,13 +53,13 @@
 								<%unless txn.category.nil?%>
 									<table style="background-color: transparent !important;">
 										<tr>
+                      <td style="width: 90%; padding:0px !important;">&nbsp;<%=txn.category.name%></td>
 											<td style="width: 10%;padding:0px !important;">
 												<div class="actions">
-													<%= link_to raw("<span class='glyphicon glyphicon-pencil' style='color: #999;' aria-hidden='true'></span>"),
+													<%= link_to raw("<span class='fa fa-edit text-primary'></span>"),
 				                   edit_transaction_category_path(id: txn.category.id,imported_txn_id: txn.id), {:remote => true} %>
 												</div>
 											</td>
-											<td style="width: 90%; padding:0px !important;">&nbsp;<%=txn.category.name%></td>
 										</tr>
 									</table>
 								<%end%>
@@ -77,20 +73,20 @@
             <td style="width: 5%;">
               <div class="actions">
                 <%if txn.payee.nil?%>
-                  <%= link_to raw("<span class='glyphicon glyphicon-user' style='color: #999;' aria-hidden='true'></span>"),
+                  <%= link_to raw("<span class='fa fa-user text-primary'></span>"),
                    new_payee_path(imported_txn_id: txn.id,called_from_import_txn: true), {:remote => true, class: 'new_payee-modal-link'} %>
                 <%end%>
-                <%= link_to raw("<span class='glyphicon glyphicon-transfer' style='color: #999;' aria-hidden='true'></span>"),
+                <%= link_to raw("<span class='glyphicon glyphicon-transfer text-primary'></span>"),
                  transfer_imported_transaction_path(txn.id), {:remote => true, class: 'new_payee-modal-link'} %>
-                <%= link_to raw("<span class='glyphicon glyphicon-remove' style='color: #999;' aria-hidden='true'></span>"), destroy_imported_transaction_path(txn.id), method: :delete, data: { confirm: 'Are you sure?' , :remote => true}%>
+                <%= link_to raw("<span class='fa fa-trash-o text-primary'></span>"), destroy_imported_transaction_path(txn.id), method: :delete, data: { confirm: 'Are you sure?' , :remote => true}%>
               </div>
             </td>
           </tr>
         <%end%>
       </table>
     </div>
-    <div id="import-preview-footer">
-      <div class="col-md-1" style="margin-left: -10px;">
+    <div class="row" id="import-preview-footer">
+      <div class="col-md-1">
         <%= link_to "Cancel",import_transactions_cancel_path(), class: "btn btn-default", style: "height: 100%;"%>
       </div>
       <div class="col-md-10">
