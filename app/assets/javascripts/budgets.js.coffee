@@ -31,13 +31,14 @@ jQuery ->
     labels: ['budgeted_amount']
     preUnits: '$'
 
-  # BugetDashboard: Miscellaneous Master Categrories Chart
+  # Stats Page: Miscellaneous Master Categrories Chart
   misc_master_expenses_bar = Morris.Bar
-    element: 'misc'
-    data: $('#misc').data('misctopexpenses')
+    element: 'miscellaneousmasterbarchart'
+    data: $('#miscellaneousmasterbarchart').data('misctopexpenses')
     xkey: 'category'
     ykeys: ['spend']
     labels: ['Expense']
+    barColors: ["#A45764"]
     preUnits: '$'
 
   #Stats Page: Miscellaneous Expenses bar graph
@@ -57,6 +58,7 @@ jQuery ->
     xkey: 'payee'
     ykeys: ['spend']
     labels: ['Expense']
+    barColors: ["#A5C8DA"]
     preUnits: '$'
 
   ml = Morris.Line
@@ -150,25 +152,26 @@ jQuery ->
 
   # console.log $('#annual2').data('amount')
 
-  c1 = $('#annual2').highcharts
+  budgeted_percentage_spent_categories = $('#budget_percentage_spent').highcharts
     chart:
-      renderTo: 'annual2'
+      renderTo: 'budget_percentage_spent'
       type: 'bar'
       height: '600'
-    title: text: 'Stacked bar chart'
-    xAxis: categories: $('#annual2').data('budgetcategories')
+    title: text: null
+    xAxis: categories: $('#budget_percentage_spent').data('budgetcategories')
     yAxis:
-      title: text: 'Percentage spent of budget'
+      title: text: '% spent of budget'
     legend: reversed: true
     plotOptions: series: stacking: 'percent'
     series: [
       {
       name: 'balance'
-      data: $('#annual2').data('balance')
+      data: $('#budget_percentage_spent').data('balance')
       }
       {
       name: 'expenses'
-      data: $('#annual2').data('expenses')
+      color: '#B4757F'
+      data: $('#budget_percentage_spent').data('expenses')
       }
     ]
 
@@ -279,7 +282,7 @@ jQuery ->
       data: $('#misccategoriespiechart').data('misccategoriesdata')
     } ]
 
-  # Stats Page: Miscellaneous Categories Pie Chart (top 10)
+  # Stats Page: Miscellaneous Master Categories Pie Chart (top 10)
   # console.log $('#misccategoriespiechart').data('misccategoriesdata')
   stats_misc_master_categories_pie = $('#miscmastercategoriespiechart').highcharts
     chart:
@@ -315,7 +318,7 @@ jQuery ->
       data: $('#miscmastercategoriespiechart').data('miscmastercategoriesdata')
     } ]
 
-  # Stats Page: Miscellaneous Categories Pie Chart (top 10)
+  # Stats Page: Payee spend Pie Chart (top 10)
   # console.log $('#payeepiechart').data('payeepiechartdata')
   payee_spend_pie = $('#payeepiechart').highcharts
     chart:
@@ -333,7 +336,7 @@ jQuery ->
       cursor: 'pointer'
       colors: do ->
         colors = []
-        base = '#FFAFAF'
+        base = '#A5C8DA'
         i = undefined
         i = 0
         while i < 10

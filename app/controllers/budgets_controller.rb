@@ -32,6 +32,9 @@ class BudgetsController < ApplicationController
   def show
     # @misc_budget_item = BudgetItem.find_by_budget_id_and_category_id(@budget.id,Category.find_by_miscellaneous_and_mandatory(true,true).id)
     @misc_budget_item = @budget.budget_items.joins(:category).where("categories.name = ?","Miscellaneous").first
+    @top_5_misc_master_categories = BudgetTransaction.total_miscellaneous_grouped_by_master_category(@budget.id,5)
+    @top_5_misc_categories = BudgetTransaction.total_miscellaneous_grouped_by_category(@budget.id,5)
+    @top_5_payees = BudgetTransaction.total_grouped_by_external_payee(@budget.id,5)
     @tasks = Task.open.where('budget_id = ?',@budget.id).order(created_at: :desc).limit(3)
 
     #Budget Dashboard Elements
@@ -48,7 +51,7 @@ class BudgetsController < ApplicationController
 
     @income_remaining = @income - (@expenses+@savings)
     @expenses_remaining = @budget.budget_items.where("balance > 0").sum(:balance)
-    
+
     if (@expenses > 0)
       @budget_consumption = ((@expenses/@budgeted_amount)*100).to_i
       @income_consumption = ((@expenses/@income)*100).to_i

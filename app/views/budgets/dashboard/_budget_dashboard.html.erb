@@ -52,7 +52,8 @@
 								</ul>
 						</div>
 						<div class="panel-body">
-								<%= content_tag :div," ",id: "misc", data: {misctopexpenses: top_spending_categories}%>
+						    <%= content_tag :div," ",id: "budget_percentage_spent", data: {budgetcategories: budget_categories_chart_data,amount: budget_amount_chart_data,expenses: budget_expenses_chart_data,balance: budget_balance_chart_data}%>
+
 						</div>
 				</div>
 		</div>

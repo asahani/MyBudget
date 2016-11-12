@@ -54,6 +54,12 @@ body {
 	color: #ffffff;
 }
 
+.panel-grey {
+	background-color: #5F8295;
+	background-image: linear-gradient(to bottom, #6c8fa1 0px, #5f8295 100%);
+	color: #ffffff;
+}
+
 .chart-heading {
 	background: #fff!important;
 	color: #8B91A0!important;
@@ -86,6 +92,10 @@ body {
 	height: 100%;
 }
 
+.chart-details-panel-container {
+	width: 49%;
+	padding: 10px;
+}
 .chart-mini-stats {
 	list-style: none;
   margin: 0;
@@ -104,7 +114,7 @@ body {
 }
 .chart-mini-stats .values {
 	font-size: 12px;
-  padding: 10px 0;
+  padding: 5px 0;
 }
 
 .chart-mini-stats .values strong{
@@ -127,7 +137,7 @@ body {
 	// font-weight: 300;
 }
 
-.chart-spend-info .text-light {
+.text-light {
 	color: rgba(255, 255, 255, 0.6);
 }
 
