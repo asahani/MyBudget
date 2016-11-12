@@ -1,6 +1,8 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
+//= require simplecalendar
+
 mb = "new"
 ml = "new2"
 misc_top_spending = "misc"
@@ -353,3 +355,5 @@ jQuery ->
       colorByPoint: true
       data: $('#payeepiechart').data('payeepiechartdata')
     } ]
+
+  calendar.init('ajax')  

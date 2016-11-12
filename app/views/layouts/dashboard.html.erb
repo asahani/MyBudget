@@ -11,7 +11,7 @@
         <!-- END META SECTION -->
 
         <%= stylesheet_link_tag    'dashboard', media: 'all', 'data-turbolinks-track' => true %>
-        <%= javascript_include_tag 'dashboard', 'data-turbolinks-track'  => true %>
+        <%= javascript_include_tag 'dashboard', params[:controller], 'data-turbolinks-track'  => true %>
         <%= csrf_meta_tags %>
     </head>
     <body class="x-dashboard-dark">
