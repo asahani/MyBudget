@@ -1,0 +1,47 @@
+
+<tr id=<%=@imported_transaction.id.to_s + '_details'%> >
+  <td colspan="9" style="padding: 0px!important;">
+    <%=form_tag add_split_imported_transaction_path(txn_id: @imported_transaction.id),{:remote => true} do%>
+    <div class="row" style="padding: 10px 0px 10px 0px;background-color: #894550; background-image: linear-gradient(to bottom, #9a4e5a 0px, #894550 100%);color: #ffffff;">
+    <table class="col-md-12">
+      <tr style="width: 100%;">
+      	<td style="width: 9%;">
+      		<%=@imported_transaction.account.name%>
+      	</td>
+        <td style="width: 10%;">
+      		<%=@imported_transaction.payee.name%>
+      	</td>
+        <td style="width: 10%;color: #333;"><%= select_tag "category_id", options_from_collection_for_select(Category.all, :id, :name,@imported_transaction.category.id),{ :prompt => "Select Category..."}%></td>
+        <td style="width: 6%;"><%=@imported_transaction.txn_date%></td>
+        <td style="width: 33%;"><%= @imported_transaction.description%></td>
+        <%unless @imported_transaction.credit.nil?%>
+          <td style="width: 8%;color: #333;"><%=number_field_tag 'credit', @imported_transaction.credit, min: 1, max: @imported_transaction.credit.to_i%></td>
+        <%else%>
+          <td style="width: 8%;">&nbsp;</td>
+        <%end%>
+        <%unless @imported_transaction.debit.nil?%>
+          <td style="width: 8%;color: #333;"><%=number_field_tag 'debit', @imported_transaction.debit, min: @imported_transaction.debit.to_i, max: -1%></td>
+        <%else%>
+          <td style="width: 8%;">&nbsp;</td>
+        <%end%>
+        <td style="width: 5%;">&nbsp;</td>
+        <td style="width: 5%;">
+          <button type="submit" style="background:none!important;border:none; "><i class="fa fa-random fa-lg"></i></button>
+          <a href="#" id="<%=@imported_transaction.id.to_s + '_close'%>"><span style="color: white;" class="fa fa-times fa-lg"></span></a>
+      	</td>
+      </tr>
+    </table>
+  </div>
+    <%end%>
+  </td>
+</tr>
+
+<script>
+$(function() {
+  var btn_id = "#<%= escape_javascript@imported_transaction.id.to_s%>"+"_close";
+  var tr_id = "#<%= escape_javascript@imported_transaction.id.to_s%>"+"_details";
+  $(btn_id).click(function(event){
+	$(tr_id).hide();
+  });
+});
+</script>

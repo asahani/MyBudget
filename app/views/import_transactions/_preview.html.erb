@@ -17,7 +17,7 @@
     <%end%>
 
     <div id="import-preview-pane-content">
-      <table class="table table-striped">
+      <table class="table table-striped table-bordered">
         <thead>
           <th style="width: 10%;">Account</th>
           <th style="width: 10%;">Payee</th>
@@ -26,8 +26,8 @@
           <th style="width: 34%;">Description</th>
           <th style="width: 8%;text-align: right!important;">Credit</th>
           <th style="width: 8%;text-align: right!important;">Debit</th>
-          <th style="width: 8%;text-align: right!important;border-right: none;">Balance</th>
-          <th style="width: 5%;text-align: right!important;border: none;box-shadow: none;">Actions</th>
+          <th style="width: 8%;text-align: right!important;">Balance</th>
+          <th style="width: 5%;text-align: right!important;">Actions</th>
         </thead>
         <%ImportedTransaction.all.each do |txn|%>
           <tr>
@@ -69,19 +69,23 @@
             <td style="width: 34%;"><%=txn.description%></td>
             <td style="width: 8%;text-align: right;"><%=number_to_currency(txn.credit, precision: 2)%></td>
             <td style="width: 8%;text-align: right;"><%=number_to_currency(txn.debit, precision: 2)%></td>
-            <td style="width: 8%;border-right: none;text-align: right;"><%=number_to_currency(txn.balance, precision: 2)%></td>
+            <td style="width: 8%;text-align: right;"><%=number_to_currency(txn.balance, precision: 2)%></td>
             <td style="width: 5%;">
               <div class="actions">
                 <%if txn.payee.nil?%>
-                  <%= link_to raw("<span class='fa fa-user text-primary'></span>"),
+                  <%= link_to raw("<span class='fa fa-user fa-lg text-primary'></span>"),
                    new_payee_path(imported_txn_id: txn.id,called_from_import_txn: true), {:remote => true, class: 'new_payee-modal-link'} %>
                 <%end%>
-                <%= link_to raw("<span class='glyphicon glyphicon-transfer text-primary'></span>"),
+                <%= link_to raw("<span class='fa fa-exchange fa-lg text-primary'></span>"),
                  transfer_imported_transaction_path(txn.id), {:remote => true, class: 'new_payee-modal-link'} %>
-                <%= link_to raw("<span class='fa fa-trash-o text-primary'></span>"), destroy_imported_transaction_path(txn.id), method: :delete, data: { confirm: 'Are you sure?' , :remote => true}%>
+                <%unless txn.payee.nil?%>
+                 <%= link_to raw("<span class='fa fa-random fa-lg text-primary'></span>"),split_imported_transaction_path(txn.id), {:remote => true} %>
+                <%end%>
+                <%= link_to raw("<span class='fa fa-trash-o fa-lg text-primary'></span>"), destroy_imported_transaction_path(txn.id), method: :delete, data: { confirm: 'Are you sure?' , :remote => true}%>
               </div>
             </td>
           </tr>
+          <tr id=<%=txn.id.to_s + '_details'%> style="display:none;"></tr>
         <%end%>
       </table>
     </div>

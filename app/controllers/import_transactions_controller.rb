@@ -75,6 +75,54 @@ class ImportTransactionsController < ApplicationController
     end
   end
 
+  def split
+    @imported_transaction = ImportedTransaction.find(params[:id])
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def add_split
+    imported_transaction = ImportedTransaction.find(params[:txn_id])
+    credit = params[:credit]
+    debit = params[:debit]
+    category = params[:category_id]
+
+    begin
+      ImportedTransaction.transaction do
+
+        if (category.nil?)
+          raise 'Category cannot be blank. Please select or add a new payee.'
+        end
+
+        split_transaction = ImportedTransaction.new(raw_data: nil, credit: credit, debit: debit, txn_date: imported_transaction.txn_date,
+         description: imported_transaction.description, balance: nil, account_id: imported_transaction.account.id, payee_id: imported_transaction.payee.id, category_id: category)
+
+        split_transaction.save!
+
+        unless(credit.nil?)
+          imported_transaction.credit = imported_transaction.credit - credit.to_f
+        end
+
+        unless(debit.nil?)
+          imported_transaction.debit = imported_transaction.debit - debit.to_f
+        end
+
+        imported_transaction.save!
+
+        respond_to do |format|
+          format.js
+        end
+      end
+    rescue => e
+      puts e.message
+      @imported_transactions = ImportedTransaction.all
+      render :process_file
+    end
+
+  end
+
   def update
     @imported_transaction = ImportedTransaction.find(params[:id])
     @imported_transaction.account_id = params[:imported_transaction][:account_id]
@@ -121,9 +169,11 @@ class ImportTransactionsController < ApplicationController
             raise 'Payee cannot be blank. Please select or add a new payee.'
           end
 
-          existing_budget_transaction = BudgetTransaction.find_by_raw_data(txn.raw_data)
-          unless (existing_budget_transaction.nil?)
-            raise 'Duplicate transaction import detected. txn: ' + txn.raw_data.to_s
+          unless (txn.raw_data.nil?)
+            existing_budget_transaction = BudgetTransaction.find_by_raw_data(txn.raw_data)
+            unless (existing_budget_transaction.nil?)
+              raise 'Duplicate transaction import detected. txn: ' + txn.raw_data.to_s
+            end
           end
 
           unless (txn.credit.nil?)
