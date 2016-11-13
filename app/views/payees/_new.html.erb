@@ -1,31 +1,68 @@
 <!-- Modal -->
-<div class="modal-dialog" style="width: 1024px;">
+<div class="modal-dialog">
 	<div class="modal-content">
+
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 			<h4 class="modal-title" id="newPayeeModalLabel">New Payee</h4>
 		</div>
-		<%= form_for @payee, remote: true do |f| %>
-		<%= f.hidden_field :is_account, :value => false%>
-		<%= f.hidden_field :called_from_import_txn, :value => @payee.called_from_import_txn%>
+
 		<div class="modal-body">
-			<table class="table">
-				<th>
-					<td>Name</td>
-					<td>Description</td>
-					<td>Category</td>
-				</th>	
-				<tr>
-					<td><%= f.text_field :name %></td>
-					<td><%= f.text_field :description %></td>
-					<td><%= f.collection_select :category_id, Category.where('active = ?',true), :id, :name, prompt: true %></td>
-				</tr>
-			</table>
+			<div class="panel panel-default">
+				<div class="panel-body">
+						<h3><span class="fa fa-pencil"></span> New Payee</h3>
+						<p>Add a new Payee.</p>
+				</div>
+				<div class="panel-body form-group-separated">
+						<%= form_for @payee, remote: true do |f| %>
+						<%= f.hidden_field :is_account, :value => false%>
+						<%= f.hidden_field :called_from_import_txn, :value => @payee.called_from_import_txn%>
+
+						<div class="form-group">
+								<label class="col-md-3 col-xs-5 control-label">Name</label>
+								<div class="col-md-9 col-xs-7">
+										<div class="input-group">
+											<%= f.text_field :name, class: "form-control" %>
+										</div>
+								</div>
+						</div>
+
+						<div class="form-group">
+								<label class="col-md-3 col-xs-5 control-label">Description</label>
+								<div class="col-md-9 col-xs-7">
+										<div class="input-group">
+											<%= f.text_field :description, class: "form-control" %>
+											<span class="input-group-addon"><span class="fa fa-comment"></span></span>
+										</div>
+								</div>
+						</div>
+
+						<div class="form-group">
+								<label class="col-md-3 col-xs-5 control-label">Category</label>
+								<div class="col-md-9 col-xs-7">
+										<div class="input-group">
+											<%= f.collection_select :category_id, Category.where('active = ?',true), :id, :name, {prompt: true}, {class: "form-control select"} %>
+										</div>
+								</div>
+						</div>
+
+						<div class="form-group">
+								<div class="col-md-12 col-xs-5">
+									<%= button_tag(type: 'submit', class: "btn btn-primary btn-rounded pull-right") do %>
+									 <i class='fa fa-user'></i>&nbsp;Create Payee
+									<% end %>
+								</div>
+						</div>
+
+					<%end%>
+				</div>
 		</div>
+		</div>
+
 		<div class="modal-footer">
 			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			<%= f.submit class: "btn btn-primary"%>
 		</div>
-		<%end%>
+
 	</div>
+
 </div>

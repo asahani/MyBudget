@@ -38,7 +38,7 @@ class PayeesController < ApplicationController
       respond_to do |format|
         if @payee.save
           ImportedTransaction.where('description = ? ', @payee.description).update_all(payee_id: @payee.id,category_id: @payee.category.id)
-          format.js { render '/import_transactions/preview', layout: "application"}
+          format.js 
         end
       end
     else
