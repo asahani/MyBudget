@@ -1,32 +1,53 @@
 <!-- Modal -->
-<div class="modal-dialog" style="width: 1024px;">
+<div class="modal-dialog">
 	<div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 			<h4 class="modal-title" id="importTransactionModalLabel">Import Transactions</h4>
 		</div>
-		<%= form_tag import_transactions_process_file_path, multipart: true do %>
 		<div class="modal-body">
-			<%= hidden_field_tag :budget_id, @budget.id%>
-			Import for Account: <%= select_tag :account_id, options_from_collection_for_select(Account.all, :id, :name)%>
-			Balance Due: <%= number_field_tag :import_balance_due, nil, :step => 0.01 %>
-		  IMport File: <%= file_field_tag :file,class: "" %>
+			<%= form_tag import_transactions_process_file_path, multipart: true, class: "form-horizontal" do %>
+			<div class="panel panel-default">
+				<div class="panel-body">
+						<h3><span class="fa fa-download"></span> Import Trasactions</h3>
+						<p>Import transactions from bank statements in CSV format.</p>
+				</div>
+
+				<div class="panel-body form-group-separated">
+					<%= hidden_field_tag :budget_id, @budget.id%>
+					<div class="form-group">
+							<label class="col-md-3 col-xs-5 control-label">Import for Account</label>
+							<div class="col-md-9 col-xs-7">
+								<%= select_tag :account_id, options_from_collection_for_select(Account.all, :id, :name)%>
+							</div>
+					</div>
+					<div class="form-group">
+							<label class="col-md-3 col-xs-5 control-label">Balance Due</label>
+							<div class="col-md-9 col-xs-7">
+								<%= number_field_tag :import_balance_due, nil, :step => 0.01 %>
+							</div>
+					</div>
+					<div class="form-group">
+							<label class="col-md-3 col-xs-5 control-label">File</label>
+							<div class="col-md-9 col-xs-7">
+								<%= file_field_tag :file,class: "btn btn-primary btn-file" %>
+							</div>
+					</div>
+
+					<div class="form-group">
+							<div class="col-md-12 col-xs-5">
+								<%= button_tag(type: 'submit', class: "btn btn-primary pull-right") do %>
+								 <i class='fa fa-download'></i>&nbsp;Import
+								<% end %>
+							</div>
+					</div>
+				</div>
+			</div>
+			<%end%>
+
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			<%= submit_tag "Import", class: "btn btn-primary"%>
 		</div>
-		<%end%>
 	</div>
 </div>
-<script>
-$(function() {
-    $( ".datepicker").datepicker({dateFormat: 'dd-mm-yy' });
-  });
-
-$(function() {
-  $('#new-budgeted-transaction-button').click(function(event){
-    $('#new-budgeted-transaction-row').slideDown(1000);
-  });
-});
-</script>
