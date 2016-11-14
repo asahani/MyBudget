@@ -14,7 +14,7 @@
 							<p>Edit <%=@transaction_type%> transaction for current budget month.</p>
 					</div>
 					<div class="panel-body form-group-separated">
-						<%= form_for @budget_transaction, format: :html do |f| %>
+						<%= form_for @budget_transaction, format: :html, html: {class: "form-horizontal", role: :form} do |f| %>
 						<%= f.hidden_field :budgeted ,:value => @budget_transaction.budgeted%>
 						<%= f.hidden_field :scheduled, :value => @budget_transaction.scheduled%>
 						<%= f.hidden_field :miscellaneous, :value => @budget_transaction.miscellaneous%>
