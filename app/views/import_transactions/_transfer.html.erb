@@ -1,48 +1,74 @@
 <!-- Modal -->
-<div class="modal-dialog" style="width: 1024px;">
+<div class="modal-dialog">
 	<div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 			<h4 class="modal-title" id="transferImportedTxnModalLabel">Account Transfer Transaction</h4>
 		</div>
-		<%= form_for @imported_transaction, remote: true do |f| %>
-		<div class="modal-body">
-			<table class="table">
-				<th>
-					<td>Date</td>
-					<td>Description</td>
-					<td>Credit</td>
-					<td>Debit</td>
-					<td>Balance</td>
-				</th>	
-				<tr>
-					<td><%=@imported_transaction.txn_date%></td>
-					<td><%=@imported_transaction.description%></td>
-					<td><%=@imported_transaction.credit%></td>
-					<td><%=@imported_transaction.debit%></td>
-					<td><%=@imported_transaction.balance%></td>
-				</tr>
-			</table>
-			
-			<table class="table">
-				<th>
-					<td>Account</td>
-					<td>Payee</td>
-				</th>	
-				<tr>
-					<td>
-						<%= @imported_transaction.account.name%>
-						<%= f.hidden_field :account_id, :value => @imported_transaction.account_id%>
-					</td>
 
-					<td><%= f.collection_select :payee_id, Payee.account_payees, :id, :name, prompt: true %></td>
-				</tr>
-			</table>
+		<div class="modal-body">
+			<%= form_for @imported_transaction, remote: true, html: {class: "form-horizontal", role: :form} do |f| %>
+			<div class="panel panel-default">
+				<div class="panel-body">
+						<h3><span class="fa fa-exchange"></span> Account Transfer</h3>
+						<p>Transfer transaction amount to another account.</p>
+				</div>
+
+				<div class="panel-body form-group-separated">
+						<div class="form-group">
+								<label class="col-md-3 col-xs-5 control-label">Date</label>
+								<div class="col-md-9 col-xs-7">
+										<%=@imported_transaction.txn_date%>
+								</div>
+						</div>
+						<div class="form-group">
+								<label class="col-md-3 col-xs-5 control-label">Description</label>
+								<div class="col-md-9 col-xs-7">
+										<%=@imported_transaction.description-%>
+								</div>
+						</div>
+						<div class="form-group">
+								<label class="col-md-3 col-xs-5 control-label">Credit</label>
+								<div class="col-md-9 col-xs-7">
+										<%=number_to_currency(@imported_transaction.credit)%>
+								</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 col-xs-5 control-label">Debit</label>
+								<div class="col-md-9 col-xs-7">
+										<%=number_to_currency(@imported_transaction.debit)%>
+								</div>
+						</div>
+						<div class="form-group">
+								<label class="col-md-3 col-xs-5 control-label">Account</label>
+								<div class="col-md-9 col-xs-7">
+									<%= @imported_transaction.account.name%>
+									<%= f.hidden_field :account_id, :value => @imported_transaction.account_id%>
+								</div>
+						</div>
+
+						<div class="form-group">
+								<label class="col-md-3 col-xs-5 control-label">Transfer To</label>
+								<div class="col-md-9 col-xs-7">
+										<div class="input-group">
+												<%= f.collection_select :payee_id, Payee.account_payees, :id, :name, {prompt: true}, {class: "form-control select"} %>
+										</div>
+								</div>
+						</div>
+						<div class="form-group">
+								<div class="col-md-12 col-xs-5">
+									<%= button_tag(type: 'submit', class: "btn btn-primary btn-rounded pull-right") do %>
+									 <i class='fa fa-exchange'></i>&nbsp;Account Transfer
+									<% end %>
+								</div>
+						</div>
+					</div>
+				<%end%>
+			</div>
 		</div>
+
 		<div class="modal-footer">
 			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			<%= f.submit class: "btn btn-primary"%>
 		</div>
-		<%end%>
 	</div>
 </div>
