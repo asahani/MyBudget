@@ -14,7 +14,7 @@
 						<p>Add a new Payee.</p>
 				</div>
 				<div class="panel-body form-group-separated">
-						<%= form_for @payee, remote: true do |f| %>
+						<%= form_for @payee, remote: true, html: {class: "form-horizontal", role: :form} do |f| %>
 						<%= f.hidden_field :is_account, :value => false%>
 						<%= f.hidden_field :called_from_import_txn, :value => @payee.called_from_import_txn%>
 
