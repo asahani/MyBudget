@@ -22,8 +22,6 @@ respond_to :js, :html
 
   # GET /budget_transactions/new
   def new
-    puts 'entered'
-
     @budget_transaction = BudgetTransaction.new
     @budget_transaction.budgeted = false
     @budget_transaction.scheduled = false
@@ -179,6 +177,6 @@ respond_to :js, :html
     # Never trust parameters from the scary internet, only allow the white list through.
     def budget_transaction_params
       params.require(:budget_transaction).permit(:credit, :debit, :transaction_date, :comments, :manual, :scheduled, :budgeted,
-        :miscellaneous, :savings, :account_id, :budget_item_id, :budget_id,:payee_id,:category_id,:transaction_type,:reconciled)
+        :miscellaneous, :savings, :account_id, :budget_item_id, :budget_id,:payee_id,:category_id,:transaction_type,:reconciled,:tag_list)
     end
 end

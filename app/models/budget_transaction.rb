@@ -1,5 +1,6 @@
 class BudgetTransaction < ActiveRecord::Base
   attr_accessor :transaction_type
+  acts_as_taggable
   ##################################
   # Relationships
   ##################################

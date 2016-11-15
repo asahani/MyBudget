@@ -101,6 +101,16 @@
 						</div>
 
 						<div class="form-group">
+								<label class="col-md-3 col-xs-5 control-label">Tags</label>
+								<div class="col-md-9 col-xs-7">
+										<div class="input-group">
+												<%= f.text_field :tag_list, 'data-role'=>'tagsinput', class: "form-control" %>
+												<span class="input-group-addon"><span class="fa fa-tags"></span></span>
+										</div>
+								</div>
+						</div>
+
+						<div class="form-group">
 								<label class="col-md-3 col-xs-5 control-label">Cleared?</label>
 								<div class="col-md-9 col-xs-7">
 									<label class="switch">
@@ -130,6 +140,12 @@
 $(function() {
     $( ".datepicker").datepicker({dateFormat: 'dd-mm-yy' });
   });
+
+$(function() {
+	$("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput({
+		tagClass: 'label fa fa-tag'
+	});
+});
 
 $(function() {
   $('#new-budgeted-transaction-button').click(function(event){

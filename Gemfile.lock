@@ -27,6 +27,8 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
+    acts-as-taggable-on (4.0.0)
+      activerecord (>= 4.0)
     arel (5.0.1.20140414130214)
     autoprefixer-rails (6.5.1)
       execjs
@@ -119,6 +121,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts-as-taggable-on (~> 4.0)
   autoprefixer-rails
   bootstrap-sass (~> 3.3.6)
   coffee-rails (~> 4.0.0)
@@ -133,3 +136,6 @@ DEPENDENCIES
   spring
   turbolinks
   uglifier (>= 1.3.0)
+
+BUNDLED WITH
+   1.12.5

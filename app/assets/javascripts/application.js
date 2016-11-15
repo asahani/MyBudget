@@ -27,6 +27,7 @@
 //= require atlant/plugins/jvectormap/jquery-jvectormap-1.2.2.min
 //= require atlant/plugins/jvectormap/jquery-jvectormap-world-mill-en
 //= require atlant/plugins/bootstrap/bootstrap-datepicker
+//= require atlant/plugins/bootstrap/bootstrap-tagsinput.min
 //= require atlant/plugins/sparkline/jquery.sparkline.min
 //= require atlant/plugins/knob/jquery.knob.min
 //= require atlant/plugins/owl/owl.carousel.min
@@ -56,7 +57,5 @@ $(document).ready(function() {
   }
 
   clickOnNewTransactionModal();
-
-  
 
 });
