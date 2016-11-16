@@ -89,7 +89,7 @@
         						<%= f.hidden_field :budget_item_id, :value => @budget_item.id%>
         						<%= f.hidden_field :budget_id, :value => @budget_item.budget.id%>
         						<%= f.hidden_field :category_id, :value => @budget_item.category.id%>
-        						<div>
+        						<div class="row">
         							<div class="form-group">
         								<div><label>Account</label></div>
         								<div><%= f.collection_select :account_id, Account.all, :id, :name, {prompt: true}, {class: "form-control select"} %></div>
@@ -121,15 +121,17 @@
         								<div><label>Comments</label></div>
         								<div><%= f.text_field :comments , class: "form-control"%></div>
         							</div>
-        							<div class="form-group">
-        								<div><label>Actions</label></div>
-        								<div>
-                          <%= button_tag(type: 'submit', class: "btn btn-success btn-condensed pull-right") do %>
-                           <i class='fa fa-plus'></i>
-                          <% end %>
-                        </div>
-        							</div>
+
         						</div>
+                    <div class="form-group row">
+                        <div><label>Tags</label></div>
+                        <div>
+                            <%= f.text_field :tag_list, 'data-role'=>'tagsinput', class: "form-control" %>
+                        </div>
+                    </div>
+                    <%= button_tag(type: 'submit', class: "btn btn-success btn-block") do %>
+                     <i class='fa fa-plus'>&nbsp; Add transaction</i>
+                    <% end %>
         					<%end%>
         			</div>
         	</div>
@@ -153,5 +155,10 @@
 <script>
 $(function() {
     $( ".datepicker").datepicker({format: 'dd-mm-yyyy' });
+  });
+  $(function() {
+  	$("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput({
+  		tagClass: 'label fa fa-tag'
+  	});
   });
 </script>

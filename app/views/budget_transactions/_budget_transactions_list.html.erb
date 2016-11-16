@@ -17,7 +17,8 @@
 													<th width="100">Date</th>
 													<th width="100">Debit</th>
 													<th width="100">Credit</th>
-													<th width="300">Comments</th>
+													<th width="200">Comments</th>
+													<th width="100">Tags</th>
 													<th width="120">actions</th>
 											</tr>
 									</thead>
@@ -31,9 +32,17 @@
 												<td><%=number_to_currency(budget_transaction.credit)%></td>
 												<td><%=budget_transaction.comments%></td>
 												<td>
+													<ul class="list-tags">
+													<%budget_transaction.tags.each do|tag|%>
+														<li><a href="#"><span class="fa fa-tag"></span><%=tag.name%></a></li>
+													<%end%>
+												</ul>
+												</td>
+
+												<td>
 														<%unless @budget_item.complete%>
 															<%=link_to edit_budget_item_transaction_path(budget_transaction),remote: true, class: "btn btn-default btn-rounded btn-condensed btn-sm" do %>
-																<span class="fa fa-pencil"></span>
+																<span class="fa fa-edit"></span>
 															<%end%>
 														<% unless budget_transaction.reconciled%>
 															<%= link_to budget_transaction, remote: true, method: :delete,  data: { confirm: 'Are you sure?' },class: "btn btn-danger btn-rounded btn-condensed btn-sm" do %>
