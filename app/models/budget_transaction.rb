@@ -20,7 +20,7 @@ class BudgetTransaction < ActiveRecord::Base
   ##################################
   # Callbacks
   ##################################
-  after_create :update_budget_item, :update_budget_account, :update_account_payee
+  after_create :update_budget_item, :update_budget_account, :update_account_payee, :add_category_tag
   after_update :update_budget_item, :update_budget_account, :update_account_payee
   after_destroy :update_budget_item, :update_budget_account, :update_account_payee
 
@@ -96,5 +96,9 @@ class BudgetTransaction < ActiveRecord::Base
         budget_account.update_future_budget_accounts
       end
     end
+  end
+
+  def add_category_tag
+    self.tag_list.add(self.category.name)
   end
 end
