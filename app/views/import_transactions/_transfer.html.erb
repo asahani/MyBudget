@@ -57,7 +57,7 @@
 						</div>
 						<div class="form-group">
 								<div class="col-md-12 col-xs-5">
-									<%= button_tag(type: 'submit', class: "btn btn-primary btn-rounded pull-right") do %>
+									<%= button_tag(type: 'submit',onclick: "$('#transferImportedTxnModal').modal('hide');", class: "btn btn-primary btn-rounded pull-right") do %>
 									 <i class='fa fa-exchange'></i>&nbsp;Account Transfer
 									<% end %>
 								</div>
