@@ -123,6 +123,29 @@ class ImportTransactionsController < ApplicationController
 
   end
 
+  def tags
+    @imported_transaction = ImportedTransaction.find(params[:id])
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def add_tags
+    @imported_transaction = ImportedTransaction.find(params[:txn_id])
+
+    unless params[:tags].nil?
+      @imported_transaction.tags = params[:tags]
+
+      @imported_transaction.save!
+    end
+
+    respond_to do |format|
+      format.js { render '/import_transactions/preview'}
+    end
+
+  end
+
   def update
     @imported_transaction = ImportedTransaction.find(params[:id])
     @imported_transaction.account_id = params[:imported_transaction][:account_id]
@@ -204,7 +227,7 @@ class ImportTransactionsController < ApplicationController
           budget_txn = BudgetTransaction.new(account_id: txn.account_id,budget_item_id: budget_item_id,payee_id: txn.payee_id,
             budget_id: budget.id,category_id: txn.category_id, credit: credit_val, debit: debit_val,
             transaction_date: txn.txn_date,comments: txn.description,raw_data:txn.raw_data ,
-            manual: false, scheduled: false, budgeted: is_budgeted,miscellaneous: misc,savings: false,reconciled: false)
+            manual: false, scheduled: false, budgeted: is_budgeted,miscellaneous: misc,savings: false,reconciled: false,tag_list: txn.tags)
 
           budget_txn.save!
           txn.budget_id = budget.id

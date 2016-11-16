@@ -81,6 +81,7 @@
                 <%unless txn.payee.nil?%>
                  <%= link_to raw("<span class='fa fa-random fa-lg text-primary'></span>"),split_imported_transaction_path(txn.id), {:remote => true} %>
                 <%end%>
+                <%= link_to raw("<span class='fa fa-tags fa-lg text-primary'></span>"),tags_imported_transaction_path(txn.id), {:remote => true} %>
                 <%= link_to raw("<span class='fa fa-trash-o fa-lg text-primary'></span>"), destroy_imported_transaction_path(txn.id), method: :delete, data: { confirm: 'Are you sure?' , :remote => true}%>
               </div>
             </td>

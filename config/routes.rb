@@ -25,6 +25,10 @@ Rails.application.routes.draw do
   match "import_transactions/:id/split" => "import_transactions#split", :via => :get, :as => 'split_imported_transaction'
   match "import_transactions/add_split" => "import_transactions#add_split", :via => :post, :as => 'add_split_imported_transaction'
 
+  match "import_transactions/:id/tags" => "import_transactions#tags", :via => :get, :as => 'tags_imported_transaction'
+  match "import_transactions/add_tags" => "import_transactions#add_tags", :via => :post, :as => 'add_tags_imported_transaction'
+
+
   resources :budget_transactions
   match "budget_transactions/:id/edit_budget_item_transaction" => "budget_transactions#edit_budget_item_transaction", :via => :get, :as => 'edit_budget_item_transaction'
   match "budget_transactions/:id/update_cleared_status" => "budget_transactions#update_cleared_status", :via => :get, :as => 'update_cleared_status'

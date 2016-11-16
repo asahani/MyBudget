@@ -133,6 +133,7 @@ ActiveRecord::Schema.define(version: 20161115095149) do
     t.decimal  "debit",       precision: 10, scale: 2
     t.date     "txn_date"
     t.string   "description"
+    t.string   "tags"
     t.decimal  "balance",     precision: 10, scale: 2
     t.integer  "account_id"
     t.integer  "payee_id"
