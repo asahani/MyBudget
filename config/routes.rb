@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   match "budget_transactions/:id/edit_budget_item_transaction" => "budget_transactions#edit_budget_item_transaction", :via => :get, :as => 'edit_budget_item_transaction'
   match "budget_transactions/:id/update_cleared_status" => "budget_transactions#update_cleared_status", :via => :get, :as => 'update_cleared_status'
   # match "budget_transactions/:id/import_transactions" => "budget_transactions#import_transactions", :via => :get, :as => 'edit_budget_item_transaction'
+  get 'tags/:tag/:budget_id', to: 'budget_transactions#index', as: :tag
 
   resources :payees
   post 'payees/select_payee'

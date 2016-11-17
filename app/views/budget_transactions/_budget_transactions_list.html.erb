@@ -34,7 +34,11 @@
 												<td>
 													<ul class="list-tags">
 													<%budget_transaction.tags.each do|tag|%>
-														<li><a href="#"><span class="fa fa-tag"></span><%=tag.name%></a></li>
+														<li>
+														<%= link_to tag_path(tag.name,@budget_item.budget.id) do %>
+															<span class="fa fa-tag"></span><%=tag.name%>
+														<%end%>
+														</li>
 													<%end%>
 												</ul>
 												</td>

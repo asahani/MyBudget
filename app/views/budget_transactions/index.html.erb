@@ -3,7 +3,9 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 					<h3 class="panel-title">
-						<%if !@account.nil?%>
+						<%if !@tag.nil?%>
+							<%=@tag%>&nbsp;Transactions
+						<%elsif !@account.nil?%>
 							<%=@account.name%>&nbsp;Account Transactions
 						<%elsif !@budget.nil?%>
 							<%=Date::ABBR_MONTHNAMES[@budget.month].upcase%>&nbsp;<%=@budget.year%>&nbsp;Budget Transactions
