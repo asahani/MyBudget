@@ -5,11 +5,11 @@
 					<th style="width: 10%;">Payee</th>
 					<th style="width: 10%;">Category</th>
 					<th style="width: 10%;">Date</th>
-					<th style="width: 40%;">Description</th>
+					<th style="width: 30%;">Description</th>
 					<th style="width: 10%">Credit</th>
 					<th style="width: 10%;">Debit</th>
-					<th style="width: 5%;">Cleared</th>
-					<th style="width: 5%;">Actions</th>
+					<th style="width: 18%;">Tags</th>
+					<th style="width: 2%;">Cleared</th>
 				</thead>
 				<!--Budget Transactions-->
 				<%@budget_transactions.each do |txn|%>
@@ -19,7 +19,7 @@
 						</td>
 						<td style="width: 10%;"><%=txn.category.name unless txn.category.nil?%></td>
 						<td style="width: 10%;"><%=txn.transaction_date%></td>
-						<td style="width: 40%;"><%=txn.comments%></td>
+						<td style="width: 30%;"><%=txn.comments%></td>
 						<td style="width: 10%;text-align: right;">
 							<%unless txn.credit == 0%>
 								<%=number_to_currency(txn.credit, precision: 2)%>
@@ -30,7 +30,18 @@
 								<%=number_to_currency(txn.debit, precision: 2)%>
 							<%end%>
 						</td>
-						<td style="width: 5%;border-right: none;text-align: right;">
+						<td  style="width: 18%;text-align: right;">
+							<ul class="list-tags">
+							<%txn.tags.each do|tag|%>
+								<li>
+								<%= link_to tag_path(tag.name,txn.budget.id) do %>
+									<span class="fa fa-tag"></span><%=tag.name%>
+								<%end%>
+								</li>
+							<%end%>
+						</ul>
+						</td>
+						<td style="width: 2%;border-right: none;text-align: center;">
 							<%=link_to update_cleared_status_path(txn,is_payee_account: false), :remote => true do%>
 								<%if txn.reconciled%>
 									<%=image_tag 'cleared-icon.png'%>
@@ -38,11 +49,6 @@
 									<%=image_tag 'uncleared-icon.png'%>
 								<%end%>
 							<%end%>
-						</td>
-						<td style="width: 5%;">
-							<div class="actions">
-								Actions
-							</div>
 						</td>
 					</tr>
 				<%end%>
