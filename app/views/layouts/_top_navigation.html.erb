@@ -6,9 +6,9 @@
     <!-- END TOGGLE NAVIGATION -->
     <!-- SEARCH -->
     <li class="xn-search">
-        <form role="form">
-            <input type="text" name="search" placeholder="Search..."/>
-        </form>
+      <%=form_tag search_path(budget_id: @budget.nil? ? nil : @budget.id) do%>
+        <%=text_field_tag :tag,nil,'placeholder'=>"Search..."%>
+      <%end%>
     </li>
     <!-- END SEARCH -->
     <li class="xn-openable">

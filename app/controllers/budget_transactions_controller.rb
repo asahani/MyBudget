@@ -4,10 +4,12 @@ respond_to :js, :html
   # GET /budget_transactions
   # GET /budget_transactions.json
   def index
-    if params[:tag] && params[:budget_id]
+    if params[:tag]
       @tag = params[:tag]
       @budget_transactions = BudgetTransaction.tagged_with(@tag)
-      @budget = Budget.find(params[:budget_id])
+      if params[:budget_id]
+        @budget = Budget.find(params[:budget_id])
+      end
     elsif !params[:budget_id].nil? && !params[:account_id].nil?
       @budget = Budget.find(params[:budget_id])
       @account = Account.find(params[:account_id])
