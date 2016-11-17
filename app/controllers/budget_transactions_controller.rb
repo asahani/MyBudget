@@ -9,7 +9,9 @@ respond_to :js, :html
       @account = Account.find(params[:account_id])
       @budget_transactions = BudgetTransaction.where('budget_id =? and account_id = ?',@budget.id,@account.id)
       @budget_withdrawals = BudgetTransaction.where('budget_id = ? and payee_id = ?',@budget.id, @account.payee.id)
-
+    elsif !params[:budget_id].nil?
+      @budget = Budget.find(params[:budget_id])
+      @budget_transactions = @budget.budget_transactions
     else
       @budget_transactions = BudgetTransaction.all
     end

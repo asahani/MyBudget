@@ -19,6 +19,11 @@
 								<%= link_to raw("<span class='fa fa-plus fa-lg'></span>"),
 										new_budget_transaction_path(transaction_type: 'miscellaneous',budget_id: @budget.id), {:remote => true, class: 'new-transaction-modal-link'} %>
 							</li>
+							<li>
+								<%= link_to raw("<span class='fa fa-list-alt fa-lg'></span>"),
+										budget_transactions_path(budget_id: @budget.id)%>
+							</li>
+
 					</ul>
 					<%end%>
 

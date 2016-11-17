@@ -2,7 +2,15 @@
 	<div class="col-md-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-					<h3 class="panel-title"><%=@account.name%>&nbsp;Account Transactions</h3>
+					<h3 class="panel-title">
+						<%if !@account.nil?%>
+							<%=@account.name%>&nbsp;Account Transactions
+						<%elsif !@budget.nil?%>
+							<%=Date::ABBR_MONTHNAMES[@budget.month].upcase%>&nbsp;<%=@budget.year%>&nbsp;Budget Transactions
+						<%else%>
+								All Transactions
+						<%end%>
+					</h3>
 					<ul class="panel-controls">
 							<li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
 					</ul>

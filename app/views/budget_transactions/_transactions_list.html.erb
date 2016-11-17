@@ -48,49 +48,50 @@
 				<%end%>
 
 				<!--Budget Withdrawals-->
-				<%@budget_withdrawals.each do |wtxn|%>
-					<tr>
-						<td style="width: 10%;padding-left: 5px !important;">
-							<%=wtxn.account.name unless wtxn.account.nil?%>
-						</td>
-						<td style="width: 10%;">
-							<%=wtxn.category.name unless wtxn.category.nil?%>
-							<%if wtxn.category.name == 'Account Transfer'%>
-								<span class='glyphicon glyphicon-transfer' style='color: #999;' aria-hidden='true'></span>
-							<%end%>
-						</td>
-						<td style="width: 10%;"><%=wtxn.transaction_date%></td>
-						<td style="width: 40%;"><%=wtxn.comments%></td>
-
-						<!-- Debit and Credit swapped around as this is for payees-->
-						<td style="width: 10%;text-align: right;">
-							<%unless wtxn.debit == 0%>
-								<%=number_to_currency(wtxn.debit, precision: 2)%>
-							<%end%>
-						</td>
-						<td style="width: 10%;text-align: right;">
-							<%unless wtxn.credit == 0%>
-								<%=number_to_currency(wtxn.credit, precision: 2)%>
-							<%end%>
-						</td>
-						<!-- =====================================================-->
-						<td style="width: 5%;border-right: none;text-align: right;">
-							<%=link_to update_cleared_status_path(wtxn,is_payee_account: true), :remote => true do%>
-								<%if wtxn.reconciled%>
-									<%=image_tag 'cleared-icon.png'%>
-								<%else%>
-									<%=image_tag 'uncleared-icon.png'%>
+				<%unless @account.nil?%>
+					<%@budget_withdrawals.each do |wtxn|%>
+						<tr>
+							<td style="width: 10%;padding-left: 5px !important;">
+								<%=wtxn.account.name unless wtxn.account.nil?%>
+							</td>
+							<td style="width: 10%;">
+								<%=wtxn.category.name unless wtxn.category.nil?%>
+								<%if wtxn.category.name == 'Account Transfer'%>
+									<span class='glyphicon glyphicon-transfer' style='color: #999;' aria-hidden='true'></span>
 								<%end%>
-							<%end%>
-						</td>
-						<td style="width: 5%;">
-							<div class="actions">
-								Actions
-							</div>
-						</td>
-					</tr>
-				<%end%>
+							</td>
+							<td style="width: 10%;"><%=wtxn.transaction_date%></td>
+							<td style="width: 40%;"><%=wtxn.comments%></td>
 
+							<!-- Debit and Credit swapped around as this is for payees-->
+							<td style="width: 10%;text-align: right;">
+								<%unless wtxn.debit == 0%>
+									<%=number_to_currency(wtxn.debit, precision: 2)%>
+								<%end%>
+							</td>
+							<td style="width: 10%;text-align: right;">
+								<%unless wtxn.credit == 0%>
+									<%=number_to_currency(wtxn.credit, precision: 2)%>
+								<%end%>
+							</td>
+							<!-- =====================================================-->
+							<td style="width: 5%;border-right: none;text-align: right;">
+								<%=link_to update_cleared_status_path(wtxn,is_payee_account: true), :remote => true do%>
+									<%if wtxn.reconciled%>
+										<%=image_tag 'cleared-icon.png'%>
+									<%else%>
+										<%=image_tag 'uncleared-icon.png'%>
+									<%end%>
+								<%end%>
+							</td>
+							<td style="width: 5%;">
+								<div class="actions">
+									Actions
+								</div>
+							</td>
+						</tr>
+					<%end%>
+				<%end%>
 			</table>
 		</div>
 
@@ -101,13 +102,23 @@
 			<div class="col-md-10">
 				<div id="import-totals-content">
 					<%
-						credit = @budget_transactions.sum(:credit) + @budget_withdrawals.sum(:debit)
-						debit = @budget_transactions.sum(:debit) + @budget_withdrawals.sum(:credit)
 
-						reconciled_total = (@budget_transactions.reconciled_transactions.sum(:credit) + @budget_withdrawals.reconciled_transactions.sum(:debit))- (@budget_transactions.reconciled_transactions.sum(:debit)+@budget_withdrawals.reconciled_transactions.sum(:credit))
+						credit = @budget_transactions.sum(:credit)
+						debit = @budget_transactions.sum(:debit)
 
-						nonconciled_total = (@budget_transactions.nonconciled_transactions.sum(:credit) + @budget_withdrawals.nonconciled_transactions.sum(:debit))- (@budget_transactions.nonconciled_transactions.sum(:debit)+@budget_withdrawals.nonconciled_transactions.sum(:credit))
+						reconciled_total = (@budget_transactions.reconciled_transactions.sum(:credit))- (@budget_transactions.reconciled_transactions.sum(:debit))
 
+						nonconciled_total = (@budget_transactions.nonconciled_transactions.sum(:credit) )- (@budget_transactions.nonconciled_transactions.sum(:debit))
+
+						unless @account.nil?
+							credit = @budget_transactions.sum(:credit) + @budget_withdrawals.sum(:debit)
+							debit = @budget_transactions.sum(:debit) + @budget_withdrawals.sum(:credit)
+
+							reconciled_total = (@budget_transactions.reconciled_transactions.sum(:credit) + @budget_withdrawals.reconciled_transactions.sum(:debit))- (@budget_transactions.reconciled_transactions.sum(:debit)+@budget_withdrawals.reconciled_transactions.sum(:credit))
+
+							nonconciled_total = (@budget_transactions.nonconciled_transactions.sum(:credit) + @budget_withdrawals.nonconciled_transactions.sum(:debit))- (@budget_transactions.nonconciled_transactions.sum(:debit)+@budget_withdrawals.nonconciled_transactions.sum(:credit))
+
+						end
 					%>
 					<table style="width:100%;height: 100%;">
 						<tr>
