@@ -26,6 +26,8 @@ class Account < ActiveRecord::Base
   scope :for_budget, -> { where(budget_account: true)}
   scope :savings_account, -> { joins(:account_type).where('account_types.name = ?', "Savings") }
   scope :credit_account, -> { joins(:account_type).where('account_types.name = ?', "Credit") }
+  scope :loan_account, -> { joins(:account_type).where('account_types.name = ?', "Loan") }
+
   ##################################
   # Class Methods
   ##################################

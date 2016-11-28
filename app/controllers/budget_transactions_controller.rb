@@ -70,7 +70,12 @@ respond_to :js, :html
   # POST /budget_transactions.json
   def create
     @budget_transaction = BudgetTransaction.new(budget_transaction_params)
-    @budget_transaction.category_id = @budget_transaction.payee.category.id
+    
+    if @budget_transaction.transaction_type == 'loan_transfer'
+      @budget_transaction.category_id = Category.find_by_name("Lending").id
+    else
+      @budget_transaction.category_id = @budget_transaction.payee.category.id
+    end
 
     if @budget_transaction.credit.nil?
       @budget_transaction.credit = 0.00

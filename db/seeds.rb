@@ -12,6 +12,7 @@ MasterCategory.create!(name: 'Account Transfer', display: false) #Should always 
 MasterCategory.create!(name: 'Savings', display: false) #Should always be third
 MasterCategory.create!(name: 'Miscellaneous', display: false)#Should always be fourth
 MasterCategory.create!(name: 'Cash', display: false)#Should always be fifth
+MasterCategory.create!(name: 'Lending', display: false)#Should always be sixth
 #---------------------------
 
 #Mandatory Categories
@@ -20,6 +21,7 @@ Category.create!(name: 'Account Transfer', active: false, budget_amount: 0.0,mas
 Category.create!(name: 'Savings', active: false, budget_amount: 0.0,master_category_id: 3,mandatory: true,miscellaneous: false,savings: true) #Should always be third
 Category.create!(name: 'Miscellaneous', active: false, budget_amount: 1000.00,master_category_id: 4,mandatory: true,miscellaneous: true,savings: false) #Should always be fourth
 Category.create!(name: 'Cash', active: false, budget_amount: 0.0,master_category_id: 5,mandatory: false,miscellaneous: false,savings: false) #Should always be fifth
+Category.create!(name: 'Lending', active: false, budget_amount: 0.0,master_category_id: 6,mandatory: false,miscellaneous: false,savings: false) #Should always be sixth
 #---------------------------
 
 # Mandatory Payees
@@ -51,34 +53,34 @@ MasterCategory.create!(name: 'Aarav', display: true)
 MasterCategory.create!(name: 'Leisure', display: true)
 MasterCategory.create!(name: 'Medical', display: true)
 
-Category.create!(name: 'God', active: true, budget_amount: 70.00,master_category_id: 6,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
-Category.create!(name: 'Money To India', active: true, budget_amount: 1000.00,master_category_id: 7,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
-Category.create!(name: 'Mortgage', active: true, budget_amount: 3615.00,master_category_id: 10,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
-Category.create!(name: 'Personal', active: true, budget_amount: 500.00,master_category_id: 9,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
-Category.create!(name: 'Groceries', active: true, budget_amount: 500.00,master_category_id: 8,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
-Category.create!(name: 'Car Loan', active: true, budget_amount: 555.00,master_category_id: 10,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
-Category.create!(name: 'Car Insurance', active: true, budget_amount: 82.00,master_category_id: 11,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
-Category.create!(name: 'Medical Insurance', active: true, budget_amount: 281.00,master_category_id: 11,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
-Category.create!(name: 'Home Insurance', active: true, budget_amount: 62.00,master_category_id: 11,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
-Category.create!(name: 'Electricity', active: true, budget_amount: 200.00,master_category_id: 12,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
-Category.create!(name: 'Gas', active: true, budget_amount: 50.00,master_category_id: 12,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
-Category.create!(name: 'Water', active: true, budget_amount: 50.00,master_category_id: 12,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
-Category.create!(name: 'Fuel', active: true, budget_amount: 100.00,master_category_id: 13,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
-Category.create!(name: 'Tesltra Home', active: true, budget_amount: 202.00,master_category_id: 12,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
-Category.create!(name: 'Mobiles', active: true, budget_amount: 50.00,master_category_id: 12,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
-Category.create!(name: 'Childcare', active: true, budget_amount: 320.00,master_category_id: 14,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
-Category.create!(name: 'ASG', active: true, budget_amount: 165.00,master_category_id: 14,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
-Category.create!(name: 'Cleaning', active: true, budget_amount: 100.00,master_category_id: 8,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
-Category.create!(name: 'Kumon', active: true, budget_amount: 120.00,master_category_id: 14,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
-Category.create!(name: 'Interest Free', active: true, budget_amount: 100.00,master_category_id: 10,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
-Category.create!(name: 'Myki', active: true, budget_amount: 400.00,master_category_id: 13,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
+Category.create!(name: 'God', active: true, budget_amount: 70.00,master_category_id: 7,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
+Category.create!(name: 'Money To India', active: true, budget_amount: 1000.00,master_category_id: 8,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
+Category.create!(name: 'Mortgage', active: true, budget_amount: 3615.00,master_category_id: 11,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
+Category.create!(name: 'Personal', active: true, budget_amount: 500.00,master_category_id: 10,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
+Category.create!(name: 'Groceries', active: true, budget_amount: 500.00,master_category_id: 9,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
+Category.create!(name: 'Car Loan', active: true, budget_amount: 555.00,master_category_id: 11,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
+Category.create!(name: 'Car Insurance', active: true, budget_amount: 82.00,master_category_id: 12,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
+Category.create!(name: 'Medical Insurance', active: true, budget_amount: 281.00,master_category_id: 12,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
+Category.create!(name: 'Home Insurance', active: true, budget_amount: 62.00,master_category_id: 12,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
+Category.create!(name: 'Electricity', active: true, budget_amount: 200.00,master_category_id: 13,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
+Category.create!(name: 'Gas', active: true, budget_amount: 50.00,master_category_id: 13,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
+Category.create!(name: 'Water', active: true, budget_amount: 50.00,master_category_id: 13,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
+Category.create!(name: 'Fuel', active: true, budget_amount: 100.00,master_category_id: 14,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
+Category.create!(name: 'Tesltra Home', active: true, budget_amount: 202.00,master_category_id: 13,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
+Category.create!(name: 'Mobiles', active: true, budget_amount: 50.00,master_category_id: 13,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
+Category.create!(name: 'Childcare', active: true, budget_amount: 320.00,master_category_id: 15,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
+Category.create!(name: 'ASG', active: true, budget_amount: 165.00,master_category_id: 15,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
+Category.create!(name: 'Cleaning', active: true, budget_amount: 100.00,master_category_id: 9,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
+Category.create!(name: 'Kumon', active: true, budget_amount: 120.00,master_category_id: 15,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
+Category.create!(name: 'Interest Free', active: true, budget_amount: 100.00,master_category_id: 11,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
+Category.create!(name: 'Myki', active: true, budget_amount: 400.00,master_category_id: 14,mandatory: true,miscellaneous: false,savings: false, budgeted: true)
 
-Category.create!(name: 'Apps', active: true, budget_amount: 0.00,master_category_id: 15,mandatory: false,miscellaneous: true,savings: false, budgeted: false)
-Category.create!(name: 'Eating Out', active: true, budget_amount: 0.00,master_category_id: 15,mandatory: false,miscellaneous: true,savings: false, budgeted: false)
-Category.create!(name: 'Doctor', active: true, budget_amount: 0.00,master_category_id: 16,mandatory: false,miscellaneous: true,savings: false, budgeted: false)
-Category.create!(name: 'Medicines', active: true, budget_amount: 0.00,master_category_id: 16,mandatory: false,miscellaneous: true,savings: false, budgeted: false)
-Category.create!(name: 'Clothes', active: true, budget_amount: 0.00,master_category_id: 9,mandatory: false,miscellaneous: true,savings: false, budgeted: false)
-Category.create!(name: 'Shoes', active: true, budget_amount: 0.00,master_category_id: 9,mandatory: false,miscellaneous: true,savings: false, budgeted: false)
+Category.create!(name: 'Apps', active: true, budget_amount: 0.00,master_category_id: 16,mandatory: false,miscellaneous: true,savings: false, budgeted: false)
+Category.create!(name: 'Eating Out', active: true, budget_amount: 0.00,master_category_id: 16,mandatory: false,miscellaneous: true,savings: false, budgeted: false)
+Category.create!(name: 'Doctor', active: true, budget_amount: 0.00,master_category_id: 17,mandatory: false,miscellaneous: true,savings: false, budgeted: false)
+Category.create!(name: 'Medicines', active: true, budget_amount: 0.00,master_category_id: 17,mandatory: false,miscellaneous: true,savings: false, budgeted: false)
+Category.create!(name: 'Clothes', active: true, budget_amount: 0.00,master_category_id: 10,mandatory: false,miscellaneous: true,savings: false, budgeted: false)
+Category.create!(name: 'Shoes', active: true, budget_amount: 0.00,master_category_id: 10,mandatory: false,miscellaneous: true,savings: false, budgeted: false)
 
 Account.create!(name: 'Citi Shruti', initial_balance: 0.00, balance: 0.00, account_type_id: 1,budget_account: true)
 Account.create!(name: 'Citi Aman', initial_balance: 0.00, balance: 0.00, account_type_id: 1,budget_account: true)
