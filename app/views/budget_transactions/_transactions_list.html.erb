@@ -62,7 +62,7 @@
 							</td>
 							<td style="width: 10%;">
 								<%=wtxn.category.name unless wtxn.category.nil?%>
-								<%if wtxn.category.name == 'Account Transfer'%>
+								<%if wtxn.category.name == 'Account Transfer' || wtxn.category.name == 'Lending'%>
 									<span class='glyphicon glyphicon-transfer' style='color: #999;' aria-hidden='true'></span>
 								<%end%>
 							</td>
@@ -81,6 +81,17 @@
 								<%end%>
 							</td>
 							<!-- =====================================================-->
+							<td  style="width: 18%;text-align: right;">
+								<ul class="list-tags">
+								<%wtxn.tags.each do|wtag|%>
+									<li>
+									<%= link_to tag_path(wtag.name,wtxn.budget.id) do %>
+										<span class="fa fa-tag"></span><%=wtag.name%>
+									<%end%>
+									</li>
+								<%end%>
+							</ul>
+							</td>
 							<td style="width: 5%;border-right: none;text-align: right;">
 								<%=link_to update_cleared_status_path(wtxn,is_payee_account: true), :remote => true do%>
 									<%if wtxn.reconciled%>
