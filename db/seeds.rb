@@ -37,8 +37,10 @@ AccountType.create!(name: 'Savings') #Should always be first
 AccountType.create!(name: 'Credit') #Should always be first
 AccountType.create!(name: 'Offset') #Should always be first
 AccountType.create!(name: 'Loan') #Should always be first
-AccountType.create!(name: 'Investment') #Should always be first
+AccountType.create!(name: 'Brokerage') #Should always be first
 AccountType.create!(name: 'Interest Free') #Should always be first
+AccountType.create!(name: 'Mortgage') #Should always be first
+AccountType.create!(name: 'Superannuation') #Should always be first
 #---------------------------
 
 MasterCategory.create!(name: 'God Charity', display: true)
