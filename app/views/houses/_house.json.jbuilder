@@ -1,0 +1,2 @@
+json.extract! house, :id, :purchase_date, :price_paid, :original_balance, :current_value, :interest_rate, :term_length, :term_start_date, :mortgage_account_id, :offset_account_id, :name, :address, :created_at, :updated_at
+json.url house_url(house, format: :json)

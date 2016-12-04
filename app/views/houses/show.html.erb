@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Purchase date:</strong>
+  <%= @house.purchase_date %>
+</p>
+
+<p>
+  <strong>Price paid:</strong>
+  <%= @house.price_paid %>
+</p>
+
+<p>
+  <strong>Original balance:</strong>
+  <%= @house.original_balance %>
+</p>
+
+<p>
+  <strong>Current value:</strong>
+  <%= @house.current_value %>
+</p>
+
+<p>
+  <strong>Interest rate:</strong>
+  <%= @house.interest_rate %>
+</p>
+
+<p>
+  <strong>Term length:</strong>
+  <%= @house.term_length %>
+</p>
+
+<p>
+  <strong>Term start date:</strong>
+  <%= @house.term_start_date %>
+</p>
+
+<p>
+  <strong>Mortgage account:</strong>
+  <%= @house.mortgage_account_id %>
+</p>
+
+<p>
+  <strong>Offset account:</strong>
+  <%= @house.offset_account_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @house.name %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @house.address %>
+</p>
+
+<%= link_to 'Edit', edit_house_path(@house) %> |
+<%= link_to 'Back', houses_path %>

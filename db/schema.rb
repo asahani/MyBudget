@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161115095149) do
+ActiveRecord::Schema.define(version: 20161204081531) do
 
   create_table "account_types", force: true do |t|
     t.string   "name"
@@ -127,13 +127,28 @@ ActiveRecord::Schema.define(version: 20161115095149) do
     t.datetime "updated_at"
   end
 
+  create_table "houses", force: true do |t|
+    t.string   "name"
+    t.string   "address"
+    t.integer  "mortgage_account_id"
+    t.integer  "offset_account_id"
+    t.date     "purchase_date"
+    t.float    "price_paid",          limit: 24
+    t.float    "original_balance",    limit: 24
+    t.float    "current_value",       limit: 24
+    t.float    "interest_rate",       limit: 24
+    t.integer  "term_length"
+    t.date     "term_start_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "imported_transactions", force: true do |t|
     t.string   "raw_data"
     t.decimal  "credit",      precision: 10, scale: 2
     t.decimal  "debit",       precision: 10, scale: 2
     t.date     "txn_date"
     t.string   "description"
-    t.string   "tags"
     t.decimal  "balance",     precision: 10, scale: 2
     t.integer  "account_id"
     t.integer  "payee_id"

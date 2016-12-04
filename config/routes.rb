@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :houses
+
   resources :tasks do
     member do
       post :complete_task
