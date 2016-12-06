@@ -10,8 +10,9 @@ class CreateHouses < ActiveRecord::Migration
       t.float :original_balance
       t.float :current_value
       t.float :interest_rate
-      t.integer :term_length
+      t.float :term_length
       t.date :term_start_date
+      t.float :monthly_payment
 
       t.timestamps
     end

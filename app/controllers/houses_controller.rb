@@ -1,4 +1,5 @@
 class HousesController < ApplicationController
+  layout "admin", only: [:index, :new, :edit,:create,:update]
   before_action :set_house, only: [:show, :edit, :update, :destroy]
 
   # GET /houses
@@ -69,6 +70,6 @@ class HousesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def house_params
-      params.require(:house).permit(:purchase_date, :price_paid, :original_balance, :current_value, :interest_rate, :term_length, :term_start_date, :mortgage_account_id, :offset_account_id, :name, :address)
+      params.require(:house).permit(:purchase_date, :price_paid, :original_balance, :current_value, :interest_rate, :term_length, :term_start_date, :mortgage_account_id, :offset_account_id, :name, :address,:monthly_payment)
     end
 end

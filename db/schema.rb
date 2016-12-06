@@ -137,8 +137,9 @@ ActiveRecord::Schema.define(version: 20161204081531) do
     t.float    "original_balance",    limit: 24
     t.float    "current_value",       limit: 24
     t.float    "interest_rate",       limit: 24
-    t.integer  "term_length"
+    t.float    "term_length",         limit: 24
     t.date     "term_start_date"
+    t.float    "monthly_payment",     limit: 24
     t.datetime "created_at"
     t.datetime "updated_at"
   end
