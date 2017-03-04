@@ -26,7 +26,46 @@ class House < ActiveRecord::Base
   ##################################
   # Class Methods
   ##################################
+  def mortgage_paid
+    payee = Payee.find_by_account_id(self.mortgage_account.id)
+    debits = BudgetTransaction.where('payee_id = ?',payee).sum('debit')
+    credits = BudgetTransaction.where('payee_id = ?',payee).sum('credit')
+    return debits-credits
+  end
 
+  def get_mortgage_payments(balance,offset_balance)
+    balance = balance.to_f
+    annual_rate = self.interest_rate.to_f * 0.01
+    monthly_rate = annual_rate / 12.to_f
+    n = self.term_length*12
+    offset = offset_balance.to_f
+    term = (1 + monthly_rate)**n
+    # monthly_payment = balance * (monthly_rate * term / (term - 1))
+    monthly_payment = self.monthly_payment
+
+    # puts "Loan term (Number of payments) [#{n}]"
+    # puts "Annual interest rate [#{annual_rate*100}]"
+    # puts "Monthly interest rate [#{monthly_rate}]"
+    # puts "Term = [#{term}]"
+    # puts "Monthly Payment = [#{monthly_payment}]"
+
+    mortgage_payments = Array.new
+    month=0
+    while (balance > offset)
+      month += 1
+      interest_payment = (balance-offset).to_f * monthly_rate
+      if interest_payment <= 0
+        interest_payment = 0
+      end
+      principal_payment = monthly_payment - interest_payment
+      balance = balance - principal_payment
+      mortgage_payments << MortgagePayment.new(month: month, interest_payment: interest_payment, principal_payment: principal_payment, balance: balance)
+
+      # puts("Interest [$#{interest_payment}], Principal [$#{principal_payment}], Balance = [$#{balance}]")
+    end
+
+    return mortgage_payments
+  end
 
   private
 

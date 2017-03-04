@@ -1,3 +1,5 @@
+<div data-highcharts="mortgage_area_chart">test</div>
+
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -54,6 +56,27 @@
   <strong>Address:</strong>
   <%= @house.address %>
 </p>
+
+
+---------
+<p>
+  <strong>Mortgage_paid:</strong>
+  <%= @mortgage_paid %>
+</p>
+<p>
+  <strong>Mortgage Paid:</strong>
+  <%= @mortgage_payments.count %> months
+  <%= (@mortgage_payments.count.months/1.year).round(2) %> years
+</p>
+
+<p>
+  <strong>Mortgage Paid with Offset:</strong>
+  <%= @mortgage_payments_with_offset.count %> months
+  <%= (@mortgage_payments_with_offset.count.months/1.year).round(2) %> years
+</p>
+
+<%= content_tag :div," ",id: "mortgagechart", data: {mortgagepayments: mortgage_payments_data,mortgagewithoffsetpayments: mortgage_with_offset_payments_data}%>
+
 
 <%= link_to 'Edit', edit_house_path(@house) %> |
 <%= link_to 'Back', houses_path %>
