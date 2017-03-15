@@ -12,8 +12,19 @@ class HousesController < ApplicationController
   # GET /houses/1.json
   def show
     @mortgage_paid = @house.mortgage_paid
-    @mortgage_payments = @house.get_mortgage_payments((@house.original_balance.to_f-@mortgage_paid.to_f).to_f,0)
-    @mortgage_payments_with_offset = @house.get_mortgage_payments((@house.original_balance.to_f-@mortgage_paid.to_f).to_f,@house.offset_account.balance.to_f)
+    @mortgage_payments = @house.get_mortgage_payments((@house.current_balance.to_f).to_f,0)
+    @mortgage_payments_with_offset = @house.get_mortgage_payments((@house.current_balance.to_f).to_f,@house.offset_account.balance.to_f)
+
+    @loan_paid_percentage = 0
+    @loan_paid_with_offset_percentage = 0
+
+    if (@house.original_balance - @house.current_balance > 0)
+      @loan_paid_percentage = (((@house.original_balance - @house.current_balance)/@house.original_balance)*100).to_i
+    end
+    if (@house.original_balance - (@house.current_balance_with_offset) > 0)
+      @loan_paid_with_offset_percentage = (((@house.original_balance - @house.current_balance_with_offset)/@house.original_balance)*100).to_i
+    end
+
   end
 
   # GET /houses/new

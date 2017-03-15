@@ -20,9 +20,10 @@ class BudgetTransaction < ActiveRecord::Base
   ##################################
   # Callbacks
   ##################################
+  before_save :update_mortgage_account_balance
   after_create :update_budget_item, :update_budget_account, :update_account_payee, :add_category_tag, :update_loan_account
   after_update :update_budget_item, :update_budget_account, :update_account_payee
-  after_destroy :update_budget_item, :update_budget_account, :update_account_payee
+  after_destroy :update_budget_item, :update_budget_account, :update_account_payee,:update_mortgage_account_balance
 
 
   ##################################
@@ -104,6 +105,8 @@ class BudgetTransaction < ActiveRecord::Base
 
   def update_loan_account
     if self.account.account_type.name == "Loan"
+      throw 'error'
+      return
       if !self.debit.nil? && self.debit > 0
         self.account.balance -= self.debit
       elsif !self.credit.nil? && self.credit > 0
@@ -111,6 +114,38 @@ class BudgetTransaction < ActiveRecord::Base
       end
       self.account.save!
     end
+  end
+
+  def update_mortgage_account_balance
+    unless self.payee.account.nil?
+      if self.payee.account.account_type.name == "Mortgage"
+        if !self.debit.nil? && self.debit > 0
+          house = House.where('mortgage_account_id = ?',self.payee.account.id).first()
+          interest = house.get_interest_payable_for_month.to_f
+          update_account_balance_for_non_budget_accounts(self.payee.account,self.mortgage_interest,interest,self.credit_was,self.credit)
+          
+          unless self.destroyed?
+            self.mortgage_interest = interest
+          end
+        elsif !self.credit.nil? && self.credit > 0
+          update_account_balance_for_non_budget_accounts(self.payee.account,self.debit_was,self.debit,self.credit_was,self.credit)
+        end
+      end
+    end
+  end
+
+  private
+
+  def update_account_balance_for_non_budget_accounts(account,old_debit_amount,debit_amount,old_credit_amount,credit_amount)
+    if !debit_amount.nil? && debit_amount > 0
+      account.balance += old_debit_amount if !old_debit_amount.nil? && old_debit_amount > 0
+      account.balance -= debit_amount unless self.destroyed?
+    elsif !credit_amount.nil? && credit_amount > 0
+      account.balance -=  old_credit_amount if !old_credit_amount.nil? && old_credit_amount > 0
+      account.balance += credit_amount unless self.destroyed?
+    end
+
+    account.save!
   end
 
 end

@@ -1,11 +1,11 @@
 module HousesHelper
 
   def mortgage_payments_data
-    get_mortgage_payment_data_for_graph(@house.get_mortgage_payments((@house.original_balance.to_f-@mortgage_paid.to_f).to_f,0))
+    get_mortgage_payment_data_for_graph(@house.get_mortgage_payments((@house.current_balance.to_f).to_f,0))
   end
 
   def mortgage_with_offset_payments_data
-    get_mortgage_payment_data_for_graph(@house.get_mortgage_payments((@house.original_balance.to_f-@mortgage_paid.to_f).to_f,@house.offset_account.balance.to_f))
+    get_mortgage_payment_data_for_graph(@house.get_mortgage_payments((@house.current_balance.to_f).to_f,@house.offset_account.balance.to_f))
   end
 
   private

@@ -1,4 +1,223 @@
-<div data-highcharts="mortgage_area_chart">test</div>
+<div class="row" style="padding-top: 70px;">
+  <div class="col-md-3">
+    <div class="widget widget-primary widget-item-icon">
+        <div class="widget-item-left">
+            <span class="fa fa-home"></span>
+        </div>
+        <div class="widget-data">
+            <div class="widget-int num-count">&nbsp;</div>
+            <div class="widget-title">Home Loan</div>
+            <div class="widget-subtitle"><%=@house.address%></div>
+        </div>
+        <div class="widget-controls">
+            <a href="#" class="widget-control-right"><span class="fa fa-times"></span></a>
+        </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-3">
+
+      <div class="widget widget-info widget-padding-sm">
+          <div class="widget-item-left">
+              <input class="knob" data-width="100" data-height="100" data-min="0" data-max="100" data-displayInput=false data-bgColor="#d6f4ff" data-fgColor="#FFF" value="<%=@loan_paid_percentage%>%" data-readOnly="true" data-thickness=".2"/>
+          </div>
+          <div class="widget-data">
+              <div class="widget-big-int"><span class="num-count"><%=@loan_paid_percentage%></span>%</div>
+              <div class="widget-title"><%=number_to_currency(@house.current_balance, precision: 2)%></div>
+              <div class="widget-subtitle">Loan Balance</div>
+          </div>
+          <div class="widget-controls">
+              <a href="#" class="widget-control-right"><span class="fa fa-times"></span></a>
+          </div>
+      </div>
+
+  </div>
+
+  <div class="col-md-3">
+
+      <div class="widget widget-info widget-padding-sm">
+          <div class="widget-item-left">
+              <input class="knob" data-width="100" data-height="100" data-min="0" data-max="100" data-displayInput=false data-bgColor="#d6f4ff" data-fgColor="#FFF" value="<%=@loan_paid_with_offset_percentage%>%" data-readOnly="true" data-thickness=".2"/>
+          </div>
+          <div class="widget-data">
+            <div class="widget-big-int"><span class="num-count"><%=@loan_paid_with_offset_percentage%></span>%</div>
+            <div class="widget-title"><%=number_to_currency(@house.current_balance_with_offset, precision: 2)%></div>
+            <div class="widget-subtitle">Loan Balance with Offset</div>
+          </div>
+          <div class="widget-controls">
+              <a href="#" class="widget-control-right"><span class="fa fa-times"></span></a>
+          </div>
+      </div>
+
+  </div>
+
+  <div class="col-md-3">
+
+      <div class="widget widget-primary">
+          <div class="widget-title"><%=@house.interest_rate%>%</div>
+          <div class="widget-subtitle">Interest Rate</div>
+          <div class="widget-title"><%=number_to_currency(@house.monthly_payment, precision: 2)%></div><div class="widget-subtitle">Monthly Payment</div>
+          <div class="widget-controls">
+              <a href="#" class="widget-control-right"><span class="fa fa-times"></span></a>
+          </div>
+      </div>
+
+  </div>
+
+</div>
+
+
+<div class="row">
+		<div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading chart-heading">
+            <h4 class="panel-title">Loan Details</h4>
+            <ul class="panel-controls">
+                <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+            </ul>
+        </div>
+        <div class="panel-body">
+          Test
+
+        </div>
+      </div>
+		</div>
+
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading chart-heading">
+            <h4 class="panel-title">Payment Details</h4>
+            <ul class="panel-controls">
+                <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+            </ul>
+        </div>
+        <div class="panel-body">
+          Test
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading chart-heading">
+            <h4 class="panel-title">Equity Details</h4>
+            <ul class="panel-controls">
+                <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+            </ul>
+        </div>
+        <div class="panel-body">
+          Test
+
+        </div>
+      </div>
+    </div>
+
+</div>
+
+<div class="row">
+
+  <div  class="col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading chart-heading">
+          <h4 class="panel-title">Projection</h4>
+          <ul class="panel-controls">
+              <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+              <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+          </ul>
+      </div>
+      <div class="panel-body">
+        <div class="col-md-3 chart-summary-panel no-padding" style="height:400px;">
+          <div class="padding-15">
+            <ul class="chart-mini-stats">
+              <li class="col-md-12 col-sm-4 col-xs-4 no-padding">
+                <div class="sparkline-bar">
+                  <span class="sparkline" sparkType="bar" sparkBarColor="#444" sparkWidth="100" sparkHeight="30" sparkBarWidth="5">4,5,6,6,7,8,6,5</span>
+                </div>
+                <div class="values">
+                  <strong></strong>
+                  Income
+                </div>
+              </li>
+              <li class="col-md-12 col-sm-4 col-xs-4 no-padding">
+                <div class="sparkline-bar">
+                  <span class="sparkline" sparkType="bar" sparkBarColor="#444" sparkWidth="100" sparkHeight="30" sparkBarWidth="5">4,5,6,6,7,8,6,5</span>
+                </div>
+                <div class="values">
+                  <strong></strong>
+                  Expenses
+                </div>
+              </li>
+              <li class="col-md-12 col-sm-4 col-xs-4 no-padding">
+                <div class="sparkline-bar">
+                  <span class="sparkline" sparkType="bar" sparkBarColor="#444" sparkWidth="100" sparkHeight="30" sparkBarWidth="5">4,5,6,6,7,8,6,5</span>
+                </div>
+                <div class="values">
+                  <strong><%=number_to_currency(300, precision: 2)%></strong>
+                  Savings
+                </div>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+
+        <div class="col-md-9" style="height:400px;">
+          <%= content_tag :div," ",id: "mortgagechart", data: {mortgagepayments: mortgage_payments_data,mortgagewithoffsetpayments: mortgage_with_offset_payments_data}%>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading chart-heading">
+          <h4 class="panel-title">Outstading Balance Details</h4>
+          <ul class="panel-controls">
+              <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+              <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+          </ul>
+      </div>
+      <div class="panel-body">
+        Test
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+		<div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading chart-heading">
+            <h4 class="panel-title">Payments</h4>
+            <ul class="panel-controls">
+                <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+            </ul>
+        </div>
+        <div class="panel-body">
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              Payments made
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              Projected payments
+            </div>
+          </div>
+        </div>
+      </div>
+		</div>
+
+</div>
 
 <p id="notice"><%= notice %></p>
 
@@ -75,7 +294,6 @@
   <%= (@mortgage_payments_with_offset.count.months/1.year).round(2) %> years
 </p>
 
-<%= content_tag :div," ",id: "mortgagechart", data: {mortgagepayments: mortgage_payments_data,mortgagewithoffsetpayments: mortgage_with_offset_payments_data}%>
 
 
 <%= link_to 'Edit', edit_house_path(@house) %> |

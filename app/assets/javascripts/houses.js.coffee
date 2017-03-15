@@ -17,12 +17,12 @@ jQuery ->
         eval value + '.highcharts().reflow()'
       return
     return
-    
+
   mortgage_area_chart = $('#mortgagechart').highcharts
     chart:
       renderTo: 'mortgagechart'
       type: 'area'
-      height: '600'
+      height: '400'
     title: text: null
     xAxis:
       title: text: 'Years'

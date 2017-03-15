@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161204081531) do
+ActiveRecord::Schema.define(version: 20170315115024) do
 
   create_table "account_types", force: true do |t|
     t.string   "name"
@@ -84,19 +84,20 @@ ActiveRecord::Schema.define(version: 20161204081531) do
     t.integer  "payee_id"
     t.integer  "budget_id"
     t.integer  "category_id"
-    t.decimal  "credit",           precision: 10, scale: 2, default: 0.0
-    t.decimal  "debit",            precision: 10, scale: 2, default: 0.0
+    t.decimal  "credit",            precision: 10, scale: 2, default: 0.0
+    t.decimal  "debit",             precision: 10, scale: 2, default: 0.0
     t.date     "transaction_date"
     t.text     "comments"
     t.string   "raw_data"
-    t.boolean  "manual",                                    default: true
-    t.boolean  "scheduled",                                 default: false
-    t.boolean  "budgeted",                                  default: false
-    t.boolean  "miscellaneous",                             default: true
-    t.boolean  "savings",                                   default: false
-    t.boolean  "reconciled",                                default: false
+    t.boolean  "manual",                                     default: true
+    t.boolean  "scheduled",                                  default: false
+    t.boolean  "budgeted",                                   default: false
+    t.boolean  "miscellaneous",                              default: true
+    t.boolean  "savings",                                    default: false
+    t.boolean  "reconciled",                                 default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "mortgage_interest", precision: 10, scale: 2, default: 0.0
   end
 
   create_table "budgets", force: true do |t|
