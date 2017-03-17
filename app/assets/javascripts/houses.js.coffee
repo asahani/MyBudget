@@ -22,7 +22,7 @@ jQuery ->
     chart:
       renderTo: 'mortgagechart'
       type: 'area'
-      height: '400'
+      height: '450'
     title: text: null
     xAxis:
       title: text: 'Years'

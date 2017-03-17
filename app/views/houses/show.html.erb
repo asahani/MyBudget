@@ -1,4 +1,4 @@
-<div class="row" style="padding-top: 70px;">
+<div class="row" style="padding-top: 60px;">
   <div class="col-md-3">
     <div class="widget widget-primary widget-item-icon">
         <div class="widget-item-left">
@@ -6,7 +6,7 @@
         </div>
         <div class="widget-data">
             <div class="widget-int num-count">&nbsp;</div>
-            <div class="widget-title">Home Loan</div>
+            <div class="widget-title"><%= @house.name %></div>
             <div class="widget-subtitle"><%=@house.address%></div>
         </div>
         <div class="widget-controls">
@@ -78,14 +78,37 @@
                 <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
             </ul>
         </div>
-        <div class="panel-body">
-          Test
+          <table class="table table-striped">
+            <tr>
+                <td style="padding:6px;">Mortgage:</td>
+                <td style="padding:6px;"><%= @house.mortgage_account.name %></td>
+                <td style="padding:6px;">Original balance:</td>
+                <td style="padding:6px;"><%= number_to_currency(@house.original_balance, precision: 2) %></td>
+            </tr>
+            <tr>
+                <td style="padding:6px;">Purchase date:</td>
+                <td style="padding:6px;"><%= @house.purchase_date %></td>
+                <td style="padding:6px;">Price paid:</td>
+                <td style="padding:6px;"><%= number_to_currency(@house.price_paid, precision: 2) %></td>
+            </tr>
+            <tr>
+                <td style="padding:6px;">Term start date:</td>
+                <td style="padding:6px;"><%= @house.term_start_date %></td>
+                <td style="padding:6px;">Term length:</td>
+                <td style="padding:6px;"><%= @house.term_length %> years</td>
+            </tr>
+            <tr>
+                <td style="padding:6px;"><&nbsp;</td>
+                <td style="padding:6px;"></td>
+                <td style="padding:6px;"></strong></td>
+                <td style="padding:6px;"></td>
+            </tr>
+          </table>
 
-        </div>
       </div>
 		</div>
 
-    <div class="col-md-4">
+    <div class="col-md-5">
       <div class="panel panel-default">
         <div class="panel-heading chart-heading">
             <h4 class="panel-title">Payment Details</h4>
@@ -94,14 +117,77 @@
                 <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
             </ul>
         </div>
-        <div class="panel-body">
-          Test
+        <div style="padding: 0px;">
+            <div class="col-md-6" style="padding: 0px;">
+                <div class="col-md-5" style="text-align: center; padding-top: 15px;padding-bottom: 15px;">
+                  <span class="sparkline" sparkType="pie" sparkWidth="90" sparkHeight="90" ><%=@mortgage_payments_with_offset[0].principal_payment%>,<%=@mortgage_payments_with_offset[0].interest_payment%></span>
+                </div>
+                <div class="col-md-7" style="padding: 5px;">
+                  <div style="padding-bottom: 10px;"><strong>Monthly Payment:</strong></div>
+                  <table style="width: 100%; padding-bottom: 10px;">
+                    <tr>
+                      <td>Principal</td>
+                      <td style="text-align: right;"><%= number_to_currency(@mortgage_payments_with_offset[0].principal_payment, precision: 2) %></td>
+                    </tr>
+                    <tr>
+                      <td>Interest</td>
+                      <td style="text-align: right;"><%= number_to_currency(@mortgage_payments_with_offset[0].interest_payment, precision: 2) %></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td style="text-align: right;">&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td style="border-bottom: 1px solid #444;">&nbsp;</td>
+                      <td style="text-align: right;border-bottom: 1px solid #444;">&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Total</strong></td>
+                      <td style="text-align: right;"><%=number_to_currency(@house.monthly_payment, precision: 2)%></td>
+                    </tr>
+                  </table>
+
+
+                </div>
+            </div>
+            <div class="col-md-6" style="padding: 0px;">
+                <div class="col-md-5" style="text-align: center; padding-top: 15px;padding-bottom: 15px;">
+                  <span class="sparkline" sparkType="pie" sparkWidth="90" sparkHeight="90"><%=@house.principal_paid%>,<%=@house.interest_paid%></span>
+                </div>
+                <div class="col-md-7" style="padding: 5px;">
+                  <div style="padding-bottom: 10px;"><strong>Total Payments:</strong></div>
+                  <table style="width: 100%; padding-bottom: 10px;">
+                    <tr>
+                      <td>Principal</td>
+                      <td style="text-align: right;"><%= number_to_currency(@house.principal_paid, precision: 2) %></td>
+                    </tr>
+                    <tr>
+                      <td>Interest</td>
+                      <td style="text-align: right;"><%= number_to_currency(@house.interest_paid, precision: 2) %></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td style="text-align: right;">&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td style="border-bottom: 1px solid #444;">&nbsp;</td>
+                      <td style="text-align: right;border-bottom: 1px solid #444;">&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Total</strong></td>
+                      <td style="text-align: right;"><%= number_to_currency(@house.mortgage_paid, precision: 2) %></td>
+                    </tr>
+                  </table>
+
+
+                </div>
+            </div>
 
         </div>
       </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="panel panel-default">
         <div class="panel-heading chart-heading">
             <h4 class="panel-title">Equity Details</h4>
@@ -110,10 +196,26 @@
                 <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
             </ul>
         </div>
-        <div class="panel-body">
-          Test
 
-        </div>
+        <table class="table table-striped">
+          <tr>
+              <td style="padding:6px;">Current value:</td>
+              <td style="padding:6px;text-align:right;"><%= number_to_currency(@house.current_value, precision: 2) %></td>
+          </tr>
+          <tr>
+              <td style="padding:6px;">Equity:</td>
+              <td style="padding:6px;text-align:right;"><%= number_to_currency((@house.current_value - @house.current_balance), precision: 2)%></td>
+          </tr>
+          <tr>
+              <td style="padding:6px;">Equity + Offset:</td>
+              <td style="padding:6px;text-align:right;"><%= number_to_currency((@house.current_value - @house.current_balance_with_offset), precision: 2)%></td>
+          </tr>
+          <tr>
+              <td style="padding:6px;">Profit:</td>
+              <td style="padding:6px;text-align:right;"><strong><%= number_to_currency((@house.current_value - @house.price_paid), precision: 2)%></strong></td>
+          </tr>
+        </table>
+
       </div>
     </div>
 
@@ -121,7 +223,7 @@
 
 <div class="row">
 
-  <div  class="col-md-8">
+  <div  class="col-md-9">
     <div class="panel panel-default">
       <div class="panel-heading chart-heading">
           <h4 class="panel-title">Projection</h4>
@@ -131,34 +233,52 @@
           </ul>
       </div>
       <div class="panel-body">
-        <div class="col-md-3 chart-summary-panel no-padding" style="height:400px;">
+        <div class="col-md-3 chart-summary-panel no-padding" style="height:450px;">
           <div class="padding-15">
             <ul class="chart-mini-stats">
               <li class="col-md-12 col-sm-4 col-xs-4 no-padding">
-                <div class="sparkline-bar">
-                  <span class="sparkline" sparkType="bar" sparkBarColor="#444" sparkWidth="100" sparkHeight="30" sparkBarWidth="5">4,5,6,6,7,8,6,5</span>
+                <div>
+                  <span class="fa fa-calendar fa-2x" style="color: #444;"></span>
                 </div>
                 <div class="values">
-                  <strong></strong>
-                  Income
+                  <strong><%= (@mortgage_payments.count.months/1.year).round(2) %> years</strong>
+                  Time Remaining
                 </div>
               </li>
               <li class="col-md-12 col-sm-4 col-xs-4 no-padding">
-                <div class="sparkline-bar">
-                  <span class="sparkline" sparkType="bar" sparkBarColor="#444" sparkWidth="100" sparkHeight="30" sparkBarWidth="5">4,5,6,6,7,8,6,5</span>
+                <div>
+                  <span class="fa fa-dollar fa-2x" style="color: #444;"></span>
                 </div>
                 <div class="values">
-                  <strong></strong>
-                  Expenses
+                  <strong><%=number_to_currency(@house.current_balance, precision: 2)%></strong>
+                  Outstanding Balance
                 </div>
               </li>
               <li class="col-md-12 col-sm-4 col-xs-4 no-padding">
-                <div class="sparkline-bar">
-                  <span class="sparkline" sparkType="bar" sparkBarColor="#444" sparkWidth="100" sparkHeight="30" sparkBarWidth="5">4,5,6,6,7,8,6,5</span>
+                <div>
+                  <span class="fa fa-calendar fa-2x" style="color: #444;"></span>
                 </div>
                 <div class="values">
-                  <strong><%=number_to_currency(300, precision: 2)%></strong>
-                  Savings
+                  <strong><%= (@mortgage_payments_with_offset.count.months/1.year).round(2) %> years</strong>
+                  Time with Offset
+                </div>
+              </li>
+              <li class="col-md-12 col-sm-4 col-xs-4 no-padding">
+                <div>
+                  <span class="fa fa-dollar fa-2x" style="color: #444;"></span>
+                </div>
+                <div class="values">
+                  <strong><%=number_to_currency(@house.current_balance_with_offset, precision: 2)%></strong>
+                  Balance with Offset
+                </div>
+              </li>
+              <li class="col-md-12 col-sm-4 col-xs-4 no-padding">
+                <div>
+                  <span class="fa fa-clock-o fa-2x" style="color: #444;"></span>
+                </div>
+                <div class="values">
+                  <strong><%= (@mortgage_payments.count.months/1.year).round(2) - (@mortgage_payments_with_offset.count.months/1.year).round(2)%> years</strong>
+                  Time Saved
                 </div>
               </li>
             </ul>
@@ -174,17 +294,68 @@
 
   </div>
 
-  <div class="col-md-4">
+  <div class="col-md-3">
     <div class="panel panel-default">
       <div class="panel-heading chart-heading">
-          <h4 class="panel-title">Outstading Balance Details</h4>
+          <h4 class="panel-title">Outstading Balance</h4>
           <ul class="panel-controls">
               <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
               <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
           </ul>
       </div>
       <div class="panel-body">
-        Test
+        <div style="padding-bottom: 20px;"><strong>Outstanding Balance Details:</strong></div>
+
+        <%progress_percentage = (@house.principal_paid/@house.original_balance).to_f*100%>
+        <div class="progress-list">
+            <div class="pull-left"><%= number_to_currency(@house.principal_paid, precision: 2)  %> (<%=progress_percentage.round(1)%>%)</div>
+            <div class="pull-right"><%= number_to_currency(@house.original_balance, precision: 2) %></div>
+            <div class="progress active">
+                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: <%=progress_percentage.round(1)%>%;"><%=progress_percentage.round(1)%>%</div>
+            </div>
+        </div>
+
+        <table class="table table-striped">
+          <tr>
+              <td style="padding:6px;">Balance:</td>
+              <td style="padding:6px;text-align:right;"><%=number_to_currency(@house.current_balance, precision: 2)%></td>
+          </tr>
+          <tr>
+              <td style="padding:6px;">Payments Remaining:</td>
+              <td style="padding:6px;text-align:right;"><%= @mortgage_payments.count %></td>
+          </tr>
+          <tr>
+              <td style="padding:6px;">Time Remaining:</td>
+              <td style="padding:6px;text-align:right;"><strong><%= (@mortgage_payments.count.months/1.year).round(2) %> years</strong></td>
+          </tr>
+
+        </table>
+
+        <div style="padding-bottom: 20px;padding-top: 20px;"><strong>Outstading Balance with Excess:</strong></div>
+        <%progress_percentage_with_offset = ((@house.principal_paid+@house.offset_account.balance.to_f)/@house.original_balance).to_f*100%>
+        <div class="progress-list">
+            <div class="pull-left"><%= number_to_currency(@house.principal_paid+@house.offset_account.balance.to_f, precision: 2)  %> (<%=progress_percentage_with_offset.round(1)%>%)</div>
+            <div class="pull-right"><%= number_to_currency(@house.original_balance, precision: 2) %></div>
+            <div class="progress active">
+                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: <%=progress_percentage_with_offset.round(1)%>%;"><%=progress_percentage_with_offset.round(1)%>%</div>
+            </div>
+        </div>
+
+        <table class="table table-striped">
+          <tr>
+              <td style="padding:6px;">Balance:</td>
+              <td style="padding:6px;text-align:right;"><%=number_to_currency(@house.current_balance_with_offset, precision: 2)%></td>
+          </tr>
+          <tr>
+              <td style="padding:6px;">Payments Remaining:</td>
+              <td style="padding:6px;text-align:right;"><%= @mortgage_payments_with_offset.count %></td>
+          </tr>
+          <tr>
+              <td style="padding:6px;">Time Remaining:</td>
+              <td style="padding:6px;text-align:right;"><strong><%= (@mortgage_payments_with_offset.count.months/1.year).round(2) %> years</strong></td>
+          </tr>
+
+        </table>
 
       </div>
     </div>
@@ -193,108 +364,71 @@
 
 
 <div class="row">
-		<div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading chart-heading">
-            <h4 class="panel-title">Payments</h4>
-            <ul class="panel-controls">
-                <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
-                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
-            </ul>
-        </div>
-        <div class="panel-body">
-          <div class="col-md-6">
-            <div class="panel panel-default">
-              Payments made
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="panel panel-default">
-              Projected payments
-            </div>
-          </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading chart-heading">
+          <h4 class="panel-title">Payment History</h4>
+          <ul class="panel-controls">
+              <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+              <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+          </ul>
+      </div>
+      <div class="panel-body">
+        <div class="panel panel-default">
+          <table class="table table-striped">
+            <thead>
+              <th style="text-align:center;">Date</th>
+              <th style="text-align:right;">Payment</th>
+              <th style="text-align:right;">Principal</th>
+              <th style="text-align:right;">Interest</th>
+            </thead>
+            <%BudgetTransaction.where('payee_id = ?',Payee.find_by_account_id(@house.mortgage_account.id)).each do |transaction|%>
+            <tr>
+                <td style="padding:6px;"><%=transaction.transaction_date%></td>
+                <td style="padding:6px;text-align:right;"><%=number_to_currency(transaction.debit, precision: 2)%></td>
+                <td style="padding:6px;text-align:right;"><%=number_to_currency(transaction.mortgage_principal, precision: 2)%></td>
+                <td style="padding:6px;text-align:right;"><%=number_to_currency(transaction.mortgage_interest, precision: 2)%></td>
+            </tr>
+            <%end%>
+          </table>
         </div>
       </div>
-		</div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading chart-heading">
+          <h4 class="panel-title">Future Payments</h4>
+          <ul class="panel-controls">
+              <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+              <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+          </ul>
+      </div>
+      <div class="panel-body">
+        <div class="panel panel-default">
+          <table class="table table-striped">
+            <thead>
+              <th style="text-align:center;">Month</th>
+              <th style="text-align:right;">Principal</th>
+              <th style="text-align:right;">Interest</th>
+              <th style="text-align:right;">Balance</th>
+            </thead>
+            <%@mortgage_payments_with_offset.each do |payment|%>
+            <tr>
+                <td style="padding:6px;text-align:center;"><%=payment.month%></td>
+                <td style="padding:6px;text-align:right;"><%=number_to_currency(payment.principal_payment, precision: 2)%></td>
+                <td style="padding:6px;text-align:right;"><%=number_to_currency(payment.interest_payment, precision: 2)%></td>
+                <td style="padding:6px;text-align:right;"><%=number_to_currency(payment.balance, precision: 2)%></td>
+            </tr>
+            <%end%>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>
-
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Purchase date:</strong>
-  <%= @house.purchase_date %>
-</p>
-
-<p>
-  <strong>Price paid:</strong>
-  <%= @house.price_paid %>
-</p>
-
-<p>
-  <strong>Original balance:</strong>
-  <%= @house.original_balance %>
-</p>
-
-<p>
-  <strong>Current value:</strong>
-  <%= @house.current_value %>
-</p>
-
-<p>
-  <strong>Interest rate:</strong>
-  <%= @house.interest_rate %>
-</p>
-
-<p>
-  <strong>Term length:</strong>
-  <%= @house.term_length %>
-</p>
-
-<p>
-  <strong>Term start date:</strong>
-  <%= @house.term_start_date %>
-</p>
-
-<p>
-  <strong>Mortgage account:</strong>
-  <%= @house.mortgage_account_id %>
-</p>
-
-<p>
-  <strong>Offset account:</strong>
-  <%= @house.offset_account_id %>
-</p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @house.name %>
-</p>
-
-<p>
-  <strong>Address:</strong>
-  <%= @house.address %>
-</p>
-
-
----------
-<p>
-  <strong>Mortgage_paid:</strong>
-  <%= @mortgage_paid %>
-</p>
-<p>
-  <strong>Mortgage Paid:</strong>
-  <%= @mortgage_payments.count %> months
-  <%= (@mortgage_payments.count.months/1.year).round(2) %> years
-</p>
-
-<p>
-  <strong>Mortgage Paid with Offset:</strong>
-  <%= @mortgage_payments_with_offset.count %> months
-  <%= (@mortgage_payments_with_offset.count.months/1.year).round(2) %> years
-</p>
-
-
 
 <%= link_to 'Edit', edit_house_path(@house) %> |
 <%= link_to 'Back', houses_path %>

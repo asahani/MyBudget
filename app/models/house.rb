@@ -47,6 +47,16 @@ class House < ActiveRecord::Base
     return debits-credits
   end
 
+  def interest_paid
+    payee = Payee.find_by_account_id(self.mortgage_account.id)
+    return BudgetTransaction.where('payee_id = ?',payee).sum('mortgage_interest')
+  end
+
+  def principal_paid
+    payee = Payee.find_by_account_id(self.mortgage_account.id)
+    return BudgetTransaction.where('payee_id = ?',payee).sum('mortgage_principal')
+  end
+
   def get_mortgage_payments(balance,offset_balance)
     balance = balance.to_f
     annual_rate = get_annual_interest_rate

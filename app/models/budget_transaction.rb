@@ -122,10 +122,12 @@ class BudgetTransaction < ActiveRecord::Base
         if !self.debit.nil? && self.debit > 0
           house = House.where('mortgage_account_id = ?',self.payee.account.id).first()
           interest = house.get_interest_payable_for_month.to_f
-          update_account_balance_for_non_budget_accounts(self.payee.account,self.mortgage_interest,interest,self.credit_was,self.credit)
-          
+          principal = self.debit.to_f - interest
+          update_account_balance_for_non_budget_accounts(self.payee.account,self.mortgage_principal,principal,self.credit_was,self.credit)
+
           unless self.destroyed?
             self.mortgage_interest = interest
+            self.mortgage_principal = principal
           end
         elsif !self.credit.nil? && self.credit > 0
           update_account_balance_for_non_budget_accounts(self.payee.account,self.debit_was,self.debit,self.credit_was,self.credit)
