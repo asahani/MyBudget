@@ -21,7 +21,7 @@ class BudgetTransaction < ActiveRecord::Base
   # Callbacks
   ##################################
   before_save :update_mortgage_account_balance
-  after_create :update_budget_item, :update_budget_account, :update_account_payee, :add_category_tag, :update_loan_account
+  after_create :update_budget_item, :update_budget_account, :update_account_payee, :add_category_tag
   after_update :update_budget_item, :update_budget_account, :update_account_payee
   after_destroy :update_budget_item, :update_budget_account, :update_account_payee,:update_mortgage_account_balance
 
@@ -101,19 +101,6 @@ class BudgetTransaction < ActiveRecord::Base
 
   def add_category_tag
     self.tag_list.add(self.category.name)
-  end
-
-  def update_loan_account
-    if self.account.account_type.name == "Loan"
-      throw 'error'
-      return
-      if !self.debit.nil? && self.debit > 0
-        self.account.balance -= self.debit
-      elsif !self.credit.nil? && self.credit > 0
-        self.account.balance += self.credit
-      end
-      self.account.save!
-    end
   end
 
   def update_mortgage_account_balance

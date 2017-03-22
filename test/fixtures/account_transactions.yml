@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  account_id: 1
+  payee_id: 1
+  budget_id: 1
+  category_id: 1
+  amount: 9.99
+  transaction_date: 2017-03-21
+  comments: MyString
+  reconciled: false
+
+two:
+  account_id: 1
+  payee_id: 1
+  budget_id: 1
+  category_id: 1
+  amount: 9.99
+  transaction_date: 2017-03-21
+  comments: MyString
+  reconciled: false

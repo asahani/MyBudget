@@ -24,14 +24,15 @@ class Account < ActiveRecord::Base
   ##################################
   scope :active, -> { where(is_active: true)}
   scope :for_budget, -> { where(budget_account: true)}
+  scope :for_miscellaneous, -> { joins(:account_type).where('account_types.name = ? OR account_types.name = ? OR account_types.name = ?', "Transaction","Savings","Credit") }
   scope :transaction_account, -> { joins(:account_type).where('account_types.name = ?', "Transaction") }
   scope :savings_account, -> { joins(:account_type).where('account_types.name = ?', "Savings") }
   scope :credit_account, -> { joins(:account_type).where('account_types.name = ?', "Credit") }
   scope :loan_account, -> { joins(:account_type).where('account_types.name = ?', "Loan") }
   scope :mortgage_account, -> { joins(:account_type).where('account_types.name = ?', "Mortgage") }
   scope :offset_account, -> { joins(:account_type).where('account_types.name = ?', "Offset") }
-  scope :brokerage_account, -> { joins(:account_type).where('account_types.name = ?', "Offset") }
-  
+  scope :brokerage_account, -> { joins(:account_type).where('account_types.name = ?', "Brokerage") }
+
 
   ##################################
   # Class Methods

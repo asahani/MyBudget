@@ -44,3 +44,4 @@ gem 'spring',        group: :development
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'autoprefixer-rails'
 gem 'acts-as-taggable-on', '~> 4.0'
+gem 'stock_quote'

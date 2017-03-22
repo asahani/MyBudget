@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Account:</strong>
+  <%= @account_transaction.account_id %>
+</p>
+
+<p>
+  <strong>Payee:</strong>
+  <%= @account_transaction.payee_id %>
+</p>
+
+<p>
+  <strong>Budget:</strong>
+  <%= @account_transaction.budget_id %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @account_transaction.category_id %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @account_transaction.amount %>
+</p>
+
+<p>
+  <strong>Transaction date:</strong>
+  <%= @account_transaction.transaction_date %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+  <%= @account_transaction.comments %>
+</p>
+
+<p>
+  <strong>Reconciled:</strong>
+  <%= @account_transaction.reconciled %>
+</p>
+
+<%= link_to 'Edit', edit_account_transaction_path(@account_transaction) %> |
+<%= link_to 'Back', account_transactions_path %>
