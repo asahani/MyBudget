@@ -1,0 +1,86 @@
+<div class="row" style="padding-top: 60px;">
+		<div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading chart-heading">
+            <h4 class="panel-title">Loan Details</h4>
+            <ul class="panel-controls">
+                <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+            </ul>
+        </div>
+
+      </div>
+		</div>
+
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading chart-heading">
+          <h4 class="panel-title">Payment History</h4>
+          <ul class="panel-controls">
+              <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+              <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+          </ul>
+      </div>
+      <div class="panel-body">
+        <%@loan_accounts.each do |loan_account|%>
+
+          <div class="panel panel-default">
+            <p>
+              <%=loan_account.name%>
+              <%=loan_account.balance%>
+            </p>
+            <table class="table table-striped">
+              <thead>
+                <th>Date</th>
+                <th>Budget</th>
+                <th>Account From/To</th>
+                <th style="text-align:right;">Loan</th>
+                <th style="text-align:right;">Received</th>
+              </thead>
+              <%AccountTransaction.joins(:payee).where('payees.account_id = ?',loan_account.id).each do |transaction|%>
+              <tr>
+                  <td style="padding:6px;"><%=transaction.transaction_date%></td>
+                  <%budget_name = transaction.budget.nil? ? "" : (I18n.t("date.abbr_month_names")[transaction.budget.month] +" "+ transaction.budget.year.to_s) %>
+                  <td style="padding:6px;"><%=budget_name%></td>
+                  <td style="padding:6px;"><%=transaction.account.name%></td>
+                  <td style="padding:6px;text-align:right;"><%=number_to_currency(transaction.amount, precision: 2)%></td>
+                  <td style="padding:6px;text-align:right;">&nbsp;</td>
+              </tr>
+              <%end%>
+
+              <%AccountTransaction.where('account_id = ?',loan_account.id).each do |transaction|%>
+              <tr>
+                  <td style="padding:6px;"><%=transaction.transaction_date%></td>
+                  <%budget_name = transaction.budget.nil? ? "" : (I18n.t("date.abbr_month_names")[transaction.budget.month] +" "+ transaction.budget.year.to_s) %>
+                  <td style="padding:6px;"><%=budget_name%></td>
+                  <td style="padding:6px;"><%=transaction.payee.account.name%></td>
+                  <td style="padding:6px;text-align:right;">&nbsp;</td>
+                  <td style="padding:6px;text-align:right;"><%=number_to_currency(transaction.amount, precision: 2)%></td>
+
+              </tr>
+              <%end%>
+              <%
+                total_loaned = AccountTransaction.joins(:payee).where('payees.account_id = ?',loan_account.id).sum(:amount).to_f
+                total_received = AccountTransaction.where('account_id = ?',loan_account.id).sum(:amount).to_f
+                total_balance = total_loaned.to_f - total_received.to_f
+              %>
+              <tr>
+                  <td style="padding:6px;"><strong>Total Balance</strong></td>
+                  <td style="padding:6px;"><strong><%=number_to_currency(total_balance, precision: 2)%></strong></td>
+                  <td style="padding:6px;">&nbsp;</td>
+                  <td style="padding:6px;text-align:right;"><strong><%=number_to_currency(total_loaned, precision: 2)%></strong></td>
+                  <td style="padding:6px;text-align:right;"><strong><%=number_to_currency(total_received, precision: 2)%></strong></td>
+              </tr>
+
+            </table>
+          </div>
+        <%end%>
+      </div>
+    </div>
+  </div>
+
+
+</div>

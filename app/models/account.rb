@@ -57,7 +57,7 @@ class Account < ActiveRecord::Base
   def create_budget_account_for_current_budget
     budget = Budget.where('start_date <= ? and end_date >= ?',Time.now.to_date,Time.now.to_date).first
     unless budget.nil?
-      BudgetAccount.create!(budget_id: budget.id, account_id: self.id, balance: 0.00)
+      BudgetAccount.create!(budget_id: budget.id, account_id: self.id, balance: 0.00,opening_balance: self.balance)
     end
   end
 
