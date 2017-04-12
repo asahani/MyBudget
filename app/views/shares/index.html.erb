@@ -1,0 +1,45 @@
+<h1>Listing shares</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Code</th>
+      <th>Share Type</th>
+      <th>Units</th>
+      <th>Purchase price</th>
+      <th>Purchase date</th>
+      <th>Last price</th>
+      <th>Sell price</th>
+      <th>Sell date</th>
+      <th>Brokerage account</th>
+      <th>No cash transaction</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @shares.each do |share| %>
+      <tr>
+        <td><%= share.name %></td>
+        <td><%= share.code %></td>
+        <td><%= share.share_type %></td>
+        <td><%= share.units %></td>
+        <td><%= share.purchase_price %></td>
+        <td><%= share.purchase_date %></td>
+        <td><%= share.last_price %></td>
+        <td><%= share.sell_price %></td>
+        <td><%= share.sell_date %></td>
+        <td><%= share.brokerage_account_id %></td>
+        <td><%= share.no_cash_transaction %></td>
+        <td><%= link_to 'Show', share %></td>
+        <td><%= link_to 'Edit', edit_share_path(share) %></td>
+        <td><%= link_to 'Destroy', share, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Share', new_share_path %>

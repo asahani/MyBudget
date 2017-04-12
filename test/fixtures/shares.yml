@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  code: MyString
+  type: 
+  units: 9.99
+  purchase_price: 9.99
+  purchase_date: 2017-04-11
+  last_price: 9.99
+  sell_price: 9.99
+  sell_date: 2017-04-11
+  brokerage_account_id: 1
+  no_cash_transaction: false
+
+two:
+  name: MyString
+  code: MyString
+  type: 
+  units: 9.99
+  purchase_price: 9.99
+  purchase_date: 2017-04-11
+  last_price: 9.99
+  sell_price: 9.99
+  sell_date: 2017-04-11
+  brokerage_account_id: 1
+  no_cash_transaction: false

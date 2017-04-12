@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170321103350) do
+ActiveRecord::Schema.define(version: 20170411103821) do
 
   create_table "account_transactions", force: true do |t|
     t.integer  "account_id"
@@ -218,6 +218,22 @@ ActiveRecord::Schema.define(version: 20170321103350) do
     t.boolean  "is_system",   default: false
     t.boolean  "is_account",  default: false
     t.integer  "account_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "shares", force: true do |t|
+    t.string   "name"
+    t.string   "code"
+    t.string   "share_type"
+    t.decimal  "units",                precision: 10, scale: 0
+    t.decimal  "purchase_price",       precision: 10, scale: 0
+    t.date     "purchase_date"
+    t.decimal  "last_price",           precision: 10, scale: 0
+    t.decimal  "sell_price",           precision: 10, scale: 0
+    t.date     "sell_date"
+    t.integer  "brokerage_account_id"
+    t.boolean  "no_cash_transaction",                           default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
