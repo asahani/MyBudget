@@ -22,4 +22,7 @@ class Share < ActiveRecord::Base
   ##################################
   # Class Methods
   ##################################
+  def get_share_history(start_date=(Time.now-1.year).to_date,end_date=Date.today)
+    return StockQuote::Stock.json_history(self.code,start_date,end_date,['Close'])['quote'].reverse
+  end
 end
