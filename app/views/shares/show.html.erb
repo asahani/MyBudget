@@ -104,7 +104,7 @@
             </tr>
             <tr>
                 <td style="padding:6px;">Profit/Loss %:</td>
-                <td style="padding:6px;" class="<%= profit_loss_value > 0 ? 'text-success' : 'text-danger' %>"><%=profit_loss_percentage%>%</td>
+                <td style="padding:6px;" class="<%= profit_loss_value > 0 ? 'text-success' : 'text-danger' %>"><%=profit_loss_percentage.to_f.round(2)%>%</td>
                 <td style="padding:6px;">Profit/Loss:</td>
                 <td style="padding:6px;" class="<%= profit_loss_value > 0 ? 'text-success' : 'text-danger' %>"><%=number_to_currency(profit_loss_value,pricision: 2)%></td>
             </tr>
