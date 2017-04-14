@@ -1,4 +1,5 @@
 class SharesController < ApplicationController
+  layout "admin", only: [:new, :edit,:create,:update]
   before_action :set_share, only: [:show, :edit, :update, :destroy]
 
   # GET /shares
@@ -23,7 +24,7 @@ class SharesController < ApplicationController
       @total_change_value += details['change_value']
       details['purchase_cost'] = share.get_purchase_cost
       details['profit_loss_value'] = share.get_profit_loss_value
-      @total_proft_loss += details['profit_loss_value'] 
+      @total_proft_loss += details['profit_loss_value']
       details['profit_loss_percentage'] = share.get_profit_loss_percentage
       @shares_with_details << details
     end

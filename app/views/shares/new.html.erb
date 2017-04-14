@@ -1,5 +1,37 @@
-<h1>New share</h1>
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb push-down-0">
+  <li><%=link_to "Admin",admin_index_path -%></li>
+  <li><%=link_to "Shares",shares_path -%></li>
+  <li class="active">New Investment - Share</li>
+</ul>
+<!-- END BREADCRUMB -->
 
-<%= render 'form' %>
+<div class="content-frame">
 
+  <!-- START PAGE HEAD -->
+  <div class="content-frame-top">
+    <div class="page-title">
+      <h2><span class="fa fa-home"></span> New Investment - Share</h2>
+    </div>
+    <div class="pull-right">
+    </div>
+  </div>
+  <!-- END PAGE HEAD -->
+
+  <%= render 'right_content_panel' %>
+
+  <div class="content-frame-body content-frame-body-left" style="height: 846px;">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">New Share</h3>
+        <ul class="panel-controls">
+          <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+          <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+          <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+        </ul>
+      </div>
+      <%= render 'form' %>
+    </div>
+  </div>
+</div>
 <%= link_to 'Back', shares_path %>
