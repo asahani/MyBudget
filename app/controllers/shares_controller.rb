@@ -4,12 +4,36 @@ class SharesController < ApplicationController
   # GET /shares
   # GET /shares.json
   def index
-    @shares = Share.all
+    @shares = Share.all.active
+    @shares_with_details = Array.new
+    @total_market_value = 0
+    @total_change_value = 0
+    @total_proft_loss = 0
+
+    @shares.each do |share|
+      share.set_share_details
+      details = Hash.new
+      details['share'] = share
+       puts details['share'].name
+      details['daily_movement_percentage'] = share.share_details.percent_change.to_f
+      details['market_value'] = share.get_holding_value
+      @total_market_value += details['market_value']
+      details['change_value'] = share.get_percent_change_value
+      puts details['change_value']
+      @total_change_value += details['change_value']
+      details['purchase_cost'] = share.get_purchase_cost
+      details['profit_loss_value'] = share.get_profit_loss_value
+      @total_proft_loss += details['profit_loss_value'] 
+      details['profit_loss_percentage'] = share.get_profit_loss_percentage
+      @shares_with_details << details
+    end
+    @total_daily_movement_percentage = ((@total_change_value/@total_market_value)*100).to_f.round(2)
   end
 
   # GET /shares/1
   # GET /shares/1.json
   def show
+    @share.set_share_details
   end
 
   # GET /shares/new

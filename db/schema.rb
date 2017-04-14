@@ -227,10 +227,10 @@ ActiveRecord::Schema.define(version: 20170411103821) do
     t.string   "code"
     t.string   "share_type"
     t.decimal  "units",                precision: 10, scale: 0
-    t.decimal  "purchase_price",       precision: 10, scale: 0
+    t.decimal  "purchase_price",       precision: 10, scale: 3
     t.date     "purchase_date"
-    t.decimal  "last_price",           precision: 10, scale: 0
-    t.decimal  "sell_price",           precision: 10, scale: 0
+    t.decimal  "last_price",           precision: 10, scale: 3
+    t.decimal  "sell_price",           precision: 10, scale: 3
     t.date     "sell_date"
     t.integer  "brokerage_account_id"
     t.boolean  "no_cash_transaction",                           default: false

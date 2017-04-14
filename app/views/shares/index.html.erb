@@ -1,45 +1,120 @@
-<h1>Listing shares</h1>
+<div class="row" style="padding-top: 60px;">
+  <%
+    @share = Share.find(1)
+    @share.set_share_details
+    change_value = @share.get_percent_change_value
+    purchase_cost = @share.get_purchase_cost
+    profit_loss_value = @share.get_profit_loss_value
+    profit_loss_percentage = @share.get_profit_loss_percentage
+  %>
+  <div class="col-md-3">
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Code</th>
-      <th>Share Type</th>
-      <th>Units</th>
-      <th>Purchase price</th>
-      <th>Purchase date</th>
-      <th>Last price</th>
-      <th>Sell price</th>
-      <th>Sell date</th>
-      <th>Brokerage account</th>
-      <th>No cash transaction</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+    <a href="#" class="tile tile-default">
+        <span class="fa fa-line-chart" style="float:left;"></span> Shares
+        <p>Investing</p>
+    </a>
 
-  <tbody>
-    <% @shares.each do |share| %>
-      <tr>
-        <td><%= share.name %></td>
-        <td><%= share.code %></td>
-        <td><%= share.share_type %></td>
-        <td><%= share.units %></td>
-        <td><%= share.purchase_price %></td>
-        <td><%= share.purchase_date %></td>
-        <td><%= share.last_price %></td>
-        <td><%= share.sell_price %></td>
-        <td><%= share.sell_date %></td>
-        <td><%= share.brokerage_account_id %></td>
-        <td><%= share.no_cash_transaction %></td>
-        <td><%= link_to 'Show', share %></td>
-        <td><%= link_to 'Edit', edit_share_path(share) %></td>
-        <td><%= link_to 'Destroy', share, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  </div>
 
-<br>
+  <div class="col-md-3">
 
+    <a href="#" class="tile tile-default">
+        <%=number_to_currency(@total_market_value, precision: 2)%>
+        <p>Portfolio Value</p>
+    </a>
+
+  </div>
+
+  <div class="col-md-3">
+
+    <a href="#" class="tile tile-default">
+      <span class="<%= @total_proft_loss > 0 ? 'text-success' : 'text-danger' %>">
+        <%=number_to_currency(@total_proft_loss, precision: 2)%>
+      </span>
+
+      <p>Portfolio Proft/Loss</p>
+
+      <div class="<%= @total_proft_loss > 0 ? 'informer informer-success dir-tr' : 'informer informer-danger dir-tr' %>">
+        <span class="<%= @total_proft_loss > 0 ? 'fa fa-caret-up' : 'fa fa-caret-down'%>"></span>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="col-md-3">
+
+    <a href="#" class="tile tile-default">
+        <span class="<%= change_value > 0 ? 'text-success' : 'text-danger' %>">
+          <%=number_to_currency(@total_change_value, precision: 2)%>
+        </span>
+        <p>Day Gain/Loss</p>
+        <div class="<%= change_value > 0 ? 'informer informer-success' : 'informer informer-danger' %>">
+          <%=@total_daily_movement_percentage%>%
+        </div>
+        <div class="<%= change_value > 0 ? 'informer informer-success dir-tr' : 'informer informer-danger dir-tr' %>">
+          <span class="<%= change_value > 0 ? 'fa fa-caret-up' : 'fa fa-caret-down'%>"></span>
+        </div>
+    </a>
+  </div>
+
+</div>
+
+<div class="row">
+  <div  class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="col-md-12" style="height:300px;">
+          <%= content_tag :div," ",id: "shareschart", data: {sharespricehistory: shares_price_history_data}%>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+		<div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading chart-heading">
+            <h4 class="panel-title">Stock Holdings</h4>
+            <ul class="panel-controls">
+                <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+            </ul>
+        </div>
+          <table class="table table-striped">
+            <thead>
+              <th style="text-align:left;width:40%;">Stock</th>
+              <th style="text-align:right;">Symbol</th>
+              <th style="text-align:right;">Price</th>
+              <th style="text-align:right;">Day Change</th>
+              <th style="text-align:right;">Units</th>
+              <th style="text-align:right;">Cost Price</th>
+              <th style="text-align:right;">Market Value</th>
+              <th style="text-align:right;">Total Gain/Loss</th>
+            </thead>
+            <%@shares_with_details.each do |share_detail|%>
+            <tr>
+                <td style="padding:8px;text-align:left;border-bottom: 1px solid #ddd;">
+                  <%= link_to share_detail['share'].name, share_detail['share'] %>
+                </td>
+                <td style="padding:8px;text-align:right;border-bottom: 1px solid #ddd;"><%=share_detail['share'].code%></td>
+                <td style="padding:8px;text-align:right;border-bottom: 1px solid #ddd;"><%=number_to_currency(share_detail['share'].last_price,pricision: 2)%></td>
+                <td style="padding:8px;text-align:right;border-bottom: 1px solid #ddd;border-right: 1px solid #ddd;" class="<%= share_detail['daily_movement_percentage'] > 0 ? 'text-success' : 'text-danger' %>">
+                  <%=share_detail['daily_movement_percentage']%>%
+                </td>
+                <td style="padding:8px;text-align:right;border-bottom: 1px solid #ddd;"><%=share_detail['share'].units%></td>
+                <td style="padding:8px;text-align:right;border-bottom: 1px solid #ddd;"><%=number_to_currency(share_detail['purchase_cost'],pricision: 2)%></td>
+                <td style="padding:8px;text-align:right;border-bottom: 1px solid #ddd;"><%=number_to_currency(share_detail['market_value'],pricision: 2)%></td>
+                <td style="padding:8px;text-align:right;border-bottom: 1px solid #ddd;" class="<%= share_detail['profit_loss_value'] > 0 ? 'text-success' : 'text-danger' %>">
+                  <%=number_to_currency(share_detail['profit_loss_value'],pricision: 2)%>&nbsp;
+                  (<%=number_to_currency(share_detail['profit_loss_percentage'],pricision: 2)%>)
+                </td>
+            </tr>
+            <%end%>
+          </table>
+
+      </div>
+		</div>
+
+</div>
 <%= link_to 'New Share', new_share_path %>

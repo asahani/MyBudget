@@ -24,27 +24,62 @@ jQuery ->
     chart:
       renderTo: 'sharechart'
       type: 'area'
-      height: '450'
+      height: '300'
+      backgroundColor: 'transparent'
     title: text: null
     xAxis:
-      title: text: 'Years'
+      title: text: 'Last Year'
+      gridLineWidth: 1
     yAxis:
-      title: text: 'Outstanding Balance'
+      title: text: 'Share Price ($)'
     legend: reversed: true
-    tooltip: pointFormat: '<b>${point.y}</b> balance in year <b>{point.x}</b>'
+    tooltip: pointFormat: '<b>${point.y}</b> share price</b>'
     plotOptions:
       area:
         pointStart: 0
         marker:
           enabled: true
           symbol: 'circle'
-          radius: 3
+          radius: 1
           states:
             hover:
               enabled: true
     series: [
       {
-      name: 'Mortgage Payments'
+      name: 'Share Price'
+      color: '#9fcc9f'
       data: $('#sharechart').data('sharepricehistory')
       }
     ]
+
+    shares_area_chart = $('#shareschart').highcharts
+      chart:
+        renderTo: 'shareschart'
+        type: 'area'
+        height: '300'
+        backgroundColor: 'transparent'
+      title: text: null
+      xAxis:
+        title: text: 'Last Year'
+        gridLineWidth: 1
+      yAxis:
+        title: text: 'Market Value ($)'
+      legend: reversed: true
+      tooltip: pointFormat: '<b>${point.y}</b> market value</b>'
+      plotOptions:
+        area:
+          pointStart: 0
+          marker:
+            enabled: true
+            symbol: 'circle'
+            radius: 1
+            states:
+              hover:
+                enabled: true
+      series: [
+        {
+        name: 'Market Value'
+        color: '#9fcc9f'
+        data: $('#shareschart').data('sharespricehistory')
+        }
+      ]
