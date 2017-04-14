@@ -101,7 +101,7 @@
 							<% end %>
 				    </div>
 
-						<div role="tabpanel" class="tab-pane fade" id="loantxn">
+						<div role="tabpanel" class="tab-pane fade in" id="loantxn">
 
 							<%= form_for @account_transaction, format: :html, html: {class: "form-horizontal", role: :form} do |f| %>
 								<%= f.hidden_field :budget_id, :value => @account_transaction.budget.id%>
