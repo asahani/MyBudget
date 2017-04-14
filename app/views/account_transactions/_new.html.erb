@@ -127,7 +127,7 @@
 														<label class="col-md-3 col-xs-5 control-label">From Account</label>
 														<div class="col-md-9 col-xs-7">
 																<div class="input-group">
-																		<%= f.collection_select :account_id, Account.active, :id, :name, {prompt: true}, {class: "form-control select"} %>
+																		<%= f.collection_select :account_id, Account.active.for_loan, :id, :name, {prompt: true}, {class: "form-control select"} %>
 																</div>
 														</div>
 												</div>
