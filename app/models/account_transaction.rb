@@ -12,9 +12,9 @@ class AccountTransaction < ActiveRecord::Base
   ##################################
   # Validations
   ##################################
-  validates_presence_of :account_id,:payee_id,:budget_id
-  validates_numericality_of :payee_id, :account_id,:amount
-  validate :amount_cannot_be_greater_than_payee_balance
+  validates_presence_of :amount,:category_id,:transaction_date
+  validates_numericality_of :amount
+  validate :amount_cannot_be_greater_than_payee_balance , unless: "account_id.nil?"
 
   ##################################
   # Callbacks
@@ -46,7 +46,10 @@ class AccountTransaction < ActiveRecord::Base
   def update_budget_accounts_and_account_balance
     # update the budget account opening balance with the new balance
     puts '------------enetered'
-    budget_account = BudgetAccount.find_by_budget_id_and_account_id(self.budget.id, self.account.id)
+    budget_account = nil
+    unless self.budget.nil? || self.account.nil?
+      budget_account = BudgetAccount.find_by_budget_id_and_account_id(self.budget.id, self.account.id)
+    end
 
     if !amount.nil? && amount > 0
       unless budget_account.nil?
@@ -61,15 +64,17 @@ class AccountTransaction < ActiveRecord::Base
         budget_account.save!
         budget_account.update_future_budget_accounts
       else
-        puts '-----------------Account'
-        puts 'account amount was = '+ self.amount_was.to_s
-        puts 'account opening balance was = '+ self.account.balance.to_s
-        self.account.balance += self.amount_was if !self.amount_was.nil? && self.amount_was > 0
-        puts 'account opening balance after removing old charge = '+ self.account.balance.to_s
-        self.account.balance -= self.amount unless self.destroyed?
-        puts 'account amount added = '+ self.amount.to_s
-        puts 'account opening balance is = '+ self.account.balance.to_s
-        self.account.save!
+        if !self.account.nil?
+          puts '-----------------Account'
+          puts 'account amount was = '+ self.amount_was.to_s
+          puts 'account opening balance was = '+ self.account.balance.to_s
+          self.account.balance += self.amount_was if !self.amount_was.nil? && self.amount_was > 0
+          puts 'account opening balance after removing old charge = '+ self.account.balance.to_s
+          self.account.balance -= self.amount unless self.destroyed?
+          puts 'account amount added = '+ self.amount.to_s
+          puts 'account opening balance is = '+ self.account.balance.to_s
+          self.account.save!
+        end
       end
     end
   end
@@ -77,10 +82,13 @@ class AccountTransaction < ActiveRecord::Base
   def update_account_payees_and_account_balance
     # update the budget account opening balance with the new balance
 
-    if self.payee.is_account
+    if !self.payee.nil? && self.payee.is_account
       puts 'payee is account'
+      budget_account = nil
+      unless self.budget.nil? || self.payee.nil?
+        budget_account = BudgetAccount.find_by_budget_id_and_account_id(self.budget.id, self.payee.account.id)
+      end
 
-      budget_account = BudgetAccount.find_by_budget_id_and_account_id(self.budget.id, self.payee.account.id)
       if !amount.nil? && amount > 0
         unless budget_account.nil?
           puts '-----------------Payee with BudgetAccount'
@@ -94,15 +102,17 @@ class AccountTransaction < ActiveRecord::Base
           budget_account.save!
           budget_account.update_future_budget_accounts
         else
-          puts '-----------------Payee'
-          puts 'account amount was = '+ self.amount_was.to_s
-          puts 'account opening balance was = '+ self.payee.account.balance.to_s
-          self.payee.account.balance -= self.amount_was if !self.amount_was.nil? && self.amount_was > 0
-          puts 'account opening balance after removing old charge = '+ self.payee.account.balance.to_s
-          self.payee.account.balance += self.amount unless self.destroyed?
-          puts 'account amount added = '+ self.amount.to_s
-          puts 'account opening balance is = '+ self.payee.account.balance.to_s
-          self.account.save!
+          if !self.payee.nil?
+            puts '-----------------Payee'
+            puts 'account amount was = '+ self.amount_was.to_s
+            puts 'account opening balance was = '+ self.payee.account.balance.to_s
+            self.payee.account.balance -= self.amount_was if !self.amount_was.nil? && self.amount_was > 0
+            puts 'account opening balance after removing old charge = '+ self.payee.account.balance.to_s
+            self.payee.account.balance += self.amount unless self.destroyed?
+            puts 'account amount added = '+ self.amount.to_s
+            puts 'account opening balance is = '+ self.payee.account.balance.to_s
+            self.payee.account.save!
+          end
         end
       end
     end

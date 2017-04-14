@@ -13,6 +13,7 @@ MasterCategory.create!(name: 'Savings', display: false) #Should always be third
 MasterCategory.create!(name: 'Miscellaneous', display: false)#Should always be fourth
 MasterCategory.create!(name: 'Cash', display: false)#Should always be fifth
 MasterCategory.create!(name: 'Lending', display: false)#Should always be sixth
+MasterCategory.create!(name: 'Investment', display: false)#Should always be seventh
 #---------------------------
 
 #Mandatory Categories
@@ -22,6 +23,7 @@ Category.create!(name: 'Savings', active: false, budget_amount: 0.0,master_categ
 Category.create!(name: 'Miscellaneous', active: false, budget_amount: 1000.00,master_category_id: 4,mandatory: true,miscellaneous: true,savings: false) #Should always be fourth
 Category.create!(name: 'Cash', active: false, budget_amount: 0.0,master_category_id: 5,mandatory: false,miscellaneous: false,savings: false) #Should always be fifth
 Category.create!(name: 'Lending', active: false, budget_amount: 0.0,master_category_id: 6,mandatory: false,miscellaneous: false,savings: false) #Should always be sixth
+Category.create!(name: 'Investment', active: false, budget_amount: 0.0,master_category_id: 7,mandatory: false,miscellaneous: false,savings: false) #Should always be seventh
 #---------------------------
 
 # Mandatory Payees

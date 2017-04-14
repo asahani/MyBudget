@@ -10,12 +10,13 @@ class Share < ActiveRecord::Base
   ##################################
   validates_presence_of :name, :code,:share_type, :units,:purchase_date,:purchase_price,:brokerage_account_id
   validates_numericality_of :units,:purchase_price,:brokerage_account_id
-
+  validate :ensure_sufficient_money_to_purchase_shares, :before => :create
   ##################################
   # Callbacks
   ##################################
   # after_initialize :set_share_details
   # after_find :set_share_details
+  after_create :deduct_amount_from_brokerage_account
 
   ##################################
   # Scoped Methods
@@ -25,6 +26,28 @@ class Share < ActiveRecord::Base
   ##################################
   # Class Methods
   ##################################
+  def ensure_sufficient_money_to_purchase_shares
+    unless self.no_cash_transaction
+      amount_required = self.units * self.purchase_price.to_f
+      if amount_required > self.brokerage_account.balance
+        errors.add(:purchase_price, amount_required.to_s + " is greater than brogerage account's balance")
+      end
+    end
+  end
+
+  def deduct_amount_from_brokerage_account
+    unless self.no_cash_transaction
+      total_purchase_price = self.units * self.purchase_price.to_f
+      comment = "Purchased "+self.units.to_s+ " "+self.name+" shares for $"+total_purchase_price.to_s
+
+      account_txn = AccountTransaction.new(account_id: self.brokerage_account.id,payee_id: nil,
+        budget_id: nil,category_id: Category.find_by_name("Investment").id, amount: total_purchase_price,
+        transaction_date: Date.today, comments: comment,reconciled: true, share_id: self.id)
+
+      account_txn.save!
+    end
+  end
+
   def set_share_details
     @share_details = get_share_details
 
@@ -71,7 +94,7 @@ class Share < ActiveRecord::Base
   def get_percent_change_value
     change_percent = self.share_details.percent_change.to_f
     change_value = ((self.get_holding_value * change_percent)/100).to_f.round(2)
-    
+
     return change_value
   end
 

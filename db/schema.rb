@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170411103821) do
+ActiveRecord::Schema.define(version: 20170414144900) do
 
   create_table "account_transactions", force: true do |t|
     t.integer  "account_id"
@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 20170411103821) do
     t.boolean  "reconciled"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "house_id"
+    t.integer  "share_id"
   end
 
   create_table "account_types", force: true do |t|
