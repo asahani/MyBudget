@@ -10,6 +10,7 @@ class Share < ActiveRecord::Base
   ##################################
   validates_presence_of :name, :code,:share_type, :units,:purchase_date,:purchase_price,:brokerage_account_id
   validates_numericality_of :units,:purchase_price,:brokerage_account_id
+  validates_numericality_of :sell_price, :allow_nil => true
   validate :ensure_sufficient_money_to_purchase_shares, :before => :create
   ##################################
   # Callbacks

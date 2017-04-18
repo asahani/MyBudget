@@ -1,6 +1,6 @@
 class SharesController < ApplicationController
   layout "admin", only: [:new, :edit,:create,:update]
-  before_action :set_share, only: [:show, :edit, :update, :destroy]
+  before_action :set_share, only: [:show, :edit, :update, :destroy, :sell_share,:complete_share_sale]
 
   # GET /shares
   # GET /shares.json
@@ -84,6 +84,47 @@ class SharesController < ApplicationController
       format.html { redirect_to shares_url, notice: 'Share was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def sell_share
+    puts 'sell share'
+  end
+
+  def complete_share_sale
+    ActiveRecord::Base.transaction(requires_new: true) do
+      respond_to do |format|
+          begin
+            if (params[:share][:sell_price].nil? || params[:share][:sell_price] == "") || (params[:share][:sell_price].nil? || params[:share][:sell_price] == "")
+              raise 'unable to undate share record as sell price or sell date is not valid'
+              @share.errors.add(:name, "Unable to undate share record as sell price or sell date is not valid")
+            end
+
+            total_sale_price = @share.units * params[:share][:sell_price].to_f
+            comment = "Sold "+@share.units.to_s+ " "+@share.name+" shares for $"+total_sale_price.to_s
+            brokerage_account_payee = Account.find(@share.brokerage_account.id).payee
+
+            AccountTransaction.create!(account_id: nil,payee_id: brokerage_account_payee.id,
+              budget_id: nil,category_id: Category.find_by_name("Investment").id, amount: total_sale_price,
+              transaction_date: params[:share][:sell_date], comments: comment,reconciled: true, share_id: @share.id)
+
+            unless @share.update(share_params)
+              raise 'unable to undate share record for sale'
+              @share.errors.add(:name, "Unable to undate share record for sale")
+            end
+
+            @share.set_share_details
+            format.html
+          rescue Exception => errs
+            puts errs
+            puts 'Unable to sell stock'
+            @share.errors.add(:name, "Unable to sell stock : "+errs.to_s)
+            raise ActiveRecord::Rollback
+            @share.set_share_details
+            format.html { render :sell_share }
+          end
+      end
+    end
+
   end
 
   private
