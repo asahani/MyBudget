@@ -94,7 +94,7 @@ Account.create!(name: 'Amex Aman', initial_balance: 0.00, balance: 0.00, account
 Account.create!(name: 'NAB Offset', initial_balance: 300000.00, balance: 300000.00,balance: 300000.00, account_type_id: 4,budget_account: false)
 Account.create!(name: 'Comsec', initial_balance: 45000.00,balance: 45000.00, account_type_id: 6,budget_account: false)
 Account.create!(name: 'GO Mastercard', initial_balance: -3500.00, balance: -3500.00, account_type_id: 7,budget_account: false)
-Account.create!(name: 'Sunny Bakshi', initial_balance: 0.00, balance: 0.00, account_type_id: 5,budget_account: true)
+Account.create!(name: 'Sunny Bakshi', initial_balance: 0.00, balance: 0.00, account_type_id: 5,budget_account: false)
 
 Payee.create!(name: 'Telstra', description: 'Telstra', category_id: 19)
 Payee.create!(name: 'MYKI', description: 'MYKI.                    DOCKLANDS', category_id: 26)
