@@ -87,7 +87,7 @@ class SharesController < ApplicationController
   end
 
   def sell_share
-    puts 'sell share'
+
   end
 
   def complete_share_sale
@@ -115,8 +115,6 @@ class SharesController < ApplicationController
             @share.set_share_details
             format.html
           rescue Exception => errs
-            puts errs
-            puts 'Unable to sell stock'
             @share.errors.add(:name, "Unable to sell stock : "+errs.to_s)
             raise ActiveRecord::Rollback
             @share.set_share_details
