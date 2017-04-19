@@ -205,18 +205,32 @@
           <table class="table table-striped">
             <thead>
               <th style="text-align:center;">Date</th>
-              <th style="text-align:right;">Payment</th>
-              <th style="text-align:right;">Principal</th>
-              <th style="text-align:right;">Interest</th>
+              <th style="text-align:right;">Transaction Type</th>
+              <th style="text-align:right;">From Account</th>
+              <th style="text-align:right;">To Payee</th>
+              <th style="text-align:right;">Amount</th>
+              <th style="text-align:right;">Comments</th>
             </thead>
-
+            <%@share.account_transactions.each do |account_transaction|%>
             <tr>
-                <td style="padding:6px;">1</td>
-                <td style="padding:6px;text-align:right;">1</td>
-                <td style="padding:6px;text-align:right;">1</td>
-                <td style="padding:6px;text-align:right;">1</td>
+                <td style="padding:6px;"><%=account_transaction.transaction_date.to_date%></td>
+                <td style="padding:6px;text-align:right;">Sale/Purchase</td>
+                <td style="padding:6px;text-align:right;"><%=account_transaction.account.name unless account_transaction.account.nil? %></td>
+                <td style="padding:6px;text-align:right;"><%=account_transaction.payee.name unless account_transaction.payee.nil?%></td>
+                <td style="padding:6px;text-align:right;"><%=account_transaction.amount%></td>
+                <td style="padding:6px;text-align:right;"><%=account_transaction.comments%></td>
             </tr>
-
+            <%end%>
+            <%@share.dividened_incomes.each do |dividened_income|%>
+            <tr>
+                <td style="padding:6px;"><%=dividened_income.created_at.to_date%></td>
+                <td style="padding:6px;text-align:right;">Dividend</td>
+                <td style="padding:6px;text-align:right;">&nbsp;</td>
+                <td style="padding:6px;text-align:right;"><%=dividened_income.account.name%></td>
+                <td style="padding:6px;text-align:right;"><%=dividened_income.amount%></td>
+                <td style="padding:6px;text-align:right;"><%=dividened_income.description%></td>
+            </tr>
+            <%end%>
           </table>
         </div>
       </div>

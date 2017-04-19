@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170414144900) do
+ActiveRecord::Schema.define(version: 20170419110139) do
 
   create_table "account_transactions", force: true do |t|
     t.integer  "account_id"
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 20170414144900) do
 
   create_table "budget_incomes", force: true do |t|
     t.string   "description"
-    t.decimal  "amount",                precision: 10, scale: 2, default: 0.0
+    t.decimal  "amount",                   precision: 10, scale: 2, default: 0.0
     t.integer  "income_id"
     t.integer  "budget_id"
     t.integer  "account_id"
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 20170414144900) do
     t.boolean  "credited"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "dividend_income_share_id"
   end
 
   create_table "budget_items", force: true do |t|

@@ -11,8 +11,8 @@ class BudgetIncome < ActiveRecord::Base
   # Validations
   ##################################
   validates_presence_of :description, :amount, :budget_id
-  validates_numericality_of :amount, :account_id, :budget_id, :income_id
-
+  validates_numericality_of :amount, :account_id, :budget_id
+  validates_numericality_of :income_id, :allow_nil => true
   ##################################
   # Callbacks
   ##################################
@@ -28,22 +28,24 @@ class BudgetIncome < ActiveRecord::Base
 
 
   def auto_generate_income_splits
-    prev_months_budget = Budget.find_by_start_date(self.budget.start_date.prev_month)
+    unless self.income_id.nil?
+      prev_months_budget = Budget.find_by_start_date(self.budget.start_date.prev_month)
 
-    unless prev_months_budget.nil?
-      last_income_split = IncomeSplit.find_by_budget_id_and_income_id_and_is_last_for_month(prev_months_budget.id,self.income.id,true)
+      unless prev_months_budget.nil?
+        last_income_split = IncomeSplit.find_by_budget_id_and_income_id_and_is_last_for_month(prev_months_budget.id,self.income.id,true)
 
-      unless last_income_split.nil?
-        starting_income_for_next_month = self.income.amount - last_income_split.amount
+        unless last_income_split.nil?
+          starting_income_for_next_month = self.income.amount - last_income_split.amount
 
-        if starting_income_for_next_month < 0
-          starting_income_for_next_month = 0
-        end
+          if starting_income_for_next_month < 0
+            starting_income_for_next_month = 0
+          end
 
-        if self.income.monthly
-          generate_income_splits(last_income_split.income_split_date.next_month, starting_income_for_next_month)
-        else
-          generate_income_splits(last_income_split.income_split_date, starting_income_for_next_month)
+          if self.income.monthly
+            generate_income_splits(last_income_split.income_split_date.next_month, starting_income_for_next_month)
+          else
+            generate_income_splits(last_income_split.income_split_date, starting_income_for_next_month)
+          end
         end
       end
     end

@@ -4,7 +4,9 @@ class Share < ActiveRecord::Base
   # Relationships
   ##################################
   belongs_to :brokerage_account, :class_name => 'Account', :foreign_key => 'brokerage_account_id'
-
+  has_many :dividened_incomes, :class_name => 'BudgetIncome', :foreign_key => 'dividend_income_share_id'
+  has_many :account_transactions, :class_name => 'AccountTransaction', :foreign_key => 'share_id'
+  
   ##################################
   # Validations
   ##################################
