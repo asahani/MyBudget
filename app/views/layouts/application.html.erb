@@ -31,18 +31,19 @@
                           <div id="sidebar-wrapper">
                           <%unless @budget.nil?
                             month = @budget.month.nil? ? params[:month].to_i : @budget.month
+                            year = @budget.year.nil? ? params[:year].to_i : @budget.year
                           %>
                               <div class="inside-sidebar" id="budget-navbar">
                                 <ul>
                                   <li class="year-item">
                                     <div class="col-md-2">
-                                      <
+                                      <%=link_to raw("<span class='fa fa-chevron-left'></span>"), show_or_create_budget_path(month: month,year: (year-1))%>
                                     </div>
                                     <div class="col-md-8">
-                                      <%=@budget.year%>
+                                      <bold><%=year%></bold>
                                     </div>
                                     <div class="col-md-2">
-                                      >
+                                      <%=link_to raw("<span class='fa fa-chevron-right'></span>"), show_or_create_budget_path(month: month,year: (year+1))%>
                                     </div>
                                   </li>
                                 </ul>
