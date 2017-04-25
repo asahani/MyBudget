@@ -1,5 +1,5 @@
 class BudgetsController < ApplicationController
-  before_action :set_budget, only: [:show, :edit, :update, :destroy, :update_progress]
+  before_action :set_budget, only: [:show, :edit, :update, :destroy, :update_progress, :close]
 
   # GET /budgets
   # GET /budgets.json
@@ -170,6 +170,22 @@ class BudgetsController < ApplicationController
       budget_account.update_attribute(:statement_balance,params[:statement_balance].to_f)
     end
 
+  end
+
+  def close
+    puts params
+    @budget.clear_budget_accounts
+    @budget.is_closed = true
+    
+    respond_to do |format|
+      if @budget.save
+        format.html { redirect_to @budget, notice: 'Budget was successfully closed.' }
+        format.json { render :show, status: :ok, location: @budget }
+      else
+        format.html { render :edit }
+        format.json { render json: @budget.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   private

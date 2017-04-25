@@ -19,6 +19,7 @@ class BudgetAccount < ActiveRecord::Base
   ##################################
   # Scoped Methods
   ##################################
+  scope :transaction_account, -> { joins(account: :account_type).where('account_types.name = ?', "Transaction") }
 
   ##################################
   # Class Methods

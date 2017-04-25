@@ -11,6 +11,7 @@
 				<li class="pull-right" style="height: 100%;">
 					<%unless @budget.nil?%>
 					<ul class="panel-controls">
+							<%unless @budget.is_closed?%>
 							<li>
 								<%= link_to raw("<span class='fa fa-download fa-lg'></span>"),
 										import_transactions_open_file_path(budget_id: @budget.id), {:remote => true, class: 'import-transactions-modal-link'} %>
@@ -23,7 +24,11 @@
 								<%= link_to raw("<span class='fa fa-list-alt fa-lg'></span>"),
 										budget_transactions_path(budget_id: @budget.id)%>
 							</li>
-
+							<li>
+								<%= link_to raw("<span class='fa fa-ban fa-lg'></span>"),
+										close_budget_path, data: { confirm: "Are you sure you want to close the budget?" }%>
+							</li>
+							<%end%>
 					</ul>
 					<%end%>
 

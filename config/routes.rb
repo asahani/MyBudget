@@ -60,6 +60,7 @@ Rails.application.routes.draw do
   resources :budgets do
     member do
       post :update_progress
+      get :close
     end
   end
   match "budgets/show_or_create/:month" => "budgets#show_or_create", :via => :get, :as => 'show_or_create_budget'

@@ -14,6 +14,7 @@ MasterCategory.create!(name: 'Miscellaneous', display: false)#Should always be f
 MasterCategory.create!(name: 'Cash', display: false)#Should always be fifth
 MasterCategory.create!(name: 'Lending', display: false)#Should always be sixth
 MasterCategory.create!(name: 'Investment', display: false)#Should always be seventh
+MasterCategory.create!(name: 'Unknown', display: false)#Should always be eighth
 #---------------------------
 
 #Mandatory Categories
@@ -24,6 +25,7 @@ Category.create!(name: 'Miscellaneous', active: false, budget_amount: 1000.00,ma
 Category.create!(name: 'Cash', active: false, budget_amount: 0.0,master_category_id: 5,mandatory: false,miscellaneous: false,savings: false) #Should always be fifth
 Category.create!(name: 'Lending', active: false, budget_amount: 0.0,master_category_id: 6,mandatory: false,miscellaneous: false,savings: false) #Should always be sixth
 Category.create!(name: 'Investment', active: false, budget_amount: 0.0,master_category_id: 7,mandatory: false,miscellaneous: false,savings: false) #Should always be seventh
+Category.create!(name: 'Unknown', active: false, budget_amount: 0.0,master_category_id: 8,mandatory: false,miscellaneous: false,savings: false) #Should always be eighth
 #---------------------------
 
 # Mandatory Payees
@@ -31,6 +33,7 @@ Payee.create!(name: 'Income', description: 'Income', category_id: 1,is_system: t
 Payee.create!(name: 'Savings', description: 'Savings', category_id: 3,is_system: true) #Should always be Second
 Payee.create!(name: 'Cash', description: 'Cash', category_id: 5,is_system: true) #Should always be Third
 Payee.create!(name: 'Miscellaneous', description: 'Miscellaneous', category_id: 4,is_system: true) #Should always be Fourth
+Payee.create!(name: 'Unknown', description: 'Unknown', category_id: 8,is_system: true) #Should always be Fifth
 #---------------------------
 
 # Mandatory Account Types
