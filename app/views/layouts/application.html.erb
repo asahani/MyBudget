@@ -203,14 +203,16 @@
                     <%end%>
                 </ul>
                 <!-- END X-NAVIGATION -->
-                <%unless @budget.nil?%>
-                	<%= link_to raw("<span class='glyphicon glyphicon-import' style='color: #999;' aria-hidden='true'></span>"),
-                			import_transactions_open_file_path(budget_id: @budget.id), {:remote => true, class: 'import-transactions-modal-link'} %>
-                	<%= link_to raw("<span class='glyphicon glyphicon-pencil' style='color: #999;' aria-hidden='true'></span>"),
-                			new_budget_transaction_path(transaction_type: 'miscellaneous',budget_id: @budget.id), {:remote => true, class: 'new-transaction-modal-link'} %>
-                  <%= link_to raw("<span class='glyphicon glyphicon-plus' style='color: #999;' aria-hidden='true'></span>"),
-                			new_account_transaction_path(budget_id: @budget.id), {:remote => true, class: 'new-account-transaction-modal-link'} %>
-                <%end%>
+                <div class="sidebar-footer">
+                  <%unless @budget.nil?%>
+                  	<%= link_to raw("<span class='glyphicon glyphicon-import' style='color: #999;' aria-hidden='true'></span>"),
+                  			import_transactions_open_file_path(budget_id: @budget.id), {:remote => true, class: 'import-transactions-modal-link'} %>
+                  	<%= link_to raw("<span class='glyphicon glyphicon-pencil' style='color: #999;' aria-hidden='true'></span>"),
+                  			new_budget_transaction_path(transaction_type: 'miscellaneous',budget_id: @budget.id), {:remote => true, class: 'new-transaction-modal-link'} %>
+                    <%= link_to raw("<span class='glyphicon glyphicon-plus' style='color: #999;' aria-hidden='true'></span>"),
+                  			new_account_transaction_path(budget_id: @budget.id), {:remote => true, class: 'new-account-transaction-modal-link'} %>
+                  <%end%>
+                </div>
             </div>
             <!-- END PAGE SIDEBAR -->
 

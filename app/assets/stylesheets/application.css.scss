@@ -49,6 +49,17 @@ body {
 .list-tags li a {
 	margin: 0px 2px 2px 0px!important;
 }
+
+.sidebar-footer{
+	position: fixed!important;
+	width: inherit;
+	height: 50px;
+	padding: 5px;
+	background: rgba(51, 51, 51, .2);
+	// background: transparent;
+	// box-shadow: inset 0 0 2px #ccc;
+	bottom: 0!important;
+}
 /*******************
  * Charting Panels
  *******************/
