@@ -16,6 +16,12 @@
 				<div class="panel-body form-group-separated">
 					<%= hidden_field_tag :budget_id, @budget.id%>
 					<div class="form-group">
+							<label class="col-md-3 col-xs-5 control-label">Import for Budget</label>
+							<div class="col-md-9 col-xs-7">
+								<%= select_tag :transaction_budget_id, options_from_collection_for_select(Budget.all.open_budgets, :id, :name)%>
+							</div>
+					</div>
+					<div class="form-group">
 							<label class="col-md-3 col-xs-5 control-label">Import for Account</label>
 							<div class="col-md-9 col-xs-7">
 								<%= select_tag :account_id, options_from_collection_for_select(Account.all, :id, :name)%>

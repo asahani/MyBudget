@@ -11,17 +11,12 @@ class ImportTransactionsController < ApplicationController
 
     ImportedTransaction.destroy_all
     account = Account.find(params[:account_id])
+    txn_budget = Budget.find(params[:transaction_budget_id])
     import_balance_due = params[:import_balance_due]
     first_row = true
 
     CSV.foreach(params[:file].path, headers: false) do |row|
       imported_transaction, txn_date, txn_amount, txn_description, txn_balance,txn_date_format, payee, credit, debit, category_id, payee_id = nil
-
-      payeeDescription = PayeeDescription.find_by_description(row[5])
-      unless payeeDescription.nil?
-        payee = payeeDescription.payee
-      end
-
 
       unless account.import_txn_date_col.nil?
         txn_date = row[account.import_txn_date_col] unless account.import_txn_date_col.nil?
@@ -29,6 +24,11 @@ class ImportTransactionsController < ApplicationController
         txn_description = row[account.import_txn_description_col]
         txn_balance = row[account.import_txn_balance_col] unless account.import_txn_balance_col.nil?
         txn_date_format = account.import_txn_date_format
+
+        payeeDescription = PayeeDescription.find_by_description(txn_description)
+        unless payeeDescription.nil?
+          payee = payeeDescription.payee
+        end
 
         unless payee.nil?
           payee_id = payee.id
@@ -50,7 +50,7 @@ class ImportTransactionsController < ApplicationController
         end
 
         imported_transaction = ImportedTransaction.new(raw_data: row.to_s, credit: credit, debit: debit, txn_date: Date.strptime(txn_date.to_s,txn_date_format),
-         description: txn_description, balance: txn_balance, account_id: account.id, payee_id: payee_id, category_id: category_id)
+         description: txn_description, balance: txn_balance, account_id: account.id, payee_id: payee_id, category_id: category_id,budget_id: txn_budget.id)
 
         budget_transaction = BudgetTransaction.find_by_raw_data(row.to_s)
 
@@ -97,7 +97,7 @@ class ImportTransactionsController < ApplicationController
         end
 
         split_transaction = ImportedTransaction.new(raw_data: nil, credit: credit, debit: debit, txn_date: imported_transaction.txn_date,
-         description: imported_transaction.description, balance: nil, account_id: imported_transaction.account.id, payee_id: imported_transaction.payee.id, category_id: category)
+         description: imported_transaction.description, balance: nil, account_id: imported_transaction.account.id, payee_id: imported_transaction.payee.id, category_id: category,budget_id: imported_transaction.budget_id)
 
         split_transaction.save!
 
@@ -135,8 +135,9 @@ class ImportTransactionsController < ApplicationController
     @imported_transaction = ImportedTransaction.find(params[:txn_id])
 
     unless params[:tags].nil?
+      puts 'entering tags add'
       @imported_transaction.tags = params[:tags]
-
+      puts @imported_transaction.tags
       @imported_transaction.save!
     end
 
@@ -206,7 +207,8 @@ class ImportTransactionsController < ApplicationController
           unless (txn.debit.nil?)
             debit_val = txn.debit.abs
           end
-          budget = Budget.get_budget(txn.txn_date)
+          # budget = Budget.get_budget(txn.txn_date)
+          budget = txn.budget_id
           category = Category.find(txn.category.id)
           budget_item = BudgetItem.find_by_budget_id_and_category_id(budget.id,category.id)
 

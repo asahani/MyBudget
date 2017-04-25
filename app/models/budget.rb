@@ -19,11 +19,13 @@ class Budget < ActiveRecord::Base
   # Callbacks
   ##################################
   after_create :create_budget_items, :create_budget_accounts, :create_income
+  before_create :create_name
 
   ##################################
   # Scoped Methods
   ##################################
   scope :future_budgets, -> { where('start_date > ?',self.start_date)}
+  scope :open_budgets, -> { where(is_closed: false)}
 
   ##################################
   # Class Methods
@@ -152,6 +154,10 @@ class Budget < ActiveRecord::Base
   end
 
   private
+  def create_name
+    self.name = Date::ABBR_MONTHNAMES[self.month].upcase + " " + self.year.to_s
+  end
+
   def create_budget_items
     categories = Category.where("mandatory=? && active=? && miscellaneous=? && savings=?",true,true,false,false);
     categories.each do |category|
