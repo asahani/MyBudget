@@ -202,8 +202,10 @@
                     <!-- END ACCCOUNTS LIST -->
                     <%end%>
                 </ul>
+
                 <!-- END X-NAVIGATION -->
                 <div class="sidebar-footer">
+        
                   <%unless @budget.nil?%>
                   	<%= link_to raw("<span class='glyphicon glyphicon-import' style='color: #999;' aria-hidden='true'></span>"),
                   			import_transactions_open_file_path(budget_id: @budget.id), {:remote => true, class: 'import-transactions-modal-link'} %>
