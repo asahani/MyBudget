@@ -1,4 +1,4 @@
-<div class="row stacked">
+<div class="row stacked" style="background: #2D3945;">
 		<div class="col-md-10">
 				<div class="x-chart-widget">
 						<div class="x-chart-widget-content">
@@ -59,39 +59,28 @@
 
 				<div class="x-widget-timeline">
 						<div class="x-widget-timelime-head">
-								<h3>NOTIFICATIONS</h3>
-								<div class="pull-right"><a href="#">Settings <span class="fa fa-cog"></span></a></div>
+								<h3>Summary</h3>
+								<div class="pull-right"><a href="#">Refresh <span class="fa fa-refresh"></span></a></div>
 						</div>
 						<div class="x-widget-timeline-content">
-								<div class="item item-blue">
-										<a href="#">Maria Jackson</a> Sent you a <strong>message</strong>
-										<span>3 minutes ago</span>
-								</div>
-								<div class="item item-green">
-										<a href="#">Brian Dawson</a> Invited you to <strong>Linkedin</strong>
-										<span>16.09.2015 1:27 pm</span>
-								</div>
-								<div class="item item-green">
-										<a href="#">Hannah Jensen</a> Invited you to like her on <strong>facebook</strong>
-										<span>16.09.2015 1:13 pm</span>
-								</div>
-								<div class="item item-red">
-										<a href="#">Nancy Watson</a> You got 3 new <strong>notifications</strong>
-										<span>16.09.2015 11:41 am</span>
-								</div>
-								<div class="item item-red">
-										<a href="#">Nancy Watson</a> You got 1 requests to <strong>add friends</strong>
-										<span>16.09.2015 11:23 am</span>
-								</div>
-								<div class="item item-greay">
-										<a href="#">Hannah Jensen</a> Invited you to like her on <strong>facebook</strong>
-										<span>16.09.2015 10:26 am</span>
-								</div>
-								<div class="item item-blue">
-										<a href="#">Douglas Cook</a> Sent you a <strong>message</strong>
-										<span>16.09.2015 09:15 am</span>
-								</div>
-								<button class="btn btn-default btn-block">Load more...</button>
+								<%@net_worth[:accounts].each do|master_account_type|%>
+									<div class="item item-<%=master_account_type[:code]%>" style="padding-right: 0px!important; width: 100%;">
+											<strong><%=master_account_type[:name]%></strong>
+											<%master_account_type[:accounts].each do|account_type|%>
+												<div class="" style="padding-right: 0px!important; width: 100%;">
+													<strong><%=account_type[:name]%></strong>
+													<%account_type[:accounts].each do|account_detail|%>
+														<div>
+																<%=account_detail[:name]%>
+																<div class="pull-right"><%=number_to_currency(account_detail[:balance])%></div>
+														</div>
+													<%end%>
+												</div>
+											<%end%>
+									</div>
+								<%end%>
+
+								<div class="btn btn-default btn-block"><%=number_to_currency(@net_worth[:total])%></div>
 						</div>
 				</div>
 
