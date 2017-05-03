@@ -368,3 +368,10 @@ body {
 .x-block .x-block-content.x-todo .x-todo-footer a span {
   margin-right: 5px;
 }
+
+.x-navigation li > a {
+  padding: 7px 10px 7px 15px!important;
+}
+.x-navigation > li.xn-openable:before {
+	top: 7px!important;
+}

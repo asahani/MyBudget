@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :null_session
+  before_action :set_net_worth
 
   def net_worth_details
     net_worth = Hash.new
@@ -133,4 +134,8 @@ class ApplicationController < ActionController::Base
     return accounts_hash
   end
 
+  # Use callbacks to share common setup or constraints between actions.
+  def set_net_worth
+    @net_worth = net_worth_details
+  end
 end
