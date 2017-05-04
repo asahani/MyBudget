@@ -32,8 +32,7 @@ class Budget < ActiveRecord::Base
   ##################################
 
   def self.get_budget(txn_date)
-    #TODO: get Start Date from config
-    month_start_day = 15
+    month_start_day = Rails.application.config.start_of_the_month
 
     budget = Budget.where('start_date <= ? and end_date >= ?',txn_date,txn_date).first
 

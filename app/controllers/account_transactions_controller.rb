@@ -17,6 +17,11 @@ class AccountTransactionsController < ApplicationController
     @account_transaction = AccountTransaction.new
     unless params[:budget_id].nil?
       @account_transaction.budget_id = params[:budget_id].to_i
+    else
+      budget = Budget.where('start_date <= ? and end_date >= ?',Date.today,Date.today).first
+      unless budget.nil?
+        @account_transaction.budget_id = budget.id
+      end
     end
   end
 
