@@ -11,47 +11,7 @@
       <%end%>
     </li>
     <!-- END SEARCH -->
-    <li class="">
-      <a href="/dashboard.html"><span class="fa fa-dashboard"></span> <span class="xn-text">Dashboard</span></a>
-    </li>
-
-    <li class="xn-openable">
-      <a href="#"><span class="fa fa-table"></span> Budget</a>
-      <ul>
-          <li><%= link_to raw("<span class='fa fa-table'></span> <span class='xn-text'>Budget</span>"), budgets_path%>
-          <li><a href="#"><span class="fa fa-bullseye"> </span> <span class='xn-text'></span>Goal Savings</a></li>
-          <li><%= link_to raw("<span class='fa fa-tasks'></span> <span class='xn-text'>Tasks</span>"), tasks_path%>
-      </ul>
-    </li>
-    <li class="xn-openable">
-        <a href="#"><span class="fa fa-bar-chart"></span>Investments</a>
-        <ul>
-            <li><%= link_to raw("<span class='fa fa-home'></span> <span class='xn-text'>Assets - Houses</span>"), houses_path%>
-            <li><%= link_to raw("<span class='fa fa-line-chart'></span> <span class='xn-text'>Assets - Shares</span>"), shares_path%>
-            <li><a href="#"><span class="fa fa-balance-scale"></span> Superanuation</a></li>
-        </ul>
-    </li>
-    <li class="xn-openable">
-        <a href="#"><span class="fa fa-money"></span>Loans</a>
-        <ul>
-            <li><%= link_to raw("<span class='fa fa-money'></span> <span class='xn-text'>Loans</span>"), loans_index_path%>
-        </ul>
-    </li>
-    <li class="xn-openable">
-        <a href="#"><span class="fa fa-cog"></span>Admin</a>
-        <ul>
-            <li><%= link_to raw("<span class='fa fa-university'></span> <span class='xn-text'>Accounts</span>"), accounts_path%>
-            <li class="xn-openable">
-                <a href="#"><span class="fa fa-folder"></span> Categories</a>
-                <ul>
-                    <li><%= link_to raw("<span class='fa fa-folder-open-o'></span> <span class='xn-text'>Master Categories</span>"), master_categories_path%>
-                    <li><%= link_to raw("<span class='fa fa-folder-open'></span> <span class='xn-text'>Categories</span>"), categories_path%>
-                </ul>
-            </li>
-            <li><%= link_to raw("<span class='fa fa-users'></span> <span class='xn-text'>Payees</span>"), payees_path%>
-            <li><%= link_to raw("<span class='fa fa-usd'></span> <span class='xn-text'>Incomes</span>"), incomes_path%>
-        </ul>
-    </li>
+    <%=render 'layouts/top_navigation_menu'-%>
 
     <!-- POWER OFF -->
     <li class="xn-icon-button pull-right last">
