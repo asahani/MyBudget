@@ -38,29 +38,23 @@ class BudgetsController < ApplicationController
     @tasks = Task.open.where('budget_id = ?',@budget.id).order(created_at: :desc).limit(3)
 
     #Budget Dashboard Elements
-    @budget_consumption = 0
-    @income_consumption = 0
+    @budgeted_amount = @budget.budgeted_amount
+    @income = @budget.income
+    @savings = @budget.savings
 
-    @budgeted_amount = @budget.budget_items.sum(:budgeted_amount)
-    @income = @budget.budget_incomes.sum(:amount)
-    @savings = @budget.budget_transactions.savings_transactions.sum(:credit)
+    @expenses = @budget.expenses
+    @miscellaneous_expenses = @budget.miscellaneous_expenses
+    @savings_expenses = @budget.savings_expenses
 
-    @expenses = @budget.budget_items.sum(:expenses)
-    @miscellaneous_expenses = @budget.budget_transactions.miscellaneous_transactions.sum(:debit)
-    @savings_expenses = @budget.budget_transactions.savings_expense_transactions.sum(:debit)
+    @income_remaining = @budget.income_remaining
+    @expenses_remaining = @budget.expenses_remaining
 
-    @income_remaining = @income - (@expenses+@savings)
-    @expenses_remaining = @budget.budget_items.where("balance > 0").sum(:balance)
 
-    if (@expenses > 0)
-      @budget_consumption = ((@expenses/@budgeted_amount)*100).to_i
-      @income_consumption = ((@expenses/@income)*100).to_i
-    end
+    @budget_consumption = @budget.budget_consumption_percentage
+    @income_consumption = @budget.income_consumption_percentage
 
-    @days_remaining = (@budget.end_date.to_date - Time.now.to_date).to_i
-    if Time.now.to_date >= @budget.end_date
-      @days_remaining = 0
-    end
+
+    @days_remaining = @budget.days_remaining
 
   end
 
@@ -176,7 +170,7 @@ class BudgetsController < ApplicationController
     puts params
     @budget.clear_budget_accounts
     @budget.is_closed = true
-    
+
     respond_to do |format|
       if @budget.save
         format.html { redirect_to @budget, notice: 'Budget was successfully closed.' }

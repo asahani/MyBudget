@@ -4,9 +4,9 @@
 <div class="tabs">
 	<div class="budget-tabs">
 		<ul class="nav nav-tabs" role="tablist">
-				<li><a href="#tab-first" role="tab" data-toggle="tab"  data-morris="none" data-highcharts="budgeted_percentage_spent_categories,total_pie,misc_pie"><span class="fa fa-dashboard"></span>&nbsp;<%=@budget.name%></a></li>
+				<li class="active"><a href="#tab-first" role="tab" data-toggle="tab"  data-morris="none" data-highcharts="budgeted_percentage_spent_categories,total_pie,misc_pie"><span class="fa fa-dashboard"></span>&nbsp;<%=@budget.name%></a></li>
 				<li><a href="#tab-second" role="tab" data-toggle="tab"  data-morris="none" data-highcharts="none"><span class="fa fa-table"></span>&nbsp;Budget Worksheet</a></li>
-				<li  class="active"><a href="#tab-third" role="tab" data-toggle="tab" data-morris="mb,payee_spend_bar,misc_expenses_bar,misc_master_expenses_bar" data-highcharts="c2,stats_summary_bar,stats_misc_categories_pie,stats_misc_master_categories_pie,payee_spend_pie"><span class="fa fa-bar-chart-o"></span>&nbsp;Charts</a></li>
+				<li><a href="#tab-third" role="tab" data-toggle="tab" data-morris="mb,payee_spend_bar,misc_expenses_bar,misc_master_expenses_bar" data-highcharts="c2,stats_summary_bar,stats_misc_categories_pie,stats_misc_master_categories_pie,payee_spend_pie"><span class="fa fa-bar-chart-o"></span>&nbsp;Charts</a></li>
 				<li><a href="#tab-fourth" role="tab" data-toggle="tab" data-morris="ml" data-highcharts="none"><span class="fa fa-desktop"></span>&nbsp;Fourth</a></li>
 				<li class="pull-right" style="height: 100%;">
 					<%unless @budget.nil?%>
@@ -36,7 +36,7 @@
 
 		</ul>
 		<div class="panel-body tab-content">
-				<div class="tab-pane fade in " id="tab-first">
+				<div class="tab-pane fade in active" id="tab-first">
 					<%=render "budgets/dashboard/budget_dashboard"%>
 				</div>
 
@@ -45,7 +45,7 @@
 					<%=render 'budgets/worksheet/show_budget_totals'%>
 					<%=render 'budgets/worksheet/show_budget_details'%>
 				</div>
-				<div class="tab-pane fade in active" id="tab-third">
+				<div class="tab-pane fade in" id="tab-third">
 					<%=render "budget_stats"%>
 				</div>
 				<div class="tab-pane fade in" id="tab-fourth">

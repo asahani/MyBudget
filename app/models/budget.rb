@@ -28,6 +28,74 @@ class Budget < ActiveRecord::Base
   scope :open_budgets, -> { where(is_closed: false)}
 
   ##################################
+  # Calculation Methods
+  ##################################
+
+  def budgeted_amount
+    self.budget_items.sum(:budgeted_amount)
+  end
+
+  def income
+    self.budget_incomes.sum(:amount)
+  end
+
+  def savings
+    self.budget_transactions.savings_transactions.sum(:credit)
+  end
+
+  def expenses
+    self.budget_items.sum(:expenses)
+  end
+
+  def miscellaneous_expenses
+     self.budget_transactions.miscellaneous_transactions.sum(:debit)
+  end
+
+  def savings_expenses
+    self.budget_transactions.savings_expense_transactions.sum(:debit)
+  end
+
+  def income_remaining
+    self.income - (self.expenses+self.savings)
+  end
+
+  def expenses_remaining
+    self.budget_items.where("balance > 0").sum(:balance)
+  end
+
+  def budget_consumption_percentage
+    budget_consumption = 0
+    if (self.expenses > 0)
+      budget_consumption = ((self.expenses/self.budgeted_amount)*100).to_i
+    end
+    return budget_consumption
+  end
+
+  def income_consumption_percentage
+    income_consumption = 0
+    if (self.expenses > 0)
+      income_consumption = ((self.expenses/self.income)*100).to_i
+    end
+    return income_consumption
+  end
+
+  def miscellaneous_expenses_percentage
+    miscellaneous_expenses = 0
+    if (self.expenses > 0)
+      miscellaneous_expenses = ((self.miscellaneous_expenses/self.expenses)*100).to_i
+    end
+    return miscellaneous_expenses
+  end
+
+  def days_remaining
+    days = (self.end_date.to_date - Time.now.to_date).to_i
+    if Time.now.to_date >= self.end_date
+      days = 0
+    end
+    return days
+  end
+
+  ##################################
   # Class Methods
   ##################################
 
