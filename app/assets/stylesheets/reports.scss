@@ -1,0 +1,36 @@
+// Place all the styles related to the Reports controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.annual-report {
+  table {
+
+		th {
+      border: none;
+    	background: #E6F4FB!important;
+    	font-weight: bold!important;
+    	color: #666!important;
+			// border-bottom: 1px solid #CCC;
+			text-align: center;
+			padding: 10px 5px!important;
+		}
+		td {
+      border: 1px dotted #ccc!important;
+      padding: 5px 5px!important;
+		}
+	}
+
+  .report-cell {
+
+  }
+  .number-cell {
+  	text-align: right!important;
+  	// border: 1px dotted #999!important;
+  }
+  .heading-column-cell {
+    background: #E6F4FB!important;
+    font-weight: bold!important;
+  	// text-align: right!important;
+  	// border: 1px dotted #999!important;
+  }
+
+}

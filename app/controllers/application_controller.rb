@@ -115,6 +115,73 @@ class ApplicationController < ActionController::Base
     return net_worth
   end
 
+  def get_annual_report(budget_year)
+    no_of_budgets = 0
+    annual_report = Hash.new
+
+    annual_report[:month_name] = Array.new(12)
+    annual_report[:income] = Array.new(13)
+    annual_report[:expenses] = Array.new(13)
+    annual_report[:savings] = Array.new(13)
+    annual_report[:savings_expenses] = Array.new(13)
+    annual_report[:total_expenses] = Array.new(13)
+    annual_report[:overall_savings] = Array.new(13)
+    annual_report[:remaining] = Array.new(13)
+    annual_report[:misc_percentage] = Array.new(13)
+
+    total_income = 0
+    total_expenses = 0
+    total_savings = 0
+    total_savings_expenses = 0
+    total_total_expenses = 0
+    total_overall_savings = 0
+    total_remaining = 0
+    total_misc_percentage = 0
+
+    for budget_month in 0..11
+      puts "month----------------"
+      puts budget_month
+      annual_report[:month_name][budget_month] = I18n.t("date.abbr_month_names")[budget_month+1]
+      puts annual_report[:month_name][budget_month]
+      budget = Budget.find_by_month_and_year(budget_month + 1,budget_year)
+
+      unless budget.nil?
+        no_of_budgets += 1
+        annual_report[:income][budget_month] = budget.income
+        annual_report[:expenses][budget_month] = budget.expenses
+        annual_report[:savings][budget_month] = budget.savings
+        annual_report[:savings_expenses][budget_month] = budget.savings_expenses
+        annual_report[:total_expenses][budget_month] = annual_report[:expenses][budget_month]  + annual_report[:savings_expenses][budget_month]
+        annual_report[:overall_savings][budget_month] = annual_report[:savings][budget_month] - annual_report[:savings_expenses][budget_month]
+        annual_report[:remaining][budget_month] = budget.income_remaining
+        annual_report[:misc_percentage][budget_month] = budget.miscellaneous_expenses_percentage
+
+        total_income += annual_report[:income][budget_month]
+        total_expenses +=   annual_report[:expenses][budget_month]
+        total_savings += annual_report[:savings][budget_month]
+        total_savings_expenses  += annual_report[:savings_expenses][budget_month]
+        total_total_expenses  += annual_report[:total_expenses][budget_month]
+        total_overall_savings += annual_report[:overall_savings][budget_month]
+        total_remaining += annual_report[:remaining][budget_month]
+        total_misc_percentage += annual_report[:misc_percentage][budget_month]
+      end
+    end
+
+    annual_report[:income][12] = total_income
+    annual_report[:expenses][12] = total_expenses
+    annual_report[:savings][12] = total_savings
+    annual_report[:savings_expenses][12]  = total_savings_expenses
+    annual_report[:total_expenses][12] = total_total_expenses
+    annual_report[:overall_savings][12] = total_overall_savings
+    annual_report[:remaining][12] = total_remaining
+    puts total_misc_percentage
+    puts no_of_budgets
+    puts (total_misc_percentage / no_of_budgets).to_f.round(2)
+    annual_report[:misc_percentage][12] = (total_misc_percentage.to_f / no_of_budgets.to_f).to_f.round(2)
+
+    return annual_report
+  end
+
   private
 
   def create_account_type_details_for_net_worth(account_type,accounts, is_negetive=false)
