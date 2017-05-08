@@ -1,4 +1,4 @@
-<div class="annual-report">
+<div class="annual-report row">
 
   <table class="table table-bordered table-striped table-hover">
     <thead>
@@ -70,5 +70,30 @@
 
     </tbody>
 </table>
+
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <%= content_tag :div," ",id: "summaryreport", data: {overallsummarymonths: report_months_data,overallsummaryincomes: overall_summary_report_incomes_data,overallsummaryexpenses: overall_summary_report_expenses_data,overallsummarysavings: overall_summary_report_savings_data}%>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <%= content_tag :div," ",id: "monthlyexpensesreport", data: {overallsummarymonths: report_months_data,monthlyexpenses: report_expenses_data}%>
+  </div>
+
+  <div class="col-md-6">
+    <%= content_tag :div," ",id: "monthlysavingsreport", data: {overallsummarymonths: report_months_data,monthlysavings: report_savings_data}%>
+  </div>
+
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <%= content_tag :div," ",id: "overallexpensesreport", data: {overallsummarymonths: report_months_data,overallexpenses: overall_summary_report_expenses_data}%>
+  </div>
+
+  <div class="col-md-6">
+    <%= content_tag :div," ",id: "overallsavingsreport", data: {overallsummarymonths: report_months_data,overallsavings: overall_summary_report_savings_data}%>
+  </div>
 
 </div>

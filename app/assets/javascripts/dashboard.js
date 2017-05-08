@@ -30,3 +30,5 @@
 //= require atlant/plugins/daterangepicker/daterangepicker
 //= require atlant/plugins
 //= require atlant/actions
+//= require highcharts/highcharts
+//= require_self
