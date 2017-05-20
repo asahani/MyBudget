@@ -21,7 +21,6 @@ jQuery ->
   summary_bar_chart = $('#summaryreport').highcharts
     chart:
       renderTo: 'summaryreport'
-      type: 'column'
       height: '300'
     title: text: 'Overall Summary'
     xAxis:
@@ -29,18 +28,62 @@ jQuery ->
       crosshair: true
     yAxis:
       title: text: 'Amount ($)'
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>${point.y:.2f}</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    }
     series: [
       {
+        type: 'column'
         name: 'Incomes'
         data: $('#summaryreport').data('overallsummaryincomes')
       }
       {
+        type: 'column'
         name: 'Expenses'
         data: $('#summaryreport').data('overallsummaryexpenses')
       }
       {
+        type: 'column'
         name: 'Savings'
         data: $('#summaryreport').data('overallsummarysavings')
+      }
+      {
+        type: 'spline',
+        name: 'Average',
+        data: [3000, 2000.67, 3000, 4000.33, 3333.33,3000, 2000.67, 3000, 4000.33, 3333.33,3000, 2000.67],
+        marker: {
+            lineWidth: 2,
+            lineColor: Highcharts.getOptions().colors[3],
+            fillColor: 'white'
+        }
+      }
+      {
+        type: 'pie',
+        name: 'Total consumption',
+        data: [{
+            name: 'Income',
+            y: 19827.00,
+            color: Highcharts.getOptions().colors[0]
+        }, {
+            name: 'Expenses',
+            y: 4249.48,
+            color: Highcharts.getOptions().colors[1]
+        }, {
+            name: 'Savings',
+            y: 1900,
+            color: Highcharts.getOptions().colors[2]
+        }],
+        center: [100, 80],
+        size: 100,
+        showInLegend: false,
+        dataLabels: {
+            enabled: false
+        }
       }
     ]
 
@@ -55,6 +98,14 @@ jQuery ->
       crosshair: true
     yAxis:
       title: text: 'Amount ($)'
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>${point.y:.2f}</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    }
     series: [
       {
         name: 'Expenses'
@@ -73,6 +124,14 @@ jQuery ->
       crosshair: true
     yAxis:
       title: text: 'Amount ($)'
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>${point.y:.2f}</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    }
     series: [
       {
         name: 'Overall Expenses'
@@ -91,6 +150,14 @@ jQuery ->
       crosshair: true
     yAxis:
       title: text: 'Amount ($)'
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>${point.y:.2f}</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    }
     series: [
       {
         name: 'Savings'
@@ -109,6 +176,14 @@ jQuery ->
       crosshair: true
     yAxis:
       title: text: 'Amount ($)'
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>${point.y:.2f}</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    }
     series: [
       {
         name: 'Overall Savings'
