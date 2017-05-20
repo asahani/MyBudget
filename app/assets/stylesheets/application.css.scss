@@ -76,6 +76,9 @@ body {
 	text-align: center;
 }
 
+.page-container.page-navigation-top-fixed .x-navigation.x-navigation-horizontal {
+	padding-right: 0px!important;
+}
 /*******************
  * Charting Panels
  *******************/
@@ -387,4 +390,143 @@ body {
 }
 .page-sidebar .x-navigation > li.xn-openable:before {
 	top: 7px!important;
+}
+
+/** ATLAMNT DASHBOARD TIMELINE **/
+.x-widget-timeline {
+  float: left;
+  width: 100%;
+  background: #374655;
+  padding: 20px 0px 0px;
+  -moz-box-shadow: 0px 12px 15px rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0px 12px 15px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 12px 15px rgba(0, 0, 0, 0.15);
+}
+.x-widget-timeline .x-widget-timelime-head {
+  float: left;
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 0px 20px;
+}
+.x-widget-timeline .x-widget-timelime-head h3 {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  float: left;
+  color: #FFF;
+  margin: 0px;
+  padding: 0px;
+}
+.x-widget-timeline .x-widget-timelime-head a {
+  font-size: 13px;
+  color: #FFF;
+  line-height: 20px;
+}
+.x-widget-timeline .x-widget-timelime-head a span {
+  font-size: 14px;
+  margin-left: 10px;
+}
+.x-widget-timeline .x-widget-timeline-content {
+  float: left;
+  width: 100%;
+  padding: 10px 20px 15px;
+}
+.x-widget-timeline .x-widget-timeline-content .item {
+  float: left;
+  padding: 0px 15px 15px;
+  position: relative;
+  background: #374655;
+  line-height: 20px;
+  font-size: 13px;
+  vertical-align: top;
+  color: #92ABB8;
+  clear: both;
+}
+.x-widget-timeline .x-widget-timeline-content .item a {
+  color: #05AAE5;
+}
+.x-widget-timeline .x-widget-timeline-content .item span {
+  float: left;
+  color: #94ABBA;
+  font-size: 11px;
+  width: 100%;
+  margin-top: 5px;
+}
+.x-widget-timeline .x-widget-timeline-content .item strong {
+  color: #FFFFFF;
+  font-weight: 400;
+}
+.x-widget-timeline .x-widget-timeline-content .item:after {
+  position: absolute;
+  display: block;
+  content: " ";
+  width: 11px;
+  height: 11px;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  left: -6px;
+  top: 5px;
+  border: 3px solid #C1CDDB;
+  background: #374655;
+}
+.x-widget-timeline .x-widget-timeline-content .item.item-blue:after {
+  border-color: #3FBAE4;
+}
+.x-widget-timeline .x-widget-timeline-content .item.item-green:after {
+  border-color: #95B75D;
+}
+.x-widget-timeline .x-widget-timeline-content .item.item-red:after {
+  border-color: #E34724;
+}
+.x-widget-timeline .x-widget-timeline-content .btn {
+  margin-top: 15px;
+  float: left;
+  background: transparent;
+  border-color: #445664;
+  color: #94ABBA;
+}
+.x-widget-timeline .x-widget-timeline-content .btn:hover {
+  background-color: #445664;
+}
+
+/** ALTALNT DASHBOARD CHART INFORMER */
+.x-chart-widget-informer {
+  float: left;
+  width: 100%;
+  background: #313F4D;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+.x-chart-widget-informer .x-chart-widget-informer-item {
+  float: left;
+  width: 100%;
+  padding: 15px;
+}
+.x-chart-widget-informer .x-chart-widget-informer-item .count {
+  float: left;
+  width: 100%;
+  font-size: 26px;
+  color: #94ABBA;
+  line-height: 35px;
+}
+.x-chart-widget-informer .x-chart-widget-informer-item .count span {
+  font-size: 11px;
+  color: #93ABB9;
+  vertical-align: bottom;
+  margin-left: 5px;
+}
+.x-chart-widget-informer .x-chart-widget-informer-item .count span .fa {
+  font-size: 8px;
+}
+.x-chart-widget-informer .x-chart-widget-informer-item .count span.negative {
+  color: #F26732;
+}
+.x-chart-widget-informer .x-chart-widget-informer-item .title {
+  font-size: 13px;
+  color: #93ABB9;
+}
+.x-chart-widget-informer .x-chart-widget-informer-item.last {
+  border-right: 0px;
 }

@@ -10,46 +10,22 @@
         <link rel="icon" href="favicon.ico" type="image/x-icon" />
         <!-- END META SECTION -->
 
-        <%= stylesheet_link_tag    'dashboard', media: 'all', 'data-turbolinks-track' => true %>
-        <%= javascript_include_tag 'dashboard', params[:controller], 'data-turbolinks-track'  => true %>
+        <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+        <%= javascript_include_tag 'application', params[:controller], 'data-turbolinks-track'  => true %>
         <%= csrf_meta_tags %>
     </head>
-    <body class="x-dashboard-dark">
+    <body>
         <!-- START PAGE CONTAINER -->
-        <div class="page-container">
+        <div class="page-container page-navigation-top">
+
             <!-- PAGE CONTENT -->
             <div class="page-content">
                 <!-- PAGE CONTENT WRAPPER -->
                 <div class="page-content-wrap">
+                    <!-- START X-NAVIGATION VERTICAL -->
 
-                    <div class="x-hnavigation">
-                        <div class="x-hnavigation-logo">
-                            <a href="/index.html">Atlant</a>
-                        </div>
-                        <ul>
-                          <%=render 'layouts/top_navigation_menu'-%>
-                        </ul>
-
-                        <div class="x-features">
-                            <div class="x-features-nav-open">
-                                <span class="fa fa-bars"></span>
-                            </div>
-                            <div class="pull-right">
-                                <div class="x-features-search">
-                                    <input type="text" name="search">
-                                    <input type="submit">
-                                </div>
-                                <div class="x-features-profile">
-                                    <%=image_tag 'assets/images/users/avatar.png'%>
-                                    <ul class="xn-drop-left animated zoomIn">
-                                        <li><a href="pages-lock-screen.html"><span class="fa fa-lock"></span> Lock Screen</a></li>
-                                        <li><a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span> Sign Out</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    <%=render 'layouts/top_navigation'-%>
+                    <!-- END X-NAVIGATION VERTICAL -->
                     <div class="x-content">
                       <%=yield%>
                     </div>
@@ -64,24 +40,10 @@
         <!-- END PAGE CONTAINER -->
 
         <!-- MESSAGE BOX-->
-        <div class="message-box animated fadeIn" data-sound="alert" id="mb-signout">
-            <div class="mb-container">
-                <div class="mb-middle">
-                    <div class="mb-title"><span class="fa fa-sign-out"></span> Log <strong>Out</strong> ?</div>
-                    <div class="mb-content">
-                        <p>Are you sure you want to log out?</p>
-                        <p>Press No if youwant to continue work. Press Yes to logout current user.</p>
-                    </div>
-                    <div class="mb-footer">
-                        <div class="pull-right">
-                            <a href="pages-login.html" class="btn btn-success btn-lg">Yes</a>
-                            <button class="btn btn-default btn-lg mb-control-close">No</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <%=render 'layouts/modal_messages'-%>
         <!-- END MESSAGE BOX-->
+        <%= javascript_include_tag 'atlant/settings', 'data-turbolinks-track'  => false %>
+        <%= stylesheet_link_tag    'atlant/theme-default', media: 'all', 'data-turbolinks-track' => true %>
 
     </body>
 </html>
