@@ -79,6 +79,45 @@ body {
 .page-container.page-navigation-top-fixed .x-navigation.x-navigation-horizontal {
 	padding-right: 0px!important;
 }
+
+.item {
+  float: left;
+  padding: 0px 10px 10px;
+  position: relative;
+  background-color: inherit;
+  line-height: 20px;
+  font-size: 13px;
+  vertical-align: top;
+  clear: both;
+}
+.item a {
+  color: #05AAE5;
+}
+
+.item:after {
+  position: absolute;
+  display: block;
+  content: " ";
+  width: 11px;
+  height: 11px;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  left: -6px;
+  top: 5px;
+  border: 3px solid #C1CDDB;
+  background-color: inherit;
+}
+.item.item-blue:after {
+  border-color: #3FBAE4;
+}
+.item.item-green:after {
+  border-color: #95B75D;
+}
+.item.item-red:after {
+  border-color: #E34724;
+}
+
 /*******************
  * Charting Panels
  *******************/

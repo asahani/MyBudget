@@ -194,7 +194,7 @@
         <%@net_worth[:accounts].each do|master_account_type|%>
         <li class="xn-openable">
           <a href="#" style="width: 100%;">
-            <span class="fa fa-credit-card"></span>
+            <span class="item item-<%=master_account_type[:code]%>"></span>
             <span class="xn-text"><%=master_account_type[:name]%></span>
             <%if master_account_type[:total] < 0 %>
               <span class="pull-right text-danger" style="display: inline-block;width: 40%;text-align: right;padding-right: 7%;">
