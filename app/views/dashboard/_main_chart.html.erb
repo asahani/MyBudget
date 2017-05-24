@@ -3,8 +3,13 @@
         <div class="x-chart-widget-content-head">
             <h4>SUMMARY</h4>
         </div>
+        <div>
+            <div id="x-dashboard-line-dark">
+              <%= content_tag :div," ",id: "summaryreport", data: {overallsummarymonths: report_months_data,overallsummaryincomes: overall_summary_report_incomes_data,overallsummaryexpenses: overall_summary_report_expenses_data,overallsummarysavings: overall_summary_report_savings_data}%>
+            </div>
+        </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="x-chart-widget-informer">
                     <div class="row">
                         <div class="col-md-3">
@@ -34,21 +39,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="buttons-panel">
-                    <button class="btn btn-primary">TODAY: 14 SEP.2015 <span class="fa fa-angle-down" style="margin-right: -5px; margin-left: 5px; color: #94ABBA;"></span></button>
-                    <span class="clearfix"></span>
-                    <div class="btn-group">
-                        <button class="btn btn-primary">DAY</button>
-                        <button class="btn btn-primary active">WEEK</button>
-                        <button class="btn btn-primary">MONTH</button>
-                        <button class="btn btn-primary">YEAR</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="x-chart-holder">
-            <div id="x-dashboard-line-dark" style="height: 400px;"></div>
         </div>
     </div>
 </div>

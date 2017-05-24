@@ -38,6 +38,26 @@ class BudgetTransaction < ActiveRecord::Base
   ##################################
   # Class Methods
   ##################################
+  def self.total_expenses_for_year(year=Date.today.year)
+    budgets_for_year = Budget.where(year: year)
+    txns = where(budget_id: budgets_for_year)
+    txns = txns.where('budget_transactions.savings = ? && debit > ?',false,0)
+    return txns.sum(:debit).to_f
+  end
+
+  def self.top_transactions_grouped_by_category(year=Date.today.year,limit=12)
+    budgets_for_year = Budget.where(year: year)
+    puts 'All budgets'
+    puts budgets_for_year
+
+    txns = where(budget_id: budgets_for_year)
+    txns = txns.where('budget_transactions.savings = ? && debit > ?',false,0)
+    txns = txns.joins(:category)
+    txns = txns.group("categories.name")
+    txns = txns.select("categories.name as name, sum(debit) as total_expense")
+    txns = txns.order("total_expense DESC").first(limit)
+    # txns.group_by { |t| t.category.name}
+  end
 
   def self.total_miscellaneous_grouped_by_master_category(budget_id,limit=10)
     txns = where(budget_id: budget_id)
