@@ -84,6 +84,6 @@ class CategoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
-      params.require(:category).permit(:name, :active, :budget_amount,:master_category_id,:mandatory,:budgeted,:miscellaneous,:savings,:direct_debit, :scheduled, :scheduled_day,:has_template_transaction,:account_id,:payee_id)
+      params.require(:category).permit(:name, :icon, :active, :budget_amount,:master_category_id,:mandatory,:budgeted,:miscellaneous,:savings,:direct_debit, :scheduled, :scheduled_day,:has_template_transaction,:account_id,:payee_id)
     end
 end

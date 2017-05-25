@@ -54,7 +54,7 @@
               <% @categories.each_with_index do |category,index| %>
                 <tr id="trow_<%=index+1-%>">
                   <td class="text-center"><%=index+1-%></td>
-                  <td><%= category.name %></td>
+                  <td><span class="fa <%=category.icon-%>">&nbsp;</span><%= category.name %></td>
                   <td class="table-right"><%= number_to_currency(category.budget_amount) %></td>
                   <td><%= category.master_category.name %></td>
                   <td class="table-center">

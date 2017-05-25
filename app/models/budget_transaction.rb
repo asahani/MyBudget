@@ -54,7 +54,7 @@ class BudgetTransaction < ActiveRecord::Base
     txns = txns.where('budget_transactions.savings = ? && debit > ?',false,0)
     txns = txns.joins(:category)
     txns = txns.group("categories.name")
-    txns = txns.select("categories.name as name, sum(debit) as total_expense")
+    txns = txns.select("categories.name as name, sum(debit) as total_expense,categories.icon as icon")
     txns = txns.order("total_expense DESC").first(limit)
     # txns.group_by { |t| t.category.name}
   end

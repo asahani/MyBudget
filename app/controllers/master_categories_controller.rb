@@ -70,6 +70,6 @@ class MasterCategoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def master_category_params
-      params.require(:master_category).permit(:name, :active)
+      params.require(:master_category).permit(:name, :icon, :active)
     end
 end

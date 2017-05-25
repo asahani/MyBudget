@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170425084133) do
+ActiveRecord::Schema.define(version: 20170525122102) do
 
   create_table "account_transactions", force: true do |t|
     t.integer  "account_id"
@@ -145,6 +145,7 @@ ActiveRecord::Schema.define(version: 20170425084133) do
     t.integer  "payee_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "icon"
   end
 
   create_table "houses", force: true do |t|
@@ -177,6 +178,7 @@ ActiveRecord::Schema.define(version: 20170425084133) do
     t.integer  "budget_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "tags"
   end
 
   create_table "income_splits", force: true do |t|
@@ -207,6 +209,7 @@ ActiveRecord::Schema.define(version: 20170425084133) do
     t.boolean  "display",    default: true
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "icon"
   end
 
   create_table "payee_descriptions", force: true do |t|
