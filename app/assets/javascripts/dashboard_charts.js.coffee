@@ -36,6 +36,7 @@ jQuery ->
         style: {
           "color": "#ddd"
         }
+      gridLineColor: "#445664"
       labels:
         style: {
           "color": "#ddd"
@@ -123,7 +124,7 @@ jQuery ->
         }
     yAxis:
       title: text: null
-      gridLineColor: "#666"
+      gridLineColor: "#445664"
       labels:
         style: {
           "color": "#ddd"
