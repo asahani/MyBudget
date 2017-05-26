@@ -255,7 +255,13 @@ jQuery ->
       height: '350'
     title: text: null
     tooltip: pointFormat: '{series.name}: <b>${point.expense:.1f}</b>'
+    legend: {
+      itemStyle:{
+        'color':'#ddd'
+      }
+    }
     plotOptions: pie:
+      borderColor: "#ddd"
       allowPointSelect: true
       cursor: 'pointer'
       colors: do ->
