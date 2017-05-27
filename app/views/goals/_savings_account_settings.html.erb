@@ -1,0 +1,23 @@
+<div id="goal_account_details">
+  <hr>
+  <div class="form-group">
+      <%= label_tag :percentage_towards_goal, nil,{class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+          <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-dollar"></span></span>
+              <%= number_field_tag 'goal[percentage_towards_goal]', class: "form-control",step: :any %>
+          </div>
+          <span class="help-block">The percentage to contribute towards the goal</span>
+      </div>
+  </div>
+  <div class="form-group">
+      <%= label_tag :current_balance_towards_goal, nil, {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+          <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-dollar"></span></span>
+              <%= number_field_tag 'goal[current_balance_towards_goal]', @account.balance, class: "form-control",step: :any %>
+          </div>
+          <span class="help-block">The current balance to allocate towards the goal</span>
+      </div>
+  </div>
+</div>

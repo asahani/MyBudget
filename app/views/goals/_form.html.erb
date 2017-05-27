@@ -1,0 +1,108 @@
+<!-- START ALERTS -->
+<% if @goal.errors.any? %>
+  <div class="alert alert-danger" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <strong>Warning!</strong> <%= pluralize(@goal.errors.count, "error") %> prohibited this goal from being saved:
+      <ul>
+      <% @house.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+  </div>
+<%end%>
+<!-- END ALERTS -->
+
+
+<%= form_for(@goal,html: {class: "form-horizontal"}) do |f| %>
+<div class="panel-body">
+
+  <div class="form-group">
+      <%= f.label :name, {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+          <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-bullseye"></span></span>
+              <%= f.text_field :name, {class: "form-control"} %>
+          </div>
+          <span class="help-block">Goal name</span>
+      </div>
+  </div>
+
+  <div class="form-group">
+      <label class="col-md-3 col-xs-12 control-label">Icon</label>
+
+      <div class="col-md-5 col-xs-12">
+        <!-- own select -->
+        <select name="goal[icon]" id="icons-fa" class="fa-select form-control select">
+          <%=render "/categories/category_icons"%>
+        </select>
+
+        <!-- Simple jq script for show selected item -->
+        <script>
+          $(document).ready(function(){
+                /* Detect any change of option*/
+          	$("#icons-fa").change(function(){
+          		var icono = $(this).val();
+          		$("#view-fa").html('<i class="fa '+icono+' fa-lg"></i>');
+          	});
+
+                 /* simulate an change on select */
+          	$("#icons-fa").change();
+          });
+        </script>
+
+        <span class="help-block">Select icon for this goal</span>
+      </div>
+      <div class="col-md-1 col-xs-12">
+        <!-- Make an div for show icon-->
+        <span id="view-fa"></span><br/>
+      </div>
+  </div>
+
+  <div class="form-group">
+      <%= f.label :target_amount, {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+          <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-dollar"></span></span>
+              <%= f.number_field :target_amount, class: "form-control",step: :any %>
+          </div>
+          <span class="help-block">The savings target</span>
+      </div>
+  </div>
+
+  <div class="form-group">
+      <label class="col-md-3 col-xs-5 control-label">Target Date</label>
+      <div class="col-md-9 col-xs-7">
+          <div class="input-group date">
+              <%= f.text_field :target_date, class: "form-control datepicker" %>
+              <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+          </div>
+      </div>
+  </div>
+
+<div class="form-group">
+    <label class="col-md-3 col-xs-12 control-label">Savings Account</label>
+    <div class="col-md-6 col-xs-12">
+      <% if f.object.persisted?%>
+        <%= f.select "account_id", options_from_collection_for_select(Account.all.active.goal_account, :id, :name,@goal.account.id),{ :prompt => "Select Savings Account..."},{ class: "form-control select"}%>
+      <%else%>
+        <%= f.select "account_id", options_from_collection_for_select(Account.all.active.goal_account, :id, :name), {:prompt => "Select Savings Account..."},{onchange: "$(this).data('f=#{f}''account_id=' + this.value)",
+          data: {
+            remote: true,
+            url: url_for(action: :get_account_details),
+            method: "POST"
+          },class: "form-control select"}%>
+      <%end%>
+      <span class="help-block">Select savings account for this goal</span>
+    </div>
+</div>
+
+<% unless f.object.persisted?%>
+  <div id="goal_account_details" style="display:none;"></div>
+<%end%>
+
+<div class="panel-footer">
+    <%= link_to 'Back', goals_path, {class: "btn btn-default"} %>
+    <%= f.submit nil, {class: "btn btn-success pull-right"} %>
+</div>
+
+<% end %>

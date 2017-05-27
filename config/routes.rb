@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :goals
+  match "goals/get_account_details" => "goals#get_account_details", :via => :post, :as => 'get_account_details'
+
+
   resources :shares
   match "shares/:id/sell_share" => "shares#sell_share", :via => :get, :as => 'sell_share'
   match "shares/:id/complete_share_sale" => "shares#complete_share_sale", :via => :patch, :as => 'complete_share_sale'

@@ -32,6 +32,7 @@ class Account < ActiveRecord::Base
   scope :mortgage_account, -> { joins(:account_type).where('account_types.name = ?', "Mortgage") }
   scope :offset_account, -> { joins(:account_type).where('account_types.name = ?', "Offset") }
   scope :brokerage_account, -> { joins(:account_type).where('account_types.name = ?', "Brokerage") }
+  scope :goal_account, -> { joins(:account_type).where('account_types.name = ? OR account_types.name = ?', "Savings","Offset") }
   scope :for_loan, -> { joins(:account_type).where('account_types.name = ? OR account_types.name = ? OR account_types.name = ?', "Transaction","Savings","Offset") }
 
   ##################################

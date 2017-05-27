@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @goal.name %>
+</p>
+
+<p>
+  <strong>Icon:</strong>
+  <%= @goal.icon %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @goal.amount %>
+</p>
+
+<p>
+  <strong>Target date:</strong>
+  <%= @goal.target_date %>
+</p>
+
+<p>
+  <strong>Account:</strong>
+  <%= @goal.account_id %>
+</p>
+
+<p>
+  <strong>Percentage towards goal:</strong>
+  <%= @goal.percentage_towards_goal %>
+</p>
+
+<p>
+  <strong>Current balance towards goal:</strong>
+  <%= @goal.current_balance_towards_goal %>
+</p>
+
+<%= link_to 'Edit', edit_goal_path(@goal) %> |
+<%= link_to 'Back', goals_path %>
