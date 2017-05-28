@@ -4,7 +4,7 @@
 %>
 <div class="row" style="padding-top: 10px;">
   <div class="col-md-3">
-    <div class="widget widget-default widget-item-icon">
+    <div class="widget widget-primary widget-item-icon">
         <div class="widget-item-left">
             <span class="fa fa-bullseye"></span>
         </div>
@@ -21,34 +21,45 @@
 
   <div class="col-md-3">
 
-    <div class="widget widget-default">
-      <div class="widget-title">Saved</div>
-      <div class="widget-subtitle"><span>&nbsp;</div>
-      <div class="widget-title"><span><%=number_to_currency(@total_saved,precision: 2)%></span></div>
-
-    </div>
-  </div>
-
-  <div class="col-md-3">
-
-    <div class="widget widget-default">
-      <div class="widget-title">Remaining</div>
-      <div class="widget-subtitle"><span>&nbsp;</div>
-      <div class="widget-title"><span><%=number_to_currency(@total_target-@total_saved,precision: 2)%></span></div>
-
+    <div class="widget widget-primary">
+      <div class="widget-data">
+        <div class="widget-subtitle">&nbsp;</div>
+        <div class="widget-title" style="font-size: 20px;"><%=number_to_currency(@total_saved,precision: 2)%></div>
+        <div class="widget-subtitle">Saved</div>
+      </div>
+      <div class="widget-controls">
+          <a href="#" class="widget-control-right"><span class="fa fa-times"></span></a>
+      </div>
     </div>
 
   </div>
 
   <div class="col-md-3">
 
-    <div class="widget widget-default">
-      <div class="widget-title">TARGET</div>
-      <div class="widget-subtitle"><span>&nbsp;</div>
-      <div class="widget-title"><span><%=number_to_currency(@total_target,precision: 2)%></span></div>
-
+    <div class="widget widget-primary">
+      <div class="widget-data">
+        <div class="widget-subtitle"><span>&nbsp;</div>
+        <div class="widget-title" style="font-size: 20px;"><span><%=number_to_currency(@total_target-@total_saved,precision: 2)%></span></div>
+        <div class="widget-subtitle"><span>Remaining</div>
+      </div>
+      <div class="widget-controls">
+          <a href="#" class="widget-control-right"><span class="fa fa-times"></span></a>
+      </div>
     </div>
+  </div>
 
+  <div class="col-md-3">
+
+    <div class="widget widget-primary">
+      <div class="widget-data">
+        <div class="widget-subtitle"><span>&nbsp;</div>
+        <div class="widget-title" style="font-size: 20px;"><span><%=number_to_currency(@total_target,precision: 2)%></span></div>
+        <div class="widget-subtitle"><span>Target</div>
+      </div>
+      <div class="widget-controls">
+          <a href="#" class="widget-control-right"><span class="fa fa-times"></span></a>
+      </div>
+    </div>
   </div>
 
 </div>
