@@ -45,34 +45,53 @@
 		</div>
 		<div class="col-md-2">
 			<div class="x-widget-timeline">
+				<div class="x-widget-timelime-head" style="margin-bottom: 10px!important;">
+					<h3>Budget <%=@budget.name%></h3>
+				</div>
 				<div class="row">
 					<div class="col-md-6" style="padding: 0px 0px 0px 5px;">
-							<a href="#" class="tile tile-primary" style="margin-bottom:5px!important;">
-									57%
-									<p>New Visitors</p>
-									<div class="informer informer-danger dir-tr"><span class="fa fa-caret-down"></span></div>
+							<a href="#" class="tile tile-primary" style="margin-bottom:5px!important;font-size: 18px;">
+								<%unless @budget.nil?%>
+									<%=number_to_currency(@budget.expenses)%>
+									<p style="padding-top:10px;">Expenses</p>
+								<%else%>>
+										<p style="padding-top:10px;">No current budget</p>
+								<%end%>
+								<div class="informer informer-danger dir-tr"><span class="fa fa-caret-down"></span></div>
 							</a>
 					</div>
 					<div class="col-md-6" style="padding: 0px 5px 0px 5px;">
-							<a href="#" class="tile tile-primary"  style="margin-bottom:5px!important;">
-									57%
-									<p>New Visitors</p>
-									<div class="informer informer-danger dir-tr"><span class="fa fa-caret-down"></span></div>
-							</a>
+						<a href="#" class="tile tile-primary" style="margin-bottom:5px!important;font-size: 18px;">
+							<%unless @budget.nil?%>
+								<%=number_to_currency(@budget.savings)%>
+								<p style="padding-top:10px;">Savings</p>
+							<%else%>>
+									<p style="padding-top:10px;">No current budget</p>
+							<%end%>
+							<div class="informer informer-danger dir-tr"><span class="fa fa-caret-down"></span></div>
+						</a>
 					</div>
 					<div class="col-md-6" style="padding: 0px 0px 0px 5px;">
-							<a href="#" class="tile tile-primary">
-									57%
-									<p>New Visitors</p>
-									<div class="informer informer-danger dir-tr"><span class="fa fa-caret-down"></span></div>
-							</a>
+						<a href="#" class="tile tile-primary" style="margin-bottom:5px!important;font-size: 18px;">
+							<%unless @budget.nil?%>
+								<%=number_to_currency(@budget.income_remaining)%>
+								<p style="padding-top:10px;">Income Left</p>
+							<%else%>>
+									<p style="padding-top:10px;">No current budget</p>
+							<%end%>
+							<div class="informer informer-danger dir-tr"><span class="fa fa-caret-down"></span></div>
+						</a>
 					</div>
 					<div class="col-md-6" style="padding: 0px 5px 0px 5px;">
-							<a href="#" class="tile tile-primary">
-									57%
-									<p>New Visitors</p>
-									<div class="informer informer-danger dir-tr"><span class="fa fa-caret-down"></span></div>
-							</a>
+						<a href="#" class="tile tile-primary" style="margin-bottom:5px!important;font-size: 18px;">
+							<%unless @budget.nil?%>
+								<%=number_to_currency(@budget.expenses_remaining)%>
+								<p style="padding-top:10px;">Expenses Left</p>
+							<%else%>>
+									<p style="padding-top:10px;">No current budget</p>
+							<%end%>
+							<div class="informer informer-danger dir-tr"><span class="fa fa-caret-down"></span></div>
+						</a>
 					</div>
 				</div>
 
@@ -115,10 +134,6 @@
 									</table>
 							</div>
 					</div>
-				</div>
-				<div class="row">
-					Spend vs Budget Graph
-
 				</div>
 			</div>
 		</div>

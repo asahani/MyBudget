@@ -21,7 +21,7 @@ jQuery ->
   summary_bar_chart = $('#summaryreport').highcharts
     chart:
       renderTo: 'summaryreport'
-      height: '300'
+      height: '400'
       backgroundColor: null
     xAxis:
       categories: $('#summaryreport').data('overallsummarymonths')
@@ -96,7 +96,7 @@ jQuery ->
             y: 1900,
             color: Highcharts.getOptions().colors[2]
         }],
-        center: [100, 80],
+        center: [30, 20],
         size: 100,
         showInLegend: false,
         dataLabels: {
@@ -110,6 +110,7 @@ jQuery ->
       renderTo: 'monthlyexpensesreport'
       height: '300'
       backgroundColor: null
+    title: text: null
     xAxis:
       categories: $('#monthlyexpensesreport').data('overallsummarymonths')
       crosshair: true
@@ -288,7 +289,7 @@ jQuery ->
       plotShadow: false
       type: 'pie'
       backgroundColor: 'transparent'
-      height: '300'
+      height: '350'
     title: text: null
     tooltip: pointFormat: '{series.name}: <b>${point.amount:.1f}</b>'
     legend: {
