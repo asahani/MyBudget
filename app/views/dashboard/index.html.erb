@@ -52,7 +52,7 @@
 					<div class="col-md-6" style="padding: 0px 0px 0px 5px;">
 							<a href="#" class="tile tile-primary" style="margin-bottom:5px!important;font-size: 18px;">
 								<%unless @budget.nil?%>
-									<%=number_to_currency(@budget.expenses)%>
+									<strong><%=number_to_currency(@budget.expenses)%></strong>
 									<p style="padding-top:10px;">Expenses</p>
 								<%else%>>
 										<p style="padding-top:10px;">No current budget</p>
@@ -63,7 +63,7 @@
 					<div class="col-md-6" style="padding: 0px 5px 0px 5px;">
 						<a href="#" class="tile tile-primary" style="margin-bottom:5px!important;font-size: 18px;">
 							<%unless @budget.nil?%>
-								<%=number_to_currency(@budget.savings)%>
+								<strong><%=number_to_currency(@budget.savings)%></strong>
 								<p style="padding-top:10px;">Savings</p>
 							<%else%>>
 									<p style="padding-top:10px;">No current budget</p>
@@ -74,7 +74,7 @@
 					<div class="col-md-6" style="padding: 0px 0px 0px 5px;">
 						<a href="#" class="tile tile-primary" style="margin-bottom:5px!important;font-size: 18px;">
 							<%unless @budget.nil?%>
-								<%=number_to_currency(@budget.income_remaining)%>
+								<strong><%=number_to_currency(@budget.income_remaining)%></strong>
 								<p style="padding-top:10px;">Income Left</p>
 							<%else%>>
 									<p style="padding-top:10px;">No current budget</p>
@@ -85,7 +85,7 @@
 					<div class="col-md-6" style="padding: 0px 5px 0px 5px;">
 						<a href="#" class="tile tile-primary" style="margin-bottom:5px!important;font-size: 18px;">
 							<%unless @budget.nil?%>
-								<%=number_to_currency(@budget.expenses_remaining)%>
+								<strong><%=number_to_currency(@budget.expenses_remaining)%></strong>
 								<p style="padding-top:10px;">Expenses Left</p>
 							<%else%>>
 									<p style="padding-top:10px;">No current budget</p>
