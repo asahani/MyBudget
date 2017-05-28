@@ -110,11 +110,6 @@ jQuery ->
       renderTo: 'monthlyexpensesreport'
       height: '300'
       backgroundColor: null
-    title:
-      text: 'Budget vs Expense'
-      style: {
-        "color": "#ddd"
-      }
     xAxis:
       categories: $('#monthlyexpensesreport').data('overallsummarymonths')
       crosshair: true
@@ -282,4 +277,36 @@ jQuery ->
       name: 'Expense'
       colorByPoint: true
       data: $('#topcategoriespiechart').data('topcategoriesdata')
+    } ]
+
+  console.log $('#goalspiechartdashboard').data('goalspiechartdatadashboard')
+  goals_pie_dashboard = $('#goalspiechartdashboard').highcharts
+    chart:
+      renderTo: 'goalspiechartdashboard'
+      plotBackgroundColor: null
+      plotBorderWidth: null
+      plotShadow: false
+      type: 'pie'
+      backgroundColor: 'transparent'
+      height: '300'
+    title: text: null
+    tooltip: pointFormat: '{series.name}: <b>${point.amount:.1f}</b>'
+    legend: {
+      itemStyle:{
+        'color':'#999'
+      }
+    }
+    plotOptions: pie:
+      # borderColor: "#ddd"
+      allowPointSelect: true
+      cursor: 'pointer'
+      dataLabels:
+        enabled: false
+        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+        style: color: Highcharts.theme and Highcharts.theme.contrastTextColor or 'black'
+      showInLegend: true
+    series: [ {
+      name: 'Amount'
+      colorByPoint: true
+      data: $('#goalspiechartdashboard').data('goalspiechartdatadashboard')
     } ]

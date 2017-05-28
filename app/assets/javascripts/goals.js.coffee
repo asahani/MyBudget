@@ -19,7 +19,7 @@ jQuery ->
     return
 
   console.log $('#goalspiechart').data('goalspiechartdata')
-  top_categories_pie = $('#goalspiechart').highcharts
+  goals_pie = $('#goalspiechart').highcharts
     chart:
       renderTo: 'goalspiechart'
       plotBackgroundColor: null

@@ -30,8 +30,13 @@
 				    </div>
 				</div>
 			</div>
-			<div class="row">
-				Goal Savings
+			<div class="x-widget-timeline" style="padding-top: 0px!important;">
+				<div class="x-widget-timelime-head">
+						<h3>Savings Goals</h3>
+				</div>
+				<div class="x-widget-timeline-content">
+					<%= content_tag :div," ",id: "goalspiechartdashboard", data: {goalspiechartdatadashboard: goals_pie_chart_data}%>
+				</div>
 			</div>
 		</div>
 		<div class="col-md-8">
@@ -74,8 +79,10 @@
 				<div class="row" style="padding:5px 7px;">
 					<div class="panel panel-primary">
 							<div class="panel-body" style="padding:5px!important; background-color: #33414e;">
-
-									<%= content_tag :div," ",id: "monthlyexpensesreport", data: {overallsummarymonths: report_months_data,monthlyexpenses: report_expenses_data}%>
+								<div class="x-widget-timelime-head">
+										<h3>Budget vs Expenses</h3>
+								</div>
+								<%= content_tag :div," ",id: "monthlyexpensesreport", data: {overallsummarymonths: report_months_data,monthlyexpenses: report_expenses_data}%>
 
 							</div>
 							<div class="panel-body list-group">
