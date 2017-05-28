@@ -5,7 +5,7 @@ class GoalsController < ApplicationController
   # GET /goals
   # GET /goals.json
   def index
-    @goals = Goal.all
+    @goals = Goal.all.active
   end
 
   # GET /goals/1
@@ -26,18 +26,16 @@ class GoalsController < ApplicationController
   # POST /goals.json
   def create
     @goal = Goal.new(goal_params)
-    puts @goal.name
-    puts @goal.percentage_towards_goal
-    puts @goal.account_id
-    # respond_to do |format|
-    #   if @goal.save
-    #     format.html { redirect_to @goal, notice: 'Goal was successfully created.' }
-    #     format.json { render :show, status: :created, location: @goal }
-    #   else
-    #     format.html { render :new }
-    #     format.json { render json: @goal.errors, status: :unprocessable_entity }
-    #   end
-    # end
+
+    respond_to do |format|
+      if @goal.save
+        format.html { redirect_to @goal, notice: 'Goal was successfully created.' }
+        format.json { render :show, status: :created, location: @goal }
+      else
+        format.html { render :new }
+        format.json { render json: @goal.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # PATCH/PUT /goals/1
@@ -65,9 +63,6 @@ class GoalsController < ApplicationController
   end
 
   def get_account_details
-    puts "goal entered..................>"
-    puts params
-    puts goal_params['account_id']
     @account = Account.find(goal_params['account_id'])
   end
 

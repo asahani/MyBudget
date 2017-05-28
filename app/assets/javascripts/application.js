@@ -30,6 +30,7 @@
 //= require atlant/plugins/bootstrap/bootstrap-tagsinput.min
 //= require atlant/plugins/sparkline/jquery.sparkline.min
 //= require atlant/plugins/knob/jquery.knob.min
+//= require atlant/plugins/ion/ion.rangeSlider.min
 //= require atlant/plugins/owl/owl.carousel.min
 //= require atlant/plugins/moment.min
 //= require atlant/plugins/daterangepicker/daterangepicker

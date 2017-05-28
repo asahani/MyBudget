@@ -4,7 +4,7 @@
       <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
       <strong>Warning!</strong> <%= pluralize(@goal.errors.count, "error") %> prohibited this goal from being saved:
       <ul>
-      <% @house.errors.full_messages.each do |message| %>
+      <% @goal.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -65,7 +65,7 @@
               <span class="input-group-addon"><span class="fa fa-dollar"></span></span>
               <%= f.number_field :target_amount, class: "form-control",step: :any %>
           </div>
-          <span class="help-block">The savings target</span>
+          <span class="help-block">How much would you like to save for this goal?</span>
       </div>
   </div>
 
@@ -76,6 +76,7 @@
               <%= f.text_field :target_date, class: "form-control datepicker" %>
               <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
           </div>
+          <span class="help-block">By when would you like to acheive this goal?</span>
       </div>
   </div>
 
@@ -92,7 +93,7 @@
             method: "POST"
           },class: "form-control select"}%>
       <%end%>
-      <span class="help-block">Select savings account for this goal</span>
+      <span class="help-block">Where would you like to keep the money for this goal?></span>
     </div>
 </div>
 

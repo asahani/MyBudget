@@ -157,6 +157,7 @@ ActiveRecord::Schema.define(version: 20170526053306) do
     t.integer  "account_id"
     t.integer  "percentage_towards_goal"
     t.decimal  "current_balance_towards_goal", precision: 10, scale: 0, default: 0
+    t.boolean  "is_active",                                             default: true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
