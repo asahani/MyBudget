@@ -1,4 +1,4 @@
-<div class="row" style="padding-top: 60px;">
+<div class="row" style="padding-top: 10px;">
   <div class="col-md-3">
     <div class="widget widget-primary widget-item-icon">
         <div class="widget-item-left">
@@ -241,7 +241,7 @@
                   <span class="fa fa-calendar fa-2x" style="color: #444;"></span>
                 </div>
                 <div class="values">
-                  <strong><%= (@mortgage_payments.count.months/1.year).round(2) %> years</strong>
+                  <strong><%= (@mortgage_payments.count.months/1.year).round(1) %> years</strong>
                   Time Remaining
                 </div>
               </li>
@@ -259,7 +259,7 @@
                   <span class="fa fa-calendar fa-2x" style="color: #444;"></span>
                 </div>
                 <div class="values">
-                  <strong><%= (@mortgage_payments_with_offset.count.months/1.year).round(2) %> years</strong>
+                  <strong><%= (@mortgage_payments_with_offset.count.months/1.year).round(1) %> years</strong>
                   Time with Offset
                 </div>
               </li>
@@ -277,7 +277,7 @@
                   <span class="fa fa-clock-o fa-2x" style="color: #444;"></span>
                 </div>
                 <div class="values">
-                  <strong><%= (@mortgage_payments.count.months/1.year).round(2) - (@mortgage_payments_with_offset.count.months/1.year).round(2)%> years</strong>
+                  <strong><%= ((@mortgage_payments.count.months/1.year).round(2) - (@mortgage_payments_with_offset.count.months/1.year).round(2)).round(1)%> years</strong>
                   Time Saved
                 </div>
               </li>
