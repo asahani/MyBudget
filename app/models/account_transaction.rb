@@ -126,11 +126,13 @@ class AccountTransaction < ActiveRecord::Base
     unless self.payee.nil?
       unless self.payee.account.nil?
         self.payee.account.goals.each do |goal|
-          amount_for_goal = ((self.amount.to_f * goal.percentage_towards_goal) / 100).round(2)
-          puts 'amount for goal = '
-          puts amount_for_goal
-          goal.saved_amount += amount_for_goal
-          goal.save!
+          if self.transaction_date > goal.created_at.to_date
+            amount_for_goal = ((self.amount.to_f * goal.percentage_towards_goal) / 100).round(2)
+            puts 'amount for goal = '
+            puts amount_for_goal
+            goal.saved_amount += amount_for_goal
+            goal.save!
+          end
         end
       end
     end
