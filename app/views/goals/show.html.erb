@@ -2,3 +2,15 @@
 <div style="padding: 10px;">
   <%=render 'show_goal_details', goal: @goal%>
 </div>
+<div class="row">
+  <table class="table">
+    <tr>
+      <td><strong>Account</strong></td>
+      <td><%=@goal.account.name%></td>
+      <td><strong>Saving %</strong></td>
+      <td><%=@goal.percentage_towards_goal%>%</td>
+      <td><strong>Initial contribution</strong></td>
+      <td><%=number_to_currency(@goal.current_balance_towards_goal)%></td>
+    </tr>
+  </table>
+</div>
