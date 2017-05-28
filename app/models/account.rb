@@ -6,6 +6,7 @@ class Account < ActiveRecord::Base
   belongs_to :account_type
   has_many :budget_transactions
   has_one :payee
+  has_many :goals
 
   ##################################
   # Validations

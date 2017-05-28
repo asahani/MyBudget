@@ -19,7 +19,7 @@ class AccountTransaction < ActiveRecord::Base
   ##################################
   # Callbacks
   ##################################
-  after_create :update_budget_accounts_and_account_balance, :update_account_payees_and_account_balance, :add_category_tag
+  after_create :update_budget_accounts_and_account_balance, :update_account_payees_and_account_balance, :add_category_tag, :update_goals
   after_update :update_budget_accounts_and_account_balance, :update_account_payees_and_account_balance
   after_destroy :update_budget_accounts_and_account_balance, :update_account_payees_and_account_balance
 
@@ -120,6 +120,20 @@ class AccountTransaction < ActiveRecord::Base
 
   def add_category_tag
     self.tag_list.add(self.category.name) unless self.category.nil?
+  end
+
+  def update_goals
+    unless self.payee.nil?
+      unless self.payee.account.nil?
+        self.payee.account.goals.each do |goal|
+          amount_for_goal = ((self.amount.to_f * goal.percentage_towards_goal) / 100).round(2)
+          puts 'amount for goal = '
+          puts amount_for_goal
+          goal.saved_amount += amount_for_goal
+          goal.save!
+        end
+      end
+    end
   end
 
 end

@@ -21,7 +21,7 @@ class BudgetTransaction < ActiveRecord::Base
   # Callbacks
   ##################################
   before_save :update_mortgage_account_balance
-  after_create :update_budget_item, :update_budget_account, :update_account_payee, :add_category_tag
+  after_create :update_budget_item, :update_budget_account, :update_account_payee, :add_category_tag, :update_goals
   after_update :update_budget_item, :update_budget_account, :update_account_payee
   after_destroy :update_budget_item, :update_budget_account, :update_account_payee,:update_mortgage_account_balance
 
@@ -155,6 +155,20 @@ class BudgetTransaction < ActiveRecord::Base
     end
 
     account.save!
+  end
+
+  def update_goals
+    unless self.account.nil?
+      if self.credit > 0
+        self.account.goals.each do |goal|
+          amount_for_goal = ((self.credit.to_f * goal.percentage_towards_goal) / 100).round(2)
+          puts 'amount for goal = '
+          puts amount_for_goal
+          goal.saved_amount += amount_for_goal
+          goal.save!
+        end
+      end
+    end
   end
 
 end
