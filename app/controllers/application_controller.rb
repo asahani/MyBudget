@@ -128,6 +128,8 @@ class ApplicationController < ActionController::Base
     annual_report[:overall_savings] = Array.new(13)
     annual_report[:remaining] = Array.new(13)
     annual_report[:misc_percentage] = Array.new(13)
+    annual_report[:budgeted_amount] = Array.new(13)
+    annual_report[:yearly_budgeted_amount] = Array.new(13)
 
     total_income = 0
     total_expenses = 0
@@ -137,6 +139,10 @@ class ApplicationController < ActionController::Base
     total_overall_savings = 0
     total_remaining = 0
     total_misc_percentage = 0
+    total_yearly_budgeted_amount = 0
+    total_budgeted_amount = 0
+
+    yearly_budgeted_amount = nil
 
     for budget_month in 0..11
       puts "month----------------"
@@ -147,6 +153,8 @@ class ApplicationController < ActionController::Base
 
       unless budget.nil?
         no_of_budgets += 1
+        yearly_budgeted_amount = budget.budgeted_amount
+
         annual_report[:income][budget_month] = budget.income
         annual_report[:expenses][budget_month] = budget.expenses
         annual_report[:savings][budget_month] = budget.savings
@@ -155,6 +163,7 @@ class ApplicationController < ActionController::Base
         annual_report[:overall_savings][budget_month] = annual_report[:savings][budget_month] - annual_report[:savings_expenses][budget_month]
         annual_report[:remaining][budget_month] = budget.income_remaining
         annual_report[:misc_percentage][budget_month] = budget.miscellaneous_expenses_percentage
+        annual_report[:budgeted_amount][budget_month] = budget.budgeted_amount
 
         total_income += annual_report[:income][budget_month]
         total_expenses +=   annual_report[:expenses][budget_month]
@@ -164,7 +173,10 @@ class ApplicationController < ActionController::Base
         total_overall_savings += annual_report[:overall_savings][budget_month]
         total_remaining += annual_report[:remaining][budget_month]
         total_misc_percentage += annual_report[:misc_percentage][budget_month]
+        total_budgeted_amount += annual_report[:budgeted_amount][budget_month]
       end
+      annual_report[:yearly_budgeted_amount][budget_month] = yearly_budgeted_amount
+      total_yearly_budgeted_amount += yearly_budgeted_amount unless yearly_budgeted_amount.nil?
     end
 
     annual_report[:income][12] = total_income
@@ -178,7 +190,8 @@ class ApplicationController < ActionController::Base
     puts no_of_budgets
     puts (total_misc_percentage / no_of_budgets).to_f.round(2)
     annual_report[:misc_percentage][12] = (total_misc_percentage.to_f / no_of_budgets.to_f).to_f.round(2)
-
+    annual_report[:yearly_budgeted_amount][12] = total_yearly_budgeted_amount
+    annual_report[:budgeted_amount][12] = total_budgeted_amount
     return annual_report
   end
 

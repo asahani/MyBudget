@@ -28,6 +28,11 @@ module DashboardHelper
     arr.collect { |saving| saving.to_f }.to_json
   end
 
+  def report_yearly_budgeted_amount_data
+    arr = @annual_report[:yearly_budgeted_amount].slice(0,12)
+    arr.collect { |yearly_budgeted_amount| yearly_budgeted_amount.to_f }.to_json
+  end
+
   def top_categories_as_percentage
     @top_categories = BudgetTransaction.top_transactions_grouped_by_category
     total_spend = BudgetTransaction.total_expenses_for_year

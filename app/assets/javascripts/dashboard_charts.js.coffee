@@ -104,7 +104,7 @@ jQuery ->
         }
       }
     ]
-
+  console.log $('#monthlyexpensesreport').data('yearlybudgetedamount')
   expenses_bar_chart = $('#monthlyexpensesreport').highcharts
     chart:
       renderTo: 'monthlyexpensesreport'
@@ -147,7 +147,7 @@ jQuery ->
       {
         type: 'spline',
         name: 'Budget',
-        data: [3500, 3500, 3500, 3500, 3500,3500, 3500, 3500, 3500, 3500,3500, 3500],
+        data: $('#monthlyexpensesreport').data('yearlybudgetedamount'),
         lineWidth: 3,
         lineColor: Highcharts.getOptions().colors[3],
         marker: {
@@ -239,7 +239,7 @@ jQuery ->
       }
     ]
 
-  console.log $('#topcategoriespiechart').data('topcategoriesdata')
+  # console.log $('#topcategoriespiechart').data('topcategoriesdata')
   top_categories_pie = $('#topcategoriespiechart').highcharts
     chart:
       renderTo: 'topcategoriespiechart'
@@ -280,7 +280,7 @@ jQuery ->
       data: $('#topcategoriespiechart').data('topcategoriesdata')
     } ]
 
-  console.log $('#goalspiechartdashboard').data('goalspiechartdatadashboard')
+  # console.log $('#goalspiechartdashboard').data('goalspiechartdatadashboard')
   goals_pie_dashboard = $('#goalspiechartdashboard').highcharts
     chart:
       renderTo: 'goalspiechartdashboard'

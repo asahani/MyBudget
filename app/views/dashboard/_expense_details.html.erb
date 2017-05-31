@@ -1,11 +1,11 @@
-<div class="x-widget-timeline">
+<div class="x-widget-timeline" style="padding-top:10px;">
   <div class="row" style="padding:5px 7px;">
   <div class="panel panel-primary">
       <div class="panel-body" style="padding:5px!important; background-color: #33414e;">
         <div class="x-widget-timelime-head">
             <h3>Budget vs Expenses</h3>
         </div>
-        <%= content_tag :div," ",id: "monthlyexpensesreport", data: {overallsummarymonths: report_months_data,monthlyexpenses: report_expenses_data}%>
+        <%= content_tag :div," ",id: "monthlyexpensesreport", data: {overallsummarymonths: report_months_data,monthlyexpenses: report_expenses_data,yearlybudgetedamount: report_yearly_budgeted_amount_data}%>
 
       </div>
       <div class="panel-body list-group">
@@ -17,17 +17,17 @@
             </tr>
             <tr>
               <td style="padding: 10px 0px 10px 15px;width: 35%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><span class="fa fa-user"></span>&nbsp;&nbsp;&nbsp;&nbsp;Budget</td>
-              <td style="text-align:right;padding: 10px 0px;width: 30%;line-height: 20px;border-bottom: 1px solid #E5E5E5;">$350000</td>
-              <td style="text-align:right;padding: 10px 15px 10px 0px;width: 35%;line-height: 20px;border-bottom: 1px solid #E5E5E5;">$350000</td>
+              <td style="text-align:right;padding: 10px 0px;width: 30%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><%=number_to_currency(@annual_report[:budgeted_amount][12])%></td>
+              <td style="text-align:right;padding: 10px 15px 10px 0px;width: 35%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><%=number_to_currency(@annual_report[:yearly_budgeted_amount][12])%></td>
             </tr>
             <tr>
               <td style="padding: 10px 0px 10px 15px;width: 35%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><span class="fa fa-user"></span>&nbsp;&nbsp;&nbsp;&nbsp;Savings</td>
-              <td style="text-align:right;padding: 10px 0px;width: 30%;line-height: 20px;border-bottom: 1px solid #E5E5E5;">$35000</td>
+              <td style="text-align:right;padding: 10px 0px;width: 30%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><%=number_to_currency(@annual_report[:savings][12])%></td>
               <td style="text-align:right;padding: 10px 15px 10px 0px;width: 35%;line-height: 20px;border-bottom: 1px solid #E5E5E5;">$35000</td>
             </tr>
             <tr>
               <td style="padding: 10px 0px 10px 15px;width: 35%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><span class="fa fa-user"></span>&nbsp;&nbsp;&nbsp;&nbsp;Expenses</td>
-              <td style="text-align:right;padding: 10px 0px;width: 30%;line-height: 20px;border-bottom: 1px solid #E5E5E5;">$35000</td>
+              <td style="text-align:right;padding: 10px 0px;width: 30%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><%=number_to_currency(@annual_report[:expenses][12])%></td>
               <td style="text-align:right;padding: 10px 15px 10px 0px;width: 35%;line-height: 20px;border-bottom: 1px solid #E5E5E5;">$35000</td>
             </tr>
             <tr>
