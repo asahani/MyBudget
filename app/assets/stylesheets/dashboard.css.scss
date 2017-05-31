@@ -28,6 +28,7 @@
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+$data-table-border-color: #445664;//#E5E5E5
 
 body {
 	font-size: small;
@@ -53,4 +54,20 @@ body {
 }
 .category-tile-name {
 
+}
+
+.expense-table-first-column {
+	line-height: 20px;
+	border-top: 1px solid $data-table-border-color;
+	border-bottom: 1px solid $data-table-border-color;
+	padding: 10px 0px 10px 15px;
+	width: 34%;
+}
+.expense-table-column {
+	line-height: 20px;
+	border-top: 1px solid $data-table-border-color;
+	border-bottom: 1px solid $data-table-border-color;
+	padding: 10px 0px;
+	text-align: right;
+	width: 33%;
 }

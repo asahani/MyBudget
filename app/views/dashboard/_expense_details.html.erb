@@ -8,32 +8,32 @@
         <%= content_tag :div," ",id: "monthlyexpensesreport", data: {overallsummarymonths: report_months_data,monthlyexpenses: report_expenses_data,yearlybudgetedamount: report_yearly_budgeted_amount_data}%>
 
       </div>
-      <div class="panel-body list-group">
-          <table style="width: 100%;">
+      <div class="panel-body list-group" style="background: #2D3945;">
+          <table style="width: 100%; background: #2D3945;color: white;">
             <tr>
-              <td style="padding: 10px 0px 10px 15px;width: 35%;line-height: 20px;border-top: 1px solid #E5E5E5;border-bottom: 1px solid #E5E5E5;"></td>
-              <td style="text-align:center;padding: 10px 0px;width: 30%;line-height: 20px;border-top: 1px solid #E5E5E5;border-bottom: 1px solid #E5E5E5;">YTD</td>
-              <td style="text-align:center;padding: 10px 15px 10px 0px;width: 35%;line-height: 20px;border-top: 1px solid #E5E5E5;border-bottom: 1px solid #E5E5E5;">Yearly</td>
+              <td class="expense-table-first-column"></td>
+              <td class="expense-table-column" style="text-align:center;"><strong>YTD</strong></td>
+              <td class="expense-table-column" style="text-align:center;padding-right: 10px;"><strong>Yearly</strong></td>
             </tr>
             <tr>
-              <td style="padding: 10px 0px 10px 15px;width: 35%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><span class="fa fa-user"></span>&nbsp;&nbsp;&nbsp;&nbsp;Budget</td>
-              <td style="text-align:right;padding: 10px 0px;width: 30%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><%=number_to_currency(@annual_report[:budgeted_amount][12])%></td>
-              <td style="text-align:right;padding: 10px 15px 10px 0px;width: 35%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><%=number_to_currency(@annual_report[:yearly_budgeted_amount][12])%></td>
+              <td class="expense-table-first-column"><span class="fa fa-user"></span>&nbsp;&nbsp;&nbsp;&nbsp;Budget</td>
+              <td class="expense-table-column"><%=number_to_currency(@annual_report[:budgeted_amount][12])%></td>
+              <td class="expense-table-column" style="padding-right: 10px;"><%=number_to_currency(@annual_report[:yearly_budgeted_amount][12])%></td>
             </tr>
             <tr>
-              <td style="padding: 10px 0px 10px 15px;width: 35%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><span class="fa fa-user"></span>&nbsp;&nbsp;&nbsp;&nbsp;Savings</td>
-              <td style="text-align:right;padding: 10px 0px;width: 30%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><%=number_to_currency(@annual_report[:savings][12])%></td>
-              <td style="text-align:right;padding: 10px 15px 10px 0px;width: 35%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><%=number_to_currency(@annual_report[:yearly_savings][12])%></td>
+              <td class="expense-table-first-column"><span class="fa fa-user"></span>&nbsp;&nbsp;&nbsp;&nbsp;Savings</td>
+              <td class="expense-table-column"><%=number_to_currency(@annual_report[:savings][12])%></td>
+              <td class="expense-table-column" style="padding-right: 10px;"><%=number_to_currency(@annual_report[:yearly_savings][12])%></td>
             </tr>
             <tr>
-              <td style="padding: 10px 0px 10px 15px;width: 35%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><span class="fa fa-user"></span>&nbsp;&nbsp;&nbsp;&nbsp;Expenses</td>
-              <td style="text-align:right;padding: 10px 0px;width: 30%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><%=number_to_currency(@annual_report[:expenses][12])%></td>
-              <td style="text-align:right;padding: 10px 15px 10px 0px;width: 35%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><%=number_to_currency(@annual_report[:yearly_expenses][12])%></td>
+              <td class="expense-table-first-column"><span class="fa fa-user"></span>&nbsp;&nbsp;&nbsp;&nbsp;Expenses</td>
+              <td class="expense-table-column"><%=number_to_currency(@annual_report[:expenses][12])%></td>
+              <td class="expense-table-column" style="padding-right: 10px;"><%=number_to_currency(@annual_report[:yearly_expenses][12])%></td>
             </tr>
             <tr>
-              <td style="padding: 10px 0px 10px 15px;width: 35%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><span class="fa fa-user"></span>&nbsp;&nbsp;&nbsp;&nbsp;Variance</td>
-              <td style="text-align:right;padding: 10px 0px;width: 30%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><%=number_to_currency(@annual_report[:budgeted_amount][12] - @annual_report[:expenses][12])%></td>
-              <td style="text-align:right;padding: 10px 15px 10px 0px;width: 35%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><%=number_to_currency(@annual_report[:yearly_budgeted_amount][12] - @annual_report[:yearly_expenses][12])%></td>
+              <td class="expense-table-first-column"><span class="fa fa-user"></span>&nbsp;&nbsp;&nbsp;&nbsp;Variance</td>
+              <td class="expense-table-column"><%=number_to_currency(@annual_report[:budgeted_amount][12] - @annual_report[:expenses][12])%></td>
+              <td class="expense-table-column" style="padding-right: 10px;"><%=number_to_currency(@annual_report[:yearly_budgeted_amount][12] - @annual_report[:yearly_expenses][12])%></td>
             </tr>
           </table>
       </div>
