@@ -33,6 +33,29 @@ module DashboardHelper
     arr.collect { |yearly_budgeted_amount| yearly_budgeted_amount.to_f }.to_json
   end
 
+  def report_income_expense_difference_data
+    arr = @annual_report[:income_expense_difference].slice(0,12)
+    arr.collect { |income_expense_difference| income_expense_difference.to_f }.to_json
+  end
+
+  def overall_pie_data_for_summary
+    overall_map = Array.new
+    overall_map << {
+      name: 'Income',
+      y: @annual_report[:income][12].to_f
+    }
+    overall_map << {
+      name: 'Expenses',
+      y: @annual_report[:expenses][12].to_f
+    }
+    overall_map << {
+      name: 'Savings',
+      y: @annual_report[:savings][12].to_f
+    }
+    return overall_map
+  end
+
+
   def top_categories_as_percentage
     @top_categories = BudgetTransaction.top_transactions_grouped_by_category
     total_spend = BudgetTransaction.total_expenses_for_year

@@ -12,5 +12,11 @@ class DashboardController < ApplicationController
     end
     puts 'Budget Consumption = '
     puts @budget_consumption
+
+    @monthly_income = 0
+    Income.all.active.each do |income|
+      @monthly_income += income.monthly_income
+    end
+    @budgets_for_year  = Budget.where('year = ?',@budget_year).all.count()
   end
 end

@@ -1,9 +1,15 @@
 <div class="x-chart-widget">
     <div class="x-chart-widget-content">
-        
+
         <div>
             <div id="x-dashboard-line-dark">
-              <%= content_tag :div," ",id: "summaryreport", data: {overallsummarymonths: report_months_data,overallsummaryincomes: overall_summary_report_incomes_data,overallsummaryexpenses: overall_summary_report_expenses_data,overallsummarysavings: overall_summary_report_savings_data}%>
+              <%= content_tag :div," ",id: "summaryreport", data: {
+                overallsummarymonths: report_months_data,
+                overallsummaryincomes: overall_summary_report_incomes_data,
+                overallsummaryexpenses: overall_summary_report_expenses_data,
+                overallsummarysavings: overall_summary_report_savings_data,
+                incomeexpensedifference: report_income_expense_difference_data,
+                overallpiedata: overall_pie_data_for_summary}%>
             </div>
         </div>
         <div class="row">
@@ -12,26 +18,38 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="x-chart-widget-informer-item">
-                                <div class="count">223<span>34% <i class="fa fa-arrow-up"></i></span></div>
-                                <div class="title">Views of your profile</div>
+                                <div class="count">
+                                  <%=number_to_currency(@monthly_income,precision: 0)%>
+                                  <span><%=number_to_currency((@monthly_income/30),precision: 0)%>/day <i class="fa fa-arrow-up"></i></span>
+                                </div>
+                                <div class="title">Monthly Income</div>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="x-chart-widget-informer-item">
-                                <div class="count">190<span>17% <i class="fa fa-arrow-up"></i></span></div>
-                                <div class="title">Views of your works</div>
+                                <div class="count">
+                                  <%=number_to_currency(Budget.last.budgeted_amount,precision: 0)%>
+                                  <span><%=number_to_currency(Budget.last.budgeted_amount/30,precision: 0)%>/day <i class="fa fa-arrow-up"></i></span>
+                                </div>
+                                <div class="title">Monthly Budget</div>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="x-chart-widget-informer-item">
-                                <div class="count">223<span class="negative">22% <i class="fa fa-arrow-down"></i></span></div>
-                                <div class="title">Likes</div>
+                                <div class="count">
+                                  <%=number_to_currency(@annual_report[:expenses][12]/@budgets_for_year,precision: 0)%>
+                                  <span class="text-danger"><%=number_to_currency((@annual_report[:expenses][12]/@budgets_for_year)/30,precision: 0)%>/day <i class="fa fa-arrow-down"></i></span>
+                                </div>
+                                <div class="title">Average Expenses</div>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="x-chart-widget-informer-item last">
-                                <div class="count">160<span>3% <i class="fa fa-arrow-up"></i></span></div>
-                                <div class="title">Comments</div>
+                              <div class="count">
+                                <%=number_to_currency(@annual_report[:savings][12]/@budgets_for_year,precision: 0)%>
+                                <span class="text-success"><%=number_to_currency((@annual_report[:savings][12]/@budgets_for_year)/30,precision: 0)%>/day <i class="fa fa-arrow-down"></i></span>
+                              </div>
+                                <div class="title">Average Savings</div>
                             </div>
                         </div>
                     </div>

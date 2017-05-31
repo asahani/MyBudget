@@ -134,6 +134,7 @@ class ApplicationController < ActionController::Base
     annual_report[:yearly_income] = Array.new(13)
     annual_report[:yearly_savings] = Array.new(13)
     annual_report[:yearly_expenses] = Array.new(13)
+    annual_report[:income_expense_difference] = Array.new(13)
 
     total_income = 0
     total_expenses = 0
@@ -149,6 +150,7 @@ class ApplicationController < ActionController::Base
     total_yearly_income = 0
     total_yearly_savings = 0
     total_yearly_expenses = 0
+    total_income_expense_difference = 0
 
     default_budgeted_amount = nil
     default_income = nil
@@ -183,6 +185,8 @@ class ApplicationController < ActionController::Base
         annual_report[:yearly_savings][budget_month]  = annual_report[:savings][budget_month]
         annual_report[:yearly_expenses][budget_month]  = annual_report[:expenses][budget_month]
 
+        annual_report[:income_expense_difference][budget_month] = annual_report[:income][budget_month] - annual_report[:expenses][budget_month]
+
         total_income += annual_report[:income][budget_month]
         total_expenses +=   annual_report[:expenses][budget_month]
         total_savings += annual_report[:savings][budget_month]
@@ -197,16 +201,26 @@ class ApplicationController < ActionController::Base
         total_yearly_income += annual_report[:income][budget_month]
         total_yearly_savings += annual_report[:savings][budget_month]
         total_yearly_expenses += annual_report[:expenses][budget_month]
+
+        total_income_expense_difference += annual_report[:income_expense_difference][budget_month]
       else
         annual_report[:yearly_budgeted_amount][budget_month] = default_budgeted_amount
         annual_report[:yearly_income][budget_month] = default_income
         annual_report[:yearly_savings][budget_month] = default_savings
         annual_report[:yearly_expenses][budget_month] = default_budgeted_amount
+        unless default_income.nil? || default_budgeted_amount.nil?
+          annual_report[:income_expense_difference][budget_month] = default_income - default_budgeted_amount
+        else
+          annual_report[:income_expense_difference][budget_month] = 0
+        end
 
         total_yearly_budgeted_amount += default_budgeted_amount unless default_budgeted_amount.nil?
         total_yearly_income += default_income unless default_income.nil?
         total_yearly_savings += default_savings unless default_savings.nil?
         total_yearly_expenses += default_budgeted_amount unless default_budgeted_amount.nil?
+        unless default_income.nil? || default_budgeted_amount.nil?
+          total_income_expense_difference += default_income - default_budgeted_amount
+        end
       end
 
     end
@@ -228,6 +242,8 @@ class ApplicationController < ActionController::Base
     annual_report[:yearly_income][12] = total_yearly_income
     annual_report[:yearly_savings][12] = total_yearly_savings
     annual_report[:yearly_expenses][12] = total_yearly_expenses
+
+    annual_report[:income_expense_difference][12] = total_income_expense_difference
 
     return annual_report
   end

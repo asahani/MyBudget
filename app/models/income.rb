@@ -3,25 +3,26 @@ class Income < ActiveRecord::Base
   # Relationships
   ##################################
   belongs_to :account
-  
+
   ##################################
   # Validations
-  ##################################    
+  ##################################
   validates_presence_of :description, :amount, :account_id
   validates_numericality_of :amount, :account_id
 
   ##################################
   # Callbacks
   ##################################
-  
+
   ##################################
   # Scoped Methods
   ##################################
+  scope :active, -> { where(is_active: true)}
   
   ##################################
   # Class Methods
   ##################################
-  
+
   def monthly_income
     if self.monthly
       return amount
@@ -30,7 +31,7 @@ class Income < ActiveRecord::Base
     elsif self.weekly
       return (self.amount * 52)/12
     end
-    return 0    
+    return 0
   end
-  
+
 end
