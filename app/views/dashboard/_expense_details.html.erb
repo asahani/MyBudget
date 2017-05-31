@@ -23,17 +23,17 @@
             <tr>
               <td style="padding: 10px 0px 10px 15px;width: 35%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><span class="fa fa-user"></span>&nbsp;&nbsp;&nbsp;&nbsp;Savings</td>
               <td style="text-align:right;padding: 10px 0px;width: 30%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><%=number_to_currency(@annual_report[:savings][12])%></td>
-              <td style="text-align:right;padding: 10px 15px 10px 0px;width: 35%;line-height: 20px;border-bottom: 1px solid #E5E5E5;">$35000</td>
+              <td style="text-align:right;padding: 10px 15px 10px 0px;width: 35%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><%=number_to_currency(@annual_report[:yearly_savings][12])%></td>
             </tr>
             <tr>
               <td style="padding: 10px 0px 10px 15px;width: 35%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><span class="fa fa-user"></span>&nbsp;&nbsp;&nbsp;&nbsp;Expenses</td>
               <td style="text-align:right;padding: 10px 0px;width: 30%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><%=number_to_currency(@annual_report[:expenses][12])%></td>
-              <td style="text-align:right;padding: 10px 15px 10px 0px;width: 35%;line-height: 20px;border-bottom: 1px solid #E5E5E5;">$35000</td>
+              <td style="text-align:right;padding: 10px 15px 10px 0px;width: 35%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><%=number_to_currency(@annual_report[:yearly_expenses][12])%></td>
             </tr>
             <tr>
               <td style="padding: 10px 0px 10px 15px;width: 35%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><span class="fa fa-user"></span>&nbsp;&nbsp;&nbsp;&nbsp;Variance</td>
-              <td style="text-align:right;padding: 10px 0px;width: 30%;line-height: 20px;border-bottom: 1px solid #E5E5E5;">$35000</td>
-              <td style="text-align:right;padding: 10px 15px 10px 0px;width: 35%;line-height: 20px;border-bottom: 1px solid #E5E5E5;">$35000</td>
+              <td style="text-align:right;padding: 10px 0px;width: 30%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><%=number_to_currency(@annual_report[:budgeted_amount][12] - @annual_report[:expenses][12])%></td>
+              <td style="text-align:right;padding: 10px 15px 10px 0px;width: 35%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><%=number_to_currency(@annual_report[:yearly_budgeted_amount][12] - @annual_report[:yearly_expenses][12])%></td>
             </tr>
           </table>
       </div>
