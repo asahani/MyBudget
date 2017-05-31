@@ -23,8 +23,12 @@
                 <!-- PAGE CONTENT WRAPPER -->
                 <div class="page-content-wrap" style="background-color: #2D3945;">
                     <!-- START X-NAVIGATION VERTICAL -->
-
-                    <%=render 'layouts/top_navigation'-%>
+                    <ul class="x-navigation x-navigation-horizontal x-navigation-panel x-navigation-container">
+                      <li class="xn-logo" style="background-color: #e0401d;">
+                        <a href="/dashboard.html"><span class="xn-text" style="font-size: 16px;">BUDGET MANAGER</span></a>
+                      </li>
+                      <%=render 'layouts/top_navigation_menu'-%>
+                    </ul
                     <!-- END X-NAVIGATION VERTICAL -->
                     <div class="x-content">
                       <%=yield%>
