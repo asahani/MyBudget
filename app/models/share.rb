@@ -6,7 +6,7 @@ class Share < ActiveRecord::Base
   belongs_to :brokerage_account, :class_name => 'Account', :foreign_key => 'brokerage_account_id'
   has_many :dividened_incomes, :class_name => 'BudgetIncome', :foreign_key => 'dividend_income_share_id'
   has_many :account_transactions, :class_name => 'AccountTransaction', :foreign_key => 'share_id'
-  
+
   ##################################
   # Validations
   ##################################
@@ -95,7 +95,8 @@ class Share < ActiveRecord::Base
   end
 
   def get_percent_change_value
-    change_percent = self.share_details.percent_change.to_f
+    change_value = 0
+    change_percent = self.share_details.percent_change.to_f unless self.share_details.nil?
     change_value = ((self.get_holding_value * change_percent)/100).to_f.round(2)
 
     return change_value

@@ -15,8 +15,7 @@ class SharesController < ApplicationController
       share.set_share_details
       details = Hash.new
       details['share'] = share
-       puts details['share'].name
-      details['daily_movement_percentage'] = share.share_details.percent_change.to_f
+      puts details['share'].name
       details['market_value'] = share.get_holding_value
       @total_market_value += details['market_value']
       details['change_value'] = share.get_percent_change_value
@@ -26,6 +25,7 @@ class SharesController < ApplicationController
       details['profit_loss_value'] = share.get_profit_loss_value
       @total_proft_loss += details['profit_loss_value']
       details['profit_loss_percentage'] = share.get_profit_loss_percentage
+      details['daily_movement_percentage'] = share.share_details.percent_change.to_f unless share.share_details.nil?
       @shares_with_details << details
     end
     @total_daily_movement_percentage = ((@total_change_value/@total_market_value)*100).to_f.round(2)
