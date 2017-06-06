@@ -1,99 +1,309 @@
-<div class="annual-report row">
+<div class="content-frame">
 
-  <table class="table table-bordered table-striped table-hover">
-    <thead>
-      <tr>
-        <th style="background: none!important;"><%=@budget_year%></th>
-        <%@annual_report[:month_name].each do |month_name|%>
-          <th><strong><%=month_name%></strong></th>
-        <%end%>
-        <th>Totals</th>
-      </tr>
-    </thead>
+  <div class="content-frame-right" style="background: #2D3945;">
+    <div class="">
+      <h4>Timeline</h4>
+    </div>
+    <div>
+      <!-- START TIMELINE -->
+      <div class="timeline">
 
-    <tbody>
-      <tr>
-        <td class="heading-column-cell report-cell">Income</td>
-        <%@annual_report[:income].each do |income|%>
-          <td class="number-cell report-cell"><%=number_to_currency(income) unless income.nil?%></td>
-        <%end%>
-      </tr>
+          <!-- START TIMELINE ITEM -->
+          <div class="timeline-item timeline-main">
+              <div class="timeline-date">2015</div>
+          </div>
+          <!-- END TIMELINE ITEM -->
 
-      <tr>
-        <td class="heading-column-cell report-cell">Expenses</td>
-        <%@annual_report[:expenses].each do |expense|%>
-          <td class="number-cell report-cell"><%=number_to_currency(expense) unless expense.nil?%></td>
-        <%end%>
-      </tr>
+          <!-- START TIMELINE ITEM -->
+          <div class="timeline-item">
+              <div class="timeline-item-info">Yesterday</div>
+              <div class="timeline-item-icon"><span class="fa fa-globe"></span></div>
+              <div class="timeline-item-content">
+                  <div class="timeline-heading">
+                      <img src="assets/images/users/user2.jpg"/> <a href="#">John Doe</a> added article <a href="#">Lorem ipsum dolor sit amet</a>
+                  </div>
+                  <div class="timeline-body">
+                      <img src="assets/images/gallery/nature-4.jpg" class="img-text" width="150" align="left"/>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tempus dolor id orci lacinia, eget aliquam velit consequat.</p>
+                      <p>Vivamus at tincidunt lectus, faucibus condimentum quam. Duis facilisis sem sed eros malesuada, vel dignissim diam ornare. Etiam rhoncus, nibh non auctor mattis, ligula diam mattis dolor, non tincidunt lectus velit nec metus.
+                         Phasellus dictum justo vitae ornare lobortis. Integer ut lectus vel mauris tempor ultricies eget vitae turpis. Sed eleifend odio quis rutrum volutpat.</p>
+                      <ul class="list-tags">
+                          <li><a href="#"><span class="fa fa-tag"></span> tempor</a></li>
+                          <li><a href="#"><span class="fa fa-tag"></span> eros</a></li>
+                          <li><a href="#"><span class="fa fa-tag"></span> suspendisse</a></li>
+                          <li><a href="#"><span class="fa fa-tag"></span> dolor</a></li>
+                      </ul>
+                  </div>
+                  <div class="timeline-body comments">
+                      <div class="comment-item">
+                          <img src="assets/images/users/user4.jpg"/>
+                          <p class="comment-head">
+                              <a href="#">Brad Pitt</a> <span class="text-muted">@bradpitt</span>
+                          </p>
+                          <p>Awesome, man, that is awesome...</p>
+                          <small class="text-muted">10h ago</small>
+                      </div>
+                      <div class="comment-write">
+                          <textarea class="form-control" placeholder="Write a comment" rows="1"></textarea>
+                      </div>
+                  </div>
+                  <div class="timeline-footer">
+                      <a href="#">Read more</a>
+                      <div class="pull-right">
+                          <a href="#"><span class="fa fa-comment"></span> 35</a>
+                          <a href="#"><span class="fa fa-share"></span></a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- END TIMELINE ITEM -->
 
-      <tr>
-        <td class="heading-column-cell report-cell">Savings</td>
-        <%@annual_report[:savings].each do |saving|%>
-          <td class="number-cell report-cell"><%=number_to_currency(saving) unless saving.nil?%></td>
-        <%end%>
-      </tr>
+          <!-- START TIMELINE ITEM -->
+          <div class="timeline-item timeline-item-right">
+              <div class="timeline-item-info">29 Sep 2015</div>
+              <div class="timeline-item-icon"><span class="fa fa-image"></span></div>
+              <div class="timeline-item-content">
+                  <div class="timeline-heading">
+                      <img src="assets/images/users/user.jpg"/> <a href="#">Dmitry Ivaniuk</a> posted <a href="#">@Nature</a> images
+                  </div>
+                  <div class="timeline-body" id="links">
+                      <div class="row">
+                          <div class="col-md-4">
+                              <a href="assets/images/gallery/nature-1.jpg" title="Nature Image 1" data-gallery>
+                                  <img src="assets/images/gallery/nature-1.jpg" class="img-responsive img-text"/>
+                              </a>
+                          </div>
+                          <div class="col-md-4">
+                              <a href="assets/images/gallery/nature-2.jpg" title="Nature Image 2" data-gallery>
+                                  <img src="assets/images/gallery/nature-2.jpg" class="img-responsive img-text"/>
+                              </a>
+                          </div>
+                          <div class="col-md-4">
+                              <a href="assets/images/gallery/nature-3.jpg" title="Nature Image 3" data-gallery>
+                                  <img src="assets/images/gallery/nature-3.jpg" class="img-responsive img-text"/>
+                              </a>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="timeline-body comments">
+                      <div class="comment-item">
+                          <img src="assets/images/users/user2.jpg"/>
+                          <p class="comment-head">
+                              <a href="#">John Doe</a> <span class="text-muted">@johndoe</span>
+                          </p>
+                          <p>Amazing! Where did you get it?</p>
+                          <small class="text-muted">10h ago</small>
+                      </div>
+                      <div class="comment-write">
+                          <textarea class="form-control" placeholder="Write a comment" rows="1"></textarea>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- END TIMELINE ITEM -->
 
-      <tr>
-        <td class="heading-column-cell report-cell">savings_expenses</td>
-        <%@annual_report[:savings_expenses].each do |savings_expense|%>
-          <td class="number-cell report-cell"><%=number_to_currency(savings_expense) unless savings_expense.nil?%></td>
-        <%end%>
-      </tr>
+          <!-- START TIMELINE ITEM -->
+          <div class="timeline-item">
+              <div class="timeline-item-info">06 Oct 2015</div>
+              <div class="timeline-item-icon"><span class="fa fa-star"></span></div>
+              <div class="timeline-item-content">
+                  <div class="timeline-heading" style="padding-bottom: 10px;">
+                      <img src="assets/images/users/user2.jpg"/>
+                      <a href="#">John Doe</a> joined group <a href="#">Web Developers</a>
+                  </div>
+                  <div class="timeline-body comments">
+                      <div class="comment-item">
+                          <img src="assets/images/users/user.jpg"/>
+                          <p class="comment-head">
+                              <a href="#">Dmitry Ivaniuk</a> <span class="text-muted">@Aqvatarius</span>
+                          </p>
+                          <p>You r welcome my friend :)</p>
+                          <small class="text-muted">5 min ago</small>
+                      </div>
+                      <div class="comment-item">
+                          <img src="assets/images/users/user2.jpg"/>
+                          <p class="comment-head">
+                              <a href="#">John Doe</a> <span class="text-muted">@johndoe</span>
+                          </p>
+                          <p>Thank you, Dmitry!!! ;)</p>
+                          <small class="text-muted">1 min ago / to @Aqvatarius</small>
+                      </div>
+                      <div class="comment-write">
+                          <textarea class="form-control" placeholder="Write a comment" rows="1"></textarea>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- END TIMELINE ITEM -->
 
-      <tr>
-        <td class="heading-column-cell report-cell">total_expenses</td>
-        <%@annual_report[:total_expenses].each do |total_expense|%>
-          <td class="number-cell report-cell"><%=number_to_currency(total_expense) unless total_expense.nil?%></td>
-        <%end%>
-      </tr>
+          <!-- START TIMELINE ITEM -->
+          <div class="timeline-item timeline-item-right">
+              <div class="timeline-item-info">5 Sep 2015</div>
+              <div class="timeline-item-icon"><span class="fa fa-map-marker"></span></div>
+              <div class="timeline-item-content">
+                  <div class="timeline-body padding-0">
+                      <div id="google_ptm_map" style="width: 100%; height: 150px;"></div>
+                  </div>
+                  <div class="timeline-heading">
+                      <img src="assets/images/users/user2.jpg"/> <a href="#">John Doe</a> invite you to <a href="#">@Event</a>
+                  </div>
+              </div>
+          </div>
+          <!-- END TIMELINE ITEM -->
 
-      <tr>
-        <td class="heading-column-cell report-cell">overall_savings</td>
-        <%@annual_report[:overall_savings].each do |overall_saving|%>
-          <td class="number-cell report-cell"><%=number_to_currency(overall_saving) unless overall_saving.nil?%></td>
-        <%end%>
-      </tr>
+          <!-- START TIMELINE ITEM -->
+          <div class="timeline-item">
+              <div class="timeline-item-info">06 Oct 2015</div>
+              <div class="timeline-item-icon"><span class="fa fa-users"></span></div>
+              <div class="timeline-item-content">
+                  <div class="timeline-heading" style="padding-bottom: 10px;">
+                      <img src="assets/images/users/user3.jpg"/>
+                      <a href="#">Nadia Ali</a> added to friends
+                      <img src="assets/images/users/user.jpg"/>
+                      <img src="assets/images/users/user2.jpg"/>
+                      <img src="assets/images/users/user4.jpg"/>
+                  </div>
+                  <div class="timeline-body comments">
+                      <div class="comment-write">
+                          <textarea class="form-control" placeholder="Write a comment" rows="1"></textarea>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- END TIMELINE ITEM -->
 
-      <tr>
-        <td class="heading-column-cell report-cell">remaining</td>
-        <%@annual_report[:remaining].each do |remaining|%>
-          <td class="number-cell report-cell"><%=number_to_currency(remaining) unless remaining.nil?%></td>
-        <%end%>
-      </tr>
+          <!-- START TIMELINE ITEM -->
+          <div class="timeline-item timeline-main">
+              <div class="timeline-date">2013</div>
+          </div>
+          <!-- END TIMELINE ITEM -->
 
-      <tr>
-        <td class="heading-column-cell report-cell">misc_percentage</td>
-        <%@annual_report[:misc_percentage].each do |misc_percentage|%>
-          <td class="number-cell report-cell"><%=(misc_percentage.to_s + '%') unless misc_percentage.nil?%> </td>
-        <%end%>
-      </tr>
+          <!-- START TIMELINE ITEM -->
+          <div class="timeline-item timeline-item-right">
+              <div class="timeline-item-info">30 Dec 2013</div>
+              <div class="timeline-item-icon"><span class="fa fa-user"></span></div>
+              <div class="timeline-item-content">
+                  <div class="timeline-heading padding-bottom-0" style="padding-bottom: 10px;">
+                      <img src="assets/images/users/user2.jpg"/>
+                      <a href="#">John Doe</a> update user image
+                  </div>
+                  <div class="timeline-body text-center">
+                      <img src="assets/images/users/user2.jpg" width="100" class="img-circle img-thumbnail"/>
+                  </div>
+                  <div class="timeline-body comments">
+                      <div class="comment-write">
+                          <textarea class="form-control" placeholder="Write a comment" rows="1"></textarea>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- END TIMELINE ITEM -->
 
-    </tbody>
-</table>
-
-</div>
-<div class="row">
-  <div class="col-md-12">
-    <%= content_tag :div," ",id: "summaryreport", data: {overallsummarymonths: report_months_data,overallsummaryincomes: overall_summary_report_incomes_data,overallsummaryexpenses: overall_summary_report_expenses_data,overallsummarysavings: overall_summary_report_savings_data}%>
+          <!-- START TIMELINE ITEM -->
+          <div class="timeline-item timeline-main">
+              <div class="timeline-date"><a href="#"><span class="fa fa-ellipsis-h"></span></a></div>
+          </div>
+          <!-- END TIMELINE ITEM -->
+      </div>
+      <!-- END TIMELINE -->
+    </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-md-6">
-    <%= content_tag :div," ",id: "monthlyexpensesreport", data: {overallsummarymonths: report_months_data,monthlyexpenses: report_expenses_data}%>
-  </div>
 
-  <div class="col-md-6">
-    <%= content_tag :div," ",id: "monthlysavingsreport", data: {overallsummarymonths: report_months_data,monthlysavings: report_savings_data}%>
-  </div>
+  <div class="content-frame-body content-frame-body-left">
 
-</div>
-<div class="row">
-  <div class="col-md-6">
-    <%= content_tag :div," ",id: "overallexpensesreport", data: {overallsummarymonths: report_months_data,overallexpenses: overall_summary_report_expenses_data}%>
-  </div>
+      <div class="annual-report">
+        <table class="table table-bordered table-striped table-hover">
+          <thead>
+            <th style="background: none!important;"><%=@budget_year%></th>
+            <%@annual_report[:month_name].each do |month_name|%>
+              <th><strong><%=month_name%></strong></th>
+            <%end%>
+            <th>Totals</th>
+          </thead>
 
-  <div class="col-md-6">
-    <%= content_tag :div," ",id: "overallsavingsreport", data: {overallsummarymonths: report_months_data,overallsavings: overall_summary_report_savings_data}%>
-  </div>
+          <tbody>
+            <tr>
+              <td class="heading-column-cell report-cell">Income</td>
+              <%@annual_report[:income].each do |income|%>
+                <td class="number-cell report-cell"><%=number_to_currency(income) unless income.nil?%></td>
+              <%end%>
+            </tr>
 
+            <tr>
+              <td class="heading-column-cell report-cell">Expenses</td>
+              <%@annual_report[:expenses].each do |expense|%>
+                <td class="number-cell report-cell"><%=number_to_currency(expense) unless expense.nil?%></td>
+              <%end%>
+            </tr>
+
+            <tr>
+              <td class="heading-column-cell report-cell">Savings</td>
+              <%@annual_report[:savings].each do |saving|%>
+                <td class="number-cell report-cell"><%=number_to_currency(saving) unless saving.nil?%></td>
+              <%end%>
+            </tr>
+
+            <tr>
+              <td class="heading-column-cell report-cell">savings_expenses</td>
+              <%@annual_report[:savings_expenses].each do |savings_expense|%>
+                <td class="number-cell report-cell"><%=number_to_currency(savings_expense) unless savings_expense.nil?%></td>
+              <%end%>
+            </tr>
+
+            <tr>
+              <td class="heading-column-cell report-cell">total_expenses</td>
+              <%@annual_report[:total_expenses].each do |total_expense|%>
+                <td class="number-cell report-cell"><%=number_to_currency(total_expense) unless total_expense.nil?%></td>
+              <%end%>
+            </tr>
+
+            <tr>
+              <td class="heading-column-cell report-cell">overall_savings</td>
+              <%@annual_report[:overall_savings].each do |overall_saving|%>
+                <td class="number-cell report-cell"><%=number_to_currency(overall_saving) unless overall_saving.nil?%></td>
+              <%end%>
+            </tr>
+
+            <tr>
+              <td class="heading-column-cell report-cell">remaining</td>
+              <%@annual_report[:remaining].each do |remaining|%>
+                <td class="number-cell report-cell"><%=number_to_currency(remaining) unless remaining.nil?%></td>
+              <%end%>
+            </tr>
+
+            <tr>
+              <td class="heading-column-cell report-cell">misc_percentage</td>
+              <%@annual_report[:misc_percentage].each do |misc_percentage|%>
+                <td class="number-cell report-cell"><%=(misc_percentage.to_s + '%') unless misc_percentage.nil?%> </td>
+              <%end%>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="">
+        <div class="col-md-12">
+          <%= content_tag :div," ",id: "summaryreport", data: {overallsummarymonths: report_months_data,overallsummaryincomes: overall_summary_report_incomes_data,overallsummaryexpenses: overall_summary_report_expenses_data,overallsummarysavings: overall_summary_report_savings_data}%>
+        </div>
+      </div>
+      <div class="">
+        <div class="col-md-6">
+          <%= content_tag :div," ",id: "monthlyexpensesreport", data: {overallsummarymonths: report_months_data,monthlyexpenses: report_expenses_data}%>
+        </div>
+
+        <div class="col-md-6">
+          <%= content_tag :div," ",id: "monthlysavingsreport", data: {overallsummarymonths: report_months_data,monthlysavings: report_savings_data}%>
+        </div>
+
+      </div>
+      <div class="">
+        <div class="col-md-6">
+          <%= content_tag :div," ",id: "overallexpensesreport", data: {overallsummarymonths: report_months_data,overallexpenses: overall_summary_report_expenses_data}%>
+        </div>
+
+        <div class="col-md-6">
+          <%= content_tag :div," ",id: "overallsavingsreport", data: {overallsummarymonths: report_months_data,overallsavings: overall_summary_report_savings_data}%>
+        </div>
+
+      </div>
+  </div>
 </div>
