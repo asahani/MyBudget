@@ -38,14 +38,27 @@ class BudgetTransaction < ActiveRecord::Base
   ##################################
   # Class Methods
   ##################################
-  def self.total_expenses_for_year(year=Date.today.year)
+  def self.total_expenses_for_year(year=Date.today.year,limit)
     budgets_for_year = Budget.where(year: year)
     txns = where(budget_id: budgets_for_year)
     txns = txns.where('budget_transactions.savings = ? && debit > ?',false,0)
-    return txns.sum(:debit).to_f
+    unless limit.nil?
+      puts 'enetered limit'
+      puts limit
+      txns = txns.order("debit DESC").first(limit)
+    else
+      txns = txns.order("debit DESC")
+    end
+
+    total = 0
+    txns.each do |txn|
+      total += txn.debit
+    end
+
+    return total.to_f
   end
 
-  def self.top_transactions_grouped_by_category(year=Date.today.year,limit=12)
+  def self.top_transactions_grouped_by_category(year=Date.today.year,limit)
     budgets_for_year = Budget.where(year: year)
     puts 'All budgets'
     puts budgets_for_year
@@ -55,7 +68,12 @@ class BudgetTransaction < ActiveRecord::Base
     txns = txns.joins(:category)
     txns = txns.group("categories.name")
     txns = txns.select("categories.name as name, sum(debit) as total_expense,categories.icon as icon")
-    txns = txns.order("total_expense DESC").first(limit)
+    unless limit.nil?
+      txns = txns.order("total_expense DESC").first(limit)
+    else
+      txns = txns.order("total_expense DESC")
+    end
+
     # txns.group_by { |t| t.category.name}
   end
 

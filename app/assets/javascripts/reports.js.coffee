@@ -197,3 +197,36 @@ jQuery ->
         data: $('#overallsavingsreport').data('overallsavings')
       }
     ]
+
+  # Category Reports Page
+  console.log $('#categoriesreportpiechart').data('categoriesreportdata')
+  top_categories_for_report_pie = $('#categoriesreportpiechart').highcharts
+    chart:
+      renderTo: 'categoriesreportpiechart'
+      plotBackgroundColor: null
+      plotBorderWidth: null
+      plotShadow: false
+      type: 'pie'
+      backgroundColor: 'transparent'
+      height: '500'
+    title: text: null
+    tooltip: pointFormat: '{series.name}: <b>${point.expense:.1f}</b>'
+    legend: {
+      itemStyle:{
+        'color':'#ddd'
+      }
+    }
+    plotOptions: pie:
+      borderColor: "#ddd"
+      allowPointSelect: true
+      cursor: 'pointer'
+      dataLabels:
+        enabled: true
+        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+        style: color: Highcharts.theme and Highcharts.theme.contrastTextColor or 'black'
+      showInLegend: true
+    series: [ {
+      name: 'Expense'
+      colorByPoint: true
+      data: $('#categoriesreportpiechart').data('categoriesreportdata')
+    } ]

@@ -84,6 +84,7 @@ Rails.application.routes.draw do
   get 'loans/index'
 
   get 'reports/index'
+  get 'reports/category_report'
 
   root 'dashboard#index'
   # The priority is based upon order of creation: first created -> highest priority.

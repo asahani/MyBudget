@@ -6,4 +6,7 @@ class ReportsController < ApplicationController
     @annual_report = get_annual_report(@budget_year)
   end
 
+  def category_report
+  end
+  
 end
