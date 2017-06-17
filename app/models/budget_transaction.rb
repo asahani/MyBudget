@@ -58,6 +58,25 @@ class BudgetTransaction < ActiveRecord::Base
     return total.to_f
   end
 
+  def self.top_transactions_grouped_by_master_category(year=Date.today.year,limit)
+    budgets_for_year = Budget.where(year: year)
+    puts 'All budgets'
+    puts budgets_for_year
+
+    txns = where(budget_id: budgets_for_year)
+    txns = txns.where('budget_transactions.savings = ? && debit > ?',false,0)
+    txns = txns.joins(category: :master_category)
+    txns = txns.group("master_categories.name")
+    txns = txns.select("master_categories.name as name, sum(debit) as total_expense,master_categories.icon as icon")
+    unless limit.nil?
+      txns = txns.order("total_expense DESC").first(limit)
+    else
+      txns = txns.order("total_expense DESC")
+    end
+
+    # txns.group_by { |t| t.category.name}
+  end
+
   def self.top_transactions_grouped_by_category(year=Date.today.year,limit)
     budgets_for_year = Budget.where(year: year)
     puts 'All budgets'
