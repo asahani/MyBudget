@@ -208,7 +208,7 @@ jQuery ->
       plotShadow: false
       type: 'pie'
       backgroundColor: 'transparent'
-      height: '500'
+      height: '600'
     title: text: null
     tooltip: pointFormat: '{series.name}: <b>${point.expense:.1f}</b>'
     legend: {
@@ -241,7 +241,7 @@ jQuery ->
         plotShadow: false
         type: 'pie'
         backgroundColor: 'transparent'
-        height: '500'
+        height: '600'
       title: text: null
       tooltip: pointFormat: '{series.name}: <b>${point.expense:.1f}</b>'
       legend: {

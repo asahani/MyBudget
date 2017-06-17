@@ -1,7 +1,7 @@
 <!-- START ALERTS -->
 <%=render 'layouts/alerts'-%>
 <!-- END ALERTS -->
-<%@mastercategoriesreportdata =  master_categories_report_as_percentage%>
+<%@mastercategoriesreportdata =  master_categories_report_as_percentage(@miscellaneous_only)%>
 <div class="content-frame">
   <div class="content-frame-right" style="background: #2D3945;color: #94ABBA;">
     <div style="border-bottom: 1px solid #555;">
@@ -57,6 +57,13 @@
         <span><%=@budget_year%> <span class="fa fa-caret-down"></span>&nbsp;&nbsp;&nbsp;</span>
         <span>All accounts <span class="fa fa-caret-down"></span>&nbsp;&nbsp;&nbsp;</span>
         <span>All Master Categories <span class="fa fa-caret-down"></span>&nbsp;&nbsp;&nbsp;</span>
+        <%if @miscellaneous_only%>
+          <span><%= link_to ' All Transactions', reports_master_category_report_path(miscellaneous: false), class: "btn btn-default"%></span>
+          <span><%= link_to 'Miscellaneous Only', reports_master_category_report_path(miscellaneous: true), class: "btn btn-primary"%></span>
+        <%else%>
+          <span><%= link_to ' All Transactions', reports_master_category_report_path(miscellaneous: false), class: "btn btn-primary"%></span>
+          <span><%= link_to 'Miscellaneous Only', reports_master_category_report_path(miscellaneous: true), class: "btn btn-default"%></span>
+        <%end%>
       </div>
     </div>
     <!-- END PAGE HEAD -->
