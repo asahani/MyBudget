@@ -57,7 +57,7 @@ module DashboardHelper
 
 
   def top_categories_as_percentage
-    @top_categories = BudgetTransaction.top_transactions_grouped_by_category(12)
+    @top_categories = BudgetTransaction.top_transactions_grouped_by_category(limit=12,miscellaneous_only=false)
     total_spend = BudgetTransaction.total_expenses_for_year(12)
 
     @top_categories.map do |txn|
