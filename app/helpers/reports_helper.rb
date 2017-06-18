@@ -54,7 +54,7 @@ module ReportsHelper
     else
       @total_spend = BudgetTransaction.total_expenses_for_year(nil)
     end
-    
+
     @top_categories.map do |txn|
       {
         name: txn.name,
@@ -63,4 +63,23 @@ module ReportsHelper
       }
     end
   end
+
+  # Category Reports Page data
+  def payee_report_as_percentage(miscellaneous=false)
+    @top_payees = BudgetTransaction.top_transactions_grouped_by_external_payee(limit=nil,miscellaneous_only=miscellaneous)
+
+    @total_spend = 0
+    @top_payees.each do |payee|
+      @total_spend += payee.total_expense
+    end
+
+    @top_payees.map do |txn|
+      {
+        name: txn.name,
+        expense: txn.total_expense,
+        y: ((txn.total_expense/@total_spend).to_f.round(2) * 100)
+      }
+    end
+  end
+
 end

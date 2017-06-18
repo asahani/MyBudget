@@ -134,11 +134,15 @@ class BudgetTransaction < ActiveRecord::Base
     else
       txns = txns.where('budget_transactions.savings = ? && debit > ?',false,0)
     end
-    
+
     txns = txns.joins(:payee).where('is_system = ? && is_account = ?',false,false)
     txns = txns.group("payees.name")
     txns = txns.select("payees.name as name, sum(debit) as total_expense")
-    txns = txns.order("total_expense DESC").first(limit)
+    unless limit.nil?
+      txns = txns.order("total_expense DESC").first(limit)
+    else
+      txns = txns.order("total_expense DESC")
+    end
     # txns.group_by { |t| t.category.name}
   end
 

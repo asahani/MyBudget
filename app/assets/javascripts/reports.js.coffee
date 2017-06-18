@@ -231,7 +231,7 @@ jQuery ->
       data: $('#categoriesreportpiechart').data('categoriesreportdata')
     } ]
 
-    # Category Reports Page
+    # Master Category Reports Page
     console.log $('#mastercategoriesreportpiechart').data('mastercategoriesreportdata')
     top_master_categories_for_report_pie = $('#mastercategoriesreportpiechart').highcharts
       chart:
@@ -262,4 +262,37 @@ jQuery ->
         name: 'Expense'
         colorByPoint: true
         data: $('#mastercategoriesreportpiechart').data('mastercategoriesreportdata')
+      } ]
+
+    # Payee Reports Page
+    console.log $('#payeesreportpiechart').data('payeesreportdata')
+    top_payee_for_report_pie = $('#payeesreportpiechart').highcharts
+      chart:
+        renderTo: 'payeesreportpiechart'
+        plotBackgroundColor: null
+        plotBorderWidth: null
+        plotShadow: false
+        type: 'pie'
+        backgroundColor: 'transparent'
+        height: '600'
+      title: text: null
+      tooltip: pointFormat: '{series.name}: <b>${point.expense:.1f}</b>'
+      legend: {
+        itemStyle:{
+          'color':'#ddd'
+        }
+      }
+      plotOptions: pie:
+        borderColor: "#ddd"
+        allowPointSelect: true
+        cursor: 'pointer'
+        dataLabels:
+          enabled: true
+          format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+          style: color: Highcharts.theme and Highcharts.theme.contrastTextColor or 'black'
+        showInLegend: true
+      series: [ {
+        name: 'Expense'
+        colorByPoint: true
+        data: $('#payeesreportpiechart').data('payeesreportdata')
       } ]
