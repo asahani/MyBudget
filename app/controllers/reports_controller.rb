@@ -8,6 +8,10 @@ class ReportsController < ApplicationController
 
   def category_report
     @budget_year = Date.today.year
+    @miscellaneous_only = false
+    unless params[:miscellaneous].nil?
+      @miscellaneous_only = params[:miscellaneous] == 'true'? true : false
+    end
   end
 
   def master_category_report

@@ -102,13 +102,17 @@ class BudgetTransaction < ActiveRecord::Base
     # txns.group_by { |t| t.category.name}
   end
 
-  def self.top_transactions_grouped_by_category(year=Date.today.year,limit)
+  def self.top_transactions_grouped_by_category(year=Date.today.year,limit,miscellaneous_only)
     budgets_for_year = Budget.where(year: year)
     puts 'All budgets'
     puts budgets_for_year
 
     txns = where(budget_id: budgets_for_year)
-    txns = txns.where('budget_transactions.savings = ? && debit > ?',false,0)
+    if miscellaneous_only
+      txns = txns.miscellaneous_transactions
+    else
+      txns = txns.where('budget_transactions.savings = ? && debit > ?',false,0)
+    end
     txns = txns.joins(:category)
     txns = txns.group("categories.name")
     txns = txns.select("categories.name as name, sum(debit) as total_expense,categories.icon as icon")
@@ -118,6 +122,23 @@ class BudgetTransaction < ActiveRecord::Base
       txns = txns.order("total_expense DESC")
     end
 
+    # txns.group_by { |t| t.category.name}
+  end
+
+  def self.top_transactions_grouped_by_external_payee(year=Date.today.year,limit,miscellaneous_only)
+    budgets_for_year = Budget.where(year: year)
+
+    txns = where(budget_id: budgets_for_year)
+    if miscellaneous_only
+      txns = txns.miscellaneous_transactions
+    else
+      txns = txns.where('budget_transactions.savings = ? && debit > ?',false,0)
+    end
+    
+    txns = txns.joins(:payee).where('is_system = ? && is_account = ?',false,false)
+    txns = txns.group("payees.name")
+    txns = txns.select("payees.name as name, sum(debit) as total_expense")
+    txns = txns.order("total_expense DESC").first(limit)
     # txns.group_by { |t| t.category.name}
   end
 

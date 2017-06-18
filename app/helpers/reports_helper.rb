@@ -36,7 +36,7 @@ module ReportsHelper
     else
       @total_spend = BudgetTransaction.total_expenses_for_year(nil)
     end
-    
+
     @top_master_categories.map do |txn|
       {
         name: txn.name,
@@ -47,10 +47,14 @@ module ReportsHelper
   end
 
   # Category Reports Page data
-  def categories_report_as_percentage
-    @top_categories = BudgetTransaction.top_transactions_grouped_by_category(nil)
-    @total_spend = BudgetTransaction.total_expenses_for_year(nil)
-
+  def categories_report_as_percentage(miscellaneous=false)
+    @top_categories = BudgetTransaction.top_transactions_grouped_by_category(limit=nil,miscellaneous_only=miscellaneous)
+    if miscellaneous
+      @total_spend = BudgetTransaction.total_misc_expenses_for_year(nil)
+    else
+      @total_spend = BudgetTransaction.total_expenses_for_year(nil)
+    end
+    
     @top_categories.map do |txn|
       {
         name: txn.name,
