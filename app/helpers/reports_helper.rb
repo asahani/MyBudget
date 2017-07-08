@@ -28,6 +28,47 @@ module ReportsHelper
     arr.collect { |saving| saving.to_f }.to_json
   end
 
+  def report_yearly_budgeted_amount_data
+    arr = @annual_report[:yearly_budgeted_amount].slice(0,12)
+    arr.collect { |yearly_budgeted_amount| yearly_budgeted_amount.to_f }.to_json
+  end
+
+  def report_income_expense_difference_data
+    arr = @annual_report[:income_expense_difference].slice(0,12)
+    arr.collect { |income_expense_difference| income_expense_difference.to_f }.to_json
+  end
+
+  def overall_pie_data_for_summary
+    overall_map = Array.new
+    overall_map << {
+      name: 'Income',
+      y: @annual_report[:income][12].to_f
+    }
+    overall_map << {
+      name: 'Expenses',
+      y: @annual_report[:expenses][12].to_f
+    }
+    overall_map << {
+      name: 'Savings',
+      y: @annual_report[:savings][12].to_f
+    }
+    return overall_map
+  end
+
+
+  def top_categories_as_percentage
+    @top_categories = BudgetTransaction.top_transactions_grouped_by_category(limit=12,miscellaneous_only=false)
+    total_spend = BudgetTransaction.total_expenses_for_year(12)
+
+    @top_categories.map do |txn|
+      {
+        name: txn.name,
+        expense: txn.total_expense,
+        y: ((txn.total_expense/total_spend).to_f.round(2) * 100)
+      }
+    end
+  end
+
   # Master Category Reports Page data
   def master_categories_report_as_percentage(miscellaneous=false)
     @top_master_categories = BudgetTransaction.top_transactions_grouped_by_master_category(limit=nil,miscellaneous_only=miscellaneous)

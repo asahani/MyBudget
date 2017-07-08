@@ -31,5 +31,5 @@
 //= require atlant/plugins
 //= require atlant/actions
 //= require highcharts/highcharts
-//= require dashboard_charts
+//= require reports
 //= require_self
