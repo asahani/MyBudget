@@ -59,10 +59,10 @@ jQuery ->
       }
       {
         type: 'spline',
-        name: 'Average',
-        data: [3000, 2000.67, 3000, 4000.33, 3333.33,3000, 2000.67, 3000, 4000.33, 3333.33,3000, 2000.67],
+        name: 'Savings Potential',
+        data: $('#summaryreport').data('incomeexpensedifference'),
         marker: {
-            lineWidth: 2,
+            lineWidth: 1,
             lineColor: Highcharts.getOptions().colors[3],
             fillColor: 'white'
         }
@@ -70,20 +70,8 @@ jQuery ->
       {
         type: 'pie',
         name: 'Total consumption',
-        data: [{
-            name: 'Income',
-            y: 19827.00,
-            color: Highcharts.getOptions().colors[0]
-        }, {
-            name: 'Expenses',
-            y: 4249.48,
-            color: Highcharts.getOptions().colors[1]
-        }, {
-            name: 'Savings',
-            y: 1900,
-            color: Highcharts.getOptions().colors[2]
-        }],
-        center: [100, 80],
+        data: $('#summaryreport').data('overallpiedata'),
+        center: [30, 20],
         size: 100,
         showInLegend: false,
         dataLabels: {

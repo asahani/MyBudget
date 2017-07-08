@@ -42,7 +42,13 @@
   <div class="content-frame-body content-frame-body-left" style="padding-top: 10px!important;">
       <div class="">
         <div class="col-md-12">
-          <%= content_tag :div," ",id: "summaryreport", data: {overallsummarymonths: report_months_data,overallsummaryincomes: overall_summary_report_incomes_data,overallsummaryexpenses: overall_summary_report_expenses_data,overallsummarysavings: overall_summary_report_savings_data}%>
+            <%= content_tag :div," ",id: "summaryreport", data: {
+              overallsummarymonths: report_months_data,
+              overallsummaryincomes: overall_summary_report_incomes_data,
+              overallsummaryexpenses: overall_summary_report_expenses_data,
+              overallsummarysavings: overall_summary_report_savings_data,
+              incomeexpensedifference: report_income_expense_difference_data,
+              overallpiedata: overall_pie_data_for_summary}%>
         </div>
       </div>
       <div class="annual-report">
