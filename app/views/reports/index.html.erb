@@ -38,108 +38,71 @@
     </div>
   </div>
 
-
   <div class="content-frame-body content-frame-body-left" style="padding-top: 10px!important;">
-      <div class="">
-        <div class="col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-title-box">
+                <h3>Annual Summary</h3>
+                <span>Annual Income, Expense and Savings report</span>
+            </div>
+            <ul class="panel-controls" style="margin-top: 2px;">
+                <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+            </ul>
+        </div>
+        <div class="panel-body">
+          <div>
             <%= content_tag :div," ",id: "summaryreport", data: {
-              overallsummarymonths: report_months_data,
-              overallsummaryincomes: overall_summary_report_incomes_data,
-              overallsummaryexpenses: overall_summary_report_expenses_data,
-              overallsummarysavings: overall_summary_report_savings_data,
-              incomeexpensedifference: report_income_expense_difference_data,
-              overallpiedata: overall_pie_data_for_summary}%>
+                          overallsummarymonths: report_months_data,
+                          overallsummaryincomes: overall_summary_report_incomes_data,
+                          overallsummaryexpenses: overall_summary_report_expenses_data,
+                          overallsummarysavings: overall_summary_report_savings_data,
+                          incomeexpensedifference: report_income_expense_difference_data,
+                          overallpiedata: overall_pie_data_for_summary}%>
+          </div>
+          <div><%= render 'annual_report_table' %></div>
         </div>
-      </div>
-      <div class="annual-report">
-        <table class="table table-bordered table-striped table-hover">
-          <thead>
-            <th style="background: none!important;"><%=@budget_year%></th>
-            <%@annual_report[:month_name].each do |month_name|%>
-              <th><strong><%=month_name%></strong></th>
-            <%end%>
-            <th>Totals</th>
-          </thead>
+    </div>
 
-          <tbody>
-            <tr>
-              <td class="heading-column-cell report-cell">Income</td>
-              <%@annual_report[:income].each do |income|%>
-                <td class="number-cell report-cell"><%=number_to_currency(income) unless income.nil?%></td>
-              <%end%>
-            </tr>
-
-            <tr>
-              <td class="heading-column-cell report-cell">Expenses</td>
-              <%@annual_report[:expenses].each do |expense|%>
-                <td class="number-cell report-cell"><%=number_to_currency(expense) unless expense.nil?%></td>
-              <%end%>
-            </tr>
-
-            <tr>
-              <td class="heading-column-cell report-cell">Savings</td>
-              <%@annual_report[:savings].each do |saving|%>
-                <td class="number-cell report-cell"><%=number_to_currency(saving) unless saving.nil?%></td>
-              <%end%>
-            </tr>
-
-            <tr>
-              <td class="heading-column-cell report-cell">savings_expenses</td>
-              <%@annual_report[:savings_expenses].each do |savings_expense|%>
-                <td class="number-cell report-cell"><%=number_to_currency(savings_expense) unless savings_expense.nil?%></td>
-              <%end%>
-            </tr>
-
-            <tr>
-              <td class="heading-column-cell report-cell">total_expenses</td>
-              <%@annual_report[:total_expenses].each do |total_expense|%>
-                <td class="number-cell report-cell"><%=number_to_currency(total_expense) unless total_expense.nil?%></td>
-              <%end%>
-            </tr>
-
-            <tr>
-              <td class="heading-column-cell report-cell">overall_savings</td>
-              <%@annual_report[:overall_savings].each do |overall_saving|%>
-                <td class="number-cell report-cell"><%=number_to_currency(overall_saving) unless overall_saving.nil?%></td>
-              <%end%>
-            </tr>
-
-            <tr>
-              <td class="heading-column-cell report-cell">remaining</td>
-              <%@annual_report[:remaining].each do |remaining|%>
-                <td class="number-cell report-cell"><%=number_to_currency(remaining) unless remaining.nil?%></td>
-              <%end%>
-            </tr>
-
-            <tr>
-              <td class="heading-column-cell report-cell">misc_percentage</td>
-              <%@annual_report[:misc_percentage].each do |misc_percentage|%>
-                <td class="number-cell report-cell"><%=(misc_percentage.to_s + '%') unless misc_percentage.nil?%> </td>
-              <%end%>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="">
-        <div class="col-md-6">
-          <%= content_tag :div," ",id: "monthlyexpensesreport", data: {overallsummarymonths: report_months_data,monthlyexpenses: report_expenses_data}%>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-title-box">
+                <h3>Annual Expense Report</h3>
+                <span>Budget expense plus overall expense report</span>
+            </div>
+            <ul class="panel-controls" style="margin-top: 2px;">
+                <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+            </ul>
         </div>
-
-        <div class="col-md-6">
-          <%= content_tag :div," ",id: "monthlysavingsreport", data: {overallsummarymonths: report_months_data,monthlysavings: report_savings_data}%>
+        <div class="panel-body">
+          <div class="col-md-6">
+            <%= content_tag :div," ",id: "monthlyexpensesreport", data: {overallsummarymonths: report_months_data,monthlyexpenses: report_expenses_data}%>
+          </div>
+          <div class="col-md-6">
+            <%= content_tag :div," ",id: "overallexpensesreport", data: {overallsummarymonths: report_months_data,overallexpenses: overall_summary_report_expenses_data}%>
+          </div>
         </div>
+    </div>
 
-      </div>
-      <div class="">
-        <div class="col-md-6">
-          <%= content_tag :div," ",id: "overallexpensesreport", data: {overallsummarymonths: report_months_data,overallexpenses: overall_summary_report_expenses_data}%>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-title-box">
+              <h3>Annual Savings Report</h3>
+              <span>Monthly Savings plus overall savings report</span>
+            </div>
+            <ul class="panel-controls" style="margin-top: 2px;">
+                <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+            </ul>
         </div>
-
-        <div class="col-md-6">
-          <%= content_tag :div," ",id: "overallsavingsreport", data: {overallsummarymonths: report_months_data,overallsavings: overall_summary_report_savings_data}%>
+        <div class="panel-body">
+          <div class="col-md-6">
+            <%= content_tag :div," ",id: "monthlysavingsreport", data: {overallsummarymonths: report_months_data,monthlysavings: report_savings_data}%>
+          </div>
+          <div class="col-md-6">
+            <%= content_tag :div," ",id: "overallsavingsreport", data: {overallsummarymonths: report_months_data,overallsavings: overall_summary_report_savings_data}%>
+          </div>
         </div>
+    </div>
 
-      </div>
   </div>
+
 </div>

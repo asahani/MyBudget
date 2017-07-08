@@ -18,13 +18,18 @@ jQuery ->
       return
     return
 
-  summary_bar_chart = $('#summaryreport').highcharts
+  dashboard_summary_bar_chart = $('#dashboardsummaryreport').highcharts
     chart:
-      renderTo: 'summaryreport'
-      height: '350'
+      renderTo: 'dashboardsummaryreport'
+      height: '400'
       backgroundColor: null
+    title:
+      text: 'Annual Summary'
+      style: {
+        "color": "#94ABBA"
+      }
     xAxis:
-      categories: $('#summaryreport').data('overallsummarymonths')
+      categories: $('#dashboardsummaryreport').data('overallsummarymonths')
       crosshair: true
       labels:
         style: {
@@ -46,6 +51,66 @@ jQuery ->
         'color':'#ddd'
       }
     }
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>${point.y:.2f}</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    }
+    series: [
+      {
+        type: 'column'
+        name: 'Incomes'
+        data: $('#dashboardsummaryreport').data('overallsummaryincomes')
+      }
+      {
+        type: 'column'
+        name: 'Expenses'
+        data: $('#dashboardsummaryreport').data('overallsummaryexpenses')
+      }
+      {
+        type: 'column'
+        name: 'Savings'
+        data: $('#dashboardsummaryreport').data('overallsummarysavings')
+      }
+      {
+        type: 'spline',
+        name: 'Savings Potential',
+        data: $('#dashboardsummaryreport').data('incomeexpensedifference'),
+        marker: {
+            lineWidth: 1,
+            lineColor: Highcharts.getOptions().colors[3],
+            fillColor: 'white'
+        }
+      }
+      {
+        type: 'pie',
+        name: 'Total consumption',
+        data: $('#dashboardsummaryreport').data('overallpiedata'),
+        center: [30, 20],
+        size: 100,
+        showInLegend: false,
+        dataLabels: {
+            enabled: false
+        }
+      }
+    ]
+
+  summary_bar_chart = $('#summaryreport').highcharts
+    chart:
+      renderTo: 'summaryreport'
+      height: '300'
+      backgroundColor: null
+    title:
+      text: 'Annual Summary'
+    xAxis:
+      categories: $('#summaryreport').data('overallsummarymonths')
+      crosshair: true
+    yAxis:
+      title:
+        text: 'Amount ($)'
     tooltip: {
         headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
