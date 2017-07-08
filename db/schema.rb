@@ -192,7 +192,6 @@ ActiveRecord::Schema.define(version: 20170526053306) do
     t.integer  "budget_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "tags"
   end
 
   create_table "income_splits", force: true do |t|

@@ -232,10 +232,7 @@ class ApplicationController < ActionController::Base
     annual_report[:total_expenses][12] = total_total_expenses
     annual_report[:overall_savings][12] = total_overall_savings
     annual_report[:remaining][12] = total_remaining
-    puts total_misc_percentage
-    puts no_of_budgets
-    puts (total_misc_percentage / no_of_budgets).to_f.round(2)
-    annual_report[:misc_percentage][12] = (total_misc_percentage.to_f / no_of_budgets.to_f).to_f.round(2)
+    annual_report[:misc_percentage][12] = no_of_budgets > 0 ? (total_misc_percentage.to_f / no_of_budgets.to_f).to_f.round(2) : 0
     annual_report[:budgeted_amount][12] = total_budgeted_amount
 
     annual_report[:yearly_budgeted_amount][12] = total_yearly_budgeted_amount
