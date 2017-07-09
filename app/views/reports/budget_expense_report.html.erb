@@ -1,46 +1,14 @@
 <div class="content-frame">
     <div class="content-frame-right" style="background: #2D3945;color: #94ABBA;">
-      <div style="border-bottom: 1px solid #555;">
+      <div>
         <div style="text-align:center;">
           <h3 style="color:white;"><%=@budget_year%></h3>
         </div>
         <div style="text-align:center;padding-bottom: 10px;">
-          All categories and accounts included
+          All budgted Expenses for the year
         </div>
       </div>
-      <div style="border-bottom: 1px solid #555;padding-top: 10px;">
-        <div style="text-align:center;">
-          <h6 style="color:#94abba;">TOTAL SPENDING</h6>
-        </div>
-        <div style="text-align:center;padding-bottom: 10px;">
-          <h3 style="color:white;"><%=number_to_currency(111)%></h3>
-          For this timeframe
-        </div>
-      </div>
-      <div style="border-bottom: 1px solid #555;padding-top: 10px;">
-        <div style="text-align:center;">
-          <h6 style="color:#94abba;">AVERAGE SPENDING</h6>
-        </div>
-        <div style="text-align:center;padding-bottom: 10px;">
-          <h3 style="color:white;"><%=number_to_currency((1212/Date.today.month.to_i).to_f)%></h3>
-          Per Month
-        </div>
-      </div>
-      <div class="">
-        <table class="" style="width:100%;">
-          <thead>
-            <th style="line-height: 20px;padding:5px;">Category</th>
-            <th style="line-height: 20px;text-align:right;">Spend</th>
-          </thead>
-
-            <tr>
-              <td style="line-height: 20px;padding:5px;"><span class="item"></span>&nbsp;<span class="xn-text">dfgfdg</span></td>
-              <td style="line-height: 20px;text-align:right;"><%=number_to_currency(4545,precision: 2)%></td>
-            </tr>
-
-        </table>
-      </div>
-      <div class="panel-body list-group" style="background: #2D3945;color: white;">
+      <div class="list-group">
           <table style="width: 100%;">
             <tr>
               <td class="expense-table-first-column"></td>
@@ -48,22 +16,22 @@
               <td class="expense-table-column" style="text-align:center;padding-right: 10px;"><strong>Yearly</strong></td>
             </tr>
             <tr>
-              <td class="expense-table-first-column"><span class="fa fa-user"></span>&nbsp;&nbsp;&nbsp;&nbsp;Budget</td>
+              <td class="expense-table-first-column"><span class="item"></span>&nbsp;<span class="xn-text">Budget</span></td>
               <td class="expense-table-column"><%=number_to_currency(@annual_report[:budgeted_amount][12])%></td>
               <td class="expense-table-column" style="padding-right: 10px;"><%=number_to_currency(@annual_report[:yearly_budgeted_amount][12])%></td>
             </tr>
             <tr>
-              <td class="expense-table-first-column"><span class="fa fa-user"></span>&nbsp;&nbsp;&nbsp;&nbsp;Savings</td>
+              <td class="expense-table-first-column"><span class="item"></span>&nbsp;<span class="xn-text">Savings</span></td>
               <td class="expense-table-column"><%=number_to_currency(@annual_report[:savings][12])%></td>
               <td class="expense-table-column" style="padding-right: 10px;"><%=number_to_currency(@annual_report[:yearly_savings][12])%></td>
             </tr>
             <tr>
-              <td class="expense-table-first-column"><span class="fa fa-user"></span>&nbsp;&nbsp;&nbsp;&nbsp;Expenses</td>
+              <td class="expense-table-first-column"><span class="item"></span>&nbsp;<span class="xn-text">Expenses</span></td>
               <td class="expense-table-column"><%=number_to_currency(@annual_report[:expenses][12])%></td>
               <td class="expense-table-column" style="padding-right: 10px;"><%=number_to_currency(@annual_report[:yearly_expenses][12])%></td>
             </tr>
             <tr>
-              <td class="expense-table-first-column"><span class="fa fa-user"></span>&nbsp;&nbsp;&nbsp;&nbsp;Variance</td>
+              <td class="expense-table-first-column"><span class="item"></span>&nbsp;<span class="xn-text">Variance</span></td>
               <td class="expense-table-column"><%=number_to_currency(@annual_report[:budgeted_amount][12] - @annual_report[:expenses][12])%></td>
               <td class="expense-table-column" style="padding-right: 10px;"><%=number_to_currency(@annual_report[:yearly_budgeted_amount][12] - @annual_report[:yearly_expenses][12])%></td>
             </tr>

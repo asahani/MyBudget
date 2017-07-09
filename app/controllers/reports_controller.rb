@@ -37,6 +37,10 @@ class ReportsController < ApplicationController
   end
 
   def timeline
+      limit = 500
+      year = Date.today.year
+      start_date = Date.new(year,1,1)
+      @major_transactions = BudgetTransaction.where('transaction_date > ? and transaction_date < ? and debit >= ? and miscellaneous = ?',start_date,start_date.end_of_year,limit,true)
   end
   private
     # Use callbacks to share common setup or constraints between actions.
