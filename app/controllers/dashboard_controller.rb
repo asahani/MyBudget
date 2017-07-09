@@ -17,6 +17,6 @@ class DashboardController < ApplicationController
     Income.all.active.each do |income|
       @monthly_income += income.monthly_income
     end
-    @budgets_for_year  = Budget.where('year = ?',@budget_year).all.count()
+    @budgets_for_year  = Budget.budgets_for_year
   end
 end

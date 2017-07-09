@@ -4,6 +4,11 @@ class ReportsController < ApplicationController
   def index
     @budget_year = Date.today.year
     @annual_report = get_annual_report(@budget_year)
+    @monthly_income = 0
+    Income.all.active.each do |income|
+      @monthly_income += income.monthly_income
+    end
+    @budgets_for_year  = Budget.budgets_for_year
   end
 
   def category_report

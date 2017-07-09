@@ -98,6 +98,9 @@ class Budget < ActiveRecord::Base
   ##################################
   # Class Methods
   ##################################
+  def self.budgets_for_year
+    Budget.where('year = ?',Date.today.year).all.count()
+  end
 
   def self.get_budget(txn_date)
     month_start_day = Rails.application.config.start_of_the_month

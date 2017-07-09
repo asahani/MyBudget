@@ -6,36 +6,105 @@
         <h3 style="color:white;"><%=@budget_year%></h3>
       </div>
       <div style="text-align:center;padding-bottom: 10px;">
-        All categories and accounts included
+        Income, expenses and savings report
       </div>
     </div>
     <div style="border-bottom: 1px solid #555;padding-top: 10px;">
       <div style="text-align:center;">
-        <h6 style="color:#94abba;">TOTAL SPENDING</h6>
+        <h6 style="color:#94abba;">INCOME</h6>
       </div>
-      <div style="text-align:center;padding-bottom: 10px;">
-        <h3 style="color:white;"><%=number_to_currency(121)%></h3>
-        For this timeframe
-      </div>
-    </div>
-    <div style="border-bottom: 1px solid #555;padding-top: 10px;">
-      <div style="text-align:center;">
-        <h6 style="color:#94abba;">AVERAGE SPENDING</h6>
-      </div>
-      <div style="text-align:center;padding-bottom: 10px;">
-        <h3 style="color:white;"><%=number_to_currency(1212)%></h3>
-        Per Month
-      </div>
-    </div>
-    <div class="">
       <table class="" style="width:100%;">
-        <thead>
-          <th style="line-height: 20px;padding:5px;">Category</th>
-          <th style="line-height: 20px;text-align:right;">Spend</th>
-        </thead>
+        <tr>
+          <td style="line-height: 20px;padding:5px;"><span class="item"></span>&nbsp;<span class="xn-text">Average Daily Income</span></td>
+          <td style="line-height: 20px;text-align:right;color:white;"><%=number_to_currency((@monthly_income/30),precision: 2)%></td>
+        </tr>
+        <tr>
+          <td style="line-height: 20px;padding:5px;"><span class="item"></span>&nbsp;<span class="xn-text">Average Monthly Income</span></td>
+          <td style="line-height: 20px;text-align:right;color:white;"><%=number_to_currency(@monthly_income,precision: 2)%></td>
+        </tr>
+        <tr>
+          <td style="line-height: 20px;padding:5px;"><span class="item"></span>&nbsp;<span class="xn-text">Forecast Yearly Income</span></td>
+          <td style="line-height: 20px;text-align:right;color:white;"><%=number_to_currency((@annual_report[:yearly_income][12]),precision: 2)%></td>
+        </tr>
+        <tr>
+          <td style="line-height: 20px;padding:5px;"><span class="item"></span>&nbsp;<span class="xn-text">Total Income for <%=@budget_year%></span></td>
+          <td style="line-height: 20px;text-align:right;color:white;"><%=number_to_currency(@annual_report[:income][12],precision: 2)%></td>
+        </tr>
+      </table>
 
+    </div>
+    <div style="border-bottom: 1px solid #555;padding-top: 10px;">
+      <div style="text-align:center;">
+        <h6 style="color:#94abba;">BUDGET</h6>
+      </div>
+      <table class="" style="width:100%;">
+        <tr>
+          <td style="line-height: 20px;padding:5px;"><span class="item"></span>&nbsp;<span class="xn-text">Average Daily Budget</span></td>
+          <td style="line-height: 20px;text-align:right;color:white;"><%=number_to_currency((Budget.last.budgeted_amount/30),precision: 2)%></td>
+        </tr>
+        <tr>
+          <td style="line-height: 20px;padding:5px;"><span class="item"></span>&nbsp;<span class="xn-text">Average Monthly Budget</span></td>
+          <td style="line-height: 20px;text-align:right;color:white;"><%=number_to_currency(Budget.last.budgeted_amount,precision: 2)%></td>
+        </tr>
+        <tr>
+          <td style="line-height: 20px;padding:5px;"><span class="item"></span>&nbsp;<span class="xn-text">Forecast Yearly Budget</span></td>
+          <td style="line-height: 20px;text-align:right;color:white;"><%=number_to_currency((@annual_report[:yearly_budgeted_amount][12]),precision: 2)%></td>
+        </tr>
+        <tr>
+          <td style="line-height: 20px;padding:5px;"><span class="item"></span>&nbsp;<span class="xn-text">Total Budget for <%=@budget_year%></span></td>
+          <td style="line-height: 20px;text-align:right;color:white;"><%=number_to_currency(@annual_report[:budgeted_amount][12],precision: 2)%></td>
+        </tr>
+      </table>
+
+    </div>
+
+    <div style="border-bottom: 1px solid #555;padding-top: 10px;">
+      <div style="text-align:center;">
+        <h6 style="color:#94abba;">SPENDING</h6>
+      </div>
+      <table class="" style="width:100%;">
+        <tr>
+          <td style="line-height: 20px;padding:5px;"><span class="item"></span>&nbsp;<span class="xn-text">Average Daily Spending</span></td>
+          <td style="line-height: 20px;text-align:right;color:white;"><%=number_to_currency((@annual_report[:expenses][12]/@budgets_for_year)/30,precision: 2)%></td>
+        </tr>
+        <tr>
+          <td style="line-height: 20px;padding:5px;"><span class="item"></span>&nbsp;<span class="xn-text">Average Monthly Spending</span></td>
+          <td style="line-height: 20px;text-align:right;color:white;"><%=number_to_currency(@annual_report[:expenses][12]/@budgets_for_year,precision: 2)%></td>
+        </tr>
+        <tr>
+          <td style="line-height: 20px;padding:5px;"><span class="item"></span>&nbsp;<span class="xn-text">Forecast Yearly Spending</span></td>
+          <td style="line-height: 20px;text-align:right;color:white;"><%=number_to_currency(@annual_report[:yearly_expenses][12],precision: 2)%></td>
+        </tr>
+        <tr>
+          <td style="line-height: 20px;padding:5px;"><span class="item"></span>&nbsp;<span class="xn-text">Total Spending for <%=@budget_year%></span></td>
+          <td style="line-height: 20px;text-align:right;color:white;"><%=number_to_currency(@annual_report[:expenses][12],precision: 2)%></td>
+        </tr>
       </table>
     </div>
+    <div style="border-bottom: 1px solid #555;padding-top: 10px;">
+      <div style="text-align:center;">
+        <h6 style="color:#94abba;">SAVINGS</h6>
+      </div>
+      <table class="" style="width:100%;">
+        <tr>
+          <td style="line-height: 20px;padding:5px;"><span class="item"></span>&nbsp;<span class="xn-text">Average Daily Savings</span></td>
+          <td style="line-height: 20px;text-align:right;color:white;"><%=number_to_currency((@annual_report[:savings][12]/@budgets_for_year)/30,precision: 2)%></td>
+        </tr>
+        <tr>
+          <td style="line-height: 20px;padding:5px;"><span class="item"></span>&nbsp;<span class="xn-text">Average Monthly Savings</span></td>
+          <td style="line-height: 20px;text-align:right;color:white;"><%=number_to_currency(@annual_report[:savings][12]/@budgets_for_year,precision: 2)%></td>
+        </tr>
+        <tr>
+          <td style="line-height: 20px;padding:5px;"><span class="item"></span>&nbsp;<span class="xn-text">Forecast Yearly Savings</span></td>
+          <td style="line-height: 20px;text-align:right;color:white;"><%=number_to_currency(@annual_report[:yearly_savings][12],precision: 2)%></td>
+        </tr>
+        <tr>
+          <td style="line-height: 20px;padding:5px;"><span class="item"></span>&nbsp;<span class="xn-text">Total Savings for <%=@budget_year%></span></td>
+          <td style="line-height: 20px;text-align:right;color:white;"><%=number_to_currency(@annual_report[:savings][12],precision: 2)%></td>
+        </tr>
+      </table>
+    </div>
+
   </div>
 
   <div class="content-frame-body content-frame-body-left" style="padding-top: 10px!important;">
