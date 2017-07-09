@@ -231,14 +231,14 @@ jQuery ->
       data: $('#goalspiechartdashboard').data('goalspiechartdatadashboard')
     } ]
 
-  expenses_vs_budget_bar_chart = $('#monthlybudgetvsexpensesreport').highcharts
+  dashboard_expenses_vs_budget_bar_chart = $('#dashboardmonthlybudgetvsexpensesreport').highcharts
     chart:
-      renderTo: 'monthlybudgetvsexpensesreport'
+      renderTo: 'dashboardmonthlybudgetvsexpensesreport'
       height: '300'
       backgroundColor: null
     title: text: null
     xAxis:
-      categories: $('#monthlybudgetvsexpensesreport').data('overallsummarymonths')
+      categories: $('#dashboardmonthlybudgetvsexpensesreport').data('overallsummarymonths')
       crosshair: true
       labels:
         style: {
@@ -268,12 +268,12 @@ jQuery ->
       {
         type: 'column'
         name: 'Expenses'
-        data: $('#monthlybudgetvsexpensesreport').data('monthlyexpenses')
+        data: $('#dashboardmonthlybudgetvsexpensesreport').data('monthlyexpenses')
       }
       {
         type: 'spline',
         name: 'Budget',
-        data: $('#monthlybudgetvsexpensesreport').data('yearlybudgetedamount'),
+        data: $('#dashboardmonthlybudgetvsexpensesreport').data('yearlybudgetedamount'),
         lineWidth: 3,
         lineColor: Highcharts.getOptions().colors[3],
         marker: {
@@ -455,7 +455,7 @@ jQuery ->
       } ]
 
     # Payee Reports Page
-    console.log $('#payeesreportpiechart').data('payeesreportdata')
+    # console.log $('#payeesreportpiechart').data('payeesreportdata')
     top_payee_for_report_pie = $('#payeesreportpiechart').highcharts
       chart:
         renderTo: 'payeesreportpiechart'
@@ -486,3 +486,62 @@ jQuery ->
         colorByPoint: true
         data: $('#payeesreportpiechart').data('payeesreportdata')
       } ]
+
+  console.log $('#budgetvsexpensecategorychart').data('amount')
+  budget_vs_expense_category_chart = $('#budgetvsexpensecategorychart').highcharts
+    chart:
+      renderTo: 'budgetvsexpensecategorychart'
+      type: 'bar'
+      height: '700'
+    title: null
+    xAxis: categories: $('#budgetvsexpensecategorychart').data('budgetcategories')
+    yAxis:
+      title: text: 'Budget vs Expenses'
+    legend: reversed: true
+    series: [
+      {
+      name: 'Expenses'
+      data: $('#budgetvsexpensecategorychart').data('expenses')
+      }
+      {
+      name: 'Budget'
+      data: $('#budgetvsexpensecategorychart').data('amount')
+      }
+    ]
+
+    expenses_vs_budget_bar_chart = $('#monthlybudgetvsexpensesreport').highcharts
+      chart:
+        renderTo: 'monthlybudgetvsexpensesreport'
+        height: '300'
+        backgroundColor: null
+      title: text: null
+      xAxis:
+        categories: $('#monthlybudgetvsexpensesreport').data('overallsummarymonths')
+        crosshair: true
+      yAxis:
+        title: text: null
+      tooltip: {
+          headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+          pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+              '<td style="padding:0"><b>${point.y:.2f}</b></td></tr>',
+          footerFormat: '</table>',
+          shared: true,
+          useHTML: true
+      }
+      series: [
+        {
+          type: 'column'
+          name: 'Expenses'
+          data: $('#monthlybudgetvsexpensesreport').data('monthlyexpenses')
+        }
+        {
+          type: 'spline',
+          name: 'Budget',
+          data: $('#monthlybudgetvsexpensesreport').data('yearlybudgetedamount'),
+          lineWidth: 3,
+          lineColor: Highcharts.getOptions().colors[3],
+          marker: {
+              enabled: false
+          }
+        }
+      ]

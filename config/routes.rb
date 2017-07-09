@@ -87,6 +87,8 @@ Rails.application.routes.draw do
   get 'reports/category_report'
   get 'reports/master_category_report'
   get 'reports/payee_report'
+  get 'reports/budget_expense_report'
+  get 'reports/timeline'
 
   root 'dashboard#index'
   # The priority is based upon order of creation: first created -> highest priority.
