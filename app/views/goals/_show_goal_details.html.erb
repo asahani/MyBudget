@@ -1,0 +1,105 @@
+<%
+  percent_complete = goal.percent_complete
+  expected_progress_percent = goal.expected_progress_percent
+  expected_progress_amount = goal.expected_progress_amount
+  time_remaining = goal.time_remaining
+  amount_required_per_month = goal.amount_required_per_month
+%>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="panel-title-box">
+            <h3><%=goal.name%></h3>
+        </div>
+        <ul class="panel-controls" style="margin-top: 2px;">
+            <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+            <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+            <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+        </ul>
+    </div>
+    <div class="panel-body">
+      <div class="row" style="padding-top:10px;">
+        <div class="col-md-1" style="padding-top:10px;">
+          <span class="fa <%=goal.icon%> fa-5x"></span>
+        </div>
+        <div class="col-md-10">
+          <div class="row">
+            <div class="col-md-6">
+              <strong><%=goal.name%></strong>
+            </div>
+            <div class="col-md-6" style="text-align:right;">
+              <strong><%=number_to_currency(goal.saved_amount)%></strong> of <strong><%=number_to_currency(goal.target_amount)%></strong>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12" style="padding-top: 5px;">
+              <div class="progress" style="height: 30px;margin-bottom: 5px!important;">
+                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%=percent_complete.round(1)%>" aria-valuemin="0" aria-valuemax="100" style="width: <%=percent_complete.round(1)%>%;">
+                    <strong><%=percent_complete%>%</strong>
+                </div>
+                <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="height: 75%;position: absolute;border: 1px solid white;border-radius: 4px;width: 5px;margin-left:<%=expected_progress_percent%>%;"></div>
+            </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <span class="fa fa-calendar"></span> Complete on: <%=goal.target_date.to_formatted_s(:long)%>
+            </div>
+            <div class="col-md-6" style="text-align:right;">
+              <%=distance_of_time_in_words(Date.today,goal.target_date)%> left
+            </div>
+          </div>
+        </div>
+        <div class="col-md-1">
+          <div class="row">
+            &nbsp;
+          </div>
+          <div class="row" style="height: 50px;font-size: 20px;padding-top: 5px;">
+            <strong><%=percent_complete%>%</strong>
+          </div>
+          <div class="row">
+            &nbsp;
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-1">
+          &nbsp;
+        </div>
+        <div class="col-md-10" style="text-align: center;">
+          <%if goal.saved_amount > expected_progress_amount%>
+            <span class="fa fa-check fa-2x text-success"></span>
+            You are ahead of schedule by <%=number_to_currency(goal.saved_amount - expected_progress_amount, precision: 0)%>
+          <%else%>
+            <span class="fa fa-warning text-warning" style="font-size: 18px;"></span>
+            You are behind schedule by <%=number_to_currency(expected_progress_amount - goal.saved_amount, precision: 0)%>
+          <%end%>
+        </div>
+        <div class="col-md-1" style="padding-top: 10px;">
+          Required
+        </div>
+      </div>
+      <div class="row" style="padding-top:5px;margin-top:15px;">
+        <div class="col-md-1">
+          &nbsp;
+        </div>
+        <div class="col-md-1">
+          <%= link_to raw("<span class='fa fa-arrow-left text-primary' style='font-size: 16px;'></span> <span class='text-primary'>&nbsp; Back</span"), goals_path %>
+        </div>
+        <div class="col-md-1" style="padding-left:20px;">
+          <%= link_to raw("<span class='fa fa-pencil text-primary' style='font-size: 16px;'></span><span class='text-primary'>&nbsp;Edit</span>") , edit_goal_path(goal) %>
+        </div>
+        <div class="col-md-2" style="padding-left:20px;">
+          <%= link_to raw("<span class='fa fa-list text-primary' style='font-size: 16px;'></span><span class='text-primary'>&nbsp;Details</span>") , goal %>
+        </div>
+        <div class="col-md-2">
+          <%= link_to raw("<span class='fa fa-trash text-primary' style='font-size: 16px;'></span> <span class='text-primary'>&nbsp; Delete</span>"), goal, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </div>
+        <div class="col-md-4">
+          &nbsp;
+        </div>
+        <div class="col-md-1">
+          <strong><%=number_to_currency(amount_required_per_month, precision: 2)%></strong>&nbsp;pm
+        </div>
+      </div>
+    </div>
+</div>

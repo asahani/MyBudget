@@ -2,80 +2,163 @@
   <div class="modal-dialog" style="width: 1024px;">
     <div class="modal-content">
       <div class="modal-header">
-		<!--
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-		-->
-		<%=link_to '<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>'.html_safe, @budget_item.budget,class: 'close'%>
-        <h4 class="modal-title" id="editBudgetItemModalLabel">Update Budget</h4>
+		    <%=link_to '<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>'.html_safe, @budget_item.budget,class: 'close'%>
+        <h4 class="modal-title" id="editBudgetItemModalLabel">Update budget for <%=@budget_item.category.name%></h4>
       </div>
-      <div class="modal-body">
-			<table class="table">
-				<tr>
-					<td><%=@budget_item.category.name%></td>
-					<td><%=@budget_item.budgeted_amount%></td>
-					<td><%=@budget_item.expenses%></td>
-					<td><%=@budget_item.balance%></td>
-					<td><%=@budget_item.payment_date%></td>
-					<td><%=@budget_item.comment%></td>
-				</tr>	
-			</table>
-			
-			<%= form_for @budget_item, html: {class: "form-horizontal", role: :form} do |f| %>
-			  <% if @budget_item.errors.any? %>
-			    <div id="error_explanation">
-					<div class="alert alert-danger" role="alert">
-					  <%= pluralize(@budget_item.errors.count, "error") %> prohibited this budget item from being saved:
-				      <% @budget_item.errors.full_messages.each do |message| %>
-				        <%= message %>
-				      <% end %>
-					</div>
-			    </div>
-			  <% end %>
 
-			  <div class="form-group">
-			    <%= f.label :budgeted_amount %><br>
-			    <%= f.number_field :budgeted_amount %>
-			  </div>
-			  <div class="form-group">
-			    <%= f.label :comment %><br>
-			    <%= f.text_field :comment %>
-			  </div>
-			  <div class="form-group">
-			    <%= f.label :payment_date %><br>
-			    <%= f.text_field :payment_date, class: 'datepicker'%>
-			  </div>
-			<div class="form-group">
-			    <%= f.label :complete %><br>
-			    <%= f.check_box :complete%>
-			  </div>
-			  <div class="form-group actions">
-			    <%= f.submit "Save Changes", class: "btn btn-primary" %>
-			  </div>
-			<% end %>
-			<div class="budget-item-transactions">
-				<%unless @budget_item.complete%>
-					<button id="new-budgeted-transaction-button">+</button>
-				<%end%>
-				<div id="budget-transactions-list">
-					<%=render("/budget_transactions/budget_transactions_list",:budget_item => @budget_item)%>
-				</div>
-			</div>	
+      <div class="modal-body">
+
+        <%= form_for @budget_item, html: {class: "form-horizontal", role: :form} do |f| %>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3><span class="fa fa-pencil"></span> Update <%=@budget_item.category.name%></h3>
+                <p>Update the details for the budget item.</p>
+            </div>
+
+            <div class="panel-body form-group-separated">
+                <div class="form-group">
+                    <label class="col-md-3 col-xs-5 control-label">Budgeted Amount</label>
+                    <div class="col-md-9 col-xs-7">
+                        <div class="input-group">
+                            <%= f.number_field :budgeted_amount,step: :any, class: "form-control" %>
+                            <span class="input-group-addon"><span class="fa fa-usd"></span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 col-xs-5 control-label">Current Expenses</label>
+                    <div class="col-md-9 col-xs-7">
+                        <%=number_to_currency(@budget_item.expenses)%>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 col-xs-5 control-label">Balance</label>
+                    <div class="col-md-9 col-xs-7">
+                        <%=number_to_currency(@budget_item.balance)%>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 col-xs-5 control-label">Payment Date</label>
+                    <div class="col-md-9 col-xs-7">
+                        <div class="input-group date">
+                            <%= f.text_field :payment_date, class: "form-control datepicker",value: @budget_item.payment_date %>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 col-xs-5 control-label">Comments</label>
+                    <div class="col-md-9 col-xs-7">
+                        <div class="input-group">
+                            <%= f.text_field :comment, class: "form-control" %>
+                            <span class="input-group-addon"><span class="fa fa-comment"></span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 col-xs-5 control-label">Expense Complete?</label>
+                    <div class="col-md-9 col-xs-7">
+                      <label class="switch">
+                        <%= f.check_box :complete%>
+                        <span></span>
+                      </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12 col-xs-5">
+                        <%= f.submit "Update Changes", class: "btn btn-primary btn-rounded pull-right" %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% end %>
+
+        <!-- START INLINE FORM SAMPLE -->
+        <%unless @budget_item.complete%>
+        	<div class="panel panel-default">
+        			<div class="panel-body">
+        				<h3><span class="fa fa-plus-square"></span> Add Transaction</h3>
+
+        					<% @new_tran = BudgetTransaction.new%>
+        					<%= form_for @new_tran, method: :post, remote: true, html: {class: "form-inline", role: "form"} do |f| %>
+        						<%= f.hidden_field :budgeted ,:value => true%>
+        						<%= f.hidden_field :scheduled, :value => true%>
+        						<%= f.hidden_field :miscellaneous, :value => false%>
+        						<%= f.hidden_field :savings, :value => false%>
+        						<%= f.hidden_field :transaction_type, :value => 'budgeted'%>
+        						<%= f.hidden_field :budget_item_id, :value => @budget_item.id%>
+        						<%= f.hidden_field :budget_id, :value => @budget_item.budget.id%>
+        						<%= f.hidden_field :category_id, :value => @budget_item.category.id%>
+        						<div class="row">
+        							<div class="form-group">
+        								<div><label>Account</label></div>
+        								<div><%= f.collection_select :account_id, Account.all, :id, :name, {prompt: true}, {class: "form-control select"} %></div>
+        							</div>
+        							<div class="form-group">
+        								<div><label>Payee</label></div>
+        								<div><%= f.collection_select :payee_id, Payee.all, :id, :name, {prompt: true}, {class: "form-control select"} %></div>
+        							</div>
+        							<div class="form-group">
+        								<div><label>Date</label></div>
+        								<div>
+                          <div class="input-group date">
+                              <%= f.text_field :transaction_date, class: "form-control datepicker",value: Time.now %>
+                              <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                          </div>
+                        </div>
+        							</div>
+        							<div class="form-group">
+        								<div><label>Debit</label></div>
+        								<div>
+                          <%= f.number_field :debit ,step: :any, class: "form-control"%>
+                        </div>
+        							</div>
+        							<div class="form-group">
+        								<div><label>Credit</label></div>
+        								<div><%= f.number_field :credit,step: :any, class: "form-control" %></div>
+        							</div>
+        							<div class="form-group">
+        								<div><label>Comments</label></div>
+        								<div><%= f.text_field :comments , class: "form-control"%></div>
+        							</div>
+
+        						</div>
+                    <div class="form-group row">
+                        <div><label>Tags</label></div>
+                        <div>
+                            <%= f.text_field :tag_list, 'data-role'=>'tagsinput', class: "form-control" %>
+                        </div>
+                    </div>
+                    <%= button_tag(type: 'submit', class: "btn btn-success btn-block") do %>
+                     <i class='fa fa-plus'>&nbsp; Add transaction</i>
+                    <% end %>
+        					<%end%>
+        			</div>
+        	</div>
+        <%end%>
+
+        <!-- END INLINE FORM SAMPLE -->
+
+  			<div class="budget-item-transactions">
+  					<%=render("/budget_transactions/budget_transactions_list",:budget_item => @budget_item)%>
+  			</div>
+
       </div>
+      <!-- END MODAL BODY -->
+
       <div class="modal-footer">
-		<%=link_to "close", @budget_item.budget,class: "btn btn-default"%>
-		
-        <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>-->
+		      <%=link_to "close", @budget_item.budget,class: "btn btn-primary"%>
       </div>
+
     </div>
   </div>
 <script>
 $(function() {
-    $( ".datepicker").datepicker({dateFormat: 'dd-mm-yy' });
+    $( ".datepicker").datepicker({format: 'dd-mm-yyyy' });
   });
-
-$(function() {
-  $('#new-budgeted-transaction-button').click(function(event){
-    $('#new-budgeted-transaction-row').slideDown(1000);
+  $(function() {
+  	$("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput({
+  		tagClass: 'label fa fa-tag'
+  	});
   });
-});
 </script>

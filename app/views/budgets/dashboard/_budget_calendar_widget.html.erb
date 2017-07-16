@@ -1,0 +1,24 @@
+<div class="calendar hidden-print" style="text-align: center;">
+  <header>
+    <h2 class="month"></h2>
+    <span class="btn-prev fa fa-angle-left pull-left"></span>
+    <span class="btn-next fa fa-angle-right pull-right"></span>
+  </header>
+  <%= content_tag :div," ",id: "calendar_data", data: {eventsdata: get_calendar_events}%>
+
+  <table>
+    <thead class="event-days">
+      <tr></tr>
+    </thead>
+    <tbody class="event-calendar">
+      <tr class="1"></tr>
+      <tr class="2"></tr>
+      <tr class="3"></tr>
+      <tr class="4"></tr>
+      <tr class="5"></tr>
+    </tbody>
+  </table>
+  <div class="list">
+
+  </div>
+</div>

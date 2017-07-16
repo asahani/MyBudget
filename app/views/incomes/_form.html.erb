@@ -1,49 +1,107 @@
-<%= form_for(@income) do |f| %>
-  <% if @income.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@income.errors.count, "error") %> prohibited this income from being saved:</h2>
-
+<!-- START ALERTS -->
+<% if @income.errors.any? %>
+  <div class="alert alert-danger" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <strong>Warning!</strong> <%= pluralize(@income.errors.count, "error") %> prohibited this income from being saved:
       <ul>
       <% @income.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
-    </div>
-  <% end %>
+  </div>
+<%end%>
+<!-- END ALERTS -->
 
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description %>
+<%= form_for(@income,html: {class: "form-horizontal"}) do |f| %>
+<div class="panel-body">
+
+  <div class="form-group">
+      <%= f.label :description, {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+          <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-credit-card"></span></span>
+              <%= f.text_field :description, {class: "form-control"} %>
+          </div>
+          <span class="help-block">Income Description</span>
+      </div>
   </div>
-  <div class="field">
-    <%= f.label :amount %><br>
-    <%= f.text_field :amount %>
+
+  <div class="form-group">
+      <%= f.label :amount, {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+          <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-dollar"></span></span>
+              <%= f.number_field :amount, step: :any, {class: "form-control"} %>
+          </div>
+          <span class="help-block">The amount to be credited per pay cycle</span>
+      </div>
   </div>
-  <div class="field">
-    <%= f.label :recurring %><br>
-    <%= f.check_box :recurring %>
+
+  <div class="form-group">
+      <label class="col-md-3 col-xs-12 control-label">Select</label>
+      <div class="col-md-6 col-xs-12">
+        <% if f.object.persisted?%>
+          <%= f.select "account_id", options_from_collection_for_select(Account.all.active, :id, :name,@income.account.id),{ :prompt => "Select Account..."},{ class: "form-control select"}%>
+        <%else%>
+          <%= f.select "account_id", options_from_collection_for_select(Account.all.active, :id, :name),{ :prompt => "Select Account..."},{ class: "form-control select"}%>
+        <%end%>
+        <span class="help-block">Account where the income is to be credited</span>
+      </div>
   </div>
-  <div class="field">
-    <%= f.label :weekly %><br>
-    <%= f.check_box :weekly %>
-  </div>
-  <div class="field">
-    <%= f.label :fortnightly %><br>
-    <%= f.check_box :fortnightly %>
-  </div>
-  <div class="field">
-    <%= f.label :monthly %><br>
-    <%= f.check_box :monthly %>
-  </div>
-  <div class="field">
-    <%= f.label :budget_id %><br>
-    <%= f.number_field :budget_id %>
-  </div>
-  <div class="field">
-    <%= f.label :account_id %><br>
-    <%= f.number_field :account_id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+
+<div class="form-group">
+    <%= f.label "Active", {class: "col-md-3 col-xs-12 control-label"}%>
+    <div class="col-md-6 col-xs-12">
+      <label class="check">
+          <%= f.radio_button :is_active, true, {class: "iradio"}-%>
+          True
+      </label>
+      <label class="check">
+          <%= f.radio_button :is_active, false,{class: "iradio"}-%>
+          False
+      </label>
+      <span class="help-block">Is the income current</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <%= f.label "Income Frequency", {class: "col-md-3 col-xs-12 control-label"}%>
+    <div class="col-md-6 col-xs-12">
+      <span class="help-block">Weekly</span>
+      <label class="check">
+          <%= f.radio_button :weekly, true, {class: "iradio", id: "income-radio-weekly-true"}-%>
+          True
+      </label>
+      <label class="check">
+          <%= f.radio_button :weekly, false,{class: "iradio", id: "income-radio-weekly-false"}-%>
+          False
+      </label>
+      <span class="help-block">Fortnightly</span>
+      <label class="check">
+          <%= f.radio_button :fortnightly, true,{class: "iradio", id: "income-radio-fortnightly-true"}-%>
+          True
+      </label>
+      <label class="check">
+          <%= f.radio_button :fortnightly, false,{class: "iradio", id: "income-radio-fortnightly-false"}-%>
+          False
+      </label>
+      <span class="help-block">Monthly</span>
+      <label class="check">
+          <%= f.radio_button :monthly, true, {class: "iradio", id: "income-radio-monthly-true"}-%>
+          True
+      </label>
+      <label class="check">
+          <%= f.radio_button :monthly, false,{class: "iradio", id: "income-radio-monthly-false"}-%>
+          False
+      </label>
+      <br/><br/>
+      <span class="help-block">The income frequency when the amount is to be credited</span>
+    </div>
+</div>
+</div>
+<div class="panel-footer">
+    <%= link_to 'Back', incomes_path, {class: "btn btn-default"} %>
+    <%= f.submit nil, {class: "btn btn-success pull-right"} %>
+</div>
+
 <% end %>

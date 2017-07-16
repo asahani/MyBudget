@@ -1,0 +1,89 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require jquery-ui
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/animate/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/blueimp/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/codemirror/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/cropper/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/dropzone/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/fontawesome/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/fonts/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/forms-material/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/fullcalendar/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/introjs/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/ion/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/jstree/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/mcustomscrollbar/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/nvd3/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/summernote/.
+ *= require_tree ../../../vendor/assets/stylesheets/atlant/ion/.
+ *= require atlant/rtl
+ *= require_self
+ */
+
+ @import "bootstrap-sprockets";
+ @import "bootstrap";
+
+ .x-navigation-container {
+ 	height: 50px;
+ 	box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.5);
+ }
+
+.table.table-actions td {
+	padding: 5px 8px!important;
+}
+
+.alert {
+	width: 99%!important;
+	margin: 10px;
+}
+
+td.table-right {
+  text-align: right;
+}
+td.table-center {
+  text-align: center;
+}
+
+.sidebar-footer{
+	position: fixed!important;
+	width: inherit;
+	// background: rgba(51, 51, 51, .7);
+	// background: #e0401d;
+	background: #33414e;
+	opacity: 1;
+	// border-top: 1px solid #666;
+	box-shadow: inset -1px 1px 1px #999;
+	bottom: 0!important;
+	z-index: 100;
+}
+
+.sidebar-footer div.xn-title-nav {
+  line-height: 20px;
+  font-weight: 300;
+  font-size: 13px;
+  color: #999;
+  border-bottom: 1px solid #2f3c48;
+	border-top: 1px solid #2f3c48;
+}
+.sidebar-footer div.xn-title-nav div.xn-title-nav-content {
+	padding: 5px 10px 5px;
+	text-align: center;
+}
+
+.page-sidebar .x-navigation li > a {
+  padding: 7px 10px 7px 15px!important;
+}
+.page-sidebar .x-navigation > li.xn-openable:before {
+	top: 7px!important;
+}

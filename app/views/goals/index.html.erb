@@ -1,0 +1,109 @@
+<%
+  @total_target = @goals.sum(:target_amount)
+  @total_saved = @goals.sum(:saved_amount)
+%>
+<div class="row" style="padding-top: 60px;">
+  <div class="col-md-3">
+    <div class="widget widget-primary widget-item-icon">
+        <div class="widget-item-left">
+            <span class="fa fa-bullseye"></span>
+        </div>
+        <div class="widget-data">
+            <div class="widget-int num-count"><%=@goals.count%></div>
+            <div class="widget-title">active goals</div>
+            <div class="widget-subtitle">Savings target for the year</div>
+        </div>
+        <div class="widget-controls">
+            <%= link_to raw("<span class='fa fa-plus'></span>"), new_goal_path,{class: "widget-control-right"} %>
+        </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+
+    <div class="widget widget-primary">
+      <div class="widget-data">
+        <div class="widget-subtitle">&nbsp;</div>
+        <div class="widget-title" style="font-size: 20px;"><%=number_to_currency(@total_saved,precision: 2)%></div>
+        <div class="widget-subtitle">Saved</div>
+      </div>
+      <div class="widget-controls">
+          <a href="#" class="widget-control-right"><span class="fa fa-times"></span></a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="col-md-3">
+
+    <div class="widget widget-primary">
+      <div class="widget-data">
+        <div class="widget-subtitle"><span>&nbsp;</div>
+        <div class="widget-title" style="font-size: 20px;"><span><%=number_to_currency(@total_target-@total_saved,precision: 2)%></span></div>
+        <div class="widget-subtitle"><span>Remaining</div>
+      </div>
+      <div class="widget-controls">
+          <a href="#" class="widget-control-right"><span class="fa fa-times"></span></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+
+    <div class="widget widget-primary">
+      <div class="widget-data">
+        <div class="widget-subtitle"><span>&nbsp;</div>
+        <div class="widget-title" style="font-size: 20px;"><span><%=number_to_currency(@total_target,precision: 2)%></span></div>
+        <div class="widget-subtitle"><span>Target</div>
+      </div>
+      <div class="widget-controls">
+          <a href="#" class="widget-control-right"><span class="fa fa-times"></span></a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="row">
+  <div class="col-md-8">
+    <%@goals.each do |goal| %>
+      <%=render 'show_goal_details', goal: goal%>
+    <%end%>
+  </div>
+  <div class="col-md-4">
+      <div class="panel panel-default">
+					<div class="panel-body" style="padding: 0px!important;">
+  		      <%= content_tag :div," ",id: "goalspiechart", data: {goalspiechartdata: goals_pie_chart_data}%>
+          </div>
+          <div class="panel-body list-group">
+            <%total_amount_required_per_month = 0%>
+            <table style="width: 100%;" class="table-striped">
+
+              <th style="padding: 10px 0px 10px 15px;width: 25%;line-height: 20px;border-top: 1px solid #E5E5E5;border-bottom: 1px solid #E5E5E5;"></th>
+              <th style="text-align:center;padding: 10px 0px;width: 23%;line-height: 20px;border-top: 1px solid #E5E5E5;border-bottom: 1px solid #E5E5E5;">Saved</th>
+              <th style="text-align:center;padding: 10px 0px;width: 23%;line-height: 20px;border-top: 1px solid #E5E5E5;border-bottom: 1px solid #E5E5E5;">Remaining</th>
+              <th style="text-align:center;padding: 10px 15px 10px 0px;width: 25%;line-height: 20px;border-top: 1px solid #E5E5E5;border-bottom: 1px solid #E5E5E5;">Required</th>
+              <%@goals.each do |goal| %>
+                <%
+                  amount_required_per_month = goal.amount_required_per_month
+                  total_amount_required_per_month += amount_required_per_month
+                %>
+                <tr>
+                  <td style="padding: 10px 0px 10px 15px;width: 25%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><%=goal.name%></td>
+                  <td style="text-align:right;padding: 10px 0px;width: 25%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><%=number_to_currency(goal.saved_amount,precision: 2)%></td>
+                  <td style="text-align:right;padding: 10px 0px;width: 25%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><%=number_to_currency(goal.target_amount - goal.saved_amount,precision: 2)%></td>
+                  <td style="text-align:right;padding: 10px 15px 10px 0px;width: 25%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><%=number_to_currency(amount_required_per_month,precision: 2)%>&nbsp;pm</td>
+                </tr>
+              <%end%>
+              <tr>
+                <td style="padding: 10px 0px 10px 15px;width: 25%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><strong>Totals</strong></td>
+                <td style="text-align:right;padding: 10px 0px;width: 25%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><strong><%=number_to_currency(@total_saved,precision: 2)%></strong></td>
+                <td style="text-align:right;padding: 10px 0px;width: 25%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><strong><%=number_to_currency(@total_target-@total_saved,precision: 2)%></strong></td>
+                <td style="text-align:right;padding: 10px 15px 10px 0px;width: 25%;line-height: 20px;border-bottom: 1px solid #E5E5E5;"><strong><%=number_to_currency(total_amount_required_per_month,precision: 2)%></strong>&nbsp;pm</td>
+              </tr>
+            </table>
+          </div>
+			</div>
+	</div>
+</div>

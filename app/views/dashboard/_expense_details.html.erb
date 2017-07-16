@@ -1,0 +1,42 @@
+<div class="x-widget-timeline" style="padding-top:10px;">
+  <div class="row" style="padding:5px 7px;">
+  <div class="panel panel-primary">
+      <div class="panel-body" style="padding:5px!important; background-color: #33414e;">
+        <div class="x-widget-timelime-head">
+            <h3>Budget vs Expenses</h3>
+        </div>
+        <%= content_tag :div," ",id: "dashboardmonthlybudgetvsexpensesreport", data: {overallsummarymonths: report_months_data,monthlyexpenses: report_expenses_data,yearlybudgetedamount: report_yearly_budgeted_amount_data}%>
+
+      </div>
+      <div class="panel-body list-group" style="background: #2D3945;color: white;">
+          <table style="width: 100%;">
+            <tr>
+              <td class="expense-table-first-column"></td>
+              <td class="expense-table-column" style="text-align:center;"><strong>YTD</strong></td>
+              <td class="expense-table-column" style="text-align:center;padding-right: 10px;"><strong>Yearly</strong></td>
+            </tr>
+            <tr>
+              <td class="expense-table-first-column"><span class="fa fa-user"></span>&nbsp;&nbsp;&nbsp;&nbsp;Budget</td>
+              <td class="expense-table-column"><%=number_to_currency(@annual_report[:budgeted_amount][12])%></td>
+              <td class="expense-table-column" style="padding-right: 10px;"><%=number_to_currency(@annual_report[:yearly_budgeted_amount][12])%></td>
+            </tr>
+            <tr>
+              <td class="expense-table-first-column"><span class="fa fa-user"></span>&nbsp;&nbsp;&nbsp;&nbsp;Savings</td>
+              <td class="expense-table-column"><%=number_to_currency(@annual_report[:savings][12])%></td>
+              <td class="expense-table-column" style="padding-right: 10px;"><%=number_to_currency(@annual_report[:yearly_savings][12])%></td>
+            </tr>
+            <tr>
+              <td class="expense-table-first-column"><span class="fa fa-user"></span>&nbsp;&nbsp;&nbsp;&nbsp;Expenses</td>
+              <td class="expense-table-column"><%=number_to_currency(@annual_report[:expenses][12])%></td>
+              <td class="expense-table-column" style="padding-right: 10px;"><%=number_to_currency(@annual_report[:yearly_expenses][12])%></td>
+            </tr>
+            <tr>
+              <td class="expense-table-first-column"><span class="fa fa-user"></span>&nbsp;&nbsp;&nbsp;&nbsp;Variance</td>
+              <td class="expense-table-column"><%=number_to_currency(@annual_report[:budgeted_amount][12] - @annual_report[:expenses][12])%></td>
+              <td class="expense-table-column" style="padding-right: 10px;"><%=number_to_currency(@annual_report[:yearly_budgeted_amount][12] - @annual_report[:yearly_expenses][12])%></td>
+            </tr>
+          </table>
+      </div>
+  </div>
+</div>
+</div>

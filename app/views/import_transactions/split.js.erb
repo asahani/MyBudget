@@ -1,0 +1,3 @@
+var tr_id = "#<%= escape_javascript@imported_transaction.id.to_s%>"+"_details";
+$(tr_id).replaceWith("<%= escape_javascript(render 'split')%>");
+$(tr_id).slideDown(1000);

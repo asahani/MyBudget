@@ -1,4 +1,5 @@
 class AccountsController < ApplicationController
+  layout "admin", only: [:index, :new, :edit,:create,:update]
   before_action :set_account, only: [:show, :edit, :update, :destroy]
 
   # GET /accounts
@@ -28,7 +29,7 @@ class AccountsController < ApplicationController
 
     respond_to do |format|
       if @account.save
-        format.html { redirect_to @account, notice: 'Account was successfully created.' }
+        format.html { redirect_to accounts_url, notice: 'Account was successfully created.' }
         format.json { render :show, status: :created, location: @account }
       else
         format.html { render :new }
@@ -42,7 +43,7 @@ class AccountsController < ApplicationController
   def update
     respond_to do |format|
       if @account.update(account_params)
-        format.html { redirect_to @account, notice: 'Account was successfully updated.' }
+        format.html { redirect_to accounts_url, notice: 'Account was successfully updated.' }
         format.json { render :show, status: :ok, location: @account }
       else
         format.html { render :edit }
@@ -69,6 +70,6 @@ class AccountsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def account_params
-      params.require(:account).permit(:name, :balance)
+      params.require(:account).permit(:name, :balance,:initial_balance, :account_type_id, :budget_account, :is_debit_negetive, :import_txn_date_col, :import_txn_amount_col, :import_txn_description_col, :import_txn_balance_col, :import_txn_date_format)
     end
 end

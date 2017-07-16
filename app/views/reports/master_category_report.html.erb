@@ -1,0 +1,74 @@
+<!-- START ALERTS -->
+<%=render 'layouts/alerts'-%>
+<!-- END ALERTS -->
+<%@mastercategoriesreportdata =  master_categories_report_as_percentage(@miscellaneous_only)%>
+<div class="content-frame">
+  <div class="content-frame-right" style="background: #2D3945;color: #94ABBA;">
+    <div style="border-bottom: 1px solid #555;">
+      <div style="text-align:center;">
+        <h3 style="color:white;"><%=@budget_year%></h3>
+      </div>
+      <div style="text-align:center;padding-bottom: 10px;">
+        All master categories and accounts included
+      </div>
+    </div>
+    <div style="border-bottom: 1px solid #555;padding-top: 10px;">
+      <div style="text-align:center;">
+        <h6 style="color:#94abba;">TOTAL SPENDING</h6>
+      </div>
+      <div style="text-align:center;padding-bottom: 10px;">
+        <h3 style="color:white;"><%=number_to_currency(@total_spend)%></h3>
+        For this timeframe
+      </div>
+    </div>
+    <div style="border-bottom: 1px solid #555;padding-top: 10px;">
+      <div style="text-align:center;">
+        <h6 style="color:#94abba;">AVERAGE SPENDING</h6>
+      </div>
+      <div style="text-align:center;padding-bottom: 10px;">
+        <h3 style="color:white;"><%=number_to_currency((@total_spend/Date.today.month.to_i).to_f)%></h3>
+        Per Month
+      </div>
+    </div>
+    <div class="">
+      <table class="" style="width:100%;">
+        <thead>
+          <th style="line-height: 20px;padding:5px;">Master Category</th>
+          <th style="line-height: 20px;text-align:right;">Spend</th>
+        </thead>
+        <%@top_master_categories.each do |master_category|%>
+          <tr>
+            <td style="line-height: 20px;padding:5px;"><span class="item"></span>&nbsp;<span class="xn-text"><%=master_category.name%></span></td>
+            <td style="line-height: 20px;text-align:right;"><%=number_to_currency(master_category.total_expense,precision: 2)%></td>
+          </tr>
+        <%end%>
+      </table>
+    </div>
+  </div>
+
+
+  <div class="content-frame-body content-frame-body-left" style="padding-top: 10px;">
+    <!-- START PAGE HEAD -->
+    <div class="content-frame-top">
+      <div class="page-title">
+        <h2><span class="fa fa-folder-open"></span> Master Category Report</h2>
+      </div>
+      <div class="pull-right">
+        <span><%=@budget_year%> <span class="fa fa-caret-down"></span>&nbsp;&nbsp;&nbsp;</span>
+        <span>All accounts <span class="fa fa-caret-down"></span>&nbsp;&nbsp;&nbsp;</span>
+        <span>All Master Categories <span class="fa fa-caret-down"></span>&nbsp;&nbsp;&nbsp;</span>
+        <%if @miscellaneous_only%>
+          <span><%= link_to ' All Transactions', reports_master_category_report_path(miscellaneous: false), class: "btn btn-default"%></span>
+          <span><%= link_to 'Miscellaneous Only', reports_master_category_report_path(miscellaneous: true), class: "btn btn-primary"%></span>
+        <%else%>
+          <span><%= link_to ' All Transactions', reports_master_category_report_path(miscellaneous: false), class: "btn btn-primary"%></span>
+          <span><%= link_to 'Miscellaneous Only', reports_master_category_report_path(miscellaneous: true), class: "btn btn-default"%></span>
+        <%end%>
+      </div>
+    </div>
+    <!-- END PAGE HEAD -->
+
+    <%= content_tag :div," ",id: "mastercategoriesreportpiechart", data: {mastercategoriesreportdata: @mastercategoriesreportdata}%>
+  </div>
+
+</div>

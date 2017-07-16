@@ -1,0 +1,78 @@
+<div class="content-frame">
+    <div class="content-frame-right" style="background: #2D3945;color: #94ABBA;">
+      <div>
+        <div style="text-align:center;">
+          <h3 style="color:white;"><%=@budget_year%></h3>
+        </div>
+        <div style="text-align:center;padding-bottom: 10px;">
+          All budgted Expenses for the year
+        </div>
+      </div>
+      <div class="list-group">
+          <table style="width: 100%;">
+            <tr>
+              <td class="expense-table-first-column"></td>
+              <td class="expense-table-column" style="text-align:center;"><strong>YTD</strong></td>
+              <td class="expense-table-column" style="text-align:center;padding-right: 10px;"><strong>Yearly</strong></td>
+            </tr>
+            <tr>
+              <td class="expense-table-first-column"><span class="item"></span>&nbsp;<span class="xn-text">Budget</span></td>
+              <td class="expense-table-column"><%=number_to_currency(@annual_report[:budgeted_amount][12])%></td>
+              <td class="expense-table-column" style="padding-right: 10px;"><%=number_to_currency(@annual_report[:yearly_budgeted_amount][12])%></td>
+            </tr>
+            <tr>
+              <td class="expense-table-first-column"><span class="item"></span>&nbsp;<span class="xn-text">Savings</span></td>
+              <td class="expense-table-column"><%=number_to_currency(@annual_report[:savings][12])%></td>
+              <td class="expense-table-column" style="padding-right: 10px;"><%=number_to_currency(@annual_report[:yearly_savings][12])%></td>
+            </tr>
+            <tr>
+              <td class="expense-table-first-column"><span class="item"></span>&nbsp;<span class="xn-text">Expenses</span></td>
+              <td class="expense-table-column"><%=number_to_currency(@annual_report[:expenses][12])%></td>
+              <td class="expense-table-column" style="padding-right: 10px;"><%=number_to_currency(@annual_report[:yearly_expenses][12])%></td>
+            </tr>
+            <tr>
+              <td class="expense-table-first-column"><span class="item"></span>&nbsp;<span class="xn-text">Variance</span></td>
+              <td class="expense-table-column"><%=number_to_currency(@annual_report[:budgeted_amount][12] - @annual_report[:expenses][12])%></td>
+              <td class="expense-table-column" style="padding-right: 10px;"><%=number_to_currency(@annual_report[:yearly_budgeted_amount][12] - @annual_report[:yearly_expenses][12])%></td>
+            </tr>
+          </table>
+      </div>
+    </div>
+
+    <div class="content-frame-body content-frame-body-left" style="padding-top: 10px!important;">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title-box">
+                    <h3>Annual Budget vs Expenses</h3>
+                    <span>Annual Expenses against the budgeted amount for each month</span>
+                </div>
+                <ul class="panel-controls" style="margin-top: 2px;">
+                    <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <div>
+                    <%= content_tag :div," ",id: "monthlybudgetvsexpensesreport", data: {overallsummarymonths: report_months_data,monthlyexpenses: report_expenses_data,yearlybudgetedamount: report_yearly_budgeted_amount_data}%>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title-box">
+                    <h3>Annual Budget vs Expenses per Category</h3>
+                    <span>Annual Expenses for each category against budgeted amount</span>
+                </div>
+                <ul class="panel-controls" style="margin-top: 2px;">
+                    <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <div>
+                    <%= content_tag :div," ",id: "budgetvsexpensecategorychart", data: {budgetcategories: budget_categories_data,amount: budgeted_amount_data(Date.today.year),expenses: budgeted_expense_data(Date.today.year)}%>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

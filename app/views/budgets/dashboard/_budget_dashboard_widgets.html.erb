@@ -1,0 +1,127 @@
+<div class="col-md-3">
+  <!-- START WIDGET SLIDER -->
+  <div class="widget widget-default widget-carousel">
+      <div class="owl-carousel" id="owl-example">
+          <div>
+              <div class="widget-item-left">
+                <span class="fa fa-dollar"></span>
+              </div>
+              <div class="widget-data">
+                <div class="widget-title">Income</div>
+                <div class="widget-subtitle">Total</div>
+                <div class="widget-int"><%=number_to_currency(@income)%></div>
+            </div>
+          </div>
+          <div>
+            <div class="widget-item-left">
+              <span class="fa fa-dollar"></span>
+            </div>
+            <div class="widget-data">
+              <div class="widget-title">Expenses</div>
+              <div class="widget-subtitle">Overall</div>
+              <div class="widget-int"><%=number_to_currency(@expenses)%></div>
+            </div>
+          </div>
+          <div>
+            <div class="widget-item-left">
+              <span class="fa fa-dollar"></span>
+            </div>
+            <div class="widget-data">
+              <div class="widget-title">Savings</div>
+              <div class="widget-subtitle">Monthly for <%=Date::ABBR_MONTHNAMES[@budget.month].upcase%> <%=@budget.year%></div>
+              <div class="widget-int"><%=number_to_currency(@savings)%></div>
+            </div>
+          </div>
+          <div>
+            <div class="widget-item-left">
+              <span class="fa fa-dollar"></span>
+            </div>
+            <div class="widget-data">
+              <div class="widget-title">Remaining</div>
+              <div class="widget-subtitle">Forecast</div>
+              <div class="widget-int"><%=number_to_currency(@income - (@savings+@expenses))%></div>
+            </div>
+          </div>
+      </div>
+      <div class="widget-controls">
+          <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
+      </div>
+  </div>
+  <!-- END WIDGET SLIDER -->
+</div>
+
+<div class="col-md-3">
+  <%
+    income_consumption_text= "info"
+    if @income_consumption >= 90
+      income_consumption_text= "danger"
+    elsif @income_consumption < 90 && @income_consumption > 75
+      income_consumption_text= "warning"
+    elsif @income_consumption > 10
+      income_consumption_text= "success"
+    end
+  %>
+
+    <div class="widget widget-<%=income_consumption_text%> widget-padding-sm">
+        <div class="widget-item-left">
+            <input class="knob" data-width="100" data-height="100" data-min="0" data-max="100" data-displayInput=false data-bgColor="#d6f4ff" data-fgColor="#FFF" value="<%=@income_consumption%>%" data-readOnly="true" data-thickness=".2"/>
+        </div>
+        <div class="widget-data">
+            <div class="widget-big-int"><span class="num-count"><%=@income_consumption%></span>%</div>
+            <div class="widget-title">Income</div>
+            <div class="widget-subtitle">Percentage Consumed</div>
+        </div>
+        <div class="widget-controls">
+            <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="col-md-3">
+    <%
+      budget_consumption_text= "info"
+      if @budget_consumption >= 90
+        budget_consumption_text= "danger"
+      elsif @budget_consumption < 90 && @budget_consumption > 75
+        budget_consumption_text= "warning"
+      elsif @budget_consumption > 10
+        budget_consumption_text= "success"
+      end
+    %>
+    <div class="widget widget-<%=budget_consumption_text%> widget-padding-sm">
+        <div class="widget-item-left">
+            <input class="knob" data-width="100" data-height="100" data-min="0" data-max="100" data-displayInput=false data-bgColor="#d6f4ff" data-fgColor="#FFF" value="<%=@budget_consumption%>%" data-readOnly="true" data-thickness=".2"/>
+        </div>
+        <div class="widget-data">
+            <div class="widget-big-int"><span class="num-count"><%=@budget_consumption%></span>%</div>
+            <div class="widget-title">Budget</div>
+            <div class="widget-subtitle">Percentage Consumed</div>
+        </div>
+        <div class="widget-controls">
+            <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
+        </div>
+    </div>
+
+</div>
+
+<div class="col-md-3">
+
+    <!-- START WIDGET MESSAGES -->
+    <div class="widget widget-danger widget-item-icon" onclick="location.href='pages-messages.html';">
+        <div class="widget-item-left">
+            <span class="fa fa-calendar"></span>
+        </div>
+        <div class="widget-data">
+            <div class="widget-int num-count"><%=@days_remaining%></div>
+            <div class="widget-title">Days</div>
+            <div class="widget-subtitle">remaining in the month</div>
+        </div>
+        <div class="widget-controls">
+            <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
+        </div>
+    </div>
+    <!-- END WIDGET MESSAGES -->
+
+</div>

@@ -1,0 +1,261 @@
+<%
+	budget_rows = 0
+	misc_rows = 0
+	savings_expense_rows = 0
+	savings_rows = 0
+%>
+<div class="budget" style="z-index: -1000;width:inherit;">
+	<div class="col-md-8 budget-main-container" style="padding: 0px 3px!important;">
+		<div class="budget-content-container">
+			<table class="table table-condensed table-hover actions-table">
+				<thead>
+					<th style="width:30%;">Category</th>
+					<th style="width:5%;">&nbsp;</th>
+					<th style="width:13%;">Date</th>
+					<th>Budget</th>
+					<th>Expense</th>
+					<th class="" style="border-right:none;width: 17%;">Balance</th>
+					<th><span class='fa fa-cog'></span></th>
+				</thead>
+			<%@budget.display_budget_items.each do |display_item|%>
+			<%budget_rows += 1%>
+				<tr>
+					<td class="master-cell" style="width:33%;">
+						<%=display_item.master_category.name%>
+					</td>
+					<td class="master-cell" style="width:5%;">
+						&nbsp;
+					</td>
+					<td class="numeric-cell master-cell" style="width:13%;">
+						&nbsp;
+					</td>
+					<td class="numeric-cell master-cell"><%=number_to_currency(display_item.budgeted, precision: 1) %></td>
+					<td class="numeric-cell master-cell"><%=number_to_currency(display_item	.expenses, precision: 1)%></td>
+					<td class="numeric-cell master-cell"><%=number_to_currency(display_item.balance, precision: 1)%></td>
+					<td class="actions-cell master-cell" style="">
+						&nbsp;
+					</td>
+				</tr>
+				<%display_item.categorised_items.each do |budget_item|%>
+				<%budget_rows += 1%>
+					<tr>
+						<td style="width:33%;padding-left: 20px!important;">
+							<%=budget_item.category.name%>
+						</td>
+						<td style="width: 5%; text-align: right!important;">
+							<%unless budget_item.comment.nil? || budget_item.comment.length < 1%>
+								<span class="fa fa-comment-o" style='color: #999;' aria-hidden="true">&nbsp;</span>
+							<%end%>
+							<%if budget_item.category.direct_debit%>
+								<span class="fa fa-credit-card" style='color: #999;' aria-hidden="true">&nbsp;</span>
+							<%end%>
+							<%if budget_item.complete%>
+								<span class="fa fa-lock" style='color: #999;' aria-hidden="true">&nbsp;</span>
+							<%end%>
+							<%if !budget_item.complete && (budget_item.comment.nil? || budget_item.comment.length < 1) && !budget_item.category.direct_debit%>
+								&nbsp;&nbsp;&nbsp;
+							<%end%>
+						</td>
+						<td class="numeric-cell" style="width:13%; text-align:center!important;">
+							<%unless budget_item.payment_date.nil?%>
+								<%=budget_item.payment_date.to_formatted_s(:short)%>
+							<%end%>
+						</td>
+
+						<td class="numeric-cell"><%=number_to_currency(budget_item.budgeted_amount, precision: 1) %></td>
+						<td class="numeric-cell"><%=number_to_currency(budget_item.expenses, precision: 1)%></td>
+						<td class="numeric-cell <%= 'negative' if budget_item.balance < 0 %>" ><%=number_to_currency(budget_item.balance, precision: 1)%></td>
+						<td class="actions-cell">
+							<div class="actions">
+								<%if budget_item.category.has_template_transaction && !budget_item.category.account_id.nil? && !budget_item.category.payee_id.nil? && !budget_item.complete?%>
+									<%= link_to raw("<span class='fa fa-check-circle-o' style='color: #999;'></span>"),
+										one_click_transaction_path(budget_item), method: :post%>&nbsp;
+								<%end%>
+								<%= link_to raw("<span class='glyphicon glyphicon-pencil' style='color: #999;' aria-hidden='true'></span>"),
+							 		edit_budget_item_path(budget_item), {:remote => true, class: 'edit-budget-item-modal-link'} %>&nbsp;
+								<%= link_to raw("<span class='caret' style='color: #999;'></span>"),
+									budget_item_path(budget_item), {:remote => true} %>
+							</div>
+						</td>
+					</tr>
+					<tr id=<%=budget_item.id.to_s + '_details'%> style="display:none;"></tr>
+				<%end%>
+			<%end%>
+			</table>
+		</div>
+	</div>
+
+	<div class="col-md-4 budget-main-container" style="padding: 0px 3px!important;">
+
+		<!-- Savings Transactions Container	 -->
+		<div class="budget-content-container">
+			<table class="table table-condensed table-hover actions-table">
+				<thead>
+					<th style="width:30%;">Account</th>
+					<th style="width:13%;"></th>
+					<th>Payee</th>
+					<th class="" style="border-right:none;width: 17%;"></th>
+					<th></th>
+				</thead>
+				<tr><td class="master-cell" colspan=5>Savings</td></tr>
+					<%@budget.budget_transactions.savings_transactions.each do |sav_txn|%>
+					<%savings_rows += 1%>
+					<tr>
+						<td style="width:30%;">
+							<%unless sav_txn.comments.nil?%>
+								<span class="glyphicon glyphicon-tag" style='color: #999;' aria-hidden="true"></span>
+							<%else%>
+								&nbsp;&nbsp;&nbsp;
+							<%end%>
+							<%=sav_txn.account.name%>
+						</td>
+						<td style="width:13%;">
+							<%unless sav_txn.transaction_date.nil?%>
+								<%=sav_txn.transaction_date.to_formatted_s(:short)%>
+							<%end%>
+						</td>
+						<td class="numeric-cell"><%=sav_txn.payee.name%></td>
+						<td class="numeric-cell" style="color: green;border-right:none;width: 17%;"><%=number_to_currency(sav_txn.credit, precision: 1) %></td>
+						<td class="actions-cell" style="">
+							<div class="actions">
+								<%= link_to raw("<span class='glyphicon glyphicon-pencil' style='color: #999;' aria-hidden='true'></span>"),
+									edit_budget_transaction_path(sav_txn,transaction_type: 'savings'), {:remote => true, class: 'new-transaction-modal-link'} %>
+								<% unless sav_txn.reconciled%>
+									<%= link_to raw("<span class='glyphicon glyphicon-remove-circle' style='color: #999;' aria-hidden='true'></span>"), sav_txn, method: :delete,  data: { confirm: 'Are you sure?' }%>
+								<% else -%>
+									<%=image_tag 'cleared-icon.png'%>
+								<% end -%>
+							</div>
+						</td>
+					</tr>
+					<tr id=<%=sav_txn.id.to_s + '_sav_txn_details'%> style="display:none;"></tr>
+				<%end%>
+				<%if savings_rows <= 0%>
+					<tr>
+						<td style="width:30%;">&nbsp;</td>
+						<td style="width:13%;"></td>
+						<td class="numeric-cell"></td>
+						<td class="numeric-cell" style="border-right:none;width: 17%;"></td>
+						<td class="actions-cell"></td>
+					</tr>
+				<%end%>
+				<tr><td class="master-cell" colspan=5>Savings Expenses</td></tr>
+				<%@budget.budget_transactions.savings_expense_transactions.each do |sav_exp_txn|%>
+				<%savings_expense_rows += 1%>
+				<tr>
+					<td style="width:30%;">
+						<%unless sav_exp_txn.comments.nil?%>
+							<span class="glyphicon glyphicon-tag" style='color: #999;' aria-hidden="true"></span>
+						<%else%>
+							&nbsp;&nbsp;&nbsp;
+						<%end%>
+						<%=sav_exp_txn.payee.name%>
+					</td>
+					<td style="width:13%;">
+						<%unless sav_exp_txn.transaction_date.nil?%>
+							<%=sav_exp_txn.transaction_date.to_formatted_s(:short)%>
+						<%end%>
+					</td>
+					<td class="numeric-cell"><%=sav_exp_txn.account.name%></td>
+					<td class="numeric-cell" style="color: red;border-right:none;width: 17%;"><%=number_to_currency(sav_exp_txn.debit, precision: 1) %></td>
+					<td class="actions-cell" style="">
+						<div class="actions">
+							<%= link_to raw("<span class='glyphicon glyphicon-pencil'></span>"),
+								edit_budget_transaction_path(sav_exp_txn,transaction_type: 'savings_expense'), {:remote => true, class: 'new-transaction-modal-link'} %>
+							<% unless sav_exp_txn.reconciled%>
+								<%= link_to raw("<span class='fa fa-trash-o text-danger'></span>"), sav_exp_txn, method: :delete,  data: { confirm: 'Are you sure?' }%>
+							<% else -%>
+								<%=image_tag 'cleared-icon.png'%>
+							<% end -%>
+						</div>
+					</td>
+				</tr>
+				<tr id=<%=sav_exp_txn.id.to_s + '_sav_exp_txn_details'%> style="display:none;"></tr>
+			<%end%>
+			<%if savings_expense_rows <= 0%>
+				<tr>
+					<td style="width:30%;">&nbsp;</td>
+					<td style="width:13%;"></td>
+					<td class="numeric-cell"></td>
+					<td class="numeric-cell" style="border-right:none;width: 17%;"></td>
+					<td class="actions-cell"></td>
+				</tr>
+			<%end%>
+			</table>
+		</div>
+
+		<!-- Miscellaneous Transactions Container -->
+		<div class="budget-content-container" style="margin-top: 12px;">
+			<table class="table table-condensed table-hover actions-table">
+				<thead>
+					<th style="width:30%;">Category</th>
+					<th style="width:13%;"></th>
+					<th>Payee</th>
+					<th class="" style="border-right:none;width: 17%;"></th>
+					<th></th>
+				</thead>
+				<tr><td class="master-cell" colspan=5>Miscellaneous Expenses</td></tr>
+			<%@budget.display_miscellaneous_items.each do |misc_display_item|%>
+			<%misc_rows += 1%>
+				<tr>
+					<td class="master-cell" style="width:33%;">
+						<%=misc_display_item.master_category.name%>
+					</td>
+					<td class="master-cell" style="width:13%;">
+						&nbsp;
+					</td>
+					<td class="numeric-cell master-cell">&nbsp;</td>
+					<td class="numeric-cell master-cell" style="border-right:none;width: 17%;"><%=number_to_currency(misc_display_item.expenses, precision: 1)%></td>
+					<td class="actions-cell master-cell">&nbsp;</td>
+				</tr>
+				<%misc_display_item.categorised_items.each do |misc_txn|%>
+				<%misc_rows += 1%>
+					<tr>
+						<td style="width:30%;">
+							<%unless misc_txn.comments.nil? || misc_txn.comments.length < 1%>
+								<span class="fa fa-comment-o" style='color: #999;' aria-hidden="true"></span>
+							<%else%>
+								&nbsp;&nbsp;&nbsp;
+							<%end%>
+							<%=misc_txn.category.name%>
+						</td>
+						<td style="width:13%;">
+							<%unless misc_txn.transaction_date.nil?%>
+								<%=misc_txn.transaction_date.to_formatted_s(:short)%>
+							<%end%>
+						</td>
+						<td class="numeric-cell"><%=misc_txn.payee.name%></td>
+						<td class="numeric-cell" style="border-right:none;width: 17%;"><%=number_to_currency(misc_txn.debit-misc_txn.credit, precision: 1) %></td>
+						<td class="actions-cell" style="">
+							<div class="actions">
+								<%= link_to raw("<span class='glyphicon glyphicon-pencil'></span>"),
+								 	edit_budget_transaction_path(misc_txn,transaction_type: 'miscellaneous'), {:remote => true, class: 'new-transaction-modal-link'} %>
+								<% unless misc_txn.reconciled%>
+									<%= link_to raw("<span class='fa fa-trash-o text-danger'></span>"), misc_txn, method: :delete,  data: { confirm: 'Are you sure?' }%>
+								<% else -%>
+									<%=image_tag 'cleared-icon.png'%>
+								<% end -%>
+							</div>
+						</td>
+					</tr>
+					<tr id=<%=misc_txn.id.to_s + '_misc_txn_details'%> style="display:none;"></tr>
+				<%end%>
+			<%end%>
+			<%blank_rows = budget_rows - (misc_rows+((savings_expense_rows == 0 ? 1 : savings_expense_rows) + (savings_rows == 0 ? 1 : savings_rows) + 5))%>
+			<%if blank_rows > 0%>
+				<% (1..blank_rows).each do |i| %>
+					<tr>
+						<td style="width:30%;">&nbsp;</td>
+						<td style="width:13%;"></td>
+						<td class="numeric-cell"></td>
+						<td class="numeric-cell" style="border-right:none;width: 17%;"></td>
+						<td class="actions-cell"></td>
+					</tr>
+				<%end%>
+			<%end%>
+			</table>
+		</div>
+
+	</div>
+
+</div>

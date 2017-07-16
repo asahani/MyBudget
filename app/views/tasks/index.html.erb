@@ -1,0 +1,84 @@
+<!-- START ALERTS -->
+<%=render 'layouts/alerts'-%>
+<!-- END ALERTS -->
+
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb push-down-0">
+  <li><%=link_to "Budget",budgets_path -%></li>
+  <li class="active">Tasks</li>
+</ul>
+<!-- END BREADCRUMB -->
+
+<!-- START CONTENT FRAME -->
+<div class="content-frame">
+    <!-- START CONTENT FRAME TOP -->
+    <div class="content-frame-top">
+        <div class="page-title">
+            <h2><span class="fa fa-tasks"></span> Tasks</h2>
+        </div>
+        <div class="pull-right">
+            <button class="btn btn-default content-frame-left-toggle"><span class="fa fa-bars"></span></button>
+        </div>
+        <div class="pull-right" style="width: 100px; margin-right: 5px;">
+            <select class="form-control select">
+                <option>All</option>
+                <option>Work</option>
+                <option>Home</option>
+                <option>Friends</option>
+                <option>Closed</option>
+            </select>
+        </div>
+
+    </div>
+    <div class="content-frame-left">
+        <%= form_for Task.new, html: {class: "form-horizontal", role: :form} do |f|%>
+        <div class="form-group">
+            <h4>Add new task:</h4>
+            <div class="form-group">
+              <div class="input-group">
+                  <%= f.text_field :title, class: "form-control", placeholder: "Task title..." %>
+                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="input-group">
+                <%= f.text_field :due_by, class: "form-control datepicker",value: Time.now %>
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="input-group">
+                  <%= f.text_field :description, class: "form-control", placeholder: "Task description..." %>
+                  <span class="input-group-addon"><span class="fa fa-align-justify"></span></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="input-group">
+                  <%= f.select :priority, options_for_select([["Low", 3],["Medium", 2],["High", 1]]), {prompt: false}, {class: "form-control select"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.submit "Add", class: "btn btn-primary pull-right" %>
+            </div>
+        </div>
+        <%end%>
+
+        <%=render "tasks_count"%>
+
+    </div>
+    <!-- END CONTENT FRAME TOP -->
+
+    <!-- START CONTENT FRAME BODY -->
+    <div class="content-frame-body">
+
+        <%= render "tasks_list"%>
+
+    </div>
+    <!-- END CONTENT FRAME BODY -->
+
+</div>
+<!-- END CONTENT FRAME -->

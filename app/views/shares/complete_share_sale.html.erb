@@ -1,0 +1,13 @@
+<% if @share.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@share.errors.count, "error") %> prohibited this share from being sold:</h2>
+
+    <ul>
+    <% @share.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%=render 'show'%>

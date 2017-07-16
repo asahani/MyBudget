@@ -1,0 +1,162 @@
+<!-- START ALERTS -->
+<% if @house.errors.any? %>
+  <div class="alert alert-danger" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <strong>Warning!</strong> <%= pluralize(@house.errors.count, "error") %> prohibited this house from being saved:
+      <ul>
+      <% @house.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+  </div>
+<%end%>
+<!-- END ALERTS -->
+
+<%= form_for(@house,html: {class: "form-horizontal"}) do |f| %>
+<div class="panel-body">
+
+  <div class="form-group">
+      <%= f.label :name, {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+          <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-home"></span></span>
+              <%= f.text_field :name, {class: "form-control"} %>
+          </div>
+          <span class="help-block">House name</span>
+      </div>
+  </div>
+
+  <div class="form-group">
+      <%= f.label :address, {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+          <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-map-marker"></span></span>
+              <%= f.text_field :address, {class: "form-control"} %>
+          </div>
+          <span class="help-block">House Address</span>
+      </div>
+  </div>
+
+<div class="form-group">
+    <label class="col-md-3 col-xs-12 control-label">Mortgage Account</label>
+    <div class="col-md-6 col-xs-12">
+      <% if f.object.persisted?%>
+        <%= f.select "mortgage_account_id", options_from_collection_for_select(Account.all.active.mortgage_account, :id, :name,@house.mortgage_account.id),{ :prompt => "Select Mortgage Account..."},{ class: "form-control select"}%>
+      <%else%>
+        <%= f.select "mortgage_account_id", options_from_collection_for_select(Account.all.active.mortgage_account, :id, :name),{ :prompt => "Select Mortgage Account..."},{ class: "form-control select"}%>
+      <%end%>
+      <span class="help-block">Select mortgage account for this house</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="col-md-3 col-xs-12 control-label">Offset Account</label>
+    <div class="col-md-6 col-xs-12">
+      <% if f.object.persisted?%>
+        <%= f.select "offset_account_id", options_from_collection_for_select(Account.all.active.offset_account, :id, :name,@house.mortgage_account.id),{ :prompt => "Select Offset Account..."},{ class: "form-control select"}%>
+      <%else%>
+        <%= f.select "offset_account_id", options_from_collection_for_select(Account.all.active.offset_account, :id, :name),{ :prompt => "Select Offset Account..."},{ class: "form-control select"}%>
+      <%end%>
+      <span class="help-block">Select offset account for this house</span>
+    </div>
+</div>
+
+<hr>
+
+<div class="form-group">
+    <label class="col-md-3 col-xs-5 control-label">Purchase Date</label>
+    <div class="col-md-9 col-xs-7">
+        <div class="input-group date">
+            <%= f.text_field :purchase_date, class: "form-control datepicker" %>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <%= f.label :price_paid, {class: "col-md-3 col-xs-12 control-label"}%>
+    <div class="col-md-6 col-xs-12">
+        <div class="input-group">
+            <span class="input-group-addon"><span class="fa fa-dollar"></span></span>
+            <%= f.number_field :price_paid, class: "form-control",step: :any %>
+        </div>
+        <span class="help-block">The amount paid for the house</span>
+    </div>
+</div>
+
+
+<hr>
+<div class="form-group">
+    <%= f.label :original_balance, {class: "col-md-3 col-xs-12 control-label"}%>
+    <div class="col-md-6 col-xs-12">
+        <div class="input-group">
+            <span class="input-group-addon"><span class="fa fa-dollar"></span></span>
+            <%= f.number_field :original_balance, class: "form-control",step: :any %>
+        </div>
+        <span class="help-block">The original balance at the time of start of the mortgage</span>
+    </div>
+</div>
+<div class="form-group">
+    <%= f.label :current_value, {class: "col-md-3 col-xs-12 control-label"}%>
+    <div class="col-md-6 col-xs-12">
+        <div class="input-group">
+            <span class="input-group-addon"><span class="fa fa-dollar"></span></span>
+            <%= f.number_field :current_value, class: "form-control",step: :any %>
+        </div>
+        <span class="help-block">The current value of the house</span>
+    </div>
+</div>
+
+<hr>
+
+<div class="form-group">
+    <%= f.label :interest_rate, {class: "col-md-3 col-xs-12 control-label"}%>
+    <div class="col-md-6 col-xs-12">
+        <div class="input-group">
+            <span class="input-group-addon"><span class="fa fa-balance-scale"></span></span>
+            <%= f.number_field :interest_rate, class: "form-control",step: :any %>
+        </div>
+        <span class="help-block">The interest rate</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <%= f.label :term_length, {class: "col-md-3 col-xs-12 control-label"}%>
+    <div class="col-md-6 col-xs-12">
+        <div class="input-group">
+            <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
+            <%= f.number_field :term_length, class: "form-control",step: :any %>
+        </div>
+        <span class="help-block">The loan term in months</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="col-md-3 col-xs-5 control-label">Loan Term Start Date</label>
+    <div class="col-md-9 col-xs-7">
+        <div class="input-group date">
+            <%= f.text_field :term_start_date, class: "form-control datepicker"%>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="form-group">
+    <%= f.label :monthly_payment, {class: "col-md-3 col-xs-12 control-label"}%>
+    <div class="col-md-6 col-xs-12">
+        <div class="input-group">
+            <span class="input-group-addon"><span class="fa fa-usd"></span></span>
+            <%= f.number_field :monthly_payment, class: "form-control",step: :any %>
+        </div>
+        <span class="help-block">Monthly payment due</span>
+    </div>
+</div>
+
+
+</div>
+<div class="panel-footer">
+    <%= link_to 'Back', houses_path, {class: "btn btn-default"} %>
+    <%= f.submit nil, {class: "btn btn-success pull-right"} %>
+</div>
+
+<% end %>

@@ -1,0 +1,81 @@
+
+<div class="row top-categories-panel">
+  <div class="col-md-6">
+    <%= content_tag :div," ",id: "topcategoriespiechart", data: {topcategoriesdata: top_categories_as_percentage}%>
+  </div>
+  <div class="col-md-6">
+    <div class="row top-categories-panel-title ">
+      Top Spending Categories
+    </div>
+    <%category_counter = 0%>
+    <%@top_categories.each do |category|%>
+      <%category_counter += 1%>
+      <%if category_counter == 1%>
+        <div class="row">
+      <%end%>
+        <div class="col-md-3 category-tile">
+          <%if category.name.nil?%>
+            <span class="fa fa-ban fa-3x"></span>
+          <%else%>
+            <span class="fa <%=category.icon%> fa-3x"></span>
+          <%end%>
+
+          <div class="category-tile-spend"><%=number_to_currency(category.total_expense,precision: 0)%></div>
+          <div class="category-tile-name"><%=category.name%></div>
+        </div>
+
+      <%if category_counter == 4%>
+        <%category_counter = 1%>
+        </div>
+      <%end%>
+    <%end%>
+    <%if category_counter != 1%>
+      </div>
+    <%end%>
+
+    <div class="row">
+      <div class="col-md-3 category-tile">
+        <span class="fa fa-user fa-3x"></span>
+        <div class="category-tile-spend">$756</div>
+        <div class="category-tile-name">Groceries</div>
+      </div>
+      <div class="col-md-3 category-tile">
+        <span class="fa fa-user fa-3x"></span>
+        <div class="category-tile-spend">$756</div>
+        <div class="category-tile-name">Groceries</div>
+      </div>
+      <div class="col-md-3 category-tile">
+        <span class="fa fa-user fa-3x"></span>
+        <div class="category-tile-spend">$756</div>
+        <div class="category-tile-name">Groceries</div>
+      </div>
+      <div class="col-md-3 category-tile">
+        <span class="fa fa-user fa-3x"></span>
+        <div class="category-tile-spend">$756</div>
+        <div class="category-tile-name">Groceries</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3 category-tile">
+        <span class="fa fa-user fa-3x"></span>
+        <div class="category-tile-spend">$756</div>
+        <div class="category-tile-name">Groceries</div>
+      </div>
+      <div class="col-md-3 category-tile">
+        <span class="fa fa-user fa-3x"></span>
+        <div class="category-tile-spend">$756</div>
+        <div class="category-tile-name">Groceries</div>
+      </div>
+      <div class="col-md-3 category-tile">
+        <span class="fa fa-user fa-3x"></span>
+        <div class="category-tile-spend">$756</div>
+        <div class="category-tile-name">Groceries</div>
+      </div>
+      <div class="col-md-3 category-tile">
+        <span class="fa fa-user fa-3x"></span>
+        <div class="category-tile-spend">$756</div>
+        <div class="category-tile-name">Groceries</div>
+      </div>
+    </div>
+  </div>
+</div>

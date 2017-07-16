@@ -15,7 +15,7 @@ class BudgetIncomesController < ApplicationController
   # GET /budget_incomes/new
   def new
     @budget_income = BudgetIncome.new
-    
+
     unless params[:budget_id].nil?
       @budget_income.budget_id = params[:budget_id].to_i
     end
@@ -68,12 +68,12 @@ class BudgetIncomesController < ApplicationController
   def show_income_splits
     @budget_income = BudgetIncome.find(params[:id])
     @income_splits = IncomeSplit.where("budget_id = ? and income_id = ?",@budget_income.budget.id,@budget_income.income.id)
-    
+
     if @income_splits.nil? || @income_splits.count < 1
       @budget_income.auto_generate_income_splits
       @income_splits = IncomeSplit.where("budget_id = ? and income_id = ?",@budget_income.budget.id,@budget_income.income.id)
     end
-    
+
     respond_to do |format|
       format.js
     end
@@ -84,7 +84,7 @@ class BudgetIncomesController < ApplicationController
     @budget_income.generate_income_splits(params[:first_income_date].to_date,params[:amount].to_f)
     @income_splits = IncomeSplit.where("budget_id = ? and income_id = ?",@budget_income.budget.id,@budget_income.income.id)
   end
-  
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_budget_income
@@ -93,6 +93,6 @@ class BudgetIncomesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def budget_income_params
-      params.require(:budget_income).permit(:description, :amount, :budget_id, :account_id)
+      params.require(:budget_income).permit(:description, :amount, :budget_id, :account_id,:dividend_income_share_id)
     end
 end

@@ -1,0 +1,351 @@
+<div class="row">
+  <div  class="col-md-7">
+    <div class="panel panel-default">
+      <div class="col-md-3 chart-summary-panel no-padding" style="height:300px;">
+        <div class="padding-15">
+          <ul class="chart-mini-stats">
+            <li class="col-md-12 col-sm-4 col-xs-4 no-padding">
+  						<div class="sparkline-bar">
+                <span class="sparkline" sparkType="bar" sparkBarColor="#444" sparkWidth="100" sparkHeight="30" sparkBarWidth="5">4,5,6,6,7,8,6,5</span>
+  						</div>
+  						<div class="values">
+  							<strong><%=number_to_currency(@budget.budget_incomes.sum(:amount), precision: 2)%></strong>
+  							Income
+  						</div>
+  					</li>
+            <li class="col-md-12 col-sm-4 col-xs-4 no-padding">
+  						<div class="sparkline-bar">
+                <span class="sparkline" sparkType="bar" sparkBarColor="#444" sparkWidth="100" sparkHeight="30" sparkBarWidth="5">4,5,6,6,7,8,6,5</span>
+  						</div>
+  						<div class="values">
+  							<strong><%=number_to_currency(@expenses, precision: 2)%></strong>
+  							Expenses
+  						</div>
+  					</li>
+            <li class="col-md-12 col-sm-4 col-xs-4 no-padding">
+  						<div class="sparkline-bar">
+                <span class="sparkline" sparkType="bar" sparkBarColor="#444" sparkWidth="100" sparkHeight="30" sparkBarWidth="5">4,5,6,6,7,8,6,5</span>
+  						</div>
+  						<div class="values">
+  							<strong><%=number_to_currency(@savings, precision: 2)%></strong>
+  							Savings
+  						</div>
+  					</li>
+          </ul>
+
+        </div>
+      </div>
+
+      <div class="col-md-9" style="height:300px;">
+        <%= content_tag :div," ",id: "summarybarchart", data: {income: @income.to_i, expenses: @expenses.to_i,savings: @savings.to_i,misc: @miscellaneous_expenses.to_i,budgetmonth: Date::ABBR_MONTHNAMES[@budget.month].upcase}%>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-5" style="height:300px;">
+    <div class="panel chart-details-panel no-padding">
+      <div class="pull-left chart-details-panel-container">
+        <div class="chart-spend-info" style="text-align: center;">
+          <h4>Actuals</h4>
+        </div>
+        <table style="width: 100%;">
+          <tr>
+            <td class="text-light" style="width: 60%;">Budget</td>
+            <td style="text-align: right; padding-right: 5px;  "><%=number_to_currency(@budgeted_amount)%></td>
+          </tr>
+          <tr>
+            <td class="text-light" style="width: 60%;">Budget - Misc</td>
+            <td style="text-align: right;padding-right: 5px; "><%=number_to_currency(@budgeted_amount - (@misc_budget_item.budgeted_amount.to_f), precision: 2)%></td>
+          </tr>
+          <tr><td colspan=2 style="border-top-style: solid;border-top-width: 1px;border-color: rgba(255, 255, 255, 0.2) !important;">&nbsp;</td></tr>
+
+          <tr>
+            <td class="text-light" style="width: 60%;">Budget Expenses</td>
+            <td style="text-align: right;padding-right: 5px; "><%=number_to_currency(@expenses - @miscellaneous_expenses, precision: 2)%></td>
+          </tr>
+          <tr>
+            <td class="text-light" style="width: 60%;">Misc Expenses</td>
+            <td style="text-align: right;padding-right: 5px; "><%=number_to_currency(@miscellaneous_expenses, precision: 2)%></td>
+          </tr>
+          <tr>
+            <td class="text-light" style="width: 60%;">Monthly Expenses</td>
+            <td style="text-align: right;padding-right: 5px; "><%=number_to_currency(@expenses, precision: 2)%></td>
+          </tr>
+
+          <tr><td colspan=2 style="border-top-style: solid;border-top-width: 1px;border-color: rgba(255, 255, 255, 0.2) !important;">&nbsp;</td></tr>
+
+          <tr>
+            <td class="text-light" style="width: 60%;">Savings</td>
+            <td style="text-align: right;padding-right: 5px; "><%=number_to_currency(@savings, precision: 2)%></td>
+          </tr>
+
+          <tr>
+            <td class="text-light" style="width: 60%;">Savings Expenses</td>
+            <td style="text-align: right;padding-right: 5px; "><%=number_to_currency(@savings_expenses, precision: 2)%></td>
+          </tr>
+
+          <tr><td colspan=2 style="border-top-style: solid;border-top-width: 1px;border-color: rgba(255, 255, 255, 0.2) !important;">&nbsp;</td></tr>
+
+          <tr>
+            <td class="text-light" style="width: 60%;">Expense vs Budget</td>
+            <td style="text-align: right;padding-right: 5px; "><%=number_to_currency(@budgeted_amount -(@expenses + @expenses_remaining), precision: 2)%></td>
+          </tr>
+
+          <tr><td colspan=2 style="border-top-style: solid;border-top-width: 1px;border-color: rgba(255, 255, 255, 0.2) !important;">&nbsp;</td></tr>
+
+          <tr>
+            <td class="text-light" style="width: 60%;">Total Expenses</td>
+            <td style="text-align: right;padding-right: 5px; "><%=number_to_currency(@expenses+@savings_expenses, precision: 2)%></td>
+          </tr>
+          <tr>
+            <td class="text-light" style="width: 60%;">Total Savings</td>
+            <td style="text-align: right;padding-right: 5px; "><%=number_to_currency(@savings-@savings_expenses, precision: 2)%></td>
+          </tr>
+        </table>
+
+      </div>
+      <div class="pull-right chart-details-panel-container">
+        <div class="chart-spend-info" style="text-align: center;">
+          <h4>Forecasts</h4>
+        </div>
+        <table style="width: 100%;">
+
+          <tr>
+            <td class="text-light" style="width: 60%;">Income/Day</td>
+            <td style="text-align: right;padding-right: 5px; "><%=number_to_currency(@income/Time.days_in_month(@budget.month, @budget.year), precision: 2)%></td>
+          </tr>
+          <tr>
+            <td class="text-light" style="width: 60%;">Expenses/Day</td>
+            <td style="text-align: right;padding-right: 5px; "><%=number_to_currency(@expenses/Time.days_in_month(@budget.month, @budget.year), precision: 2)%></td>
+          </tr>
+
+          <tr><td colspan=2 style="border-top-style: solid;border-top-width: 1px;border-color: rgba(255, 255, 255, 0.2) !important;">&nbsp;</td></tr>
+
+          <tr>
+            <td class="text-light" style="width: 60%;">Income Remaining</td>
+            <td style="text-align: right;padding-right: 5px; "><%=number_to_currency(@income_remaining, precision: 2)%></td>
+          </tr>
+          <tr>
+            <td class="text-light" style="width: 60%;">Expenses Remaining</td>
+            <td style="text-align: right;padding-right: 5px; "><%=number_to_currency(@expenses_remaining, precision: 2)%></td>
+          </tr>
+
+          <tr><td colspan=2>&nbsp;</td></tr>
+          <tr><td colspan=2 style="border-top-style: solid;border-top-width: 1px;border-color: rgba(255, 255, 255, 0.2) !important;">&nbsp;</td></tr>
+
+          <tr>
+            <td class="text-light" style="width: 60%;">Max Savings Possible</td>
+            <td style="text-align: right;padding-right: 5px; "><%=number_to_currency(@income-@budgeted_amount, precision: 2)%></td>
+          </tr>
+          <tr>
+            <td class="text-light" style="width: 60%;">Savings Remaning</td>
+            <td style="text-align: right;padding-right: 5px; "><%=number_to_currency(@income_remaining-@expenses_remaining, precision: 2)%></td>
+          </tr>
+
+
+          <tr><td colspan=2 style="border-top-style: solid;border-top-width: 1px;border-color: rgba(255, 255, 255, 0.2) !important;">&nbsp;</td></tr>
+
+          <tr>
+            <td class="text-light" style="width: 60%;t">Forecast Status</td>
+            <td style="text-align: right;padding-right: 5px; "><%=number_to_currency(@income -(@expenses + @expenses_remaining), precision: 2)%></td>
+          </tr>
+
+          <tr><td colspan=2 style="border-top-style: solid;border-top-width: 1px;border-color: rgba(255, 255, 255, 0.2) !important;">&nbsp;</td></tr>
+
+          <tr>
+            <td class="text-light" style="width: 60%;">Forecast Expenses</td>
+            <td style="text-align: right;padding-right: 5px; "><%=number_to_currency(@expenses + @expenses_remaining, precision: 2)%></td>
+          </tr>
+          <tr>
+            <td class="text-light" style="width: 60%;">Forecast Savings</td>
+            <td style="text-align: right;padding-right: 5px; "><%=number_to_currency(@savings+(@income_remaining-@expenses_remaining), precision: 2)%></td>
+          </tr>
+        </table>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="panel panel-default">
+  <div class="panel-heading chart-heading">
+      <h4 class="panel-title">Miscellanesous Statistics</h4>
+      <ul class="panel-controls">
+          <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+          <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+      </ul>
+  </div>
+  <div class="panel-body">
+    <div class="row no-padding">
+      <div class="row">
+        <div class="col-md-3">
+            <a href="#" class="tile panel-grey">
+                <%=number_to_currency(@miscellaneous_expenses, precision: 2)%>
+                <p>Miscellaneous Expenses</p>
+
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="#" class="tile panel-grey">
+                <%=((@miscellaneous_expenses/@budgeted_amount)*100).to_i%>%
+                <p>Budget Consumption</p>
+
+            </a>
+        </div>
+        <div class="col-md-3">
+            <span class="tile panel-grey">
+                <%=((@miscellaneous_expenses/@income)*100).to_i%>%
+                <p>Income Consumption</p>
+            </span>
+        </div>
+        <%over_budget = @misc_budget_item.budgeted_amount - (@miscellaneous_expenses)%>
+        <div class="col-md-3">
+            <span class="tile panel-bricky">
+                <% %>
+                  <span class="<%=over_budget > 0 ? 'fa fa-caret-up text-success' : 'fa fa-caret-down text-warning'%>" style="font-size: 40px;line-height: 42px;">&nbsp;</span>
+                <%=number_to_currency(over_budget, precision: 2)%>
+                <p>Over/Under Budget</p>
+
+            </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row no-padding">
+      <div class="col-md-6">
+
+        <div class="panel panel-bricky">
+          <div class="panel-heading chart-heading-merged">
+              <h4 class="panel-title">Miscellaneous Master Category Spend</h4>
+          </div>
+    			<div class="panel-body" style="height: 300px;">
+    				<div class="row">
+    					<div class="col-md-6"  style="top: -15px;">
+    						<%= content_tag :div," ",id: "miscmastercategoriespiechart", data: {miscmastercategoriesdata: top_misc_spending_master_categories_as_percentage}%>
+    					</div>
+    					<div class="col-md-6">
+                <div class="chart-spend-info">
+    							<h4>Top 5 Expenses</h4>
+    						</div>
+                <%@top_5_misc_master_categories.each do |category|%>
+    						<div class="chart-spend-info">
+                  <span class="text-light pull-left"><%=category.name%></span>
+    							<h4 class="pull-right"><%=number_to_currency(category.total_expense)%></h4>
+    							<div class="clearfix"></div>
+    						</div>
+                <%end%>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+      </div>
+
+      <div class="col-md-6">
+        <%= content_tag :div," ",id: "miscexpenses", data: {miscexpenses: miscellaneous_categories}%>
+      </div>
+    </div>
+
+    <div class="row no-padding">
+
+      <div class="col-md-6">
+
+        <div class="panel panel-bricky">
+          <div class="panel-heading chart-heading-merged">
+              <h4 class="panel-title">Miscellaneous Category Spend</h4>
+          </div>
+    			<div class="panel-body" style="height:300px;">
+    				<div class="row">
+    					<div class="col-md-6"  style="top: -15px;">
+    						<%= content_tag :div," ",id: "misccategoriespiechart", data: {misccategoriesdata: miscellaneous_categories_as_percentage}%>
+    					</div>
+    					<div class="col-md-6">
+                <div class="chart-spend-info">
+    							<h4>Top 5 Expenses</h4>
+    						</div>
+                <%@top_5_misc_categories.each do |category|%>
+    						<div class="chart-spend-info">
+                  <span class="text-light pull-left"><%=category.name%></span>
+    							<h4 class="pull-right"><%=number_to_currency(category.total_expense)%></h4>
+    							<div class="clearfix"></div>
+    						</div>
+                <%end%>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+      </div>
+
+      <div class="col-md-6">
+        <%= content_tag :div," ",id: "miscellaneousmasterbarchart", data: {misctopexpenses: top_spending_categories}%>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading chart-heading">
+      <h4 class="panel-title">Payee Statistics</h4>
+      <ul class="panel-controls">
+          <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+          <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+      </ul>
+  </div>
+  <div class="panel-body">
+    <div class="row no-padding">
+
+      <div class="col-md-6">
+
+        <div class="panel panel-grey">
+          <div class="panel-heading chart-heading-merged">
+              <h4 class="panel-title">Payee Spend</h4>
+          </div>
+    			<div class="panel-body" style="height:300px;">
+    				<div class="row">
+    					<div class="col-md-6"  style="top: -15px;">
+    						<%= content_tag :div," ",id: "payeepiechart", data: {payeepiechartdata: payee_spend_as_percentage}%>
+    					</div>
+    					<div class="col-md-6">
+                <div class="chart-spend-info">
+    							<h4>Top 5 Expenses</h4>
+    						</div>
+                <%@top_5_payees.each do |payee|%>
+    						<div class="chart-spend-info">
+                  <span class="text-light pull-left"><%=payee.name%></span>
+    							<h4 class="pull-right"><%=number_to_currency(payee.total_expense)%></h4>
+    							<div class="clearfix"></div>
+    						</div>
+                <%end%>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+      </div>
+
+      <div class="col-md-6">
+        <%= content_tag :div," ",id: "payeespendbarchart", data: {payeespenddata: payee_spend}%>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading chart-heading">
+      <h4 class="panel-title">Budget Statistics</h4>
+      <ul class="panel-controls">
+          <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+          <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+      </ul>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-12">
+      <%= content_tag :div," ",id: "annual3", data: {budgetcategories: budget_categories_chart_data,amount: budget_amount_chart_data,expenses: budget_expenses_chart_data,balance: budget_balance_chart_data}%>
+    </div>
+    <div class="col-md-12">
+      <%= content_tag :div," ",id: "annual", data: {budgetitems: budget_items_chart_data}%>
+    </div>
+  </div>
+</div>

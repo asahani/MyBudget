@@ -1,10 +1,11 @@
 class MasterCategoriesController < ApplicationController
+  layout "admin"
   before_action :set_master_category, only: [:show, :edit, :update, :destroy]
 
   # GET /master_categories
   # GET /master_categories.json
   def index
-    @master_categories = MasterCategory.all
+    @master_categories = MasterCategory.all.non_system
   end
 
   # GET /master_categories/1
@@ -28,7 +29,7 @@ class MasterCategoriesController < ApplicationController
 
     respond_to do |format|
       if @master_category.save
-        format.html { redirect_to @master_category, notice: 'Master category was successfully created.' }
+        format.html { redirect_to master_categories_url, notice: 'Master category was successfully created.' }
         format.json { render :show, status: :created, location: @master_category }
       else
         format.html { render :new }
@@ -42,7 +43,7 @@ class MasterCategoriesController < ApplicationController
   def update
     respond_to do |format|
       if @master_category.update(master_category_params)
-        format.html { redirect_to @master_category, notice: 'Master category was successfully updated.' }
+        format.html { redirect_to master_categories_url, notice: 'Master category was successfully updated.' }
         format.json { render :show, status: :ok, location: @master_category }
       else
         format.html { render :edit }
@@ -69,6 +70,6 @@ class MasterCategoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def master_category_params
-      params.require(:master_category).permit(:name, :active)
+      params.require(:master_category).permit(:name, :icon, :active)
     end
 end

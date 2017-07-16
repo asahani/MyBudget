@@ -1,29 +1,234 @@
-<%= form_for(@category) do |f| %>
-  <% if @category.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@category.errors.count, "error") %> prohibited this category from being saved:</h2>
-
+<!-- START ALERTS -->
+<% if @category.errors.any? %>
+  <div class="alert alert-danger" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <strong>Warning!</strong> <%= pluralize(@category.errors.count, "error") %> prohibited this category from being saved:
       <ul>
       <% @category.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
-    </div>
-  <% end %>
+  </div>
+<%end%>
+<!-- END ALERTS -->
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+<%= form_for(@category,html: {class: "form-horizontal"}) do |f| %>
+<div class="panel-body">
+
+  <div class="form-group">
+      <%= f.label :name, {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+          <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-credit-card"></span></span>
+              <%= f.text_field :name, {class: "form-control"} %>
+          </div>
+          <span class="help-block">Category name</span>
+      </div>
   </div>
-  <div class="field">
-    <%= f.label :active %><br>
-    <%= f.check_box :active %>
+
+  <div class="form-group">
+      <label class="col-md-3 col-xs-12 control-label">Icon</label>
+
+      <div class="col-md-5 col-xs-12">
+        <!-- own select -->
+        <select name="category[icon]" id="icons-fa" class="fa-select form-control select">
+          <%=render "category_icons"%>
+        </select>
+
+        <!-- Simple jq script for show selected item -->
+        <script>
+          $(document).ready(function(){
+                /* Detect any change of option*/
+          	$("#icons-fa").change(function(){
+          		var icono = $(this).val();
+          		$("#view-fa").html('<i class="fa '+icono+' fa-lg"></i>');
+          	});
+
+                 /* simulate an change on select */
+          	$("#icons-fa").change();
+          });
+        </script>
+
+        <span class="help-block">Select icon for this category</span>
+      </div>
+      <div class="col-md-1 col-xs-12">
+        <!-- Make an div for show icon-->
+        <span id="view-fa"></span><br/>
+      </div>
   </div>
-  <div class="field">
-    <%= f.label :budget_amount %><br>
-    <%= f.text_field :budget_amount %>
+
+  <div class="form-group">
+      <%= f.label :budget_amount, {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+          <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-dollar"></span></span>
+              <%= f.number_field :budget_amount, class: "form-control",step: :any %>
+          </div>
+          <span class="help-block">The amount allocated per month</span>
+      </div>
   </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+
+<div class="form-group">
+    <label class="col-md-3 col-xs-12 control-label">Master Category</label>
+    <div class="col-md-6 col-xs-12">
+      <% if f.object.persisted?%>
+        <%= f.select "master_category_id", options_from_collection_for_select(MasterCategory.all.non_system, :id, :name,@category.master_category.id),{ :prompt => "Select Master Category..."},{ class: "form-control select"}%>
+      <%else%>
+        <%= f.select "master_category_id", options_from_collection_for_select(MasterCategory.all.non_system, :id, :name),{ :prompt => "Select Master Category..."},{ class: "form-control select"}%>
+      <%end%>
+      <span class="help-block">Select master category for this category</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <%= f.label :mandatory, {class: "col-md-3 col-xs-12 control-label"}%>
+    <div class="col-md-6 col-xs-12">
+      <label class="check">
+          <%= f.radio_button :mandatory, true, {class: "iradio"}-%>
+          True
+      </label>
+      <label class="check">
+          <%= f.radio_button :mandatory, false,{class: "iradio"}-%>
+          False
+      </label>
+      <span class="help-block">Required for display on the budget sheet</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <%= f.label "Display Category", {class: "col-md-3 col-xs-12 control-label"}%>
+    <div class="col-md-6 col-xs-12">
+      <span class="help-block">Budgeted</span>
+      <label class="check">
+          <%= f.radio_button :budgeted, true, {class: "iradio", id: "category-radio-budgeted-true"}-%>
+          True
+      </label>
+      <label class="check">
+          <%= f.radio_button :budgeted, false,{class: "iradio", id: "category-radio-budgeted-false"}-%>
+          False
+      </label>
+      <span class="help-block">Miscellaneous</span>
+      <label class="check">
+          <%= f.radio_button :miscellaneous, true,{class: "iradio", id: "category-radio-misc-true"}-%>
+          True
+      </label>
+      <label class="check">
+          <%= f.radio_button :miscellaneous, false,{class: "iradio", id: "category-radio-misc-false"}-%>
+          False
+      </label>
+      <span class="help-block">Savings</span>
+      <label class="check">
+          <%= f.radio_button :savings, true, {class: "iradio", id: "category-radio-savings-true"}-%>
+          True
+      </label>
+      <label class="check">
+          <%= f.radio_button :savings, false,{class: "iradio", id: "category-radio-savings-false"}-%>
+          False
+      </label>
+      <br/><br/>
+      <span class="help-block">Required for display on the budget sheet</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <%= f.label "Direct Debit", {class: "col-md-3 col-xs-12 control-label"}%>
+    <div class="col-md-6 col-xs-12">
+      <label class="check">
+          <%= f.radio_button :direct_debit, true, {class: "iradio"}-%>
+          True
+      </label>
+      <label class="check">
+          <%= f.radio_button :direct_debit, false,{class: "iradio"}-%>
+          False
+      </label>
+      <span class="help-block">Does the category have a potential Direct Debit Transaction?</span>
+    </div>
+</div>
+
+<hr>
+<div class="form-group">
+    <span class="fa fa-calendar col-md-3 col-xs-12" style="text-align: right;"></span>
+
+    <div class="col-md-9 col-xs-12">
+        <%= f.label "Scheduled Transaction for Category", class: "control-label"%>
+    </div>
+</div>
+
+<div class="form-group">
+    <%= f.label "Scheduled Transactions", {class: "col-md-3 col-xs-12 control-label"}%>
+    <div class="col-md-6 col-xs-12">
+      <label class="check">
+          <%= f.radio_button :scheduled, true, {class: "iradio"}-%>
+          True
+      </label>
+      <label class="check">
+          <%= f.radio_button :scheduled, false,{class: "iradio"}-%>
+          False
+      </label>
+      <span class="help-block">Does the category have a monthly scheduled Transaction?</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <%= f.label :scheduled_day, {class: "col-md-3 col-xs-12 control-label"}%>
+    <div class="col-md-6 col-xs-12">
+        <div class="input-group">
+            <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+            <%= f.number_field :scheduled_day, class: "form-control",step: :any, max: 31 %>
+        </div>
+        <span class="help-block">The day every month when this category will have a scheduled transaction</span>
+    </div>
+</div>
+
+<hr>
+<div class="form-group">
+    <span class="fa fa-hand-o-up col-md-3 col-xs-12" style="text-align: right;"></span>
+
+    <div class="col-md-9 col-xs-12">
+        <%= f.label "1-Click Template Transaction for Category", {class: "control-label"}%>
+    </div>
+</div>
+
+<div class="form-group">
+    <%= f.label "Template Transaction", {class: "col-md-3 col-xs-12 control-label"}%>
+    <div class="col-md-6 col-xs-12">
+      <label class="check">
+          <%= f.radio_button :has_template_transaction, true, {class: "iradio"}-%>
+          True
+      </label>
+      <label class="check">
+          <%= f.radio_button :has_template_transaction, false,{class: "iradio"}-%>
+          False
+      </label>
+      <span class="help-block">Does the category have a potential 1-click template Transaction?</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <%= f.label "Debit amount", {class: "col-md-3 col-xs-12 control-label"}%>
+    <div class="col-md-6 col-xs-12">
+      <div class="input-group">
+          <%= f.collection_select :account_id, Account.active, :id, :name, {prompt: true}, {class: "form-control select"} %>
+      </div>
+      <span class="help-block">The account to debit for the 1-click transaction</span>
+    </div>
+</div>
+
+
+<div class="form-group">
+    <%= f.label "Debit amount", {class: "col-md-3 col-xs-12 control-label"}%>
+    <div class="col-md-6 col-xs-12">
+      <div class="input-group">
+          <%= f.collection_select :payee_id, Payee.non_system, :id, :name, {prompt: true}, {class: "form-control select"} %>
+      </div>
+      <span class="help-block">The Payee to credit for the 1-click transaction</span>
+    </div>
+</div>
+
+</div>
+<div class="panel-footer">
+    <%= link_to 'Back', categories_path, {class: "btn btn-default"} %>
+    <%= f.submit nil, {class: "btn btn-success pull-right"} %>
+</div>
+
 <% end %>

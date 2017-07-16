@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="x-widget-timeline">
+      <div class="x-widget-timelime-head">
+          <h3>Net Worth</h3>
+          <div class="pull-right"><a href="#">Refresh <span class="fa fa-refresh"></span></a></div>
+      </div>
+      <div class="x-widget-timeline-content">
+          <%@net_worth[:accounts].each do|master_account_type|%>
+            <div class="item item-<%=master_account_type[:code]%>" style="padding-right: 0px!important; width: 100%;">
+                <div>
+                    <strong><%=master_account_type[:name]%></strong>
+                    <div class="pull-right"><%=number_to_currency(master_account_type[:total])%></div>
+                </div>
+                <%master_account_type[:accounts].each do|account_type|%>
+                  <div class="" style="padding-right: 0px!important; width: 100%;">
+
+                    <div>
+                        <strong><%=account_type[:name]%></strong>
+                        <div class="pull-right"><%=number_to_currency(account_type[:total])%></div>
+                    </div>
+
+                  </div>
+                <%end%>
+            </div>
+          <%end%>
+
+          <div class="btn btn-default btn-block"><%=number_to_currency(@net_worth[:total])%></div>
+      </div>
+  </div>
+</div>

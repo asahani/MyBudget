@@ -1,28 +1,58 @@
 <%
 	income_rows = 0
 %>
-<div id="budget-flip">
-	<div class="front" id="budget-flip-front">
-		<div class="fixed" >
-			<%=render 'show_budget_summary'%>
-			<%=render 'show_budget_totals'%>
-		</div>	
-		<%=render 'show_budget_details'%>
-	</div>
-	<div class="back" id="budget-flip-back">
-		<div>
-			<%= high_chart("my_id4", @chart)  %>
-			<%= high_chart("my_id6", @chart3) %>
-			<%= high_chart("my_id5", @chart2) do |c| %>
-			          <%= raw "options.tooltip.formatter = function() {return '<b> YUPI!! '+ this.point.name +'</b>: '+ this.y +' %';}"  %>
-			          <%= raw "options.plotOptions.pie.dataLabels.formatter = function() { if (this.y > 5) return this.point.name; }"  %>
-			      <% end %>
-			
+<div class="tabs">
+	<div class="budget-tabs">
+		<ul class="nav nav-tabs" role="tablist">
+				<li class="active"><a href="#tab-first" role="tab" data-toggle="tab"  data-morris="none" data-highcharts="budgeted_percentage_spent_categories,total_pie,misc_pie"><span class="fa fa-dashboard"></span>&nbsp;<%=@budget.name%></a></li>
+				<li><a href="#tab-second" role="tab" data-toggle="tab"  data-morris="none" data-highcharts="none"><span class="fa fa-table"></span>&nbsp;Budget Worksheet</a></li>
+				<li><a href="#tab-third" role="tab" data-toggle="tab" data-morris="mb,payee_spend_bar,misc_expenses_bar,misc_master_expenses_bar" data-highcharts="c2,stats_summary_bar,stats_misc_categories_pie,stats_misc_master_categories_pie,payee_spend_pie"><span class="fa fa-bar-chart-o"></span>&nbsp;Charts</a></li>
+				<li><a href="#tab-fourth" role="tab" data-toggle="tab" data-morris="ml" data-highcharts="none"><span class="fa fa-desktop"></span>&nbsp;Fourth</a></li>
+				<li class="pull-right" style="height: 100%;">
+					<%unless @budget.nil?%>
+					<ul class="panel-controls">
+							<%unless @budget.is_closed?%>
+							<li>
+								<%= link_to raw("<span class='fa fa-download fa-lg'></span>"),
+										import_transactions_open_file_path(budget_id: @budget.id), {:remote => true, class: 'import-transactions-modal-link'} %>
+							</li>
+							<li>
+								<%= link_to raw("<span class='fa fa-plus fa-lg'></span>"),
+										new_budget_transaction_path(transaction_type: 'miscellaneous',budget_id: @budget.id), {:remote => true, class: 'new-transaction-modal-link'} %>
+							</li>
+							<li>
+								<%= link_to raw("<span class='fa fa-list-alt fa-lg'></span>"),
+										budget_transactions_path(budget_id: @budget.id)%>
+							</li>
+							<li>
+								<%= link_to raw("<span class='fa fa-ban fa-lg'></span>"),
+										close_budget_path, data: { confirm: "Are you sure you want to close the budget?" }%>
+							</li>
+							<%end%>
+					</ul>
+					<%end%>
+
+				</li>
+
+		</ul>
+		<div class="panel-body tab-content">
+				<div class="tab-pane fade in active" id="tab-first">
+					<%=render "budgets/dashboard/budget_dashboard"%>
+				</div>
+
+				<div class="tab-pane fade in" id="tab-second">
+					<%=render 'budgets/worksheet/show_budget_summary'%>
+					<%=render 'budgets/worksheet/show_budget_totals'%>
+					<%=render 'budgets/worksheet/show_budget_details'%>
+				</div>
+				<div class="tab-pane fade in" id="tab-third">
+					<%=render "budget_stats"%>
+				</div>
+				<div class="tab-pane fade in" id="tab-fourth">
+						<p>In mattis sapien lorem, nec tincidunt elit scelerisque tempus. Quisque nisl nisl, venenatis eget dignissim et, adipiscing eu tellus. Sed nulla massa, luctus id orci sed, elementum consequat est. Proin dictum odio quis diam gravida facilisis. Sed pharetra dolor a tempor tristique. Sed semper sed urna ac dignissim. Aenean fermentum leo at posuere mattis. Etiam vitae quam in magna viverra dictum. Curabitur feugiat ligula in dui luctus, sed aliquet neque posuere.</p>
+						<p>Donec tristique eu sem et aliquam. Proin sodales elementum urna et euismod. Quisque nisl nisl, venenatis eget dignissim et, adipiscing eu tellus. Sed nulla massa, luctus id orci sed, elementum consequat est. Proin dictum odio quis diam gravida facilisis. Sed pharetra dolor a tempor tristique. Sed semper sed urna ac dignissim. Aenean fermentum leo at posuere mattis. Etiam vitae quam in magna viverra dictum. Curabitur feugiat ligula in dui luctus, sed aliquet neque posuere.</p>
+						<%= content_tag :div," ",id: "annual4"%>
+				</div>
 		</div>
-	</div>	
+	</div>
 </div>
-<div class="modal fade" id="importTransactionsModal" tabindex="-1" role="dialog" aria-labelledby="importTransactionsModalLabel" aria-hidden="true"></div>
-<div class="modal fade" id="incomeSplitsModal" tabindex="-1" role="dialog" aria-labelledby="incomeSplitsModalLabel" aria-hidden="true"></div>	
-<div class="modal fade" id="editBudgetItemModal" tabindex="-1" role="dialog" aria-labelledby="editBudgetItemModalLabel" aria-hidden="true"></div>
-<div class="modal fade" id="newTransactionModal" tabindex="-1" role="dialog" aria-labelledby="newTransactionModalLabel" aria-hidden="true"></div>
-<div class="modal fade" id="newBudgetIncomeModal" tabindex="-1" role="dialog" aria-labelledby="newBudgetIncomeModalLabel" aria-hidden="true"></div>

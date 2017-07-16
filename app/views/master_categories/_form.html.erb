@@ -1,25 +1,65 @@
-<%= form_for(@master_category) do |f| %>
-  <% if @master_category.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@master_category.errors.count, "error") %> prohibited this master_category from being saved:</h2>
-
+<!-- START ALERTS -->
+<% if @master_category.errors.any? %>
+  <div class="alert alert-danger" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <strong>Warning!</strong> <%= pluralize(@master_category.errors.count, "error") %> prohibited this master_category from being saved:
       <ul>
       <% @master_category.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
-    </div>
-  <% end %>
+  </div>
+<%end%>
+<!-- END ALERTS -->
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+<%= form_for(@master_category,html: {class: "form-horizontal"}) do |f| %>
+<div class="panel-body">
+
+  <div class="form-group">
+      <%= f.label :name, {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+          <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+              <%= f.text_field :name, {class: "form-control"} %>
+          </div>
+          <span class="help-block">Master category name</span>
+      </div>
   </div>
-  <div class="field">
-    <%= f.label :display %><br>
-    <%= f.check_box :display %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+</div>
+<div class="form-group">
+    <label class="col-md-3 col-xs-12 control-label">Icon</label>
+
+    <div class="col-md-5 col-xs-12">
+      <!-- own select -->
+      <select name="master_category[icon]" id="icons-fa" class="fa-select form-control select">
+        <%=render "/categories/category_icons"%>
+      </select>
+
+      <!-- Simple jq script for show selected item -->
+      <script>
+        $(document).ready(function(){
+              /* Detect any change of option*/
+          $("#icons-fa").change(function(){
+            var icono = $(this).val();
+            $("#view-fa").html('<i class="fa '+icono+' fa-lg"></i>');
+          });
+
+               /* simulate an change on select */
+          $("#icons-fa").change();
+        });
+      </script>
+
+      <span class="help-block">Select icon for this category</span>
+    </div>
+    <div class="col-md-1 col-xs-12">
+      <!-- Make an div for show icon-->
+      <span id="view-fa"></span><br/>
+    </div>
+</div>
+
+<div class="panel-footer">
+    <%= link_to 'Back', master_categories_path, {class: "btn btn-default"} %>
+    <%= f.submit nil, {class: "btn btn-success pull-right"} %>
+</div>
+
 <% end %>

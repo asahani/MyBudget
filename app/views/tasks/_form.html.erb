@@ -1,0 +1,52 @@
+<%= form_for @task, html: {class: "form-horizontal", role: :form} do |f|%>
+<%unless @budget.nil?%>
+    <%=f.hidden_field :budget_id, :value => @budget.id%>
+<%end%>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h3><span class="fa fa-pencil"></span> New Task</h3>
+        <p>Create a new task / ToDo item.</p>
+    </div>
+
+    <div class="panel-body">
+        <div class="form-group">
+            <label class="col-md-3 col-xs-5 control-label">Title</label>
+            <div class="col-md-9 col-xs-7">
+                <div class="input-group">
+                    <%= f.text_field :title,value: @task.title, class: "form-control" %>
+                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 col-xs-5 control-label">Priority</label>
+            <div class="col-md-9 col-xs-7">
+                <%= f.select :priority, options_for_select([["Low", 3],["Medium", 2],["High", 1]]), {prompt: false}, {class: "form-control select"} %>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 col-xs-5 control-label">Payment Date</label>
+            <div class="col-md-9 col-xs-7">
+                <div class="input-group date">
+                    <%= f.text_field :due_by, class: "form-control datepicker",value: Time.now %>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 col-xs-5 control-label">Description</label>
+            <div class="col-md-9 col-xs-7">
+                <div class="input-group">
+                    <%= f.text_field :description,value: @task.description, class: "form-control" %>
+                    <span class="input-group-addon"><span class="fa fa-align-justify"></span></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12 col-xs-5">
+                <%= f.submit "Create Task", class: "btn btn-primary btn-rounded pull-right" %>
+            </div>
+        </div>
+    </div>
+</div>
+<% end %>

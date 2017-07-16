@@ -13,12 +13,34 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
-//= require turbolinks
-//= require highcharts/highcharts                                                           
-//= require highcharts/highcharts-more                                                         
-//= require highcharts/highstock
 //= require bootstrap-sprockets
-//= require_tree .
+//= require atlant/plugins/bootstrap/bootstrap-colorpicker
+//= require atlant/plugins/bootstrap/bootstrap-datepicker
+//= require atlant/plugins/bootstrap/bootstrap-file-input
+//= require atlant/plugins/bootstrap/bootstrap-select
+//= require atlant/plugins/icheck/icheck.min
+//= require atlant/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min
+//= require atlant/plugins/scrolltotop/scrolltopcontrol
+//= require atlant/plugins/morris/raphael-min
+//= require atlant/plugins/morris/morris.min
+//= require atlant/plugins/rickshaw/d3.v3
+//= require atlant/plugins/jvectormap/jquery-jvectormap-1.2.2.min
+//= require atlant/plugins/jvectormap/jquery-jvectormap-world-mill-en
+//= require atlant/plugins/bootstrap/bootstrap-datepicker
+//= require atlant/plugins/bootstrap/bootstrap-tagsinput.min
+//= require atlant/plugins/sparkline/jquery.sparkline.min
+//= require atlant/plugins/knob/jquery.knob.min
+//= require atlant/plugins/ion/ion.rangeSlider.min
+//= require atlant/plugins/owl/owl.carousel.min
+//= require atlant/plugins/moment.min
+//= require atlant/plugins/daterangepicker/daterangepicker
+//= require atlant/plugins/tagsinput/jquery.tagsinput.min
+//= require atlant/plugins/dropzone/dropzone.min
+//= require atlant/demo_tables
+//= require atlant/plugins
+//= require atlant/actions
+//= require highcharts/highcharts
+//= require_self
 
 $(document).ready(function() {
   var clickOnBudgetModal = function(){
@@ -26,7 +48,7 @@ $(document).ready(function() {
       $('#editBudgetItemModal').modal('show');
     });
   }
-  
+
   clickOnBudgetModal();
 
   var clickOnNewTransactionModal = function(){
@@ -34,9 +56,7 @@ $(document).ready(function() {
       $('#newTransactionModal').modal('show');
     });
   }
-  
+
   clickOnNewTransactionModal();
 
 });
-
-

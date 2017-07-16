@@ -1,0 +1,66 @@
+<div class="row" style="margin-top: 70px;">
+    <div class="col-md-12">
+        <!-- START TIMELINE -->
+        <div class="timeline">
+
+            <!-- START TIMELINE ITEM -->
+            <div class="timeline-item timeline-main">
+                <div class="timeline-date"><%=@budget_year%></div>
+            </div>
+            <!-- END TIMELINE ITEM -->
+            <%odd = true%>
+            <%@major_transactions.each do |transaction|%>
+                <%right_item_class = odd ? '' : 'timeline-item-right'%>
+                <div class="timeline-item <%=right_item_class%>">
+                    <div class="timeline-item-info"><%=transaction.transaction_date.strftime("%d %b, %Y")%></div>
+                    <div class="timeline-item-icon">
+                        <%category_icon = transaction.category.icon.nil? ? 'fa-globe' :  transaction.category.icon%>
+                        <span class="fa <%=category_icon%>"></span>
+                    </div>
+                    <div class="timeline-item-content">
+                        <div class="timeline-heading">
+                            <span class="fa <%=category_icon%>"></span> &nbsp;&nbsp;
+                            Paid <a href="#"><%=number_to_currency(transaction.debit,precision: 2)%></a> to
+                            <a href="#"><%=transaction.payee.name%></a> from
+                            <a href="#"><%=transaction.account.name%></a> on
+                            <a href="#"><%=transaction.transaction_date.strftime("%d %b, %Y")%></a>
+
+                        </div>
+                        <div class="timeline-body">
+                            <ul class="list-tags">
+                                <%transaction.tags.each do|tag|%>
+                                    <li><a href="#"><span class="fa fa-tag"></span><%=tag.name%></a></li>
+                                <%end%>
+                            </ul>
+                        </div>
+                        <div class="timeline-body comments">
+                            <div class="comment-item">
+                                <span class="fa fa-folder-open"></span>
+                                <%=transaction.category.name%>
+                                <div class="pull-right">
+                                    <span class="fa fa-folder-open-o"></span>
+                                    <%=transaction.category.master_category.name%>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-body comments">
+                            <div class="comment-item">
+                                <span class="fa fa-comment"></span>
+                                <p><%=transaction.comments%></p>
+                            </div>
+                        </div>
+                        <div class="timeline-footer">
+                            <a href="#">More details</a>
+                            <div class="pull-right">
+                                <a href="#"><span class="fa fa-info"></span> Details</a>
+                                <a href="#"><span class="fa fa-file-zip-o"></span> Receipts</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%odd ? odd = false : odd = true%>
+            <%end%>
+        </div>
+        <!-- END TIMELINE -->
+  </div>
+</div>

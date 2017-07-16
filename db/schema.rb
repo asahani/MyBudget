@@ -11,11 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160623072132) do
+ActiveRecord::Schema.define(version: 20170716025228) do
+
+  create_table "account_transactions", force: true do |t|
+    t.integer  "account_id"
+    t.integer  "payee_id"
+    t.integer  "budget_id"
+    t.integer  "category_id"
+    t.decimal  "amount",           precision: 10, scale: 0
+    t.date     "transaction_date"
+    t.string   "comments"
+    t.boolean  "reconciled"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "house_id"
+    t.integer  "share_id"
+  end
+
+  add_index "account_transactions", ["account_id"], name: "index_account_transactions_on_account_id", using: :btree
+  add_index "account_transactions", ["budget_id"], name: "index_account_transactions_on_budget_id", using: :btree
+  add_index "account_transactions", ["category_id"], name: "index_account_transactions_on_category_id", using: :btree
+  add_index "account_transactions", ["payee_id"], name: "index_account_transactions_on_payee_id", using: :btree
 
   create_table "account_types", force: true do |t|
     t.string   "name"
-    t.boolean  "budget_account", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -24,7 +43,7 @@ ActiveRecord::Schema.define(version: 20160623072132) do
     t.string   "name"
     t.decimal  "initial_balance",            precision: 10, scale: 2, default: 0.0
     t.decimal  "balance",                    precision: 10, scale: 2, default: 0.0
-    t.integer  "account_type",                                        default: 0
+    t.integer  "account_type_id",                                     default: 1
     t.boolean  "budget_account",                                      default: true
     t.integer  "bsb_number"
     t.integer  "card_number"
@@ -41,18 +60,29 @@ ActiveRecord::Schema.define(version: 20160623072132) do
     t.datetime "updated_at"
   end
 
+  add_index "accounts", ["account_type_id"], name: "index_accounts_on_account_type_id", using: :btree
+  add_index "accounts", ["is_active"], name: "index_accounts_on_is_active", using: :btree
+
   create_table "budget_accounts", force: true do |t|
     t.integer  "account_id"
     t.integer  "budget_id"
-    t.decimal  "opening_balance", precision: 10, scale: 2, default: 0.0
-    t.decimal  "balance",         precision: 10, scale: 2, default: 0.0
+    t.decimal  "opening_balance",   precision: 10, scale: 2, default: 0.0
+    t.decimal  "balance",           precision: 10, scale: 2, default: 0.0
+    t.decimal  "statement_balance", precision: 10, scale: 2, default: 0.0
+    t.boolean  "paid",                                       default: false
+    t.boolean  "reconciled",                                 default: false
+    t.boolean  "documented",                                 default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "budget_accounts", ["account_id", "budget_id"], name: "index_budget_accounts_on_account_id_and_budget_id", using: :btree
+  add_index "budget_accounts", ["account_id"], name: "index_budget_accounts_on_account_id", using: :btree
+  add_index "budget_accounts", ["budget_id"], name: "index_budget_accounts_on_budget_id", using: :btree
+
   create_table "budget_incomes", force: true do |t|
     t.string   "description"
-    t.decimal  "amount",                precision: 10, scale: 2, default: 0.0
+    t.decimal  "amount",                   precision: 10, scale: 2, default: 0.0
     t.integer  "income_id"
     t.integer  "budget_id"
     t.integer  "account_id"
@@ -60,7 +90,13 @@ ActiveRecord::Schema.define(version: 20160623072132) do
     t.boolean  "credited"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "dividend_income_share_id"
   end
+
+  add_index "budget_incomes", ["account_id"], name: "index_budget_incomes_on_account_id", using: :btree
+  add_index "budget_incomes", ["budget_id"], name: "index_budget_incomes_on_budget_id", using: :btree
+  add_index "budget_incomes", ["budget_transaction_id"], name: "index_budget_incomes_on_budget_transaction_id", using: :btree
+  add_index "budget_incomes", ["income_id"], name: "index_budget_incomes_on_income_id", using: :btree
 
   create_table "budget_items", force: true do |t|
     t.integer  "budget_id"
@@ -75,26 +111,38 @@ ActiveRecord::Schema.define(version: 20160623072132) do
     t.datetime "updated_at"
   end
 
+  add_index "budget_items", ["budget_id"], name: "index_budget_items_on_budget_id", using: :btree
+  add_index "budget_items", ["category_id"], name: "index_budget_items_on_category_id", using: :btree
+
   create_table "budget_transactions", force: true do |t|
     t.integer  "account_id"
     t.integer  "budget_item_id"
     t.integer  "payee_id"
     t.integer  "budget_id"
     t.integer  "category_id"
-    t.decimal  "credit",           precision: 10, scale: 2, default: 0.0
-    t.decimal  "debit",            precision: 10, scale: 2, default: 0.0
+    t.decimal  "credit",             precision: 10, scale: 2, default: 0.0
+    t.decimal  "debit",              precision: 10, scale: 2, default: 0.0
     t.date     "transaction_date"
     t.text     "comments"
     t.string   "raw_data"
-    t.boolean  "manual",                                    default: true
-    t.boolean  "scheduled",                                 default: false
-    t.boolean  "budgeted",                                  default: false
-    t.boolean  "miscellaneous",                             default: true
-    t.boolean  "savings",                                   default: false
-    t.boolean  "reconciled",                                default: false
+    t.boolean  "manual",                                      default: true
+    t.boolean  "scheduled",                                   default: false
+    t.boolean  "budgeted",                                    default: false
+    t.boolean  "miscellaneous",                               default: true
+    t.boolean  "savings",                                     default: false
+    t.boolean  "reconciled",                                  default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "mortgage_interest",  precision: 10, scale: 2, default: 0.0
+    t.decimal  "mortgage_principal", precision: 10, scale: 2, default: 0.0
   end
+
+  add_index "budget_transactions", ["account_id"], name: "index_budget_transactions_on_account_id", using: :btree
+  add_index "budget_transactions", ["budget_id"], name: "index_budget_transactions_on_budget_id", using: :btree
+  add_index "budget_transactions", ["budget_item_id"], name: "index_budget_transactions_on_budget_item_id", using: :btree
+  add_index "budget_transactions", ["budgeted"], name: "index_budget_transactions_on_budgeted", using: :btree
+  add_index "budget_transactions", ["category_id"], name: "index_budget_transactions_on_category_id", using: :btree
+  add_index "budget_transactions", ["payee_id"], name: "index_budget_transactions_on_payee_id", using: :btree
 
   create_table "budgets", force: true do |t|
     t.integer  "year"
@@ -103,17 +151,68 @@ ActiveRecord::Schema.define(version: 20160623072132) do
     t.date     "end_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_closed",            default: false
+    t.string   "name"
   end
+
+  add_index "budgets", ["month"], name: "index_budgets_on_month", using: :btree
+  add_index "budgets", ["year"], name: "index_budgets_on_year", using: :btree
 
   create_table "categories", force: true do |t|
     t.string   "name"
-    t.boolean  "active",                                      default: true
-    t.decimal  "budget_amount",      precision: 10, scale: 2
+    t.boolean  "active",                                            default: true
+    t.decimal  "budget_amount",            precision: 10, scale: 2
     t.integer  "master_category_id"
-    t.boolean  "mandatory",                                   default: false
-    t.boolean  "budgeted",                                    default: false
-    t.boolean  "miscellaneous",                               default: false
-    t.boolean  "savings",                                     default: false
+    t.boolean  "mandatory",                                         default: false
+    t.boolean  "budgeted",                                          default: false
+    t.boolean  "miscellaneous",                                     default: false
+    t.boolean  "savings",                                           default: false
+    t.boolean  "direct_debit",                                      default: false
+    t.boolean  "scheduled",                                         default: false
+    t.integer  "scheduled_day"
+    t.boolean  "has_template_transaction",                          default: false
+    t.integer  "account_id"
+    t.integer  "payee_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "icon"
+  end
+
+  add_index "categories", ["account_id"], name: "index_categories_on_account_id", using: :btree
+  add_index "categories", ["budgeted"], name: "index_categories_on_budgeted", using: :btree
+  add_index "categories", ["master_category_id"], name: "index_categories_on_master_category_id", using: :btree
+  add_index "categories", ["miscellaneous"], name: "index_categories_on_miscellaneous", using: :btree
+  add_index "categories", ["payee_id"], name: "index_categories_on_payee_id", using: :btree
+
+  create_table "goals", force: true do |t|
+    t.string   "name"
+    t.string   "icon"
+    t.decimal  "target_amount",                precision: 10, scale: 0, default: 0
+    t.decimal  "saved_amount",                 precision: 10, scale: 0, default: 0
+    t.date     "target_date"
+    t.integer  "account_id"
+    t.integer  "percentage_towards_goal"
+    t.decimal  "current_balance_towards_goal", precision: 10, scale: 0, default: 0
+    t.boolean  "is_active",                                             default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "goals", ["account_id"], name: "index_goals_on_account_id", using: :btree
+
+  create_table "houses", force: true do |t|
+    t.string   "name"
+    t.string   "address"
+    t.integer  "mortgage_account_id"
+    t.integer  "offset_account_id"
+    t.date     "purchase_date"
+    t.float    "price_paid",          limit: 24
+    t.float    "original_balance",    limit: 24
+    t.float    "current_value",       limit: 24
+    t.float    "interest_rate",       limit: 24
+    t.float    "term_length",         limit: 24
+    t.date     "term_start_date"
+    t.float    "monthly_payment",     limit: 24
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -131,6 +230,7 @@ ActiveRecord::Schema.define(version: 20160623072132) do
     t.integer  "budget_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "tags"
   end
 
   create_table "income_splits", force: true do |t|
@@ -144,23 +244,29 @@ ActiveRecord::Schema.define(version: 20160623072132) do
     t.datetime "updated_at"
   end
 
+  add_index "income_splits", ["budget_id"], name: "index_income_splits_on_budget_id", using: :btree
+  add_index "income_splits", ["income_id"], name: "index_income_splits_on_income_id", using: :btree
+
   create_table "incomes", force: true do |t|
     t.string   "description"
     t.decimal  "amount",      precision: 10, scale: 2, default: 0.0
-    t.boolean  "weekly"
-    t.boolean  "fortnightly"
-    t.boolean  "monthly"
+    t.boolean  "weekly",                               default: false
+    t.boolean  "fortnightly",                          default: false
+    t.boolean  "monthly",                              default: true
     t.integer  "account_id"
     t.boolean  "is_active",                            default: true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "incomes", ["account_id"], name: "index_incomes_on_account_id", using: :btree
+
   create_table "master_categories", force: true do |t|
     t.string   "name"
     t.boolean  "display",    default: true
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "icon"
   end
 
   create_table "payee_descriptions", force: true do |t|
@@ -169,6 +275,8 @@ ActiveRecord::Schema.define(version: 20160623072132) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "payee_descriptions", ["payee_id"], name: "index_payee_descriptions_on_payee_id", using: :btree
 
   create_table "payees", force: true do |t|
     t.string   "name"
@@ -180,5 +288,64 @@ ActiveRecord::Schema.define(version: 20160623072132) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "payees", ["account_id"], name: "index_payees_on_account_id", using: :btree
+  add_index "payees", ["category_id"], name: "index_payees_on_category_id", using: :btree
+
+  create_table "shares", force: true do |t|
+    t.string   "name"
+    t.string   "code"
+    t.string   "share_type"
+    t.decimal  "units",                precision: 10, scale: 0
+    t.decimal  "purchase_price",       precision: 10, scale: 3
+    t.date     "purchase_date"
+    t.decimal  "last_price",           precision: 10, scale: 3
+    t.decimal  "sell_price",           precision: 10, scale: 3
+    t.date     "sell_date"
+    t.integer  "brokerage_account_id"
+    t.boolean  "no_cash_transaction",                           default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "taggings", force: true do |t|
+    t.integer  "tag_id"
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.integer  "tagger_id"
+    t.string   "tagger_type"
+    t.string   "context",       limit: 128
+    t.datetime "created_at"
+  end
+
+  add_index "taggings", ["context"], name: "index_taggings_on_context", using: :btree
+  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree
+  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id", using: :btree
+  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
+  add_index "taggings", ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy", using: :btree
+  add_index "taggings", ["taggable_id"], name: "index_taggings_on_taggable_id", using: :btree
+  add_index "taggings", ["taggable_type"], name: "index_taggings_on_taggable_type", using: :btree
+  add_index "taggings", ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type", using: :btree
+  add_index "taggings", ["tagger_id"], name: "index_taggings_on_tagger_id", using: :btree
+
+  create_table "tags", force: true do |t|
+    t.string  "name"
+    t.integer "taggings_count", default: 0
+  end
+
+  add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
+
+  create_table "tasks", force: true do |t|
+    t.integer  "budget_id"
+    t.string   "title"
+    t.text     "description"
+    t.integer  "priority"
+    t.date     "due_by"
+    t.boolean  "completed",   default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tasks", ["budget_id"], name: "index_tasks_on_budget_id", using: :btree
 
 end

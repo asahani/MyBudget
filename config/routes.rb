@@ -1,4 +1,25 @@
 Rails.application.routes.draw do
+  resources :goals
+  match "goals/get_account_details" => "goals#get_account_details", :via => :post, :as => 'get_account_details'
+
+
+  resources :shares
+  match "shares/:id/sell_share" => "shares#sell_share", :via => :get, :as => 'sell_share'
+  match "shares/:id/complete_share_sale" => "shares#complete_share_sale", :via => :patch, :as => 'complete_share_sale'
+
+  resources :account_transactions
+
+  resources :houses
+
+  resources :tasks do
+    member do
+      post :complete_task
+      post :complete_task_widget
+    end
+  end
+
+  get 'admin/index'
+
   get 'import_transactions/open_file'
 
   post 'import_transactions/process_file'
@@ -13,10 +34,19 @@ Rails.application.routes.draw do
 
   get 'import_transactions/cancel'
 
+  match "import_transactions/:id/split" => "import_transactions#split", :via => :get, :as => 'split_imported_transaction'
+  match "import_transactions/add_split" => "import_transactions#add_split", :via => :post, :as => 'add_split_imported_transaction'
+
+  match "import_transactions/:id/tags" => "import_transactions#tags", :via => :get, :as => 'tags_imported_transaction'
+  match "import_transactions/add_tags" => "import_transactions#add_tags", :via => :post, :as => 'add_tags_imported_transaction'
+
+
   resources :budget_transactions
   match "budget_transactions/:id/edit_budget_item_transaction" => "budget_transactions#edit_budget_item_transaction", :via => :get, :as => 'edit_budget_item_transaction'
   match "budget_transactions/:id/update_cleared_status" => "budget_transactions#update_cleared_status", :via => :get, :as => 'update_cleared_status'
   # match "budget_transactions/:id/import_transactions" => "budget_transactions#import_transactions", :via => :get, :as => 'edit_budget_item_transaction'
+  get 'tags/:tag/:budget_id', to: 'budget_transactions#index', as: :tag
+  match "search" => "budget_transactions#index", :via => :post, as: :search
 
   resources :payees
   post 'payees/select_payee'
@@ -31,10 +61,17 @@ Rails.application.routes.draw do
 
   resources :account_types
 
-  resources :budgets
+  resources :budgets do
+    member do
+      post :update_progress
+      get :close
+    end
+  end
   match "budgets/show_or_create/:month" => "budgets#show_or_create", :via => :get, :as => 'show_or_create_budget'
 
+
   resources :budget_items, :only => [:edit,:show,:update]
+  match "budget_items/:id/one_click_transaction" => "budget_items#one_click_transaction", :via => :post, :as => 'one_click_transaction'
 
   resources :dashboard, :only => [:index]
 
@@ -44,6 +81,16 @@ Rails.application.routes.draw do
 
   resources :master_categories
 
+  get 'loans/index'
+
+  get 'reports/index'
+  get 'reports/category_report'
+  get 'reports/master_category_report'
+  get 'reports/payee_report'
+  get 'reports/budget_expense_report'
+  get 'reports/timeline'
+
+  root 'dashboard#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,0 +1,104 @@
+<div class="row">
+	<%=render 'budgets/dashboard/budget_dashboard_widgets'%>
+</div>
+
+<div class="row">
+		<div class="col-md-12">
+			<%=render 'budgets/dashboard/budget_dashboard_progress'%>
+		</div>
+</div>
+
+<div class="row">
+		<div class="col-md-4">
+			<!-- INCOME DISTRIBUTION CHART -->
+			<div class="panel panel-default">
+					<div class="panel-body" style="padding: 0px!important;">
+							<%= content_tag :div," ",id: "expensebreakdownchart", data: {budgetbreakdowndata: budget_breakdown_pie_data}%>
+					</div>
+			</div>
+		</div>
+
+		<div class="col-md-4">
+			<!-- MISCELLANEOUS CHART -->
+			<div class="panel panel-default">
+					<div class="panel-body" style="padding: 0px!important;">
+						<%= content_tag :div," ",id: "miscmasterexpenseschart", data: {miscpiedata: top_misc_spending_master_categories_as_percentage}%>
+					</div>
+			</div>
+		</div>
+
+		<div class="col-md-4">
+				<!-- CALENDAR WIDGET -->
+				<div class="panel panel-default">
+						<div class="panel-heading">
+								<h3 class="panel-title">Schedule Calendar</h3>
+						</div>
+						<div class="panel-body">
+							<%=render 'budgets/dashboard/budget_calendar_widget'%>
+						</div>
+				</div>
+		</div>
+</div>
+
+<div class="row">
+
+		<div class="col-md-8">
+				<!-- MISCELLANEOUS MASTER CATEGORIES BAR CHART -->
+				<div class="panel panel-default">
+						<div class="panel-heading">
+								<h3 class="panel-title">Miscellanous Master Categories</h3>
+								<ul class="panel-controls">
+										<li><a href="#"><span class="fa fa-plus"></span></a></li>
+								</ul>
+						</div>
+						<div class="panel-body">
+						    <%= content_tag :div," ",id: "budget_percentage_spent", data: {budgetcategories: budget_categories_chart_data,amount: budget_amount_chart_data,expenses: budget_expenses_chart_data,balance: budget_balance_chart_data}%>
+
+						</div>
+				</div>
+		</div>
+
+		<div class="col-md-4">
+			<!-- MONTHLY TASKS -->
+			<%= render partial: "/tasks/tasks_widget", locals: { budget: @budget }%>
+		</div>
+</div>
+
+<div class="row">
+	<div class="col-md-3">
+
+	    <!-- START WIDGET CLOCK -->
+	    <div class="widget widget-danger widget-padding-sm">
+	        <div class="widget-big-int plugin-clock">00:00</div>
+	        <div class="widget-subtitle plugin-date">Loading...</div>
+	        <div class="widget-controls">
+	            <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="left" title="Remove Widget"><span class="fa fa-times"></span></a>
+	        </div>
+	        <div class="widget-buttons widget-c3">
+	            <div class="col">
+	                <a href="#"><span class="fa fa-clock-"></span></a>
+	            </div>
+	            <div class="col">
+	                <a href="#"><span class="fa fa-bell"></span></a>
+	            </div>
+	            <div class="col">
+	                <a href="#"><span class="fa fa-calendar"></span></a>
+	            </div>
+	        </div>
+	    </div>
+	    <!-- END WIDGET CLOCK -->
+
+	</div>
+	<div class="col-md-4">
+
+	</div>
+	<div class="col-md-4">
+
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-4">
+
+	</div>
+</div>

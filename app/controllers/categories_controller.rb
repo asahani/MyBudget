@@ -1,10 +1,11 @@
 class CategoriesController < ApplicationController
+  layout "admin", only: [:index, :new, :edit,:create,:update]
   before_action :set_category, only: [:show, :edit, :update, :destroy,:edit_transaction_category,:select_transaction_category]
 
   # GET /categories
   # GET /categories.json
   def index
-    @categories = Category.where('active = ?',true)
+    @categories = Category.all.non_system
   end
 
   # GET /categories/1
@@ -28,7 +29,7 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       if @category.save
-        format.html { redirect_to @category, notice: 'Category was successfully created.' }
+        format.html { redirect_to categories_url, notice: 'Category was successfully created.' }
         format.json { render :show, status: :created, location: @category }
       else
         format.html { render :new }
@@ -42,7 +43,7 @@ class CategoriesController < ApplicationController
   def update
     respond_to do |format|
       if @category.update(category_params)
-        format.html { redirect_to @category, notice: 'Category was successfully updated.' }
+        format.html { redirect_to categories_url, notice: 'Category was successfully updated.' }
         format.json { render :show, status: :ok, location: @category }
       else
         format.html { render :edit }
@@ -83,6 +84,6 @@ class CategoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
-      params.require(:category).permit(:name, :active, :budget_amount)
+      params.require(:category).permit(:name, :icon, :active, :budget_amount,:master_category_id,:mandatory,:budgeted,:miscellaneous,:savings,:direct_debit, :scheduled, :scheduled_day,:has_template_transaction,:account_id,:payee_id)
     end
 end

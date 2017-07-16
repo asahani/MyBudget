@@ -1,12 +1,65 @@
 <tr id=<%=@budget_transaction.id%>>
-		<td><%= form_for(@budget_transaction, remote: true) do |f| %>
-			<%= f.collection_select :account_id, Account.all, :id, :name, prompt: true %>
-		</td>
-		<td><%= f.collection_select :payee_id, Payee.where("category_id=?",@budget_transaction.budget_item.category.id), :id, :name, prompt: true %></td>
-		<td><%= f.date_select :transaction_date %></td>
-		<td><%= f.number_field :debit %></td>
-		<td><%= f.number_field :credit %></td>
-		<td><%= f.text_field :comments %></td>
-		<td><%= f.submit "update"%><%end%></td>
-</tr>	
+	<td colspan="8">
+		<%= form_for(@budget_transaction, remote: true, html: {class: "form-inline", role: "form"}) do |f| %>
+		<table>
+		<tr id=<%=@budget_transaction.id%>>
+			<div class="row">
+				<div class="form-group">
+					<div><label>Account</label></div>
+					<div><%= f.collection_select :account_id, Account.all, :id, :name, {prompt: true}, {class: "form-control select"} %></div>
+				</div>
+				<div class="form-group">
+					<div><label>Payee</label></div>
+					<div><%= f.collection_select :payee_id, Payee.all, :id, :name, {prompt: true}, {class: "form-control select"} %></div>
+				</div>
+				<div class="form-group">
+					<div><label>Date</label></div>
+					<div>
+						<div class="input-group date">
+								<%= f.text_field :transaction_date, class: "form-control datepicker",value: Time.now %>
+								<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div><label>Debit</label></div>
+					<div>
+						<%= f.number_field :debit ,step: :any, class: "form-control"%>
+					</div>
+				</div>
+				<div class="form-group">
+					<div><label>Credit</label></div>
+					<div><%= f.number_field :credit,step: :any, class: "form-control" %></div>
+				</div>
+				<div class="form-group">
+					<div><label>Comments</label></div>
+					<div><%= f.text_field :comments , class: "form-control"%></div>
+				</div>
 
+			</div>
+			<div class="form-group row">
+					<div><label>Tags</label></div>
+					<div>
+							<%= f.text_field :tag_list, 'data-role'=>'tagsinput', class: "form-control" %>
+					</div>
+			</div>
+			<%= button_tag(type: 'submit', class: "btn btn-success btn-block") do %>
+			 <i class='fa fa-pencil'>&nbsp; Update transaction</i>
+			<% end %>
+
+
+		</tr>
+	</table>
+		<%end%>
+	</td>
+</tr>
+<script>
+$(function() {
+    $( ".datepicker").datepicker({format: 'dd-mm-yyyy' });
+  });
+  $(function() {
+  	$("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput({
+  		tagClass: 'label fa fa-tag'
+  	});
+  });
+</script>

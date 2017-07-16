@@ -1,0 +1,158 @@
+<%
+	income_rows = 0
+%>
+<div class="row">
+	<div class="col-md-4" style="padding: 0px 3px!important;">
+
+		<div class="widget widget-primary widget-item-icon budget-summary-widget-content" style="margin-bottom: 5px!important;padding: 5px 0px!important;">
+			<div class="widget-item-left" style="position: absolute; top: 0; padding: 5px 0px!important; width:50px!important;">
+        <span style="margin-left: -8px;font-size: 1.2em; text-shadow: 1px 1px 2px #222;"><%=Date::ABBR_MONTHNAMES[@budget.month].upcase%></span><br>
+        <span style="margin-left: -5px;font-size: 1em;"><%=@budget.year%></span>
+			</div>
+			<div class="widget-data">
+
+				<%@budget.budget_incomes.each do|budget_income|%>
+		    <div class="widget-subtitle"  style="text-align: center; margin-left: -25px;">
+		      <span>
+		        <%= link_to budget_income.description,
+		          show_income_splits_path(budget_income), {:remote => true, class: 'show-income-splits-modal-link'} %>
+		      </span>
+		      <span>
+		        <%= link_to number_to_currency(budget_income.amount, precision: 2),
+		          edit_budget_income_path(budget_income), {:remote => true, class: 'new-budget-income-modal-link'} %>
+		      </span>
+		    </div>
+		    <%end%>
+
+				<div style="position: absolute; bottom: 0;">
+
+					<div class="widget-title" style="text-align: center; padding-right: 50px;">
+			      = <%=number_to_currency(@budget.budget_incomes.sum(:amount), precision: 2)%>
+			    </div>
+			    <div class="widget-subtitle" style="text-align: center; padding-right: 50px;">
+			      Monthly Income
+			    </div>
+				</div>
+			</div>
+				<div class="widget-controls">
+						<%= link_to raw("<span class='fa fa-plus' style='color: #777;' aria-hidden='true'></span>"),
+					    new_budget_income_path(budget_id: @budget.id), {:remote => true, class: 'widget-control-right new-budget-income-modal-link'} %>
+				</div>
+		</div>
+
+
+	</div>
+
+	<div class="col-md-4"  style="padding: 0px 3px!important;">
+		<div class="widget widget-primary budget-summary-widget-content"  style="margin-bottom: 5px!important; padding: 1px 1px!important;">
+			<div class="col-md-6" style="box-shadow: inset 0 0 3px #666; height: 100%; margin-top: 0px; padding: 5px 0px 0px 0px;">
+				<table style="font-size: 11px;width: 100%;">
+					<tr>
+						<td style="width: 60%;text-align: right;padding-right: 5px;">Budget: </td>
+						<td style="text-align: left;color: #CCC"><%=number_to_currency(@budgeted_amount)%></td>
+					</tr>
+					<tr>
+						<td style="width: 60%;text-align: right;padding-right: 5px;">Budget - Misc:</td>
+						<td style="text-align: left;color: #CCC"><%=number_to_currency(@budgeted_amount - (@misc_budget_item.budgeted_amount.to_f), precision: 2)%></td>
+					</tr>
+					<tr>
+						<td style="width: 60%;text-align: right;padding-right: 5px;">Remaining: </td>
+						<td style="text-align: left;color: #CCC"><%=number_to_currency(@income_remaining, precision: 2)%></td>
+					</tr>
+				</table>
+        <div style="position: absolute; bottom: 0;text-align: center;width: 100%;">
+
+					<div class="widget-title" style="text-align: center;width: 100%;">
+			      = <%=number_to_currency(@savings, precision: 2)%>
+			    </div>
+			    <div class="widget-subtitle" style="text-align: center;">
+			      Monthly Savings
+			    </div>
+				</div>
+			</div>
+			<div class="col-md-6" style="height: 100%; margin-top: 0px; padding: 5px 0px 0px 0px;">
+				<table style="font-size: 11px;width: 100%;">
+					<tr>
+						<td style="width: 60%;text-align: right;padding-right: 5px;">Budget Expenses: </td>
+						<td style="text-align: left;color: #CCC"><%=number_to_currency(@expenses - @miscellaneous_expenses, precision: 2)%></td>
+					</tr>
+					<tr>
+						<td style="width: 60%;text-align: right;padding-right: 5px;">Misc Expenses: </td>
+						<td style="text-align: left;color: #CCC"><%=number_to_currency(@miscellaneous_expenses, precision: 2)%></td>
+					</tr>
+					<tr>
+						<td style="width: 60%;text-align: right;padding-right: 5px;">Savings Expenses: </td>
+						<td style="text-align: left;color: #CCC"><%=number_to_currency(@savings_expenses, precision: 2)%></td>
+					</tr>
+				</table>
+        <div style="position: absolute; bottom: 0;text-align: center;width: 100%;">
+
+					<div class="widget-title" style="text-align: center;width: 100%;">
+			      = <%=number_to_currency(@expenses, precision: 2)%>
+			    </div>
+			    <div class="widget-subtitle" style="text-align: center;">
+			      Total Monthly Expenses
+			    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+  <div class="col-md-4"  style="padding: 0px 3px!important;">
+		<div class="widget widget-primary budget-summary-widget-content"  style="margin-bottom: 5px!important; padding: 1px 1px!important;">
+			<div class="col-md-6" style="box-shadow: inset 0 0 3px #666; height: 100%; margin-top: 0px; padding: 5px 0px 0px 0px;">
+				<table style="font-size: 11px;width: 100%;">
+					<tr>
+            <td style="width: 60%;text-align: right;padding-right: 5px;">Total Expenses: </td>
+            <td style="text-align: left;color: #CCC">$25000.00</td>
+          </tr>
+          <tr>
+            <td style="width: 60%;text-align: right;padding-right: 5px;">Total Savings: </td>
+            <td style="text-align: left;color: #CCC">$25000.00</td>
+          </tr>
+
+          <tr>
+            <td style="width: 60%;text-align: right;padding-right: 5px;">Expense vs Budget</td>
+            <td style="text-align: left;color: #CCC"><%=number_to_currency(@budgeted_amount -(@expenses + @expenses_remaining), precision: 2)%></td>
+          </tr>
+
+				</table>
+        <div style="position: absolute; bottom: 0;text-align: center;width: 100%;">
+
+					<div class="widget-title" style="text-align: center;width: 100%;">
+			      = <%=number_to_currency(@expenses + @expenses_remaining, precision: 2)%>
+			    </div>
+			    <div class="widget-subtitle" style="text-align: center;">
+			      Forecast Expenses
+			    </div>
+				</div>
+			</div>
+			<div class="col-md-6" style="height: 100%; margin-top: 0px; padding: 5px 0px 0px 0px;">
+				<table style="font-size: 11px;width: 100%;">
+					<tr>
+						<td style="width: 60%;text-align: right;padding-right: 5px;">Max Possible</td>
+						<td style="text-align: left;color: #CCC"><%=number_to_currency(@income-@budgeted_amount, precision: 2)%></td>
+					</tr>
+					<tr>
+						<td style="width: 60%;text-align: right;padding-right: 5px;">Expenses Left:</td>
+						<td style="text-align: left;color: #CCC"><%=number_to_currency(@expenses_remaining, precision: 2)%></td>
+					</tr>
+					<tr>
+						<td style="width: 60%;text-align: right;padding-right: 5px;">Forecast Left: </td>
+						<td style="text-align: left;color: #CCC"><%=number_to_currency(@income_remaining-@expenses_remaining, precision: 2)%></td>
+					</tr>
+				</table>
+        <div style="position: absolute; bottom: 0;text-align: center;width: 100%;">
+
+					<div class="widget-title" style="text-align: center;width: 100%;">
+			      = <%=number_to_currency(@savings+(@income_remaining-@expenses_remaining), precision: 2)%>
+			    </div>
+			    <div class="widget-subtitle" style="text-align: center;">
+			      Forecast Savings
+			    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>

@@ -5,66 +5,135 @@
 			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 			<h4 class="modal-title" id="newTransactionModalLabel">Edit <%=@transaction_type%> Transaction</h4>
 		</div>
-		<%= form_for @budget_transaction, format: :html do |f| %>
-		<%= f.hidden_field :budgeted ,:value => @budget_transaction.budgeted%>
-		<%= f.hidden_field :scheduled, :value => @budget_transaction.scheduled%>
-		<%= f.hidden_field :miscellaneous, :value => @budget_transaction.miscellaneous%>
-		<%= f.hidden_field :savings, :value => @budget_transaction.savings%>
-		<%= f.hidden_field :budget_id, :value => @budget_transaction.budget.id%>
+
 		<div class="modal-body">
-			<table class="table">
-				<tr>
-					<td>Account</td>
-					<%if @transaction_type == 'miscellaneous' || @transaction_type == 'account_transfer'%>
-						<td><%= f.collection_select :account_id, Account.for_budget.active, :id, :name, prompt: true %></td>
-					<%else%>	
-						<td><%= f.collection_select :account_id, Account.savings_account.for_budget.active, :id, :name, prompt: true %></td>
-					<%end%>	
-				</tr>
-				<tr>	
-					<%if @transaction_type == 'miscellaneous'%>
-						<td>Payee</td>
-						<td><%= f.collection_select :payee_id, Payee.external_payees, :id, :name, prompt: true %></td>
-					<%elsif @transaction_type == 'savings' || @transaction_type == 'account_transfer'%>
-						<td>From</td>
-						<td><%= f.collection_select :payee_id, Payee.account_payees, :id, :name, prompt: true %></td>
-					<%elsif @transaction_type == 'savings_expense'%>
-						<td>Payee</td>
-						<td><%= f.collection_select :payee_id, Payee.external_payees + Payee.account_payees, :id, :name, prompt: true %></td>	
-					<%end%>	
-				</tr>
-				<tr>	
-					<td>Date</td>
-					<td><%= f.text_field :transaction_date, class: 'datepicker'%></td>
-				</tr>
-				<%unless @transaction_type == 'savings' || @transaction_type == 'account_transfer'%>
-				<tr>	
-						<td>Debit</td>
-						<td><%= f.number_field :debit %></td>
-				</tr>
-				<%end%>
-				<%unless @transaction_type == 'savings_expense'%>
-				<tr>	
-						<td>Credit</td>
-						<td><%= f.number_field :credit %></td>
-				</tr>
-				<%end%>
-				
-				<tr>	
-					<td>Comments</td>
-					<td><%= f.text_field :comments %></td>
-				</tr>
-				<tr>
-					<td>Cleared?</td>	
-					<td><%= f.check_box :reconciled %></td>
-				</tr>
-			</table>
+			<div class="panel panel-default">
+				<div>
+					<div class="panel-body">
+							<h3><span class="fa fa-pencil"></span> Edit <%=@transaction_type%> Transaction</h3>
+							<p>Edit <%=@transaction_type%> transaction for current budget month.</p>
+					</div>
+					<div class="panel-body form-group-separated">
+						<%= form_for @budget_transaction, format: :html, html: {class: "form-horizontal", role: :form} do |f| %>
+						<%= f.hidden_field :budgeted ,:value => @budget_transaction.budgeted%>
+						<%= f.hidden_field :scheduled, :value => @budget_transaction.scheduled%>
+						<%= f.hidden_field :miscellaneous, :value => @budget_transaction.miscellaneous%>
+						<%= f.hidden_field :savings, :value => @budget_transaction.savings%>
+						<%= f.hidden_field :budget_id, :value => @budget_transaction.budget.id%>
+						<div class="form-group">
+								<label class="col-md-3 col-xs-5 control-label">Account</label>
+								<div class="col-md-9 col-xs-7">
+										<div class="input-group">
+											<%if @transaction_type == 'miscellaneous' || @transaction_type == 'account_transfer'%>
+												<%= f.collection_select :account_id, Account.for_budget.active, :id, :name, {prompt: true}, {class: "form-control select"} %>
+											<%else%>
+												<%= f.collection_select :account_id, Account.savings_account.for_budget.active, :id, :name, {prompt: true}, {class: "form-control select"} %>
+											<%end%>
+										</div>
+								</div>
+						</div>
+
+						<div class="form-group">
+								<label class="col-md-3 col-xs-5 control-label">
+									<%if @transaction_type == 'miscellaneous'%>
+										Payee
+									<%elsif @transaction_type == 'savings' || @transaction_type == 'account_transfer'%>
+										From
+									<%elsif @transaction_type == 'savings_expense'%>
+										Payee
+									<%end%>
+								</label>
+								<div class="col-md-9 col-xs-7">
+										<div class="input-group">
+											<%if @transaction_type == 'miscellaneous'%>
+												<%= f.collection_select :payee_id, Payee.external_payees, :id, :name, {prompt: true}, {class: "form-control select"} %>
+											<%elsif @transaction_type == 'savings' || @transaction_type == 'account_transfer'%>
+												<%= f.collection_select :payee_id, Payee.account_payees, :id, :name, {prompt: true}, {class: "form-control select"} %>
+											<%elsif @transaction_type == 'savings_expense'%>
+												<%= f.collection_select :payee_id, Payee.external_payees + Payee.account_payees, :id, :name, {prompt: true}, {class: "form-control select"} %>
+											<%end%>
+										</div>
+								</div>
+						</div>
+
+						<div class="form-group">
+								<label class="col-md-3 col-xs-5 control-label">Transaction Date</label>
+								<div class="col-md-9 col-xs-7">
+										<div class="input-group date">
+												<%= f.text_field :transaction_date, class: "form-control datepicker",value: @budget_transaction.transaction_date %>
+												<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+										</div>
+								</div>
+						</div>
+
+						<%unless @transaction_type == 'savings' || @transaction_type == 'account_transfer'%>
+						<div class="form-group">
+								<label class="col-md-3 col-xs-5 control-label">Debit</label>
+								<div class="col-md-9 col-xs-7">
+									<div class="input-group">
+										<%= f.number_field :debit, step: :any, class: "form-control" %>
+										<span class="input-group-addon"><span class="fa fa-usd"></span></span>
+									</div>
+								</div>
+						</div>
+						<%end%>
+
+						<%unless @transaction_type == 'savings_expense'%>
+						<div class="form-group">
+								<label class="col-md-3 col-xs-5 control-label">Credit</label>
+								<div class="col-md-9 col-xs-7">
+									<div class="input-group">
+										<%= f.number_field :credit, step: :any, class: "form-control" %>
+										<span class="input-group-addon"><span class="fa fa-usd"></span></span>
+									</div>
+								</div>
+						</div>
+						<%end%>
+
+						<div class="form-group">
+								<label class="col-md-3 col-xs-5 control-label">Comments</label>
+								<div class="col-md-9 col-xs-7">
+										<div class="input-group">
+												<%= f.text_field :comments, class: "form-control" %>
+												<span class="input-group-addon"><span class="fa fa-comment"></span></span>
+										</div>
+								</div>
+						</div>
+
+						<div class="form-group">
+								<label class="col-md-3 col-xs-5 control-label">Tags</label>
+								<div class="col-md-9 col-xs-7">
+										<div class="input-group">
+												<%= f.text_field :tag_list, 'data-role'=>'tagsinput', class: "form-control" %>
+												<span class="input-group-addon"><span class="fa fa-tags"></span></span>
+										</div>
+								</div>
+						</div>
+
+						<div class="form-group">
+								<label class="col-md-3 col-xs-5 control-label">Cleared?</label>
+								<div class="col-md-9 col-xs-7">
+									<label class="switch">
+										<%= f.check_box :reconciled%>
+										<span></span>
+									</label>
+								</div>
+						</div>
+
+						<div class="form-group">
+								<div class="col-md-12 col-xs-5">
+										<%= f.submit class: "btn btn-primary btn-rounded pull-right" %>
+								</div>
+						</div>
+						<%end%>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			<%= f.submit class: "btn btn-primary"%>
 		</div>
-		<%end%>
+
 	</div>
 </div>
 <script>
@@ -73,9 +142,14 @@ $(function() {
   });
 
 $(function() {
+	$("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput({
+		tagClass: 'label fa fa-tag'
+	});
+});
+
+$(function() {
   $('#new-budgeted-transaction-button').click(function(event){
     $('#new-budgeted-transaction-row').slideDown(1000);
   });
 });
 </script>
-

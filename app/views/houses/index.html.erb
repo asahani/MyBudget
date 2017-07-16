@@ -1,0 +1,45 @@
+<h1>Listing houses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Purchase date</th>
+      <th>Price paid</th>
+      <th>Original balance</th>
+      <th>Current value</th>
+      <th>Interest rate</th>
+      <th>Term length</th>
+      <th>Term start date</th>
+      <th>Mortgage account</th>
+      <th>Offset account</th>
+      <th>Name</th>
+      <th>Address</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @houses.each do |house| %>
+      <tr>
+        <td><%= house.purchase_date %></td>
+        <td><%= house.price_paid %></td>
+        <td><%= house.original_balance %></td>
+        <td><%= house.current_value %></td>
+        <td><%= house.interest_rate %></td>
+        <td><%= house.term_length %></td>
+        <td><%= house.term_start_date %></td>
+        <td><%= house.mortgage_account_id %></td>
+        <td><%= house.offset_account_id %></td>
+        <td><%= house.name %></td>
+        <td><%= house.address %></td>
+        <td><%= link_to 'Show', house %></td>
+        <td><%= link_to 'Edit', edit_house_path(house) %></td>
+        <td><%= link_to 'Destroy', house, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New House', new_house_path %>

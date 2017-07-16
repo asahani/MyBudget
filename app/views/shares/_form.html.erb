@@ -1,0 +1,117 @@
+<!-- START ALERTS -->
+<% if @share.errors.any? %>
+  <div class="alert alert-danger" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <strong>Warning!</strong> <%= pluralize(@share.errors.count, "error") %> prohibited this house from being saved:
+      <ul>
+      <% @share.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+  </div>
+<%end%>
+<!-- END ALERTS -->
+
+<%= form_for(@share,html: {class: "form-horizontal"}) do |f| %>
+<div class="panel-body">
+
+  <div class="form-group">
+      <%= f.label :name, {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+          <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-line-chart"></span></span>
+              <%= f.text_field :name, {class: "form-control"} %>
+          </div>
+          <span class="help-block">Share name</span>
+      </div>
+  </div>
+
+  <div class="form-group">
+      <%= f.label :share_type, {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+          <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-line-chart"></span></span>
+              <%= f.text_field :share_type, {class: "form-control"} %>
+          </div>
+          <span class="help-block">Share Type</span>
+      </div>
+  </div>
+
+  <% unless f.object.persisted?%>
+  <div class="form-group">
+      <%= f.label :code, {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+          <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-line-chart"></span></span>
+              <%= f.text_field :code, {class: "form-control"} %>
+          </div>
+          <span class="help-block">Share Code</span>
+      </div>
+  </div>
+
+  <hr>
+
+  <div class="form-group">
+      <%= f.label :units, {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+          <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-sort-numeric-asc"></span></span>
+              <%= f.number_field :units, class: "form-control",step: :any %>
+          </div>
+          <span class="help-block">The number of shares acquired</span>
+      </div>
+  </div>
+
+  <div class="form-group">
+      <%= f.label :purchase_price, {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+          <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-dollar"></span></span>
+              <%= f.number_field :purchase_price, class: "form-control",step: :any %>
+          </div>
+          <span class="help-block">The amount paid per share</span>
+      </div>
+  </div>
+
+  <div class="form-group">
+      <label class="col-md-3 col-xs-5 control-label">Purchase Date</label>
+      <div class="col-md-9 col-xs-7">
+          <div class="input-group date">
+              <%= f.text_field :purchase_date, class: "form-control datepicker" %>
+              <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+          </div>
+      </div>
+  </div>
+
+  <hr>
+
+  <div class="form-group">
+      <label class="col-md-3 col-xs-12 control-label">Offset Account</label>
+      <div class="col-md-6 col-xs-12">
+        <% if f.object.persisted?%>
+          <%= f.select "brokerage_account_id", options_from_collection_for_select(Account.all.active.brokerage_account, :id, :name,@share.brokerage_account.id),{ :prompt => "Select Brokerage Account..."},{ class: "form-control select"}%>
+        <%else%>
+          <%= f.select "brokerage_account_id", options_from_collection_for_select(Account.all.active.brokerage_account, :id, :name),{ :prompt => "Select Brokerage Account..."},{ class: "form-control select"}%>
+        <%end%>
+        <span class="help-block">Select brokerage account for this share</span>
+      </div>
+  </div>
+
+  <hr>
+
+  <div class="form-group">
+      <label class="col-md-3 col-xs-5 control-label">Do Not Deduct from Brokerage</label>
+      <div class="col-md-9 col-xs-7">
+          <div class="input-group date">
+              <%= f.check_box :no_cash_transaction%>
+          </div>
+      </div>
+  </div>
+  <%end%>
+</div>
+<div class="panel-footer">
+    <%= link_to 'Back', shares_path, {class: "btn btn-default"} %>
+    <%= f.submit nil, {class: "btn btn-success pull-right"} %>
+</div>
+
+<% end %>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- META SECTION -->
+        <title>MyBudget - Administration Console</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <!-- END META SECTION -->
+        <%= stylesheet_link_tag    'admin', media: 'all', 'data-turbolinks-track' => true %>
+        <%= javascript_include_tag 'admin', params[:controller], 'data-turbolinks-track'  => false %>
+        <%= csrf_meta_tags %>
+    </head>
+    <body>
+        <!-- START PAGE CONTAINER -->
+        <div class="page-container">
+
+            <!-- START PAGE SIDEBAR -->
+              <%=render 'layouts/sidebar'%>
+            <!-- END PAGE SIDEBAR -->
+
+            <!-- PAGE CONTENT -->
+            <div class="page-content">
+
+                <!-- START X-NAVIGATION VERTICAL -->
+                <%=render 'layouts/top_navigation'-%>
+                <!-- END X-NAVIGATION VERTICAL -->
+                <%=yield%>
+            </div>
+            <!-- END PAGE CONTENT -->
+        </div>
+        <!-- END PAGE CONTAINER -->
+
+        <!-- MESSAGE BOX-->
+        <%=render 'layouts/modal_messages'-%>
+        <!-- END MESSAGE BOX-->
+        <%= javascript_include_tag 'atlant/settings', 'data-turbolinks-track'  => false %>
+        <%= stylesheet_link_tag    'atlant/theme-default', media: 'all', 'data-turbolinks-track' => true %>
+        <!-- START PRELOADS -->
+        <!-- <audio id="audio-alert" src="audio/alert.mp3" preload="auto"></audio>
+        <audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio> -->
+    </body>
+</html>

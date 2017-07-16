@@ -1,0 +1,54 @@
+<div>
+	<div class="col-md-4 budget-totals-container">
+		<div class="budget-totals-content">
+			<table class="budget-totals-table">
+				<tr>
+					<td style="width:30%;text-align:left;padding-left:10px;font-size: 12px;">Budget</td>
+					<td>Budgeted</td>
+					<td>Expense</td>
+					<td style="border-right:none;">Balance</td>
+				</tr>
+				<tr>
+					<td style="width:30%;">&nbsp;</td>
+					<td><%=number_to_currency(@budgeted_amount, precision: 2)%></td>
+					<td><%=number_to_currency(@expenses, precision: 2)%></td>
+					<td style="border-right:none;"><%=number_to_currency(@expenses_remaining, precision: 1)%></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="col-md-4 budget-totals-container">
+		<div class="budget-totals-content">
+			<table class="budget-totals-table">
+				<tr>
+					<td style="width:40%;text-align:left;padding-left:10px;font-size: 12px;">Miscellaneous</td>
+					<td>Misc Balance</td>
+					<td style="border-right:none;" style="min-width:20%;">Total</td>
+				</tr>
+				<tr>
+					<td style="width:40%;">
+					</td>
+					<td><%=number_to_currency(@misc_budget_item.balance, precision: 2)%></td>
+					<td style="border-right:none; min-width:20%;"><%=number_to_currency(@misc_budget_item.expenses, precision: 2)%></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="col-md-4 budget-totals-container">
+		<div class="budget-totals-content">
+			<table class="budget-totals-table">
+				<tr>
+					<td style="width:40%;text-align:left;padding-left:10px;font-size: 12px;">Savings</td>
+					<td>Savings</td>
+					<td class="numeric-cell" style="border: none;">Savings Expenses</td>
+				</tr>
+				<tr>
+					<td style="width:40%;">
+					</td>
+					<td><%=number_to_currency(@savings, precision: 2)%></td>
+					<td style="border-right:none;"><%=number_to_currency(@savings_expenses, precision: 2)%></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>

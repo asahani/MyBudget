@@ -1,0 +1,150 @@
+<%
+total_balance_all = 0
+total_received_all= 0
+total_loaned_all = 0
+total_balances = Array.new
+%>
+<div class="row" style="padding-top: 60px;">
+		<div class="col-md-12">
+      <div class="row">
+    		<div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="col-md-8">
+                <div style="padding-bottom: 10px;"><strong>Loan Details:</strong></div>
+                <table style="width: 100%; padding-bottom: 10px;">
+                  <%@loan_accounts_with_details.each do |detail|%>
+                    <%total_balance_all += detail.loan_account.balance.to_f%>
+                    <%total_received_all += detail.total_received.to_f%>
+                    <%total_loaned_all += detail.total_loaned%>
+                    <%total_balances << detail.loan_account.balance.to_f%>
+                    <tr>
+                      <td><%=detail.loan_account.name%></td>
+                      <td style="text-align: right;"><%= number_to_currency(detail.loan_account.balance, precision: 2) %></td>
+                    </tr>
+                    <tr>
+                  <%end%>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td style="text-align: right;">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td style="border-bottom: 1px solid #444;">&nbsp;</td>
+                    <td style="text-align: right;border-bottom: 1px solid #444;">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Total Balance</strong></td>
+                    <td style="text-align: right;"><strong><%=number_to_currency(total_balance_all, precision: 2)%></strong></td>
+                  </tr>
+                </table>
+              </div>
+              <div class="col-md-4" style="text-align: center;">
+            <span class="sparkline" sparkType="pie" sparkWidth="90" sparkHeight="90" >
+              <%total_balances.each do |balance|%>
+                <%=balance%>,
+              <%end%>
+            </span>
+          </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="col-md-4" style="text-align: center;">
+                <span class="sparkline" sparkType="pie" sparkWidth="90" sparkHeight="90" ><%=total_balance_all%>,<%=total_received_all%></span>
+              </div>
+              <div class="col-md-8">
+            <div style="padding-bottom: 10px;"><strong>Loan Details:</strong></div>
+            <table style="width: 100%; padding-bottom: 10px;">
+              <tr>
+                <td>Balance Outstanding</td>
+                <td style="text-align: right;"><%= number_to_currency(total_balance_all, precision: 2) %></td>
+              </tr>
+              <tr>
+                <td>Received</td>
+                <td style="text-align: right;"><%= number_to_currency(total_received_all, precision: 2) %></td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td style="text-align: right;">&nbsp;</td>
+              </tr>
+              <tr>
+                <td style="border-bottom: 1px solid #444;">&nbsp;</td>
+                <td style="text-align: right;border-bottom: 1px solid #444;">&nbsp;</td>
+              </tr>
+              <tr>
+                <td><strong>Total Loaned</strong></td>
+                <td style="text-align: right;"><strong><%=number_to_currency(total_loaned_all, precision: 2)%></strong></td>
+              </tr>
+            </table>
+          </div>
+            </div>
+          </div>
+        </div>
+      </div>
+		</div>
+
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <%@loan_accounts_with_details.each do |loan_account_detail|%>
+      <div class="panel panel-default">
+      <div class="panel-heading chart-heading">
+          <h4 class="panel-title"><%=loan_account_detail.loan_account.name%> : <%=number_to_currency(loan_account_detail.loan_account.balance, precision: 2)%></h4>
+          <ul class="panel-controls">
+              <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+              <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+          </ul>
+      </div>
+      <div class="panel-body panel-body-table">
+          <table class="table table-striped">
+              <thead>
+                <th>Date</th>
+                <th>Budget</th>
+                <th>Account From/To</th>
+                <th style="text-align:right;">Loan</th>
+                <th style="text-align:right;">Received</th>
+              </thead>
+              <%loan_account_detail.payee_transactions.each do |transaction|%>
+              <tr>
+                  <td style="padding:6px;"><%=transaction.transaction_date%></td>
+                  <%budget_name = transaction.budget.nil? ? "" : (I18n.t("date.abbr_month_names")[transaction.budget.month] +" "+ transaction.budget.year.to_s) %>
+                  <td style="padding:6px;"><%=budget_name%></td>
+                  <td style="padding:6px;"><%=transaction.account.name%></td>
+                  <td style="padding:6px;text-align:right;"><%=number_to_currency(transaction.amount, precision: 2)%></td>
+                  <td style="padding:6px;text-align:right;">&nbsp;</td>
+              </tr>
+              <%end%>
+
+              <%loan_account_detail.account_transactions.each do |transaction|%>
+              <tr>
+                  <td style="padding:6px;"><%=transaction.transaction_date%></td>
+                  <%budget_name = transaction.budget.nil? ? "" : (I18n.t("date.abbr_month_names")[transaction.budget.month] +" "+ transaction.budget.year.to_s) %>
+                  <td style="padding:6px;"><%=budget_name%></td>
+                  <td style="padding:6px;"><%=transaction.payee.account.name%></td>
+                  <td style="padding:6px;text-align:right;">&nbsp;</td>
+                  <td style="padding:6px;text-align:right;"><%=number_to_currency(transaction.amount, precision: 2)%></td>
+
+              </tr>
+              <%end%>
+              <%
+                total_loaned = loan_account_detail.total_loaned
+                total_received = loan_account_detail.total_received
+                total_balance = loan_account_detail.total_balance
+              %>
+              <tr>
+                  <td style="padding:6px;"><strong>Total Balance</strong></td>
+                  <td style="padding:6px;"><strong><%=number_to_currency(total_balance, precision: 2)%></strong></td>
+                  <td style="padding:6px;">&nbsp;</td>
+                  <td style="padding:6px;text-align:right;"><strong><%=number_to_currency(total_loaned, precision: 2)%></strong></td>
+                  <td style="padding:6px;text-align:right;"><strong><%=number_to_currency(total_received, precision: 2)%></strong></td>
+              </tr>
+
+          </table>
+      </div>
+    </div>
+    <%end%>
+  </div>
+</div>

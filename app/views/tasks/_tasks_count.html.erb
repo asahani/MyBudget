@@ -1,0 +1,9 @@
+<div id="tasks_count" class="form-group">
+    <h4>Task groups:</h4>
+    <div class="list-group border-bottom">
+        <a href="/tasks" class="list-group-item"><span class="fa fa-circle text-primary"></span> Total Tasks<span class="badge badge-primary"><%=Task.open.count%></span></a>
+        <a href="/tasks" class="list-group-item"><span class="fa fa-circle text-danger"></span> High priority<span class="badge badge-danger"><%=Task.open.high_priority.count%></span></a>
+        <a href="/tasks" class="list-group-item"><span class="fa fa-circle text-success"></span> Normal priority<span class="badge badge-success"><%=Task.open.normal_priority.count%></span></a>
+        <a href="/tasks" class="list-group-item"><span class="fa fa-circle text-info"></span> Low priority<span class="badge badge-info"><%=Task.open.low_priority.count%></span></a>
+    </div>
+</div>

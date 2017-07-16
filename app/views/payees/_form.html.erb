@@ -1,29 +1,99 @@
-<%= form_for(@payee) do |f| %>
-  <% if @payee.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@payee.errors.count, "error") %> prohibited this payee from being saved:</h2>
-
+<!-- START ALERTS -->
+<% if @payee.errors.any? %>
+  <div class="alert alert-danger" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <strong>Warning!</strong> <%= pluralize(@payee.errors.count, "error") %> prohibited this category from being saved:
       <ul>
       <% @payee.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
-    </div>
-  <% end %>
+  </div>
+<%end%>
+<!-- END ALERTS -->
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+<%= form_for(@payee,html: {class: "form-horizontal"}) do |f| %>
+<div class="panel-body">
+
+  <div class="form-group">
+      <%= f.label :name, {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+          <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-credit-card"></span></span>
+              <%= f.text_field :name, {class: "form-control"} %>
+          </div>
+          <span class="help-block">External payee name</span>
+      </div>
   </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description %>
+
+  <div class="form-group">
+      <%= f.label :description, {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-6 col-xs-12">
+          <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa-align-justify"></span></span>
+              <%= f.text_field :description, {class: "form-control"} %>
+          </div>
+          <span class="help-block">The generic description for the payee</span>
+      </div>
   </div>
-  <div class="field">
-    <%= f.label :category_id %><br>
-    <%= f.number_field :category_id %>
+  <% unless f.object.persisted?%>
+  <div class="form-group">
+      <label class="col-md-3 col-xs-12 control-label">Select</label>
+      <div class="col-md-6 col-xs-12">
+        <%= f.select "category_id", options_from_collection_for_select(Category.all.non_system, :id, :name),{ :prompt => "Select Category..."},{ class: "form-control select"}%>
+        <span class="help-block">The category the payee belongs to</span>
+      </div>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+  <%end%>
+  <hr>
+
+  <% if f.object.persisted?%>
+  <div class="form-group">
+      <span class="fa fa-align-justify col-md-3 col-xs-12" style="text-align: right;"></span>
+
+      <div class="col-md-9 col-xs-12">
+          <%= f.label "Additional Payee Descriptions", {class: "control-label"}%>
+      </div>
   </div>
+
+  <div class="form-group">
+      <%unless @payee.payee_descriptions.count < 1%>
+      <%= f.label "Payee Descriptions", {class: "col-md-3 col-xs-12 control-label"}%>
+      <div class="col-md-9 col-xs-12">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th width="50">id</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%@payee.payee_descriptions.each_with_index do |payee_description,index| %>
+                <tr id="trow_<%=index+1-%>">
+                  <td class="text-center"><%=index+1-%></td>
+                  <td><%=payee_description.description%></td>
+               </tr>
+               <%end%>
+            </tbody>
+          </table>
+        </div>
+        <span class="help-block">Associated Payee Descriptions for merchant categorisation</span>
+      </div>
+      <%else%>
+        <span class="col-md-3 col-xs-12" style="text-align: right;"></span>
+        <div class="col-md-9 col-xs-12">
+            There are no additional descriptions for this payee
+        </div>
+      <%end%>
+    </div>
+
+  <%end%>
+</div>
+
+<div class="panel-footer">
+    <%= link_to 'Back', payees_path, {class: "btn btn-default"} %>
+    <%= f.submit nil, {class: "btn btn-success pull-right"} %>
+</div>
+
 <% end %>

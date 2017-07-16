@@ -1,69 +1,163 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>MyBudget</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track'  => true %>
   <%= csrf_meta_tags %>
 </head>
+
 <body>
-	<!-- Top Navigation Bar -->
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#">Project name</a>
-			</div>
-			<div id="navbar" class="navbar-collapse collapse">
-				<ul class="nav navbar-nav navbar-right">
-				<li><%= link_to "Dashboard", dashboard_index_path %></li>
-				<li><a href="#">Settings</a></li>
-				<li><a href="#">Profile</a></li>
-				<li><a href="#">Help</a></li>
-				</ul>
-				<form class="navbar-form navbar-right">
-				<input type="text" class="form-control" placeholder="Search...">
-				</form>
-			</div>
-		</div>
-	</nav>
-	
+	<!-- Main Body -->
+	<div id="main-wrapper">
+		<!-- Left Sidebar -->
+	    <div id="sidebar-wrapper">
+			<%unless @budget.nil?%>
+			<%
+				month = @budget.month.nil? ? params[:month].to_i : @budget.month
+			%>
+		    	<div id="budget-navbar">
+				    <ul>
+  						<li class="year-item">
+  							<div class="col-md-2">
+  								<
+  							</div>
+  							<div class="col-md-8">
+  								<%=@budget.year%>
+  							</div>
+  							<div class="col-md-2">
+  								>
+  							</div>
+  						</li>
+					  </ul>
+					<ul>
+						<%I18n.t("date.abbr_month_names").drop(1).map.with_index { |month_name,index|%>
+							<%
+								active = false
+								last = false
+								if month_name == I18n.t("date.abbr_month_names")[month]
+									active = true
+							  	end
+								if index == 11
+									last = true
+								end
+							%>
 
-	<div class="sidebar-panel">
-		<div class="accordian" id="accordian2">
-			<div class="accordian-group">
-				<div class="accordian-heading">
-					<a class="accordian-toggle" data-toggle="collapse" data-parent="#accordian2" href="#collapseOne">
-						<div>Collapsible Group Item1</div>
-					</a>	
-				</div>	
-				<div id="collapseOne" class="accoridian-body collapse in">
-					<div class="accordian-inner">
-						data
-					</div>	
-				</div>	
-			</div>
-			<div class="accordian-group">
-				<div class="accordian-heading">
-					<a class="accordian-toggle" data-toggle="collapse" data-parent="#accordian2" href="#collapseTwo">
-						Collapsible Group Item2
-					</a>	
-				</div>	
-				<div id="collapseTwo" class="accoridian-body collapse in">
-					<div class="accordian-inner">
-						data
-					</div>	
-				</div>	
-			</div>
-		</div>
-	</div>	
+							<%if active && last%>
+								<li class="active last">
+							<%elsif active && !last%>
+								<li class="active">
+							<%elsif !active && last%>
+								<li class="last">
+							<%else%>
+								<li>
+							<%end%>
 
-<%= yield %>
+							<%=link_to month_name, show_or_create_budget_path(month: index+1,year: @budget.year)%></li>
+						<%}%>
+				    </ul>
+				</div>
 
+				<div class="sidebar-panel">
+		          <ul class="nav nav-sidebar">
+		            <li class="active"><%= link_to "Budgets", budgets_path %></li>
+		            <li><a href="#">Reports</a></li>
+		            <li><%= link_to "Dashboard", dashboard_index_path %></li>
+		          </ul>
+				</div>
+				<div class="sidebar-panel">
+		          <ul class="nav nav-sidebar">
+		            <li>
+						<a data-toggle="collapse" data-target="#inner-nav-items" href="#">
+							<div>
+								<span class="caret"></span>
+								<div style="display: inline-block;width: 52%;">Budget Accounts</div>
+								<div style="display: inline-block;width: 40%;text-align: right;">
+									<%=number_to_currency(@budget.budget_accounts.sum(:balance),:precision => 2)%>
+								</div>
+							</div>
+						</a>
+						<div id="inner-nav-items" class="collapse in">
+							<ul class="nav nav-sidebar inner-nav">
+								<%@budget.budget_accounts.each do |budget_account|%>
+					            <%unless @account.nil?%>
+									<%if @account.id == budget_account.account.id%>
+										<li class="active">
+									<%else%>
+										<li>
+									<%end%>
+								<%else%>
+								<li>
+								<%end%>
+									<%=link_to budget_transactions_path(budget_id: budget_account.budget.id,account_id: budget_account.account.id) do%>
+									<div>
+										<div style="display: inline-block;width: 60%;"><%=budget_account.account.name%></div>
+										<%if budget_account.balance < 0%>
+										<div class="text-danger" style="display: inline-block;width: 38%;text-align: right;">
+										<%else%>
+										<div style="display: inline-block;width: 38%;text-align: right;">
+										<%end%>
+											<%=number_to_currency(budget_account.balance,:precision => 2)%>
+										</div>
+									</div>
+									<div>
+										<div style="display: inline-block;width: 60%;"></div>
+										<%
+											budget_transactions = BudgetTransaction.where('budget_id =? and account_id = ?',budget_account.budget.id, budget_account.account.id)
+											budget_withdrawals = BudgetTransaction.where('budget_id = ? and payee_id = ?',budget_account.budget.id, budget_account.account.payee.id)
+											nonconciled_total = (budget_transactions.nonconciled_transactions.sum(:credit) + budget_withdrawals.nonconciled_transactions.sum(:debit))- (budget_transactions.nonconciled_transactions.sum(:debit) + budget_withdrawals.nonconciled_transactions.sum(:credit))
+										%>
+										<div class="text-danger" style="display: inline-block;width: 38%;text-align: right;">
+											<%=number_to_currency(nonconciled_total,:precision => 2)%>
+										</div>
+									</div>
+									<%end%>
+
+								</li>
+								<%end%>
+					          </ul>
+						</div>
+					</li>
+		          </ul>
+				</div>
+			<%end%>
+			<div class="sidebar-footer">
+		      <div class="container">
+				<%unless @budget.nil?%>
+
+		       	<%= link_to raw("<span class='glyphicon glyphicon-import' style='color: #999;' aria-hidden='true'></span>"),
+				 	import_transactions_open_file_path(budget_id: @budget.id), {:remote => true, class: 'import-transactions-modal-link'} %>
+					<%= link_to raw("<span class='glyphicon glyphicon-pencil' style='color: #999;' aria-hidden='true'></span>"),
+					 	new_budget_transaction_path(transaction_type: 'miscellaneous',budget_id: @budget.id), {:remote => true, class: 'new-transaction-modal-link'} %>
+				<%end%>
+		    </div>
+		  </div>
+    </div>
+  </div>
+
+  <!-- Content Panel -->
+  <div id="page-content-wrapper">
+      <div class="page-content">
+		<%=yield%>
+      </div>
+  </div>
+</div>
+
+<script>
+	$(".nav a").on("click", function(){
+	   $(".nav").find(".active").removeClass("active");
+	   $(this).parent().addClass("active");
+	});
+
+	$(".budget-navbar a").on("click", function(){
+	   $(".budget-navbar").find(".active").removeClass("active");
+	   $(this).parent().addClass("active");
+	});
+
+	$(".nav-sidebar a").on("click", function(){
+	   $(".sidebar-panel").find(".active").removeClass("active");
+	   $(this).parent().addClass("active");
+	});
+</script>
 </body>
 </html>
