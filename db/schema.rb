@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170526053306) do
+ActiveRecord::Schema.define(version: 20170716025228) do
 
   create_table "account_transactions", force: true do |t|
     t.integer  "account_id"
@@ -27,6 +27,11 @@ ActiveRecord::Schema.define(version: 20170526053306) do
     t.integer  "house_id"
     t.integer  "share_id"
   end
+
+  add_index "account_transactions", ["account_id"], name: "index_account_transactions_on_account_id", using: :btree
+  add_index "account_transactions", ["budget_id"], name: "index_account_transactions_on_budget_id", using: :btree
+  add_index "account_transactions", ["category_id"], name: "index_account_transactions_on_category_id", using: :btree
+  add_index "account_transactions", ["payee_id"], name: "index_account_transactions_on_payee_id", using: :btree
 
   create_table "account_types", force: true do |t|
     t.string   "name"
@@ -55,6 +60,9 @@ ActiveRecord::Schema.define(version: 20170526053306) do
     t.datetime "updated_at"
   end
 
+  add_index "accounts", ["account_type_id"], name: "index_accounts_on_account_type_id", using: :btree
+  add_index "accounts", ["is_active"], name: "index_accounts_on_is_active", using: :btree
+
   create_table "budget_accounts", force: true do |t|
     t.integer  "account_id"
     t.integer  "budget_id"
@@ -67,6 +75,10 @@ ActiveRecord::Schema.define(version: 20170526053306) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "budget_accounts", ["account_id", "budget_id"], name: "index_budget_accounts_on_account_id_and_budget_id", using: :btree
+  add_index "budget_accounts", ["account_id"], name: "index_budget_accounts_on_account_id", using: :btree
+  add_index "budget_accounts", ["budget_id"], name: "index_budget_accounts_on_budget_id", using: :btree
 
   create_table "budget_incomes", force: true do |t|
     t.string   "description"
@@ -81,6 +93,11 @@ ActiveRecord::Schema.define(version: 20170526053306) do
     t.integer  "dividend_income_share_id"
   end
 
+  add_index "budget_incomes", ["account_id"], name: "index_budget_incomes_on_account_id", using: :btree
+  add_index "budget_incomes", ["budget_id"], name: "index_budget_incomes_on_budget_id", using: :btree
+  add_index "budget_incomes", ["budget_transaction_id"], name: "index_budget_incomes_on_budget_transaction_id", using: :btree
+  add_index "budget_incomes", ["income_id"], name: "index_budget_incomes_on_income_id", using: :btree
+
   create_table "budget_items", force: true do |t|
     t.integer  "budget_id"
     t.integer  "category_id"
@@ -93,6 +110,9 @@ ActiveRecord::Schema.define(version: 20170526053306) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "budget_items", ["budget_id"], name: "index_budget_items_on_budget_id", using: :btree
+  add_index "budget_items", ["category_id"], name: "index_budget_items_on_category_id", using: :btree
 
   create_table "budget_transactions", force: true do |t|
     t.integer  "account_id"
@@ -117,6 +137,13 @@ ActiveRecord::Schema.define(version: 20170526053306) do
     t.decimal  "mortgage_principal", precision: 10, scale: 2, default: 0.0
   end
 
+  add_index "budget_transactions", ["account_id"], name: "index_budget_transactions_on_account_id", using: :btree
+  add_index "budget_transactions", ["budget_id"], name: "index_budget_transactions_on_budget_id", using: :btree
+  add_index "budget_transactions", ["budget_item_id"], name: "index_budget_transactions_on_budget_item_id", using: :btree
+  add_index "budget_transactions", ["budgeted"], name: "index_budget_transactions_on_budgeted", using: :btree
+  add_index "budget_transactions", ["category_id"], name: "index_budget_transactions_on_category_id", using: :btree
+  add_index "budget_transactions", ["payee_id"], name: "index_budget_transactions_on_payee_id", using: :btree
+
   create_table "budgets", force: true do |t|
     t.integer  "year"
     t.integer  "month",      limit: 2
@@ -127,6 +154,9 @@ ActiveRecord::Schema.define(version: 20170526053306) do
     t.boolean  "is_closed",            default: false
     t.string   "name"
   end
+
+  add_index "budgets", ["month"], name: "index_budgets_on_month", using: :btree
+  add_index "budgets", ["year"], name: "index_budgets_on_year", using: :btree
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -148,6 +178,12 @@ ActiveRecord::Schema.define(version: 20170526053306) do
     t.string   "icon"
   end
 
+  add_index "categories", ["account_id"], name: "index_categories_on_account_id", using: :btree
+  add_index "categories", ["budgeted"], name: "index_categories_on_budgeted", using: :btree
+  add_index "categories", ["master_category_id"], name: "index_categories_on_master_category_id", using: :btree
+  add_index "categories", ["miscellaneous"], name: "index_categories_on_miscellaneous", using: :btree
+  add_index "categories", ["payee_id"], name: "index_categories_on_payee_id", using: :btree
+
   create_table "goals", force: true do |t|
     t.string   "name"
     t.string   "icon"
@@ -161,6 +197,8 @@ ActiveRecord::Schema.define(version: 20170526053306) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "goals", ["account_id"], name: "index_goals_on_account_id", using: :btree
 
   create_table "houses", force: true do |t|
     t.string   "name"
@@ -192,6 +230,7 @@ ActiveRecord::Schema.define(version: 20170526053306) do
     t.integer  "budget_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "tags"
   end
 
   create_table "income_splits", force: true do |t|
@@ -205,6 +244,9 @@ ActiveRecord::Schema.define(version: 20170526053306) do
     t.datetime "updated_at"
   end
 
+  add_index "income_splits", ["budget_id"], name: "index_income_splits_on_budget_id", using: :btree
+  add_index "income_splits", ["income_id"], name: "index_income_splits_on_income_id", using: :btree
+
   create_table "incomes", force: true do |t|
     t.string   "description"
     t.decimal  "amount",      precision: 10, scale: 2, default: 0.0
@@ -216,6 +258,8 @@ ActiveRecord::Schema.define(version: 20170526053306) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "incomes", ["account_id"], name: "index_incomes_on_account_id", using: :btree
 
   create_table "master_categories", force: true do |t|
     t.string   "name"
@@ -232,6 +276,8 @@ ActiveRecord::Schema.define(version: 20170526053306) do
     t.datetime "updated_at"
   end
 
+  add_index "payee_descriptions", ["payee_id"], name: "index_payee_descriptions_on_payee_id", using: :btree
+
   create_table "payees", force: true do |t|
     t.string   "name"
     t.string   "description"
@@ -242,6 +288,9 @@ ActiveRecord::Schema.define(version: 20170526053306) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "payees", ["account_id"], name: "index_payees_on_account_id", using: :btree
+  add_index "payees", ["category_id"], name: "index_payees_on_category_id", using: :btree
 
   create_table "shares", force: true do |t|
     t.string   "name"
@@ -296,5 +345,7 @@ ActiveRecord::Schema.define(version: 20170526053306) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "tasks", ["budget_id"], name: "index_tasks_on_budget_id", using: :btree
 
 end
