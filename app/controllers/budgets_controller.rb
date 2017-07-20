@@ -167,12 +167,12 @@ class BudgetsController < ApplicationController
   end
 
   def close
-    puts params
     @budget.clear_budget_accounts
     @budget.is_closed = true
 
     respond_to do |format|
       if @budget.save
+        NetWorth.capture_net_worth_for_budget(@budget)
         format.html { redirect_to @budget, notice: 'Budget was successfully closed.' }
         format.json { render :show, status: :ok, location: @budget }
       else

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170716025228) do
+ActiveRecord::Schema.define(version: 20170719115209) do
 
   create_table "account_transactions", force: true do |t|
     t.integer  "account_id"
@@ -268,6 +268,22 @@ ActiveRecord::Schema.define(version: 20170716025228) do
     t.datetime "updated_at"
     t.string   "icon"
   end
+
+  create_table "net_worths", force: true do |t|
+    t.integer  "account_id"
+    t.integer  "share_id"
+    t.integer  "house_id"
+    t.integer  "budget_id"
+    t.date     "capture_date"
+    t.decimal  "value",        precision: 10, scale: 0, default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "net_worths", ["account_id"], name: "index_net_worths_on_account_id", using: :btree
+  add_index "net_worths", ["budget_id"], name: "index_net_worths_on_budget_id", using: :btree
+  add_index "net_worths", ["house_id"], name: "index_net_worths_on_house_id", using: :btree
+  add_index "net_worths", ["share_id"], name: "index_net_worths_on_share_id", using: :btree
 
   create_table "payee_descriptions", force: true do |t|
     t.string   "description"
