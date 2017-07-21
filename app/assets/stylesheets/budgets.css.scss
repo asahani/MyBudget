@@ -220,20 +220,22 @@ table.actions-table td { padding: 3px!important;border-top: $numeric-cell-border
 table.actions-table td div.actions { visibility: hidden;}
 table.actions-table tr:hover td div.actions { visibility: visible; display: inline;}
 .master-cell {
-	border: none;
+	border: none!important;
 	background: #E6F4FB!important;
 	font-weight: bold!important;
 	color: #666!important;
 }
 .numeric-cell {
 	text-align: right!important;
-	border: $numeric-cell-border!important;
+	border-top: $numeric-cell-border!important;
+	border-left: $numeric-cell-border!important;
+	border-right: $numeric-cell-border!important;
 }
 .actions-cell {
 	text-align: right!important;
 	border: $numeric-cell-border!important;
 	border-top: $numeric-cell-border!important;
-	border-bottom: $numeric-cell-border!important;
+	border-bottom: none!important;
 	border-left:none!important;
 	width:10%!important;
 }
