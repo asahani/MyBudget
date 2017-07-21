@@ -1,15 +1,27 @@
 <tr id=<%=@budget_item.id.to_s + '_details'%> >
-	<td colspan=8>
+	<td class="inner-tabele-container" colspan=8 style="">
 		<table id="inner-table">
-		<tr><td colspan=8 style="border: none!important;"><ul class="panel-controls"><li><a href="#" id="<%=@budget_item.id.to_s + '_close'%>" class="panel-remove"><span class="fa fa-times"></span></a></li></ul></td></tr>
+		<thead>
+			<th>Account</th>
+			<th>Payee</th>
+			<th>Date</th>
+			<th>Debit</th>
+			<th>Credit</th>
+			<th colspan=2>Comments</th>
+			<th style="border: none!important;">
+				<ul class="panel-controls">
+					<li><a href="#" id="<%=@budget_item.id.to_s + '_close'%>" class="panel-remove"><span class="fa fa-times"></span></a></li>
+				</ul>
+			</th>
+		</thead>
 		<%@budget_item.budget_transactions.each do |budget_transaction|%>
 		<tr>
 			<td><%=budget_transaction.account.name%></td>
 			<td><%=budget_transaction.payee.name%></td>
 			<td><%=budget_transaction.transaction_date%></td>
-			<td><%=budget_transaction.debit%></td>
-			<td><%=budget_transaction.credit%></td>
-			<td><%=budget_transaction.comments%></td>
+			<td><%=number_to_currency(budget_transaction.debit)%></td>
+			<td><%=number_to_currency(budget_transaction.credit)%></td>
+			<td colspan=3><%=budget_transaction.comments%></td>
 		</tr>
 		<%end%>
 		</table>

@@ -221,7 +221,11 @@ table.actions-table td div.actions { visibility: hidden;}
 table.actions-table tr:hover td div.actions { visibility: visible; display: inline;}
 .master-cell {
 	border: none!important;
-	background: #E6F4FB!important;
+	// background: #E6F4FB!important;
+	// background: #dee7f2!important;
+	background: #F0F4F9!important;
+
+
 	font-weight: bold!important;
 	color: #666!important;
 }
@@ -259,11 +263,3 @@ table.actions-table tr:hover td div.actions { visibility: visible; display: inli
   font-size: 12px;
   color: #526C7F;
 }
-
-
-/*******************
- * Budget Inner Table
- *******************/
-#inner-table {box-shadow: 2px 2px 10px #888888 inset; width: 100%; }
-#inner-table tr {}
-#inner-table td { background-color: #fff!important;}
