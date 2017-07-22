@@ -9,7 +9,7 @@ var calendar = {
           // loop json & append to dom
           for (var i = 0; i < events.length; i++) {
 						console.log(events[i].day);
-            $('.list').append('<div class="day-event" date-day="'+ events[i].day +'" date-month="' + events[i].month +'" date-year="'+ events[i].year +'" data-number="'+ i +'"><span class="close fa fa-remove pull-right"></span><p>'+ events[i].description +'</p></div>');
+            $('.list').append('<div class="day-event" date-day="'+ events[i].day +'" date-month="' + events[i].month +'" date-year="'+ events[i].year +'" data-number="'+ i +'"><span class="close-event fa fa-times-circle-o fa-2x pull-right"></span><p>'+ events[i].description +'</p></div>');
 
 
 					}
@@ -213,7 +213,7 @@ var calendar = {
 		/**
 		 * Close day-event
 		 */
-		$('.close').on('click', function(e) {
+		$('.close-event').on('click', function(e) {
 			$(this).parent().slideUp('fast');
 		});
 
@@ -229,7 +229,7 @@ var calendar = {
 				var eventNumber = $(this).closest('.day-event').attr('data-number');
 				$('.person-list').append('<div class="day" date-month="' + eventMonth + '" date-day="' + eventDay + '" data-number="' + eventNumber + '" style="display:none;">' + eventHtml + '</div>');
 				$('.day[date-month="' + eventMonth + '"][date-day="' + eventDay + '"]').slideDown('fast');
-				$('.day').find('.close').remove();
+				$('.day').find('.close-event').remove();
 				$('.day').find('.save').removeClass('save').addClass('remove');
 				$('.day').find('.remove').next().addClass('hidden-print');
 				remove();

@@ -126,6 +126,25 @@ module BudgetsHelper
         event_array << event
       end
     end
+
+    @budget.budget_incomes.each do |budget_income|
+      unless budget_income.income.nil?
+        income_splits = IncomeSplit.where("budget_id = ? and income_id = ?",budget_income.budget.id,budget_income.income.id)
+        income_splits.each do |split|
+          event = {}
+          month_due = split.income_split_date.month
+          year_due = split.income_split_date.year
+          event["month"] = month_due
+          event["day"] = split.income_split_date.day
+          event["year"] = year_due
+          event["title"] = "Income"
+          event["description"] = split.income.description + " : " + split.amount.to_s
+
+          event_array << event
+        end
+      end
+    end
+
     # event_array =
     #   [{
     #     "month"=> "10",

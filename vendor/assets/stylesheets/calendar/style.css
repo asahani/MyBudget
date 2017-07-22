@@ -47,7 +47,7 @@
 
 .calendar td {
     border: 2px solid transparent;
-    border-radius: 50%;
+    border-radius: 10%;
     display: inline-block;
     width: 14%;
     height: 44px;
@@ -98,7 +98,8 @@
 }
 
 .btn-prev:hover,
-.btn-next:hover {
+.btn-next:hover
+{
     background: #cbd1d2;
     color: #f9f9f9;
 }
@@ -115,8 +116,8 @@
     /*margin-top: 20px;*/
 }
 
-.close {
-    color: #A4AAAB;
+.close-event {
+    color: #A4AAAB!important;
     margin-top: -15px;
     margin-right: 10px;
     float: right;
