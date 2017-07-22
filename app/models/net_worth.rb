@@ -15,18 +15,18 @@ class NetWorth < ActiveRecord::Base
     mortgage_account_type = AccountType.find_by_name("Mortgage")
     #capture accounts
     Account.all.active.each do| account |
-      if account.budget_account
-        budget_account = BudgetAccount.find_by_budget_id_and_account_id(budget.id,account.id)
-        net_worth = NetWorth.new(account_id: account.id, budget_id: budget.id, capture_date: Date.today,value: budget_account.balance)
-        net_worth.save!
+      # if account.budget_account
+      #   budget_account = BudgetAccount.find_by_budget_id_and_account_id(budget.id,account.id)
+      #   net_worth = NetWorth.new(account_id: account.id, budget_id: budget.id, capture_date: Date.today,value: budget_account.balance)
+      #   net_worth.save!
+      # else
+      if account.account_type.id ==  mortgage_account_type.id
+        net_worth = NetWorth.new(account_id: account.id, budget_id: budget.id, capture_date: Date.today,value: (account.balance * -1))
       else
-        if account.account_type.id ==  mortgage_account_type.id
-          net_worth = NetWorth.new(account_id: account.id, budget_id: budget.id, capture_date: Date.today,value: (account.balance * -1))
-        else
-          net_worth = NetWorth.new(account_id: account.id, budget_id: budget.id, capture_date: Date.today,value: account.balance)
-        end
-        net_worth.save!
+        net_worth = NetWorth.new(account_id: account.id, budget_id: budget.id, capture_date: Date.today,value: account.balance)
       end
+      net_worth.save!
+      # end
     end
     #capture investments  - Shares
     Share.all.active.each do | share|
