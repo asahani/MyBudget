@@ -29,6 +29,9 @@
                   <!-- START X-NAVIGATION VERTICAL -->
                   <%=render 'layouts/top_navigation'-%>
                   <!-- END X-NAVIGATION VERTICAL -->
+                  <p class="notice"><%= notice %></p>
+                  <p class="alert"><%= alert %></p>
+                  
                   <%=yield%>
 
                   <div class="modal fade" id="importTransactionsModal" tabindex="-1" role="dialog" aria-labelledby="importTransactionsModalLabel" aria-hidden="true"></div>

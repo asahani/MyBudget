@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :null_session
+  before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_net_worth
 
   def net_worth_details
@@ -243,6 +244,12 @@ class ApplicationController < ActionController::Base
     annual_report[:income_expense_difference][12] = total_income_expense_difference
 
     return annual_report
+  end
+  protected
+  
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :email, :password])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:username, :email, :password, :current_password])
   end
 
   private

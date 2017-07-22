@@ -1,3 +1,4 @@
+
 <li class="">
   <a href="/dashboard.html"><span class="fa fa-dashboard"></span> <span class="xn-text"> Dashboard</span></a>
 </li>
@@ -60,6 +61,11 @@
     <ul class="xn-drop-left animated zoomIn">
         <li><a href="pages-lock-screen.html"><span class="fa fa-lock"></span> Lock Screen</a></li>
         <li><a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span> Sign Out</a></li>
+        <li><%= link_to "Edit profile", edit_user_registration_path %></li>
+        <li><%= link_to "Sign up", new_user_registration_path %></li>
+        <li><%= link_to "Login", new_user_session_path %></li>
+        <li><%= link_to raw("<span class='fa fa-power-off'></span>"), destroy_user_session_path, method: :delete%></li>
+        <li role="separator" class="divider"></li>
     </ul>
 </li>
 <!-- END POWER OFF -->

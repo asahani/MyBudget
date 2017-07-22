@@ -23,11 +23,14 @@
 
             <!-- PAGE CONTENT -->
             <div class="page-content">
-
                 <!-- START X-NAVIGATION VERTICAL -->
                 <%=render 'layouts/top_navigation'-%>
                 <!-- END X-NAVIGATION VERTICAL -->
+                <p class="notice"><%= notice %></p>
+                <p class="alert"><%= alert %></p>
+
                 <%=yield%>
+
             </div>
             <!-- END PAGE CONTENT -->
         </div>
