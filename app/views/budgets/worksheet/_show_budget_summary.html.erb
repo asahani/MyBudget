@@ -10,20 +10,41 @@
         <span style="margin-left: -5px;font-size: 1em;"><%=@budget.year%></span>
 			</div>
 			<div class="widget-data">
-
+				<table style="width: 82%;">
 				<%@budget.budget_incomes.each do|budget_income|%>
-		    <div class="widget-subtitle"  style="text-align: center; margin-left: -25px;">
+				<tr>
+					<td style="width: 35%;">
 		      <span>
 		        <%= link_to budget_income.description,
 		          show_income_splits_path(budget_income), {:remote => true, class: 'show-income-splits-modal-link'} %>
 		      </span>
+					</td>
+					<td style="width: 30%;">
 		      <span>
 		        <%= link_to number_to_currency(budget_income.amount, precision: 2),
 		          edit_budget_income_path(budget_income), {:remote => true, class: 'new-budget-income-modal-link'} %>
 		      </span>
-		    </div>
-		    <%end%>
+					</td>
+					<td style="width: 35%;">
+						<%unless budget_income.income.nil?%>
+							<%
+								income_splits = IncomeSplit.where("budget_id = ? and income_id = ?",budget_income.budget.id,budget_income.income.id)
+								slit_width = 0
+								split_width = (80 / income_splits.count) unless income_splits.count < 1
+							%>
+							<%income_splits.each do |split|%>
+								<%if split.income_split_date < Time.now%>
+									<span style="font-size:5px; font-family:Tahoma; padding-left:<%=split_width%>px; background-color: #95b75d;overflow:hidden;box-shadow: 1px 1px 1px #999 inset">&nbsp;</span>
+								<%else%>
+									<span style="font-size:5px; font-family:Tahoma; padding-left:<%=split_width%>px; background-color: #ccc;overflow:hidden;box-shadow: 1px 1px 1px #999 inset">&nbsp;</span>
+								<%end%>
+							<%end%>
 
+						<%end%>
+					</td>
+				</tr>
+		    <%end%>
+				</table>
 				<div style="position: absolute; bottom: 0;">
 
 					<div class="widget-title" style="text-align: center; padding-right: 50px;">
@@ -35,12 +56,10 @@
 				</div>
 			</div>
 				<div class="widget-controls">
-						<%= link_to raw("<span class='fa fa-plus' style='color: #777;' aria-hidden='true'></span>"),
+						<%= link_to raw("<span class='fa fa-plus' aria-hidden='true'></span>"),
 					    new_budget_income_path(budget_id: @budget.id), {:remote => true, class: 'widget-control-right new-budget-income-modal-link'} %>
 				</div>
 		</div>
-
-
 	</div>
 
 	<div class="col-md-4"  style="padding: 0px 3px!important;">
