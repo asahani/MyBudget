@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" class="body-full-height">
+    <head>
+        <!-- META SECTION -->
+        <title>Atlant - Responsive Bootstrap Admin Template</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <!-- END META SECTION -->
+
+        <!-- CSS INCLUDE -->
+        <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+        <%= javascript_include_tag 'application',  params[:controller], 'data-turbolinks-track'  => false %>
+
+        <%= csrf_meta_tags %>
+        <!-- EOF CSS INCLUDE -->
+    </head>
+    <body>
+      <%=yield%>
+    </body>
+</html>

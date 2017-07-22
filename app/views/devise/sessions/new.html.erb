@@ -1,26 +1,58 @@
-<h2>Log in</h2>
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+<div class="login-container">
+    <%unless alert.nil? && notice.nil?%>
+    <div class="alert alert-danger" role="alert">
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <strong>Warning!</strong>
+        <p class="notice"><%= notice %></p>
+        <p class="alert"><%= alert %></p>
     </div>
-  <% end -%>
+    <%end%>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
+    <div class="login-box animated fadeInDown">
+        <div class="login-logo"></div>
+        <div class="login-body">
+            <div class="login-title"><strong>Welcome</strong>, Please login</div>
+            <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <%= f.email_field :email, autofocus: true, placeholder: "Username", class: "form-control" %>
+                </div>
+            </div>
+            <div>&nbsp;</div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <%= f.password_field :password, autocomplete: "off", placeholder: "Password", class: "form-control" %>
+                </div>
+            </div>
 
-<%= render "devise/shared/links" %>
+            <% if devise_mapping.rememberable? -%>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <%= f.check_box :remember_me %>
+                    <%= f.label :remember_me, style: 'color: #aaa;', class: "btn"%>
+                </div>
+            </div>
+            <%end%>
+            <div class="form-group">
+                <div class="col-md-6">
+                    <%= link_to "Forgot your password?", new_password_path(resource_name),class:"btn btn-link btn-block" %><br />
+                </div>
+                <div class="col-md-6">
+                    <%= f.submit "Log In", class:"btn btn-info btn-block" %>
+                </div>
+            </div>
+            <%end%>
+        </div>
+        <div class="login-footer">
+            <div class="pull-left">
+                &copy; 2015 AppName
+            </div>
+            <div class="pull-right">
+                <a href="#">About</a> |
+                <a href="#">Privacy</a> |
+                <a href="#">Contact Us</a>
+            </div>
+        </div>
+    </div>
+
+</div>
