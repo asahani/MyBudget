@@ -38,4 +38,4 @@ application up and running.
 Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
 
-  - Moneywiz reports / budget view
+GM v1.0, Branch Users. This commit
