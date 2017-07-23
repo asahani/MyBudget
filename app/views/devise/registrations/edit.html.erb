@@ -1,45 +1,80 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-    <%= devise_error_messages! %>
-    <div class="row">
-      <div class="form-group col-md-4">
-        <%= f.label :username %><br />
-        <%= f.text_field :username, autofocus: true, class: "form-control" %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="form-group col-md-4">
-        <%= f.label :email %><br />
-        <%= f.email_field :email, autofocus: true, class: "form-control" %>
-      </div>
-    </div>
-    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-      <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-    <% end %>
-    <div class="row">
-      <div class="form-group col-md-4">
-        <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-        <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="form-group col-md-4">
-        <%= f.label :password_confirmation %><br />
-        <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="form-group col-md-4">
-        <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-        <%= f.password_field :current_password, autocomplete: "off", class: "form-control" %>
-      </div>
-    </div>
-    <div class="actions">
-      <%= f.submit "Update", class: "btn btn-primary" %>
-    </div>
-  <% end %>
-<h3>Cancel my account</h3>
+<div class="registration-container">
+    <div class="registration-box animated fadeInDown">
+        <div class="registration-logo"></div>
+        <div class="registration-body">
+            <div class="registration-title"><strong>Profile</strong>, update using form below</div>
+            <div class="registration-subtitle">Please update your details using the form below. If you do not wish to change your password, then leave the fields blank. </div>
 
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger" %></p>
+            <%= form_for(resource, as: resource_name, url: registration_path(resource_name), class:"form-horizontal",html: { method: :put }) do |f| %>
+            <%= devise_error_messages! %>
 
-<%= link_to "Back", :back, class: "btn btn-default" %>
+            <h4>Personal info</h4>
+            <div class="form-group">
+                <div class="col-md-12">
+                  <%= f.text_field :username, autofocus: true, class: "form-control" %>
+                </div>
+            </div>
+            <div>&nbsp;</div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <%= f.text_field :first_name, placeholder: "First Name", class: "form-control" %>
+                </div>
+            </div>
+            <div>&nbsp;</div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <%= f.text_field :last_name, placeholder: "Last Name", class: "form-control" %>
+                </div>
+            </div>
+            <div>&nbsp;</div>
+            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+              <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+            <% end %>
+            <h4>Authentication</h4>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <%= f.email_field :email, placeholder:"E-mail",class: "form-control" %>
+                </div>
+            </div>
+            <div>&nbsp;</div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <%= f.password_field :password, autocomplete: "off", placeholder:"Password (leave blank if not changing)", class: "form-control" %>
+                </div>
+            </div>
+            <div>&nbsp;</div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <%= f.password_field :password_confirmation, autocomplete: "off", placeholder:"Reconfirm Password",class: "form-control" %>
+                </div>
+            </div>
+            <div>&nbsp;</div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <%= f.password_field :current_password, autocomplete: "off", placeholder:"Current Password (we need to confirm your changes)", class: "form-control" %>
+                </div>
+            </div>
+            <div>&nbsp;</div>
+            <div class="form-group push-up-30">
+                <div class="col-md-6">
+                    <%= link_to "Back", :back, class: "btn btn-primary" %>
+                </div>
+                <div class="col-md-6">
+                    <%= f.submit "Update", class: "btn btn-danger btn-block" %>
+                </div>
+            </div>
+            <%end%>
+        </div>
+        <div class="registration-footer">
+            <div class="pull-left">
+                &copy; 2015 BudgetManager
+            </div>
+            <div class="pull-right">
+                <a href="#">About</a> |
+                <a href="#">Privacy</a> |
+                <a href="#">Contact Us</a>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -8,6 +8,20 @@
      <%= f.text_field :username, autofocus: true, class: "form-control" %>
   </div>
 </div>
+
+<div class="row">
+    <div class="form-group col-md-4">
+        <%= f.label :first_name %><br />
+        <%= f.text_field :first_name, placeholder: "First Name", class: "form-control" %>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-4">
+        <%= f.label :last_name %><br />
+        <%= f.text_field :last_name, placeholder: "Last Name", class: "form-control" %>
+    </div>
+</div>
+
 <div class="row">
   <div class="form-group col-md-4">
     <%= f.label :email %><br />
