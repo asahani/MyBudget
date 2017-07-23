@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :users
+
   resources :goals
   match "goals/get_account_details" => "goals#get_account_details", :via => :post, :as => 'get_account_details'
 
