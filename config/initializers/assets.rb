@@ -22,6 +22,7 @@ Rails.application.config.assets.precompile += %w( dashboard.css )
 Rails.application.config.assets.precompile += %w( dashboard.js )
 Rails.application.config.assets.precompile += %w( atlant/settings.js )
 Rails.application.config.assets.precompile += %w( atlant/theme-default.css )
+Rails.application.config.assets.precompile += %w( devise/sessions.js )
 
 %w( account_types accounts budget_incomes budget_items budget_transactions budgets categories import_transactions incomes master_categories payees tasks houses account_transactions loans shares reports goals).each do |controller|
   Rails.application.config.assets.precompile += ["#{controller}.js"]

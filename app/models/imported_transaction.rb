@@ -1,4 +1,4 @@
-class ImportedTransaction < ActiveRecord::Base
+class ImportedTransaction < ApplicationRecord
   belongs_to :category
   belongs_to :account
   belongs_to :payee

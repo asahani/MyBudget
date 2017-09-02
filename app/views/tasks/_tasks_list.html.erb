@@ -20,7 +20,16 @@
             %>
               <div class="item">
                   <div class="head">
-                      <div class="pull-left"><span class="<%=priority_class%>"></span> Priority: High</div>
+                      <div class="pull-left"><span class="<%=priority_class%>"></span>
+                        Priority:
+                        <%if task.priority == 1%>
+                          High
+                        <%elsif task.priority == 2%>
+                          Medium
+                        <%else%>
+                          Low
+                        <%end%>
+                      </div>
                       <%unless task.budget.nil?%><div class="pull-left">Budget: <%=task.budget.start_date.strftime("%B, %Y")%></div><%end%>
                       <div class="pull-right"><span class="fa fa-clock-o"></span> added <%=distance_of_time_in_words_to_now(task.created_at)%> ago</div>
                   </div>
@@ -38,7 +47,7 @@
                           padding: 0;
                           width: 20px;
                           height: 20px;
-                          background: url('#{asset_path('assets/img/icheck/grey.png')}') no-repeat;
+                          background: image_path('/img/icheck/grey.2png') no-repeat;
                           border: none;
                           cursor: pointer;"}%>
                       </label>

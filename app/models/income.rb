@@ -1,4 +1,4 @@
-class Income < ActiveRecord::Base
+class Income < ApplicationRecord
   ##################################
   # Relationships
   ##################################
@@ -18,7 +18,7 @@ class Income < ActiveRecord::Base
   # Scoped Methods
   ##################################
   scope :active, -> { where(is_active: true)}
-  
+
   ##################################
   # Class Methods
   ##################################

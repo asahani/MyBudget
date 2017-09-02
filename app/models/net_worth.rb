@@ -1,4 +1,4 @@
-class NetWorth < ActiveRecord::Base
+class NetWorth < ApplicationRecord
   ##################################
   # Relationships
   ##################################

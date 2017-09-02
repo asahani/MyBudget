@@ -126,13 +126,13 @@ module ReportsHelper
   #Budget vs Expense for each Category Report
   def budget_categories_data
     # @budget.budget_items.collect { |budget_item| budget_item.category.name.to_s }.to_json
-    categories = Category.for_budget
+    categories = Category.for_budget.to_a
     categories << Category.find_by_name("Miscellaneous")
     return categories.collect { |category| category.name.to_s }.to_json
   end
 
   def budgeted_amount_data(year)
-    categories = Category.for_budget
+    categories = Category.for_budget.to_a
     categories << Category.find_by_name("Miscellaneous")
 
     return categories.collect { |category| category.budget_items.for_year(year).sum('budgeted_amount').to_f }.to_json
@@ -140,7 +140,7 @@ module ReportsHelper
   end
 
   def budgeted_expense_data(year)
-      categories = Category.for_budget
+      categories = Category.for_budget.to_a
       categories << Category.find_by_name("Miscellaneous")
 
       return categories.collect { |category| category.budget_items.for_year(year).sum('expenses').to_f }.to_json

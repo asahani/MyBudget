@@ -1,4 +1,4 @@
-class House < ActiveRecord::Base
+class House < ApplicationRecord
   ##################################
   # Relationships
   ##################################

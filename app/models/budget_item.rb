@@ -1,4 +1,4 @@
-class BudgetItem < ActiveRecord::Base
+class BudgetItem < ApplicationRecord
   belongs_to :budget
   belongs_to :category
   has_many :budget_transactions

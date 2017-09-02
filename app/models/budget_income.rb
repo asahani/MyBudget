@@ -1,4 +1,4 @@
-class BudgetIncome < ActiveRecord::Base
+class BudgetIncome < ApplicationRecord
   ##################################
   # Relationships
   ##################################

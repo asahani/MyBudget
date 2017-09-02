@@ -1,4 +1,4 @@
-class Payee < ActiveRecord::Base
+class Payee < ApplicationRecord
   attr_accessor :called_from_import_txn
 
   ##################################

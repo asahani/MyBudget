@@ -1,4 +1,4 @@
-class BudgetTransaction < ActiveRecord::Base
+class BudgetTransaction < ApplicationRecord
   attr_accessor :transaction_type
   acts_as_taggable
   ##################################
@@ -91,7 +91,7 @@ class BudgetTransaction < ActiveRecord::Base
     end
 
     txns = txns.joins(category: :master_category)
-    txns = txns.group("master_categories.name")
+    txns = txns.group("master_categories.name,master_categories.icon")
     txns = txns.select("master_categories.name as name, sum(debit) as total_expense,master_categories.icon as icon")
     unless limit.nil?
       txns = txns.order("total_expense DESC").first(limit)
@@ -114,7 +114,7 @@ class BudgetTransaction < ActiveRecord::Base
       txns = txns.where('budget_transactions.savings = ? && debit > ?',false,0)
     end
     txns = txns.joins(:category)
-    txns = txns.group("categories.name")
+    txns = txns.group("categories.name,categories.icon")
     txns = txns.select("categories.name as name, sum(debit) as total_expense,categories.icon as icon")
     unless limit.nil?
       txns = txns.order("total_expense DESC").first(limit)

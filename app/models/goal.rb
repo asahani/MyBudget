@@ -1,4 +1,4 @@
-class Goal < ActiveRecord::Base
+class Goal < ApplicationRecord
   ##################################
   # Relationships
   ##################################

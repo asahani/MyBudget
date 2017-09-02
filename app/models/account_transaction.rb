@@ -1,4 +1,4 @@
-class AccountTransaction < ActiveRecord::Base
+class AccountTransaction < ApplicationRecord
   attr_accessor :transaction_type
   acts_as_taggable
   ##################################

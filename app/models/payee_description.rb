@@ -1,4 +1,4 @@
-class PayeeDescription < ActiveRecord::Base
+class PayeeDescription < ApplicationRecord
   ##################################
   # Relationships
   ##################################
@@ -6,7 +6,7 @@ class PayeeDescription < ActiveRecord::Base
 
   ##################################
   # Validations
-  ##################################    
+  ##################################
   validates_uniqueness_of :description
   validates_presence_of :description, :payee_id
   validates_numericality_of :payee_id, :allow_nil => false
@@ -14,11 +14,11 @@ class PayeeDescription < ActiveRecord::Base
   ##################################
   # Callbacks
   ##################################
-  
+
   ##################################
   # Scoped Methods
   ##################################
-  
+
   ##################################
   # Class Methods
   ##################################
