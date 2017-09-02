@@ -1,4 +1,4 @@
-class AddHouseAndShareIdToAccountTransaction < ActiveRecord::Migration
+class AddHouseAndShareIdToAccountTransaction < ActiveRecord::Migration[4.2]
   def self.up
     add_column :account_transactions, :house_id, :integer
     add_column :account_transactions, :share_id, :integer

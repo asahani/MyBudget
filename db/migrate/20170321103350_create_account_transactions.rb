@@ -1,4 +1,4 @@
-class CreateAccountTransactions < ActiveRecord::Migration
+class CreateAccountTransactions < ActiveRecord::Migration[4.2]
   def change
     create_table :account_transactions do |t|
       t.integer :account_id

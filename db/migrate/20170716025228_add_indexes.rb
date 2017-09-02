@@ -1,4 +1,4 @@
-class AddIndexes < ActiveRecord::Migration
+class AddIndexes < ActiveRecord::Migration[4.2]
   def self.up
       add_index :account_transactions, :account_id
       add_index :account_transactions, :budget_id

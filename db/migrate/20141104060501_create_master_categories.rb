@@ -1,4 +1,4 @@
-class CreateMasterCategories < ActiveRecord::Migration
+class CreateMasterCategories < ActiveRecord::Migration[4.2]
   def change
     create_table :master_categories do |t|
       t.string :name

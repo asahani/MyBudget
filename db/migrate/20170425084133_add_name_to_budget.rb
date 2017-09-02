@@ -1,4 +1,4 @@
-class AddNameToBudget < ActiveRecord::Migration
+class AddNameToBudget < ActiveRecord::Migration[4.2]
   def self.up
     add_column :budgets, :name, :string
   end

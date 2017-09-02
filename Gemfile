@@ -44,6 +44,6 @@ gem 'spring',group: :development
 
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'autoprefixer-rails'
-gem 'acts-as-taggable-on', '~> 4.0'
+gem 'acts-as-taggable-on', github: 'mbleigh/acts-as-taggable-on'
 gem 'stock_quote'
 gem 'devise', github: 'plataformatec/devise'

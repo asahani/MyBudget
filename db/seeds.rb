@@ -109,4 +109,4 @@ PayeeDescription.create!(description: 'SAFEWAY 3128 DONCASTER VIDONCASTER', paye
 Income.create!(description: 'Shruti Salary',amount: 4000.00, weekly: false, fortnightly: false, monthly: true, account_id: 1)
 Income.create!(description: 'Aman Salary',amount: 1018.50, weekly: true, fortnightly: false, monthly: false, account_id: 2)
 
-user1 = User.create(username: 'admin',email: 'admin@gadmin.com',password: 'password123',password_confirmation: 'password123')
+user1 = User.create(username: 'admin',email: 'aman.sahani@gmail.com',password: 'password123',password_confirmation: 'password123')

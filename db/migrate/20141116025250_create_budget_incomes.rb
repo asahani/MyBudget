@@ -1,4 +1,4 @@
-class CreateBudgetIncomes < ActiveRecord::Migration
+class CreateBudgetIncomes < ActiveRecord::Migration[4.2]
   def change
     create_table :budget_incomes do |t|
       t.string :description
@@ -8,7 +8,7 @@ class CreateBudgetIncomes < ActiveRecord::Migration
       t.integer :account_id
       t.integer :budget_transaction_id
       t.boolean :credited
-      
+
       t.timestamps
     end
   end

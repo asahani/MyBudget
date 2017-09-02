@@ -1,4 +1,4 @@
-class CreateImportedTransactions < ActiveRecord::Migration
+class CreateImportedTransactions < ActiveRecord::Migration[4.2]
   def change
     create_table :imported_transactions do |t|
       t.string :raw_data

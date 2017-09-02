@@ -1,4 +1,4 @@
-class AddMortgageInterestToBudgetTransactions < ActiveRecord::Migration
+class AddMortgageInterestToBudgetTransactions < ActiveRecord::Migration[4.2]
   def self.up
     add_column :budget_transactions, :mortgage_interest, :decimal, default: 0.0, :precision => 10, :scale => 2
     add_column :budget_transactions, :mortgage_principal, :decimal, default: 0.0, :precision => 10, :scale => 2
