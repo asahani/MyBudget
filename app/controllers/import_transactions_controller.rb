@@ -48,8 +48,8 @@ class ImportTransactionsController < ApplicationController
             credit = txn_amount.to_f.abs
           end
         end
-
-        imported_transaction = ImportedTransaction.new(raw_data: row.to_s, credit: credit, debit: debit, txn_date: Date.strptime(txn_date.to_s,txn_date_format),
+        
+        imported_transaction = ImportedTransaction.new(raw_data: row.to_s, credit: credit, debit: debit, txn_date: Date.strptime(txn_date.to_s,txn_date_format.to_s),
          description: txn_description, balance: txn_balance, account_id: account.id, payee_id: payee_id, category_id: category_id,budget_id: txn_budget.id)
 
         budget_transaction = BudgetTransaction.find_by_raw_data(row.to_s)
