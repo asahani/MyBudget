@@ -91,6 +91,9 @@ class Share < ActiveRecord::Base
   end
 
   def get_holding_value
+    if self.last_price.nil?
+      self.set_share_details
+    end
     (self.last_price * self.units).to_f.round(2) unless self.last_price.nil?
   end
 
