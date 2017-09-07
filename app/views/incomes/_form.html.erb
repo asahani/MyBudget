@@ -31,7 +31,7 @@
       <div class="col-md-6 col-xs-12">
           <div class="input-group">
               <span class="input-group-addon"><span class="fa fa-dollar"></span></span>
-              <%= f.number_field :amount, step: :any, {class: "form-control"} %>
+              <%= f.number_field :amount, class: "form-control",step: :any %>
           </div>
           <span class="help-block">The amount to be credited per pay cycle</span>
       </div>
@@ -97,7 +97,7 @@
       <br/><br/>
       <span class="help-block">The income frequency when the amount is to be credited</span>
     </div>
-</div>
+  </div>
 </div>
 <div class="panel-footer">
     <%= link_to 'Back', incomes_path, {class: "btn btn-default"} %>
