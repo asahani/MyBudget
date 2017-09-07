@@ -70,7 +70,7 @@ respond_to :js, :html
   # POST /budget_transactions.json
   def create
     @budget_transaction = BudgetTransaction.new(budget_transaction_params)
-    
+
     if @budget_transaction.transaction_type == 'loan_transfer'
       @budget_transaction.category_id = Category.find_by_name("Lending").id
     else
@@ -190,6 +190,6 @@ respond_to :js, :html
     # Never trust parameters from the scary internet, only allow the white list through.
     def budget_transaction_params
       params.require(:budget_transaction).permit(:credit, :debit, :transaction_date, :comments, :manual, :scheduled, :budgeted,
-        :miscellaneous, :savings, :account_id, :budget_item_id, :budget_id,:payee_id,:category_id,:transaction_type,:reconciled,:tag_list)
+        :miscellaneous, :savings, :account_id, :budget_item_id, :budget_id,:payee_id,:category_id,:transaction_type,:reconciled,:tag_list,:flagged)
     end
 end

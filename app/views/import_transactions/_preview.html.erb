@@ -23,15 +23,18 @@
           <th style="width: 10%;">Payee</th>
           <th style="width: 10%;">Category</th>
           <th style="width: 7%;">Date</th>
-          <th style="width: 34%;">Description</th>
+          <th style="width: 30%;">Description</th>
           <th style="width: 8%;text-align: right!important;">Credit</th>
           <th style="width: 8%;text-align: right!important;">Debit</th>
           <th style="width: 8%;text-align: right!important;">Balance</th>
-          <th style="width: 5%;text-align: right!important;">Actions</th>
+          <th style="width: 9%;text-align: right!important;">Actions</th>
         </thead>
         <%ImportedTransaction.all.each do |txn|%>
           <tr>
             <td style="width: 10%;padding-left: 5px !important;">
+              <% if txn.flagged? %>
+                <span style="color: #a94442;" class="glyphicon glyphicon-flag"></span>
+              <%end%>
               <%if txn.payee.nil?%>
                 <span style="color: #a94442;" class="glyphicon glyphicon-exclamation-sign"></span>
               <%else%>
@@ -66,11 +69,11 @@
 							</div>
             </td>
             <td style="width: 7%;"><%=txn.txn_date%></td>
-            <td style="width: 34%;"><%=txn.description%></td>
+            <td style="width: 30%;"><%=txn.description%></td>
             <td style="width: 8%;text-align: right;"><%=number_to_currency(txn.credit, precision: 2)%></td>
             <td style="width: 8%;text-align: right;"><%=number_to_currency(txn.debit, precision: 2)%></td>
             <td style="width: 8%;text-align: right;"><%=number_to_currency(txn.balance, precision: 2)%></td>
-            <td style="width: 5%;">
+            <td style="width: 9%;">
               <div class="actions">
                 <%if txn.payee.nil?%>
                   <%= link_to raw("<span class='fa fa-user fa-lg text-primary'></span>"),
@@ -82,6 +85,11 @@
                  <%= link_to raw("<span class='fa fa-random fa-lg text-primary'></span>"),split_imported_transaction_path(txn.id), {:remote => true} %>
                 <%end%>
                 <%= link_to raw("<span class='fa fa-tags fa-lg text-primary'></span>"),tags_imported_transaction_path(txn.id), {:remote => true} %>
+                <% if txn.flagged? %>
+                  <%= link_to raw("<span class='fa fa-flag-o fa-lg text-danger'></span>"),flag_imported_transaction_path(txn.id), {:remote => true} %>
+                <%else%>
+                  <%= link_to raw("<span class='fa fa-flag-o fa-lg text-primary'></span>"),flag_imported_transaction_path(txn.id), {:remote => true} %>
+                <%end%>
                 <%= link_to raw("<span class='fa fa-trash-o fa-lg text-primary'></span>"), destroy_imported_transaction_path(txn.id), method: :delete, data: { confirm: 'Are you sure?' , :remote => true}%>
               </div>
             </td>

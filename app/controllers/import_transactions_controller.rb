@@ -48,7 +48,7 @@ class ImportTransactionsController < ApplicationController
             credit = txn_amount.to_f.abs
           end
         end
-        
+
         imported_transaction = ImportedTransaction.new(raw_data: row.to_s, credit: credit, debit: debit, txn_date: Date.strptime(txn_date.to_s,txn_date_format.to_s),
          description: txn_description, balance: txn_balance, account_id: account.id, payee_id: payee_id, category_id: category_id,budget_id: txn_budget.id)
 
@@ -147,6 +147,20 @@ class ImportTransactionsController < ApplicationController
 
   end
 
+  def flag
+    @imported_transaction = ImportedTransaction.find(params[:id])
+    if @imported_transaction.flagged?
+      @imported_transaction.flagged = false
+    else
+      @imported_transaction.flagged = true
+    end
+
+    respond_to do |format|
+      @imported_transaction.save!
+      format.js
+    end
+  end
+
   def update
     @imported_transaction = ImportedTransaction.find(params[:id])
     @imported_transaction.account_id = params[:imported_transaction][:account_id]
@@ -229,7 +243,7 @@ class ImportTransactionsController < ApplicationController
           budget_txn = BudgetTransaction.new(account_id: txn.account_id,budget_item_id: budget_item_id,payee_id: txn.payee_id,
             budget_id: budget.id,category_id: txn.category_id, credit: credit_val, debit: debit_val,
             transaction_date: txn.txn_date,comments: txn.description,raw_data:txn.raw_data ,
-            manual: false, scheduled: false, budgeted: is_budgeted,miscellaneous: misc,savings: false,reconciled: false,tag_list: txn.tags)
+            manual: false, scheduled: false, budgeted: is_budgeted,miscellaneous: misc,savings: false,reconciled: false,tag_list: txn.tags,flagged: txn.flagged)
 
           budget_txn.save!
           txn.budget_id = budget.id
