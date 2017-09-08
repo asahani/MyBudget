@@ -4,9 +4,11 @@ respond_to :js, :html
   # GET /budget_transactions
   # GET /budget_transactions.json
   def index
-    if params[:tag]
+    puts params[:tag]
+    if !params[:tag].nil?
       @tag = params[:tag]
-      @budget_transactions = BudgetTransaction.tagged_with(@tag)
+      @budget_transactions = BudgetTransaction.tagged_with(@tag,:any => true)
+
       if params[:budget_id]
         @budget = Budget.find(params[:budget_id])
       end
