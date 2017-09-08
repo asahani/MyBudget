@@ -34,18 +34,18 @@ class PayeesController < ApplicationController
   def create
     @payee = Payee.new(payee_params)
 
-    if @payee.called_from_import_txn
+    if @payee.called_from_import_txn == "true"
       respond_to do |format|
         if @payee.save
           ImportedTransaction.where('description = ? ', @payee.description).update_all(payee_id: @payee.id,category_id: @payee.category.id)
-          format.js 
+          format.js
         end
       end
     else
       respond_to do |format|
         if @payee.save
           @imported_transactions = ImportedTransaction.all
-          format.html { redirect_to payees_url, notice: 'Payee was successfully created.' }
+          format.html { redirect_back(fallback_location: budgets_path)}
           format.json { render :show, status: :created, location: @payee }
           format.js
         else

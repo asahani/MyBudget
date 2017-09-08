@@ -255,7 +255,7 @@
 
               <div style="clear:both;">
                 <%= link_to raw("<span class='fa fa-user-plus fa-lg' style='color: #999;' aria-hidden='true'></span>"),
-                  new_account_transaction_path, {:remote => true, class: 'new-account-transaction-modal-link'}%>
+                  new_payee_path(called_from_import_txn: false), {:remote => true, class: 'new_payee-modal-link'}%>
               </div>
               <span><small>Payee</small></span>
 
