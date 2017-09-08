@@ -1,6 +1,7 @@
 class AccountTransaction < ApplicationRecord
   attr_accessor :transaction_type
-  attr_accessor :historical_transaction #no cash to be exchanged
+  attr_accessor :historical_loan_transaction #no cash to be exchanged
+  attr_accessor :historical_account_transaction #no cash to be exchanged
 
   acts_as_taggable
   ##################################
@@ -46,11 +47,13 @@ class AccountTransaction < ApplicationRecord
   private
 
   def update_accounts
-    unless historical_transaction == "1"
+    unless historical_loan_transaction == "1"
       update_budget_accounts_and_account_balance
     end
 
-    update_account_payees_and_account_balance
+    unless historical_account_transaction == "1"
+      update_account_payees_and_account_balance
+    end
   end
 
   def update_budget_accounts_and_account_balance
