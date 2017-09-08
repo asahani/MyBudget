@@ -5,7 +5,7 @@ class CreateAccountTransactions < ActiveRecord::Migration[4.2]
       t.integer :payee_id
       t.integer :budget_id
       t.integer :category_id
-      t.decimal :amount
+      t.decimal :amount, default: 0.0, :precision => 10, :scale => 2
       t.date :transaction_date
       t.string :comments
       t.boolean :reconciled
