@@ -17,7 +17,7 @@ class BudgetIncome < ApplicationRecord
   # Callbacks
   ##################################
   after_create :create_income_transaction, :auto_generate_income_splits
-  after_update :update_income_transaction
+  after_update :update_income_transaction, :regenerate_income_splits
   ##################################
   # Scoped Methods
   ##################################
@@ -26,6 +26,10 @@ class BudgetIncome < ApplicationRecord
   # Class Methods
   ##################################
 
+  def regenerate_income_splits
+    splits = IncomeSplit.where("income_id = ? and budget_id = ?",self.income_id,self.budget_id).destroy_all
+    auto_generate_income_splits
+  end
 
   def auto_generate_income_splits
     unless self.income_id.nil?

@@ -13,6 +13,7 @@ class Income < ApplicationRecord
   ##################################
   # Callbacks
   ##################################
+  after_update :delete_future_income_splits
 
   ##################################
   # Scoped Methods
@@ -22,6 +23,12 @@ class Income < ApplicationRecord
   ##################################
   # Class Methods
   ##################################
+  def delete_future_income_splits
+    future_budgets = Budget.where("start_date > ?",Date.today)
+    future_budgets.each do |budget|
+      splits = IncomeSplit.where("income_id = ? and budget_id = ?",self.id,budget.id).destroy_all
+    end
+  end
 
   def monthly_income
     if self.monthly
