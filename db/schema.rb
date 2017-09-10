@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170902113332) do
+ActiveRecord::Schema.define(version: 20170906141759) do
 
-  create_table "account_transactions", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "account_transactions", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer "account_id"
     t.integer "payee_id"
     t.integer "budget_id"
@@ -25,19 +25,20 @@ ActiveRecord::Schema.define(version: 20170902113332) do
     t.datetime "updated_at"
     t.integer "house_id"
     t.integer "share_id"
+    t.boolean "flagged", default: false
     t.index ["account_id"], name: "index_account_transactions_on_account_id"
     t.index ["budget_id"], name: "index_account_transactions_on_budget_id"
     t.index ["category_id"], name: "index_account_transactions_on_category_id"
     t.index ["payee_id"], name: "index_account_transactions_on_payee_id"
   end
 
-  create_table "account_types", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "account_types", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "accounts", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "accounts", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "name"
     t.decimal "initial_balance", precision: 10, scale: 2, default: "0.0"
     t.decimal "balance", precision: 10, scale: 2, default: "0.0"
@@ -60,7 +61,7 @@ ActiveRecord::Schema.define(version: 20170902113332) do
     t.index ["is_active"], name: "index_accounts_on_is_active"
   end
 
-  create_table "budget_accounts", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "budget_accounts", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer "account_id"
     t.integer "budget_id"
     t.decimal "opening_balance", precision: 10, scale: 2, default: "0.0"
@@ -76,7 +77,7 @@ ActiveRecord::Schema.define(version: 20170902113332) do
     t.index ["budget_id"], name: "index_budget_accounts_on_budget_id"
   end
 
-  create_table "budget_incomes", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "budget_incomes", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "description"
     t.decimal "amount", precision: 10, scale: 2, default: "0.0"
     t.integer "income_id"
@@ -93,7 +94,7 @@ ActiveRecord::Schema.define(version: 20170902113332) do
     t.index ["income_id"], name: "index_budget_incomes_on_income_id"
   end
 
-  create_table "budget_items", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "budget_items", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer "budget_id"
     t.integer "category_id"
     t.decimal "budgeted_amount", precision: 10, scale: 2
@@ -108,7 +109,7 @@ ActiveRecord::Schema.define(version: 20170902113332) do
     t.index ["category_id"], name: "index_budget_items_on_category_id"
   end
 
-  create_table "budget_transactions", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "budget_transactions", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer "account_id"
     t.integer "budget_item_id"
     t.integer "payee_id"
@@ -129,6 +130,7 @@ ActiveRecord::Schema.define(version: 20170902113332) do
     t.datetime "updated_at"
     t.decimal "mortgage_interest", precision: 10, scale: 2, default: "0.0"
     t.decimal "mortgage_principal", precision: 10, scale: 2, default: "0.0"
+    t.boolean "flagged", default: false
     t.index ["account_id"], name: "index_budget_transactions_on_account_id"
     t.index ["budget_id"], name: "index_budget_transactions_on_budget_id"
     t.index ["budget_item_id"], name: "index_budget_transactions_on_budget_item_id"
@@ -137,7 +139,7 @@ ActiveRecord::Schema.define(version: 20170902113332) do
     t.index ["payee_id"], name: "index_budget_transactions_on_payee_id"
   end
 
-  create_table "budgets", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "budgets", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer "year"
     t.integer "month", limit: 2
     t.date "start_date"
@@ -150,7 +152,7 @@ ActiveRecord::Schema.define(version: 20170902113332) do
     t.index ["year"], name: "index_budgets_on_year"
   end
 
-  create_table "categories", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "categories", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "name"
     t.boolean "active", default: true
     t.decimal "budget_amount", precision: 10, scale: 2
@@ -175,7 +177,7 @@ ActiveRecord::Schema.define(version: 20170902113332) do
     t.index ["payee_id"], name: "index_categories_on_payee_id"
   end
 
-  create_table "goals", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "goals", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "name"
     t.string "icon"
     t.decimal "target_amount", precision: 10, default: "0"
@@ -190,7 +192,7 @@ ActiveRecord::Schema.define(version: 20170902113332) do
     t.index ["account_id"], name: "index_goals_on_account_id"
   end
 
-  create_table "houses", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "houses", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "name"
     t.string "address"
     t.integer "mortgage_account_id"
@@ -207,12 +209,13 @@ ActiveRecord::Schema.define(version: 20170902113332) do
     t.datetime "updated_at"
   end
 
-  create_table "imported_transactions", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "imported_transactions", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "raw_data"
     t.decimal "credit", precision: 10, scale: 2
     t.decimal "debit", precision: 10, scale: 2
     t.date "txn_date"
     t.string "description"
+    t.string "tags"
     t.decimal "balance", precision: 10, scale: 2
     t.integer "account_id"
     t.integer "payee_id"
@@ -220,10 +223,10 @@ ActiveRecord::Schema.define(version: 20170902113332) do
     t.integer "budget_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string "tags"
+    t.boolean "flagged", default: false
   end
 
-  create_table "income_splits", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "income_splits", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer "budget_id"
     t.integer "income_id"
     t.date "income_split_date"
@@ -236,7 +239,7 @@ ActiveRecord::Schema.define(version: 20170902113332) do
     t.index ["income_id"], name: "index_income_splits_on_income_id"
   end
 
-  create_table "incomes", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "incomes", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "description"
     t.decimal "amount", precision: 10, scale: 2, default: "0.0"
     t.boolean "weekly", default: false
@@ -249,7 +252,7 @@ ActiveRecord::Schema.define(version: 20170902113332) do
     t.index ["account_id"], name: "index_incomes_on_account_id"
   end
 
-  create_table "master_categories", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "master_categories", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "name"
     t.boolean "display", default: true
     t.datetime "created_at"
@@ -257,7 +260,7 @@ ActiveRecord::Schema.define(version: 20170902113332) do
     t.string "icon"
   end
 
-  create_table "net_worths", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "net_worths", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer "account_id"
     t.integer "share_id"
     t.integer "house_id"
@@ -272,7 +275,7 @@ ActiveRecord::Schema.define(version: 20170902113332) do
     t.index ["share_id"], name: "index_net_worths_on_share_id"
   end
 
-  create_table "payee_descriptions", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "payee_descriptions", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "description"
     t.integer "payee_id"
     t.datetime "created_at"
@@ -280,7 +283,7 @@ ActiveRecord::Schema.define(version: 20170902113332) do
     t.index ["payee_id"], name: "index_payee_descriptions_on_payee_id"
   end
 
-  create_table "payees", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "payees", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "name"
     t.string "description"
     t.integer "category_id"
@@ -293,7 +296,7 @@ ActiveRecord::Schema.define(version: 20170902113332) do
     t.index ["category_id"], name: "index_payees_on_category_id"
   end
 
-  create_table "shares", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "shares", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "name"
     t.string "code"
     t.string "share_type"
@@ -309,12 +312,12 @@ ActiveRecord::Schema.define(version: 20170902113332) do
     t.datetime "updated_at"
   end
 
-  create_table "taggings", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "taggings", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer "tag_id"
-    t.integer "taggable_id"
     t.string "taggable_type"
-    t.integer "tagger_id"
+    t.integer "taggable_id"
     t.string "tagger_type"
+    t.integer "tagger_id"
     t.string "context", limit: 128
     t.datetime "created_at"
     t.index ["context"], name: "index_taggings_on_context"
@@ -328,13 +331,13 @@ ActiveRecord::Schema.define(version: 20170902113332) do
     t.index ["tagger_id"], name: "index_taggings_on_tagger_id"
   end
 
-  create_table "tags", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "tags", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "name", collation: "utf8_bin"
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
-  create_table "tasks", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "tasks", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer "budget_id"
     t.string "title"
     t.text "description"
@@ -346,7 +349,7 @@ ActiveRecord::Schema.define(version: 20170902113332) do
     t.index ["budget_id"], name: "index_tasks_on_budget_id"
   end
 
-  create_table "users", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "users", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
