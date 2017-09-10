@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :upcoming_events
 
-  def upcoming_events
+  def upcoming_events(only_future_events = false)
     upcoming_events = Array.new
 
     budgets = Budget.where('start_date > ? or end_date > ?', Date.today, Date.today) #current and future budgets
@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
       month_due = budget_item.category.scheduled_day < Rails.application.config.start_of_the_month ? budget_item.budget.month + 1 : budget_item.budget.month
       year_due = (budget_item.category.scheduled_day < Rails.application.config.start_of_the_month) && (budget_item.budget.month == 12)? budget_item.budget.year + 1 : budget_item.budget.year
       event_date = Date.new(year_due,month_due,budget_item.category.scheduled_day)
-      if event_date > Date.today
+      if (only_future_events == true && event_date > Date.today) || only_future_events == false
         event = {}
         event["start"] = event_date
         event["end"] = event_date

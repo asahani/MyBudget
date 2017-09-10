@@ -68,16 +68,16 @@
 
 <li class="xn-icon-button pull-right">
     <a href="#"><span class="fa fa-calendar"></span></a>
-    <div class="informer informer-danger"><%=upcoming_events.count%></div>
+    <div class="informer informer-danger"><%=upcoming_events(true).count%></div>
     <div class="panel panel-primary animated zoomIn xn-drop-left xn-panel-dragging">
         <div class="panel-heading">
             <h3 class="panel-title"><span class="fa fa-comments"></span> Upcoming Events</h3>
             <div class="pull-right">
-                <span class="label label-danger"><%=upcoming_events.count%> events</span>
+                <span class="label label-danger"><%=upcoming_events(true).count%> events</span>
             </div>
         </div>
         <div class="panel-body list-group list-group-contacts scroll" style="height: 200px;">
-            <%upcoming_events.each do |event|%>
+            <%upcoming_events(true).each do |event|%>
               <a href="#" class="list-group-item">
                   <div class="list-group-status status-online"></div>
                   <span class="pull-left fa <%=event['icon']-%> fa-2x"></span>
