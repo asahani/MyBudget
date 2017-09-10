@@ -5,6 +5,51 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :set_net_worth
 
+  helper_method :upcoming_events
+
+  def upcoming_events
+    upcoming_events = Array.new
+
+    budgets = Budget.where('start_date > ? or end_date > ?', Date.today, Date.today) #current and future budgets
+
+    budget_items = BudgetItem.where(budget_id: budgets)
+    budget_items = budget_items.joins(:category)
+    budget_items = budget_items.where("categories.scheduled = ?", true)
+
+    budget_items.each do |budget_item|
+      month_due = budget_item.category.scheduled_day < Rails.application.config.start_of_the_month ? budget_item.budget.month + 1 : budget_item.budget.month
+      year_due = (budget_item.category.scheduled_day < Rails.application.config.start_of_the_month) && (budget_item.budget.month == 12)? budget_item.budget.year + 1 : budget_item.budget.year
+      event_date = Date.new(year_due,month_due,budget_item.category.scheduled_day)
+      if event_date > Date.today
+        event = {}
+        event["event_date"] = event_date
+        event["title"] = budget_item.category.name
+        event["icon"] = budget_item.category.icon
+        event["description"] = budget_item.category.name + " due on " + event_date.to_s(:long)
+
+        upcoming_events << event
+      end
+    end
+
+    income_splits = IncomeSplit.where(budget_id: budgets)
+
+    income_splits.each do |split|
+      event_date = Date.new(split.income_split_date.year,split.income_split_date.month,split.income_split_date.day)
+      if event_date > Date.today
+        event = {}
+        event["event_date"] = event_date
+        event["title"] = "Income"
+        event["icon"] = "fa-money"
+        event["description"] = split.income.description + " : $" + split.amount.to_s + " on " + event_date.to_s(:long)
+
+        upcoming_events << event
+      end
+    end
+
+    upcoming_events.sort!{|x,y|x["event_date"] <=> y["event_date"]}
+  end
+
+
   def net_worth_details
     net_worth = Hash.new
     net_worth[:accounts] = Array.new
