@@ -222,7 +222,7 @@ class ImportTransactionsController < ApplicationController
             debit_val = txn.debit.abs
           end
           # budget = Budget.get_budget(txn.txn_date)
-          budget = txn.budget_id
+          budget = Budget.find(txn.budget_id)
           category = Category.find(txn.category.id)
           budget_item = BudgetItem.find_by_budget_id_and_category_id(budget.id,category.id)
 
