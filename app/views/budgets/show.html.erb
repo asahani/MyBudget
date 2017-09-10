@@ -14,19 +14,40 @@
 							<%unless @budget.is_closed?%>
 							<li>
 								<%= link_to raw("<span class='fa fa-download fa-lg'></span>"),
-										import_transactions_open_file_path(budget_id: @budget.id), {:remote => true, class: 'import-transactions-modal-link'} %>
+										import_transactions_open_file_path(budget_id: @budget.id),
+										:remote => true, class: 'import-transactions-modal-link',
+										data: {
+											toggle: "tooltip",
+											placement: "bottom",
+											title: "Import transaction for Credit Cards" }
+								%>
 							</li>
 							<li>
 								<%= link_to raw("<span class='fa fa-plus fa-lg'></span>"),
-										new_budget_transaction_path(transaction_type: 'miscellaneous',budget_id: @budget.id), {:remote => true, class: 'new-transaction-modal-link'} %>
+										new_budget_transaction_path(transaction_type: 'miscellaneous',budget_id: @budget.id),
+										:remote => true, class: 'new-transaction-modal-link',
+										data: {
+											toggle: "tooltip",
+											placement: "bottom",
+											title: "New Budget Transaction" }
+								 %>
 							</li>
 							<li>
 								<%= link_to raw("<span class='fa fa-list-alt fa-lg'></span>"),
-										budget_transactions_path(budget_id: @budget.id)%>
+										budget_transactions_path(budget_id: @budget.id),
+										data: {
+											toggle: "tooltip",
+											placement: "bottom",
+											title: "Show all budget transactions" }
+								%>
 							</li>
 							<li>
 								<%= link_to raw("<span class='fa fa-ban fa-lg'></span>"),
-										close_budget_path, data: { confirm: "Are you sure you want to close the budget?" }%>
+										close_budget_path, data: {
+											confirm: "Closing the budget does 3 things.\n\n1: Set all budget accounts to 0 by adding an unkown transaction for the remaining amount.\n2: Captures the net worth by taking a snaphot of all accounts(non-budget), houses and shares.\n3: Set the budget to closed.\n\nAre you sure you want to close the budget?",
+											toggle: "tooltip",
+											placement: "bottom",
+											title: "Close Budget" }%>
 							</li>
 							<%end%>
 					</ul>
