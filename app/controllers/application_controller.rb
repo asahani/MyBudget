@@ -22,8 +22,10 @@ class ApplicationController < ActionController::Base
       event_date = Date.new(year_due,month_due,budget_item.category.scheduled_day)
       if event_date > Date.today
         event = {}
+        event["start"] = event_date
+        event["end"] = event_date
         event["event_date"] = event_date
-        event["title"] = budget_item.category.name
+        event["title"] = budget_item.category.name+ " due"
         event["icon"] = budget_item.category.icon
         event["description"] = budget_item.category.name + " due on " + event_date.to_s(:long)
 
@@ -37,8 +39,10 @@ class ApplicationController < ActionController::Base
       event_date = Date.new(split.income_split_date.year,split.income_split_date.month,split.income_split_date.day)
       if event_date > Date.today
         event = {}
+        event["start"] = event_date
+        event["end"] = event_date
         event["event_date"] = event_date
-        event["title"] = "Income"
+        event["title"] = split.income.description
         event["icon"] = "fa-money"
         event["description"] = split.income.description + " : $" + split.amount.to_s + " on " + event_date.to_s(:long)
 

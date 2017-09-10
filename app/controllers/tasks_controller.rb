@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy, :complete_task, :complete_task_widget]
-
+  layout "admin", only: [:calendar]
   # GET /tasks
   # GET /tasks.json
   def index
@@ -92,6 +92,16 @@ class TasksController < ApplicationController
       format.js
     end
 
+  end
+
+  def calendar
+    @events = upcoming_events
+    puts @events
+    respond_to do |format|
+
+        format.html
+        format.json
+    end
   end
 
   private

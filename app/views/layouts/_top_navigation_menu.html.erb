@@ -35,7 +35,7 @@
     <a href="#"><span class="fa fa-tasks"></span> Tasks</a>
     <ul>
         <li><%= link_to raw("<span class='fa fa-tasks'></span> <span class='xn-text'> Tasks</span>"), tasks_path%></li>
-        <li><%= link_to raw("<span class='fa fa-tasks'></span> <span class='xn-text'> Calendar (TBA)</span>"), tasks_path%></li>
+        <li><%= link_to raw("<span class='fa fa-tasks'></span> <span class='xn-text'> Calendar</span>"), tasks_calendar_path%></li>
     </ul>
 </li>
 <li class="xn-openable">
@@ -87,7 +87,7 @@
             <%end%>
         </div>
         <div class="panel-footer text-center">
-            <a href="calendar.html">Show all events</a>
+            <%= link_to "Show all events", tasks_calendar_path%>
         </div>
     </div>
 </li>

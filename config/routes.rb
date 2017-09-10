@@ -13,6 +13,8 @@ Rails.application.routes.draw do
 
   resources :houses
 
+  get 'tasks/calendar'
+
   resources :tasks do
     member do
       post :complete_task
