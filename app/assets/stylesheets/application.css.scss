@@ -119,6 +119,21 @@ body {
 }
 
 /*******************
+ * Budget Inner Table
+ *******************/
+.inner-table-container {
+  background-color: #33414e!important;
+  margin:0px; padding: 0px;box-shadow: 2px 2px 10px #000 inset;
+}
+
+#inner-table { width: 100%; color: #fff;}
+#inner-table tr {}
+#inner-table td { border: none!important;background-color: #33414e!important;}
+
+.flagged-cell {
+	border: 1px solid #b64645;
+}
+/*******************
  * Charting Panels
  *******************/
 .panel-bricky {

@@ -8,8 +8,8 @@
 
 			<div class="panel-body panel-body-table">
 
-					<div class="table-responsive">
-							<table class="table table-bordered table-striped table-actions">
+					<div>
+							<table class="table table-bordered table-striped table-condensed table-actions">
 									<thead>
 											<tr>
 													<th>From account</th>
@@ -24,8 +24,19 @@
 									</thead>
 									<tbody>
 											<%@budget_item.budget_transactions.each do |budget_transaction|%>
-											<tr id=<%=budget_transaction.id%> >
-												<td><strong><%=budget_transaction.account.name%></strong></td>
+											<%if budget_transaction.flagged?
+													flagged = "flagged-cell"
+												else
+													flagged = ""
+												end
+											%>
+											<tr class="<%=flagged%>" id=<%=budget_transaction.id%> >
+												<td>
+													<% if budget_transaction.flagged? %>
+						                <span style="color: #a94442;" class="glyphicon glyphicon-flag"></span>
+						              <%end%>
+													<strong><%=budget_transaction.account.name%></strong>
+												</td>
 												<td><strong><%=budget_transaction.payee.name%></strong></td>
 												<td><%=budget_transaction.transaction_date%></td>
 												<td><%=number_to_currency(budget_transaction.debit)%></td>

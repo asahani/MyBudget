@@ -40,8 +40,16 @@
 				</tr>
 				<%display_item.categorised_items.each do |budget_item|%>
 				<%budget_rows += 1%>
-					<tr>
+				<%if budget_item.budget_transactions.where("flagged = true").count > 0 %>
+					<%flagged = "flagged-cell"%>
+					<%else%>
+					<%flagged = ""%>
+				<%end%>
+					<tr class="<%=flagged%>">
 						<td style="width:15%;padding-left: 20px!important;">
+							<%if flagged == "flagged-cell"%>
+							<span style="color: #a94442;" class="glyphicon glyphicon-flag"></span>
+							<%end%>
 							<%=budget_item.category.name%>
 						</td>
 						<td style="width:15%;">
@@ -236,8 +244,18 @@
 				</tr>
 				<%misc_display_item.categorised_items.each do |misc_txn|%>
 				<%misc_rows += 1%>
-					<tr>
+					<%if misc_txn.flagged?
+							flagged = "flagged-cell"
+						else
+							flagged = ""
+						end
+					%>
+
+					<tr class="<%=flagged%>">
 						<td style="width:30%;">
+							<% if misc_txn.flagged? %>
+                <span style="color: #a94442;" class="glyphicon glyphicon-flag"></span>
+              <%end%>
 							<%unless misc_txn.comments.nil? || misc_txn.comments.length < 1%>
 								<span class="fa fa-comment-o fa-lg" style='color: #999;' aria-hidden="true"></span>
 							<%else%>
