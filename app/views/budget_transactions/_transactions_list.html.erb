@@ -4,8 +4,9 @@
 				<thead>
 					<th style="width: 10%;">Payee</th>
 					<th style="width: 10%;">Category</th>
+					<th style="width: 10%;">Budget Category</th>
 					<th style="width: 10%;">Date</th>
-					<th style="width: 30%;">Description</th>
+					<th style="width: 20%;">Description</th>
 					<th style="width: 10%">Credit</th>
 					<th style="width: 10%;">Debit</th>
 					<th style="width: 18%;">Tags</th>
@@ -18,6 +19,7 @@
 							<%=txn.payee.name unless txn.payee.nil?%>
 						</td>
 						<td style="width: 10%;"><%=txn.category.name unless txn.category.nil?%></td>
+						<td style="width: 10%;"><%=txn.budget_item.category.name unless txn.budget_item_id.nil?%></td>
 						<td style="width: 10%;"><%=txn.transaction_date%></td>
 						<td style="width: 30%;"><%=txn.comments%></td>
 						<td style="width: 10%;text-align: right;">
