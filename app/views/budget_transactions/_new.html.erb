@@ -12,7 +12,8 @@
 			  <ul class="nav nav-tabs" role="tablist">
 			    <li role="presentation" class="active"><a href="#misctxn" aria-controls="misctxn" role="tab" data-toggle="tab">Miscellaneous Transaction</a></li>
 			    <li role="presentation"><a href="#savingstxn" aria-controls="savingstxn" role="tab" data-toggle="tab">Savings</a></li>
-			    <li role="presentation"><a href="#savingsexpensetxn" aria-controls="savingsexpensetxn" role="tab" data-toggle="tab">Savings Expense </a></li>
+					<!-- DISABLING SAVINGS EXPENSES -->
+			    <!-- <li role="presentation"><a href="#savingsexpensetxn" aria-controls="savingsexpensetxn" role="tab" data-toggle="tab">Savings Expense </a></li> -->
 			    <li role="presentation"><a href="#transfertxn" aria-controls="transfertxn" role="tab" data-toggle="tab">Account Transfer</a></li>
 			  </ul>
 
@@ -199,6 +200,8 @@
 								</div>
 							<% end %>
 				    </div>
+						<!-- DISABLING SAVINGS EXPENSES -->
+						<!--
 				    <div role="tabpanel" class="tab-pane fade" id="savingsexpensetxn">
 
 							<%= form_for @budget_transaction, format: :html, html: {class: "form-horizontal", role: :form} do |f| %>
@@ -285,6 +288,7 @@
 								</div>
 							<% end %>
 				    </div>
+						 -->
 				    <div role="tabpanel" class="tab-pane fade" id="transfertxn">
 
 							<%= form_for @budget_transaction, format: :html, html: {class: "form-horizontal", role: :form} do |f| %>
@@ -371,7 +375,7 @@
 								</div>
 							<% end %>
 				    </div>
-						
+
 				  </div>
 					<!-- End Tab panes -->
 				</div>
