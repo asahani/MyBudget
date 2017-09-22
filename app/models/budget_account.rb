@@ -53,6 +53,12 @@ class BudgetAccount < ApplicationRecord
       end
     end
 
+    atxns = AccountTransaction.where('budget_id = ? and account_id = ?',self.budget.id, self.account.id)
+
+    atxns.each do |atxn|
+      total_spend -= atxn.amount
+    end
+
     self.balance = total_spend
     self.update_withdrawal_balance
     self.save!
@@ -63,6 +69,12 @@ class BudgetAccount < ApplicationRecord
 
     txns.each do |txn|
       self.balance += txn.debit - txn.credit
+    end
+
+    atxns = AccountTransaction.where('budget_id = ? and payee_id = ?',self.budget.id, self.account.payee.id)
+
+    atxns.each do |atxn|
+      self.balance += atxn.amount
     end
   end
 

@@ -73,6 +73,7 @@ class AccountTransaction < ApplicationRecord
         budget_account.opening_balance -= self.amount unless self.destroyed?
         # puts 'budget account amount added = '+ self.amount.to_s
         # puts 'budget account opening balance is = '+ budget_account.opening_balance.to_s
+        budget_account.update_balance
         budget_account.save!
         budget_account.update_future_budget_accounts
       else
@@ -111,6 +112,7 @@ class AccountTransaction < ApplicationRecord
           budget_account.opening_balance += self.amount unless self.destroyed?
           puts 'budget account amount added = '+ self.amount.to_s
           puts 'budget account opening balance is = '+ budget_account.opening_balance.to_s
+          budget_account.update_balance
           budget_account.save!
           budget_account.update_future_budget_accounts
         else
