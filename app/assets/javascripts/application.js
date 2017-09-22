@@ -37,6 +37,7 @@
 //= require atlant/plugins/tagsinput/jquery.tagsinput.min
 //= require atlant/plugins/dropzone/dropzone.min
 //= require atlant/plugins/fullcalendar/fullcalendar.min
+//= require atlant/plugins/datatables/jquery.dataTables.min
 //= require atlant/demo_tables
 //= require atlant/plugins
 //= require atlant/actions

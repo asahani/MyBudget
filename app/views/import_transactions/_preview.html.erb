@@ -15,19 +15,24 @@
       <%=non_payee_txns%> transactions do not have a Payee. Please add Payees.
     </div>
     <%end%>
+    <div class="panel panel-default">
+        <div class="panel-body">
 
-    <div id="import-preview-pane-content">
-      <table class="table table-striped table-bordered">
+
+    <div id="import-preview-pane-content" class="table-responsive">
+      <table class="table table-striped table-bordered datatable">
         <thead>
-          <th style="width: 10%;">Account</th>
-          <th style="width: 10%;">Payee</th>
-          <th style="width: 10%;">Category</th>
-          <th style="width: 7%;">Date</th>
-          <th style="width: 30%;">Description</th>
-          <th style="width: 8%;text-align: right!important;">Credit</th>
-          <th style="width: 8%;text-align: right!important;">Debit</th>
-          <th style="width: 8%;text-align: right!important;">Balance</th>
-          <th style="width: 9%;text-align: right!important;">Actions</th>
+          <tr>
+            <th style="width: 10%;">Account</th>
+            <th style="width: 10%;">Payee</th>
+            <th style="width: 10%;">Category</th>
+            <th style="width: 7%;">Date</th>
+            <th style="width: 30%;">Description</th>
+            <th style="width: 8%;text-align: right!important;">Credit</th>
+            <th style="width: 8%;text-align: right!important;">Debit</th>
+            <th style="width: 8%;text-align: right!important;">Balance</th>
+            <th style="width: 9%;text-align: right!important;">Actions</th>
+          </tr>
         </thead>
         <%ImportedTransaction.all.each do |txn|%>
           <tr>
@@ -94,10 +99,30 @@
               </div>
             </td>
           </tr>
-          <tr id=<%=txn.id.to_s + '_details'%> style="display:none;"></tr>
+          <tr id=<%=txn.id.to_s + '_details'%> style="display:none;">
+            <td style="width: 10%;">&nbsp;<%=txn.account.name unless txn.account.nil?%></td>
+            <td style="width: 10%;">
+              <%unless txn.payee.nil?%>
+                <%=txn.payee.name%>
+              <%end%>
+            </td>
+            <td style="width: 10%;">
+              <%unless txn.category.nil?%>
+                &nbsp;<%=txn.category.name%><
+              <%end%>
+            </td>
+            <td style="width: 7%;"><%=txn.txn_date%></td>
+            <td style="width: 30%;"><%=txn.description%></td>
+            <td style="width: 8%;text-align: right!important;"><%=number_to_currency(txn.credit, precision: 2)%></td>
+            <td style="width: 8%;text-align: right!important;"><%=number_to_currency(txn.debit, precision: 2)%></td>
+            <td style="width: 8%;text-align: right!important;"><%=number_to_currency(txn.balance, precision: 2)%></td>
+            <td style="width: 9%;text-align: right!important;">Actions</td>
+          </tr>
         <%end%>
       </table>
     </div>
+
+  </div></div>
     <div class="row" id="import-preview-footer">
       <div class="col-md-1">
         <%= link_to "Cancel",import_transactions_cancel_path(), class: "btn btn-default", style: "height: 100%;"%>
