@@ -1,7 +1,10 @@
 <div id="import-preview-pane">
   <script type="text/javascript">
     $(document).ready(function() {
-    $('#import-txn-table').dataTable();
+      table = $('#import-txn-table').DataTable( {
+        retrieve: true,
+        paging: false
+      } );
     } );
     </script>
   <%if ImportedTransaction.all.count < 1%>
