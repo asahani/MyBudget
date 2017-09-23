@@ -58,7 +58,7 @@
             <td style="width: 10%;">
               <%if txn.payee.nil?%>
                 <%=form_tag payees_select_payee_path(imported_txn_id: txn.id),{:remote => true, :id => "import_txn_#{txn.id}"} do%>
-                  <%= select_tag "id", options_from_collection_for_select(Payee.all, :id, :name),{ :prompt => "Select Payee...",:onchange => "$('#import_txn_#{txn.id}').submit();" }%>
+                  <%= select_tag "id", options_from_collection_for_select(Payee.order(:name).all, :id, :name),{ :prompt => "Select Payee...",:onchange => "$('#import_txn_#{txn.id}').submit();" }%>
                 <%end%>
               <%else%>
                 <%=txn.payee.name%>
