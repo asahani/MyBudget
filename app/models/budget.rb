@@ -60,7 +60,7 @@ class Budget < ApplicationRecord
   end
 
   def expenses_remaining
-    self.budget_items.where("balance > 0").sum(:balance)
+    self.budget_items.where("balance > 0 AND complete = false").sum(:balance)
   end
 
   def budget_consumption_percentage
