@@ -11,7 +11,7 @@
 				<tr>
 					<td style="width:30%;">&nbsp;</td>
 					<td><%=number_to_currency(@budgeted_amount, precision: 2)%></td>
-					<td><%=number_to_currency(@expenses, precision: 2)%></td>
+					<td><%=number_to_currency(@expenses - @miscellaneous_expenses, precision: 2)%></td>
 					<td style="border-right:none;"><%=number_to_currency(@expenses_remaining, precision: 1)%></td>
 				</tr>
 			</table>

@@ -75,17 +75,17 @@
 						<td style="text-align: left;color: #CCC"><%=number_to_currency(@budgeted_amount - (@misc_budget_item.budgeted_amount.to_f), precision: 2)%></td>
 					</tr>
 					<tr>
-						<td style="width: 60%;text-align: right;padding-right: 5px;">Remaining: </td>
+						<td style="width: 60%;text-align: right;padding-right: 5px;">Income Left: </td>
 						<td style="text-align: left;color: #CCC"><%=number_to_currency(@income_remaining, precision: 2)%></td>
 					</tr>
 				</table>
-        <div style="position: absolute; bottom: 0;text-align: center;width: 100%;">
+				<div style="position: absolute; bottom: 0;text-align: center;width: 100%;">
 
 					<div class="widget-title" style="text-align: center;width: 100%;">
-			      = <%=number_to_currency(@savings, precision: 2)%>
+			      = <%=number_to_currency(@expenses, precision: 2)%>
 			    </div>
 			    <div class="widget-subtitle" style="text-align: center;">
-			      Monthly Savings
+			      Total Monthly Expenses
 			    </div>
 				</div>
 			</div>
@@ -100,17 +100,21 @@
 						<td style="text-align: left;color: #CCC"><%=number_to_currency(@miscellaneous_expenses, precision: 2)%></td>
 					</tr>
 					<tr>
-						<td style="width: 60%;text-align: right;padding-right: 5px;">Savings Expenses: </td>
-						<td style="text-align: left;color: #CCC"><%=number_to_currency(@savings_expenses, precision: 2)%></td>
+						<td style="width: 60%;text-align: right;padding-right: 5px;">Total Expenses: </td>
+						<td style="text-align: left;color: #CCC"><%=number_to_currency(@expenses, precision: 2)%></td>
 					</tr>
+					<!-- <tr>
+						<td style="width: 60%;text-align: right;padding-right: 5px;">Total Expenses: </td>
+						<td style="text-align: left;color: #CCC"><%=number_to_currency(@savings_expenses, precision: 2)%></td>
+					</tr> -->
 				</table>
-        <div style="position: absolute; bottom: 0;text-align: center;width: 100%;">
+				<div style="position: absolute; bottom: 0;text-align: center;width: 100%;">
 
 					<div class="widget-title" style="text-align: center;width: 100%;">
-			      = <%=number_to_currency(@expenses, precision: 2)%>
+			      = <%=number_to_currency(@expenses + @expenses_remaining, precision: 2)%>
 			    </div>
 			    <div class="widget-subtitle" style="text-align: center;">
-			      Total Monthly Expenses
+			      Forecast Expenses
 			    </div>
 				</div>
 			</div>
@@ -123,11 +127,11 @@
 				<table style="font-size: 11px;width: 100%;">
 					<tr>
             <td style="width: 60%;text-align: right;padding-right: 5px;">Total Expenses: </td>
-            <td style="text-align: left;color: #CCC">$25000.00</td>
+            <td style="text-align: left;color: #CCC"><%=number_to_currency(@expenses, precision: 2)%></td>
           </tr>
           <tr>
             <td style="width: 60%;text-align: right;padding-right: 5px;">Total Savings: </td>
-            <td style="text-align: left;color: #CCC">$25000.00</td>
+            <td style="text-align: left;color: #CCC"><%=number_to_currency(@savings, precision: 2)%></td>
           </tr>
 
           <tr>
@@ -136,15 +140,16 @@
           </tr>
 
 				</table>
-        <div style="position: absolute; bottom: 0;text-align: center;width: 100%;">
+				<div style="position: absolute; bottom: 0;text-align: center;width: 100%;">
 
 					<div class="widget-title" style="text-align: center;width: 100%;">
-			      = <%=number_to_currency(@expenses + @expenses_remaining, precision: 2)%>
+			      = <%=number_to_currency(@savings, precision: 2)%>
 			    </div>
 			    <div class="widget-subtitle" style="text-align: center;">
-			      Forecast Expenses
+			      Monthly Savings
 			    </div>
 				</div>
+
 			</div>
 			<div class="col-md-6" style="height: 100%; margin-top: 0px; padding: 5px 0px 0px 0px;">
 				<table style="font-size: 11px;width: 100%;">
