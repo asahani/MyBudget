@@ -39,8 +39,8 @@
           <table class="table table-bordered table-striped table-actions table-hover">
             <thead>
                 <tr>
-                    <th width="50">id</th>
-                    <th>name</th>
+                    <th width="50">Id</th>
+                    <th>Name</th>
                     <th width="100">Budget</th>
                     <th width="100">Master Catgory</th>
                     <th width="100">Mandatory</th>
@@ -53,7 +53,7 @@
             <tbody>
               <% @categories.each_with_index do |category,index| %>
                 <tr id="trow_<%=index+1-%>">
-                  <td class="text-center"><%=index+1-%></td>
+                  <td class="text-center"><%=category.id-%></td>
                   <td><span class="fa <%=category.icon-%>">&nbsp;</span><%= category.name %></td>
                   <td class="table-right"><%= number_to_currency(category.budget_amount) %></td>
                   <td><%= category.master_category.name %></td>
