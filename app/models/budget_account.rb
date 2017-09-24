@@ -53,14 +53,18 @@ class BudgetAccount < ApplicationRecord
       end
     end
 
+    puts 'Total Spend for budget transactions in update balance = '+ total_spend.to_s
     atxns = AccountTransaction.where('budget_id = ? and account_id = ?',self.budget.id, self.account.id)
 
     atxns.each do |atxn|
       total_spend -= atxn.amount
     end
+    puts 'Total Spend for Account transactions in update balance = '+ total_spend.to_s
 
     self.balance = total_spend
+    puts 'Total Spend = '+self.balance.to_s
     self.update_withdrawal_balance
+    puts 'BALANCE at UPDATE BALANCE = '+self.balance.to_s
     self.save!
   end
 
@@ -70,24 +74,29 @@ class BudgetAccount < ApplicationRecord
     txns.each do |txn|
       self.balance += txn.debit - txn.credit
     end
+    puts 'Total Spend for budget transactions in update withdrawal balance = '+ self.balance.to_s
 
     atxns = AccountTransaction.where('budget_id = ? and payee_id = ?',self.budget.id, self.account.payee.id)
 
     atxns.each do |atxn|
       self.balance += atxn.amount
     end
+    puts 'Total Spend for budget transactions in update withdrawal balance = '+ self.balance.to_s
   end
 
   def update_future_budget_accounts
     future_budget_accounts = BudgetAccount.joins(:budget).where('budgets.start_date > ? AND account_id = ?',self.budget.start_date,self.account.id).order('budgets.start_date')
+    puts 'Self Opening balance = ' + self.opening_balance.to_s
+    puts 'Self balance = ' + self.balance.to_s
     prev_month_closing_balance = self.opening_balance + self.balance
+    puts 'PREV Month closing balance = ' + prev_month_closing_balance.to_s
 
     future_budget_accounts.each do |budget_account|
       budget_account.opening_balance = prev_month_closing_balance
       budget_account.save!
       prev_month_closing_balance = budget_account.opening_balance + budget_account.balance
     end
-
+    puts 'PREV Month closing balance = ' + prev_month_closing_balance.to_s
     self.account.balance = prev_month_closing_balance
     self.account.save!
   end

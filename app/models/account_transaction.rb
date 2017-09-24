@@ -65,27 +65,27 @@ class AccountTransaction < ApplicationRecord
 
     if !amount.nil? && amount > 0
       unless budget_account.nil?
-        # puts '-----------------Account with BudgetAccount'
-        # puts 'budget account amount was = '+ self.amount_before_last_save.to_s
-        # puts 'budget account opening balance was = '+ budget_account.opening_balance.to_s
-        budget_account.opening_balance += self.amount_before_last_save if !self.amount_before_last_save.nil? && self.amount_before_last_save > 0
-        # puts 'budget account opening balance after removing old charge = '+ budget_account.opening_balance.to_s
-        budget_account.opening_balance -= self.amount unless self.destroyed?
-        # puts 'budget account amount added = '+ self.amount.to_s
-        # puts 'budget account opening balance is = '+ budget_account.opening_balance.to_s
+        puts '-----------------Account with BudgetAccount'
+        puts 'budget account amount was = '+ self.amount_before_last_save.to_s
+        puts 'budget account opening balance was = '+ budget_account.opening_balance.to_s
+        # budget_account.opening_balance += self.amount_before_last_save if !self.amount_before_last_save.nil? && self.amount_before_last_save > 0
+        puts 'budget account opening balance after removing old charge = '+ budget_account.opening_balance.to_s
+        # budget_account.opening_balance -= self.amount unless self.destroyed?
+        puts 'budget account amount added = '+ self.amount.to_s
+        puts 'budget account opening balance is = '+ budget_account.opening_balance.to_s
         budget_account.update_balance
         budget_account.save!
         budget_account.update_future_budget_accounts
       else
         if !self.account.nil?
-          # puts '-----------------Account'
-          # puts 'account amount was = '+ self.amount_before_last_save.to_s
-          # puts 'account opening balance was = '+ self.account.balance.to_s
+          puts '-----------------Account'
+          puts 'account amount was = '+ self.amount_before_last_save.to_s
+          puts 'account opening balance was = '+ self.account.balance.to_s
           self.account.balance += self.amount_before_last_save if !self.amount_before_last_save.nil? && self.amount_before_last_save > 0
-          # puts 'account opening balance after removing old charge = '+ self.account.balance.to_s
+          puts 'account opening balance after removing old charge = '+ self.account.balance.to_s
           self.account.balance -= self.amount unless self.destroyed?
-          # puts 'account amount added = '+ self.amount.to_s
-          # puts 'account opening balance is = '+ self.account.balance.to_s
+          puts 'account amount added = '+ self.amount.to_s
+          puts 'account opening balance is = '+ self.account.balance.to_s
           self.account.save!
         end
       end
@@ -107,9 +107,9 @@ class AccountTransaction < ApplicationRecord
           puts '-----------------Payee with BudgetAccount'
           puts 'budget account amount was = '+ self.amount_before_last_save.to_s
           puts 'budget account opening balance was = '+ budget_account.opening_balance.to_s
-          budget_account.opening_balance -= self.amount_before_last_save if !self.amount_before_last_save.nil? && self.amount_before_last_save > 0
+          # budget_account.opening_balance -= self.amount_before_last_save if !self.amount_before_last_save.nil? && self.amount_before_last_save > 0
           puts 'budget account opening balance after removing old charge = '+ budget_account.opening_balance.to_s
-          budget_account.opening_balance += self.amount unless self.destroyed?
+          # budget_account.opening_balance += self.amount unless self.destroyed?
           puts 'budget account amount added = '+ self.amount.to_s
           puts 'budget account opening balance is = '+ budget_account.opening_balance.to_s
           budget_account.update_balance
