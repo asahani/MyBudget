@@ -22,7 +22,7 @@ class AccountTransaction < ApplicationRecord
   ##################################
   # Callbacks
   ##################################
-  after_create :update_accounts, :add_category_tag, :update_goals
+  after_create :update_accounts, :add_category_tag#, :update_goals
   after_update :update_accounts
   after_destroy :update_accounts
 
@@ -151,6 +151,6 @@ class AccountTransaction < ApplicationRecord
   #       end
   #     end
   #   end
-  end
+  # end
 
 end
