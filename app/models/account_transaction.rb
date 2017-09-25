@@ -136,20 +136,21 @@ class AccountTransaction < ApplicationRecord
     self.tag_list.add(self.category.name) unless self.category.nil?
   end
 
-  def update_goals
-    unless self.payee.nil?
-      unless self.payee.account.nil?
-        self.payee.account.goals.each do |goal|
-          if self.transaction_date > goal.created_at.to_date
-            amount_for_goal = ((self.amount.to_f * goal.percentage_towards_goal) / 100).round(2)
-            puts 'amount for goal = '
-            puts amount_for_goal
-            goal.saved_amount += amount_for_goal
-            goal.save!
-          end
-        end
-      end
-    end
+  # Goals should only be updated by a savings transaction
+  # def update_goals
+  #   unless self.payee.nil?
+  #     unless self.payee.account.nil?
+  #       self.payee.account.goals.each do |goal|
+  #         if self.transaction_date > goal.created_at.to_date
+  #           amount_for_goal = ((self.amount.to_f * goal.percentage_towards_goal) / 100).round(2)
+  #           puts 'amount for goal = '
+  #           puts amount_for_goal
+  #           goal.saved_amount += amount_for_goal
+  #           goal.save!
+  #         end
+  #       end
+  #     end
+  #   end
   end
 
 end
