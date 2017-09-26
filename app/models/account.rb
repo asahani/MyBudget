@@ -35,7 +35,7 @@ class Account < ApplicationRecord
   scope :brokerage_account, -> { joins(:account_type).where('account_types.name = ?', "Brokerage") }
   scope :goal_account, -> { joins(:account_type).where('account_types.name = ? OR account_types.name = ?', "Savings","Offset") }
   scope :for_loan, -> { joins(:account_type).where('account_types.name = ? OR account_types.name = ? OR account_types.name = ?', "Transaction","Savings","Offset") }
-
+  scope :for_transfer, -> { joins(:account_type).where('account_types.name = ? OR account_types.name = ? OR account_types.name = ? OR account_types.name = ? OR account_types.name = ?', "Transaction","Savings","Credit","Offset","Brokerage") }
   ##################################
   # Class Methods
   ##################################
