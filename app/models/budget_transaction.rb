@@ -16,6 +16,7 @@ class BudgetTransaction < ApplicationRecord
   validates_presence_of :account_id,:payee_id, :category_id
   validates_numericality_of :payee_id, :account_id
   validates_numericality_of :credit, :debit, :allow_nil => true
+  validate :amounts_greater_than_zero
 
   ##################################
   # Callbacks
@@ -34,6 +35,15 @@ class BudgetTransaction < ApplicationRecord
   scope :savings_expense_transactions, -> { where('savings = ? && debit > ?',true,0)}
   scope :reconciled_transactions, -> { where('reconciled = ?',true)}
   scope :nonconciled_transactions, -> { where('reconciled = ?',false)}
+
+  ##################################
+  # Validation Methods
+  ##################################
+  def amounts_greater_than_zero
+    if self.debit == 0 && self.credit == 0
+      errors.add(:debit, "and credit, both can't be Zero")
+    end
+  end
 
   ##################################
   # Class Methods
