@@ -24,10 +24,12 @@
 								<label class="col-md-3 col-xs-5 control-label">Account</label>
 								<div class="col-md-9 col-xs-7">
 										<div class="input-group">
-											<%if @transaction_type == 'miscellaneous' || @transaction_type == 'account_transfer'%>
-												<%= f.collection_select :account_id, Account.for_budget.active, :id, :name, {prompt: true}, {class: "form-control select"} %>
+											<%if @transaction_type == 'miscellaneous'%>
+												<%= f.collection_select :account_id, Account.for_budget.active, :id, :name, {prompt: true}, {class: "form-control select", disabled: true} %>
+											<%elsif @transaction_type == 'account_transfer'%>
+												<%= f.collection_select :account_id, Account.for_transfer.active, :id, :name, {prompt: true}, {class: "form-control select", disabled: true} %>
 											<%else%>
-												<%= f.collection_select :account_id, Account.savings_account.for_budget.active, :id, :name, {prompt: true}, {class: "form-control select"} %>
+												<%= f.collection_select :account_id, Account.goal_account.active, :id, :name, {prompt: true}, {class: "form-control select", disabled: true} %>
 											<%end%>
 										</div>
 								</div>
@@ -46,11 +48,13 @@
 								<div class="col-md-9 col-xs-7">
 										<div class="input-group">
 											<%if @transaction_type == 'miscellaneous'%>
-												<%= f.collection_select :payee_id, Payee.external_payees, :id, :name, {prompt: true}, {class: "form-control select"} %>
-											<%elsif @transaction_type == 'savings' || @transaction_type == 'account_transfer'%>
-												<%= f.collection_select :payee_id, Payee.account_payees, :id, :name, {prompt: true}, {class: "form-control select"} %>
+												<%= f.collection_select :payee_id, Payee.external_payees, :id, :name, {prompt: true}, {class: "form-control select", disabled: true} %>
+											<%elsif @transaction_type == 'savings'%>
+												<%= f.collection_select :payee_id, Payee.non_credit_account_payees, :id, :name, {prompt: true}, {class: "form-control select", disabled: true} %>
+											<%elsif @transaction_type == 'account_transfer'%>
+												<%= f.collection_select :payee_id, Payee.transfer_account_payees, :id, :name, {prompt: true}, {class: "form-control select", disabled: true} %>
 											<%elsif @transaction_type == 'savings_expense'%>
-												<%= f.collection_select :payee_id, Payee.external_payees + Payee.account_payees, :id, :name, {prompt: true}, {class: "form-control select"} %>
+												<%= f.collection_select :payee_id, Payee.external_payees + Payee.account_payees, :id, :name, {prompt: true}, {class: "form-control select", disabled: true} %>
 											<%end%>
 										</div>
 								</div>

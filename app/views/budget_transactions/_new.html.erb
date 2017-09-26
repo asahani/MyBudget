@@ -134,7 +134,7 @@
 														<label class="col-md-3 col-xs-5 control-label">To Account</label>
 														<div class="col-md-9 col-xs-7">
 																<div class="input-group">
-																		<%= f.collection_select :account_id, Account.savings_account.for_budget.active, :id, :name, {prompt: true}, {class: "form-control select"} %>
+																		<%= f.collection_select :account_id, Account.goal_account.active, :id, :name, {prompt: true}, {class: "form-control select"} %>
 																</div>
 														</div>
 												</div>
@@ -142,7 +142,7 @@
 														<label class="col-md-3 col-xs-5 control-label">From Account</label>
 														<div class="col-md-9 col-xs-7">
 																<div class="input-group">
-																		<%= f.collection_select :payee_id, Payee.account_payees, :id, :name, {prompt: true}, {class: "form-control select"} %>
+																		<%= f.collection_select :payee_id, Payee.non_credit_account_payees, :id, :name, {prompt: true}, {class: "form-control select"} %>
 																</div>
 														</div>
 												</div>

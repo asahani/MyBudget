@@ -33,6 +33,7 @@ class Payee < ApplicationRecord
   scope :system_payees, -> { where(is_system: true)}
   scope :non_system, -> { where(is_system: false)}
   scope :transfer_account_payees, -> { joins(account: :account_type).where('is_account = ? AND accounts.is_active = ? AND (account_types.name = ? OR account_types.name = ? OR account_types.name = ? OR account_types.name = ? OR account_types.name = ?)',true,true,"Transaction","Savings","Credit","Offset","Brokerage")}
+  scope :non_credit_account_payees, -> { joins(account: :account_type).where('is_account = ? AND accounts.is_active = ? AND accounts.budget_account = ? AND account_types.name = ?',true,true,true,"Transaction")}
   ##################################
   # Class Methods
   ##################################
