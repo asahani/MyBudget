@@ -1,4 +1,4 @@
-class BudgetTransaction < ActiveRecord::Base
+class BudgetTransaction < ApplicationRecord
   attr_accessor :transaction_type
   acts_as_taggable
   ##################################
@@ -91,7 +91,7 @@ class BudgetTransaction < ActiveRecord::Base
     end
 
     txns = txns.joins(category: :master_category)
-    txns = txns.group("master_categories.name")
+    txns = txns.group("master_categories.name,master_categories.icon")
     txns = txns.select("master_categories.name as name, sum(debit) as total_expense,master_categories.icon as icon")
     unless limit.nil?
       txns = txns.order("total_expense DESC").first(limit)
@@ -114,7 +114,7 @@ class BudgetTransaction < ActiveRecord::Base
       txns = txns.where('budget_transactions.savings = ? && debit > ?',false,0)
     end
     txns = txns.joins(:category)
-    txns = txns.group("categories.name")
+    txns = txns.group("categories.name,categories.icon")
     txns = txns.select("categories.name as name, sum(debit) as total_expense,categories.icon as icon")
     unless limit.nil?
       txns = txns.order("total_expense DESC").first(limit)
@@ -185,7 +185,7 @@ class BudgetTransaction < ActiveRecord::Base
       self.budget_item.update_spend_and_balance
     end
   end
-
+  #Deprecated : Use update_budget_accounts_and_account_balance
   def update_budget_account
     # Loop through all budget_accounts for self.account and update the balance
     budget_account = BudgetAccount.find_by_budget_id_and_account_id(self.budget.id, self.account.id)
@@ -195,6 +195,7 @@ class BudgetTransaction < ActiveRecord::Base
     end
   end
 
+  #Deprecated : Use update_account_payees_and_account_balance
   def update_account_payee
     if self.payee.is_account
       puts 'payee is account'
@@ -245,15 +246,17 @@ class BudgetTransaction < ActiveRecord::Base
   end
 
   def update_goals
-    unless self.account.nil?
-      if self.credit > 0
-        self.account.goals.each do |goal|
-          if self.transaction_date > goal.created_at.to_date
-            amount_for_goal = ((self.credit.to_f * goal.percentage_towards_goal) / 100).round(2)
-            puts 'amount for goal = '
-            puts amount_for_goal
-            goal.saved_amount += amount_for_goal
-            goal.save!
+    if self.savings
+      unless self.account.nil?
+        if self.credit > 0
+          self.account.goals.each do |goal|
+            if self.transaction_date > goal.created_at.to_date
+              amount_for_goal = ((self.credit.to_f * goal.percentage_towards_goal) / 100).round(2)
+              puts 'amount for goal = '
+              puts amount_for_goal
+              goal.saved_amount += amount_for_goal
+              goal.save!
+            end
           end
         end
       end

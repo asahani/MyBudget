@@ -32,6 +32,10 @@
 //= require atlant/plugins/daterangepicker/daterangepicker
 //= require atlant/plugins/tagsinput/jquery.tagsinput.min
 //= require atlant/plugins/ion/ion.rangeSlider.min
+//= require atlant/plugins/icheck/icheck.min
+//= require atlant/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min
+//= require atlant/plugins/moment.min
+//= require atlant/plugins/fullcalendar/fullcalendar.min
 //= require atlant/demo_tables
 //= require atlant/plugins
 //= require atlant/actions

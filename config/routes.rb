@@ -13,6 +13,8 @@ Rails.application.routes.draw do
 
   resources :houses
 
+  get 'tasks/calendar'
+
   resources :tasks do
     member do
       post :complete_task
@@ -42,6 +44,7 @@ Rails.application.routes.draw do
   match "import_transactions/:id/tags" => "import_transactions#tags", :via => :get, :as => 'tags_imported_transaction'
   match "import_transactions/add_tags" => "import_transactions#add_tags", :via => :post, :as => 'add_tags_imported_transaction'
 
+  match "import_transactions/:id/flag" => "import_transactions#flag", :via => :get, :as => 'flag_imported_transaction'
 
   resources :budget_transactions
   match "budget_transactions/:id/edit_budget_item_transaction" => "budget_transactions#edit_budget_item_transaction", :via => :get, :as => 'edit_budget_item_transaction'

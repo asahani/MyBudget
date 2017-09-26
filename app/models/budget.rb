@@ -1,4 +1,4 @@
-class Budget < ActiveRecord::Base
+class Budget < ApplicationRecord
   ##################################
   # Relationships
   ##################################
@@ -48,7 +48,7 @@ class Budget < ActiveRecord::Base
   end
 
   def miscellaneous_expenses
-     self.budget_transactions.miscellaneous_transactions.sum(:debit)
+     self.budget_transactions.miscellaneous_transactions.sum(:debit) - self.budget_transactions.miscellaneous_transactions.sum(:credit)
   end
 
   def savings_expenses
@@ -60,7 +60,7 @@ class Budget < ActiveRecord::Base
   end
 
   def expenses_remaining
-    self.budget_items.where("balance > 0").sum(:balance)
+    self.budget_items.where("balance > 0 AND complete = false").sum(:balance)
   end
 
   def budget_consumption_percentage

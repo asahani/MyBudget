@@ -1,4 +1,4 @@
-class CreateIncomeSplits < ActiveRecord::Migration
+class CreateIncomeSplits < ActiveRecord::Migration[4.2]
   def change
     create_table :income_splits do |t|
       t.integer :budget_id

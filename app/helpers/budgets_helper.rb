@@ -138,7 +138,7 @@ module BudgetsHelper
           event["day"] = split.income_split_date.day
           event["year"] = year_due
           event["title"] = "Income"
-          event["description"] = split.income.description + " : " + split.amount.to_s
+          event["description"] = split.income.description + " : $" + split.amount.to_s
 
           event_array << event
         end

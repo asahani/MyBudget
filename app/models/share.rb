@@ -13,7 +13,7 @@ class Share < ActiveRecord::Base
   validates_presence_of :name, :code,:share_type, :units,:purchase_date,:purchase_price,:brokerage_account_id
   validates_numericality_of :units,:purchase_price,:brokerage_account_id
   validates_numericality_of :sell_price, :allow_nil => true
-  validate :ensure_sufficient_money_to_purchase_shares, :before => :create
+  validate :ensure_sufficient_money_to_purchase_shares, :on => :create
   ##################################
   # Callbacks
   ##################################
@@ -91,6 +91,9 @@ class Share < ActiveRecord::Base
   end
 
   def get_holding_value
+    if self.last_price.nil?
+      self.set_share_details
+    end
     (self.last_price * self.units).to_f.round(2) unless self.last_price.nil?
   end
 

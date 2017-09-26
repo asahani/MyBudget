@@ -20,7 +20,6 @@
  *= require_tree ../../../vendor/assets/stylesheets/atlant/fontawesome/.
  *= require_tree ../../../vendor/assets/stylesheets/atlant/fonts/.
  *= require_tree ../../../vendor/assets/stylesheets/atlant/forms-material/.
- *= require_tree ../../../vendor/assets/stylesheets/atlant/fullcalendar/.
  *= require_tree ../../../vendor/assets/stylesheets/atlant/introjs/.
  *= require_tree ../../../vendor/assets/stylesheets/atlant/ion/.
  *= require_tree ../../../vendor/assets/stylesheets/atlant/jstree/.
@@ -96,18 +95,18 @@ body {
 }
 
 .item:after {
-  position: absolute;
-  display: block;
-  content: " ";
-  width: 11px;
-  height: 11px;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
-  left: -6px;
-  top: 5px;
-  border: 3px solid #C1CDDB;
-  background-color: inherit;
+  // position: absolute;
+  // display: block;
+  // content: " ";
+  // width: 11px;
+  // height: 11px;
+  // -moz-border-radius: 50%;
+  // -webkit-border-radius: 50%;
+  // border-radius: 50%;
+  // left: -6px;
+  // top: 5px;
+  // border: 3px solid #C1CDDB;
+  // background-color: inherit;
 }
 .item.item-blue:after {
   border-color: #3FBAE4;
@@ -119,6 +118,21 @@ body {
   border-color: #E34724;
 }
 
+/*******************
+ * Budget Inner Table
+ *******************/
+.inner-table-container {
+  background-color: #33414e!important;
+  margin:0px; padding: 0px;box-shadow: 2px 2px 10px #000 inset;
+}
+
+#inner-table { width: 100%; color: #fff;}
+#inner-table tr {}
+#inner-table td { border: none!important;background-color: #33414e!important;}
+
+.flagged-cell {
+	border: 1px solid #b64645;
+}
 /*******************
  * Charting Panels
  *******************/
@@ -317,9 +331,9 @@ body {
   width: 10px;
   height: 10px;
   margin-right: 10px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
   background: #CCC;
   border: 0px;
 }

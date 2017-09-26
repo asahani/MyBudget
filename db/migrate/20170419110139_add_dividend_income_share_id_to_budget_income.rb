@@ -1,4 +1,4 @@
-class AddDividendIncomeShareIdToBudgetIncome < ActiveRecord::Migration
+class AddDividendIncomeShareIdToBudgetIncome < ActiveRecord::Migration[4.2]
   def self.up
     add_column :budget_incomes, :dividend_income_share_id, :integer
   end

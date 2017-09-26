@@ -11,7 +11,7 @@
 				<tr>
 					<td style="width:30%;">&nbsp;</td>
 					<td><%=number_to_currency(@budgeted_amount, precision: 2)%></td>
-					<td><%=number_to_currency(@expenses, precision: 2)%></td>
+					<td><%=number_to_currency(@expenses - @miscellaneous_expenses, precision: 2)%></td>
 					<td style="border-right:none;"><%=number_to_currency(@expenses_remaining, precision: 1)%></td>
 				</tr>
 			</table>
@@ -40,13 +40,14 @@
 				<tr>
 					<td style="width:40%;text-align:left;padding-left:10px;font-size: 12px;">Savings</td>
 					<td>Savings</td>
-					<td class="numeric-cell" style="border: none;">Savings Expenses</td>
+					<!-- DISABLING SAVINGS EXPENSES -->
+					<!-- <td class="numeric-cell" style="border: none;">Savings Expenses</td> -->
 				</tr>
 				<tr>
 					<td style="width:40%;">
 					</td>
 					<td><%=number_to_currency(@savings, precision: 2)%></td>
-					<td style="border-right:none;"><%=number_to_currency(@savings_expenses, precision: 2)%></td>
+					<!-- <td style="border-right:none;"><%=number_to_currency(@savings_expenses, precision: 2)%></td> -->
 				</tr>
 			</table>
 		</div>

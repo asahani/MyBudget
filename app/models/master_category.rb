@@ -1,4 +1,4 @@
-class MasterCategory < ActiveRecord::Base
+class MasterCategory < ApplicationRecord
   has_many :categories
 
   validates_presence_of :name

@@ -1,4 +1,4 @@
-class CreateBudgetTransactions < ActiveRecord::Migration
+class CreateBudgetTransactions < ActiveRecord::Migration[4.2]
   def change
     create_table :budget_transactions do |t|
       t.integer :account_id
@@ -17,7 +17,7 @@ class CreateBudgetTransactions < ActiveRecord::Migration
       t.boolean :miscellaneous, :default => true
       t.boolean :savings, :default => false
       t.boolean :reconciled, :default => false
-      
+
       t.timestamps
     end
   end

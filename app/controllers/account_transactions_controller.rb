@@ -15,8 +15,10 @@ class AccountTransactionsController < ApplicationController
   # GET /account_transactions/new
   def new
     @account_transaction = AccountTransaction.new
-    unless params[:budget_id].nil?
+    if !params[:budget_id].nil?
       @account_transaction.budget_id = params[:budget_id].to_i
+    elsif !session[:budget_id].nil?
+      @account_transaction.budget_id = session[:budget_id]
     else
       budget = Budget.where('start_date <= ? and end_date >= ?',Date.today,Date.today).first
       unless budget.nil?
@@ -84,6 +86,6 @@ class AccountTransactionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def account_transaction_params
-      params.require(:account_transaction).permit(:tag_list, :account_id, :payee_id, :budget_id, :category_id, :amount, :transaction_date, :comments, :reconciled,:transaction_type)
+      params.require(:account_transaction).permit(:tag_list, :account_id, :payee_id, :budget_id, :category_id, :amount, :transaction_date, :comments, :reconciled,:transaction_type,:historical_loan_transaction,:historical_account_transaction,:flagged)
     end
 end

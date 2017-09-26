@@ -1,4 +1,4 @@
-class BudgetIncome < ActiveRecord::Base
+class BudgetIncome < ApplicationRecord
   ##################################
   # Relationships
   ##################################
@@ -16,8 +16,8 @@ class BudgetIncome < ActiveRecord::Base
   ##################################
   # Callbacks
   ##################################
-  after_create :create_income_transaction, :auto_generate_income_splits
-  after_update :update_income_transaction
+  after_create :create_income_transaction #, :auto_generate_income_splits
+  after_update :update_income_transaction, :regenerate_income_splits
   ##################################
   # Scoped Methods
   ##################################
@@ -26,8 +26,14 @@ class BudgetIncome < ActiveRecord::Base
   # Class Methods
   ##################################
 
+  def regenerate_income_splits
+    puts 'Regenerate Income splits called.'
+    splits = IncomeSplit.where("income_id = ? and budget_id = ?",self.income_id,self.budget_id).destroy_all
+    auto_generate_income_splits
+  end
 
   def auto_generate_income_splits
+    puts 'Auto generate Income splits called.'
     unless self.income_id.nil?
       prev_months_budget = Budget.find_by_start_date(self.budget.start_date.prev_month)
 

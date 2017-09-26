@@ -1,4 +1,12 @@
 <div id="import-preview-pane">
+  <script type="text/javascript">
+    $(document).ready(function() {
+      table = $('#import-txn-table').DataTable( {
+        retrieve: true,
+        paging: false
+      } );
+    } );
+    </script>
   <%if ImportedTransaction.all.count < 1%>
     <div style="font-size: 13px;" class="alert alert-warning" role="alert">
       <span class="glyphicon glyphicon-exclamation-sign"></span>
@@ -15,23 +23,31 @@
       <%=non_payee_txns%> transactions do not have a Payee. Please add Payees.
     </div>
     <%end%>
+    <div class="panel panel-default">
+        <div class="panel-body">
 
-    <div id="import-preview-pane-content">
-      <table class="table table-striped table-bordered">
+
+    <div id="import-preview-pane-content" class="table-responsive">
+      <table id="import-txn-table" class="table table-striped table-bordered datatable">
         <thead>
-          <th style="width: 10%;">Account</th>
-          <th style="width: 10%;">Payee</th>
-          <th style="width: 10%;">Category</th>
-          <th style="width: 7%;">Date</th>
-          <th style="width: 34%;">Description</th>
-          <th style="width: 8%;text-align: right!important;">Credit</th>
-          <th style="width: 8%;text-align: right!important;">Debit</th>
-          <th style="width: 8%;text-align: right!important;">Balance</th>
-          <th style="width: 5%;text-align: right!important;">Actions</th>
+          <tr>
+            <th style="width: 10%;">Account</th>
+            <th style="width: 10%;">Payee</th>
+            <th style="width: 10%;">Category</th>
+            <th style="width: 7%;">Date</th>
+            <th style="width: 30%;">Description</th>
+            <th style="width: 8%;text-align: right!important;">Credit</th>
+            <th style="width: 8%;text-align: right!important;">Debit</th>
+            <th style="width: 8%;text-align: right!important;">Balance</th>
+            <th style="width: 9%;text-align: right!important;">Actions</th>
+          </tr>
         </thead>
         <%ImportedTransaction.all.each do |txn|%>
           <tr>
             <td style="width: 10%;padding-left: 5px !important;">
+              <% if txn.flagged? %>
+                <span style="color: #a94442;" class="glyphicon glyphicon-flag"></span>
+              <%end%>
               <%if txn.payee.nil?%>
                 <span style="color: #a94442;" class="glyphicon glyphicon-exclamation-sign"></span>
               <%else%>
@@ -42,7 +58,7 @@
             <td style="width: 10%;">
               <%if txn.payee.nil?%>
                 <%=form_tag payees_select_payee_path(imported_txn_id: txn.id),{:remote => true, :id => "import_txn_#{txn.id}"} do%>
-                  <%= select_tag "id", options_from_collection_for_select(Payee.all, :id, :name),{ :prompt => "Select Payee...",:onchange => "$('#import_txn_#{txn.id}').submit();" }%>
+                  <%= select_tag "id", options_from_collection_for_select(Payee.order(:name).all, :id, :name),{ :prompt => "Select Payee...",:onchange => "$('#import_txn_#{txn.id}').submit();" }%>
                 <%end%>
               <%else%>
                 <%=txn.payee.name%>
@@ -66,11 +82,11 @@
 							</div>
             </td>
             <td style="width: 7%;"><%=txn.txn_date%></td>
-            <td style="width: 34%;"><%=txn.description%></td>
+            <td style="width: 30%;"><%=txn.description%></td>
             <td style="width: 8%;text-align: right;"><%=number_to_currency(txn.credit, precision: 2)%></td>
             <td style="width: 8%;text-align: right;"><%=number_to_currency(txn.debit, precision: 2)%></td>
             <td style="width: 8%;text-align: right;"><%=number_to_currency(txn.balance, precision: 2)%></td>
-            <td style="width: 5%;">
+            <td style="width: 9%;">
               <div class="actions">
                 <%if txn.payee.nil?%>
                   <%= link_to raw("<span class='fa fa-user fa-lg text-primary'></span>"),
@@ -82,14 +98,39 @@
                  <%= link_to raw("<span class='fa fa-random fa-lg text-primary'></span>"),split_imported_transaction_path(txn.id), {:remote => true} %>
                 <%end%>
                 <%= link_to raw("<span class='fa fa-tags fa-lg text-primary'></span>"),tags_imported_transaction_path(txn.id), {:remote => true} %>
+                <% if txn.flagged? %>
+                  <%= link_to raw("<span class='fa fa-flag-o fa-lg text-danger'></span>"),flag_imported_transaction_path(txn.id), {:remote => true} %>
+                <%else%>
+                  <%= link_to raw("<span class='fa fa-flag-o fa-lg text-primary'></span>"),flag_imported_transaction_path(txn.id), {:remote => true} %>
+                <%end%>
                 <%= link_to raw("<span class='fa fa-trash-o fa-lg text-primary'></span>"), destroy_imported_transaction_path(txn.id), method: :delete, data: { confirm: 'Are you sure?' , :remote => true}%>
               </div>
             </td>
           </tr>
-          <tr id=<%=txn.id.to_s + '_details'%> style="display:none;"></tr>
+          <tr id=<%=txn.id.to_s + '_details'%> style="display:none;">
+            <td style="width: 10%;">&nbsp;<%=txn.account.name unless txn.account.nil?%></td>
+            <td style="width: 10%;">
+              <%unless txn.payee.nil?%>
+                <%=txn.payee.name%>
+              <%end%>
+            </td>
+            <td style="width: 10%;">
+              <%unless txn.category.nil?%>
+                &nbsp;<%=txn.category.name%><
+              <%end%>
+            </td>
+            <td style="width: 7%;"><%=txn.txn_date%></td>
+            <td style="width: 30%;"><%=txn.description%></td>
+            <td style="width: 8%;text-align: right!important;"><%=number_to_currency(txn.credit, precision: 2)%></td>
+            <td style="width: 8%;text-align: right!important;"><%=number_to_currency(txn.debit, precision: 2)%></td>
+            <td style="width: 8%;text-align: right!important;"><%=number_to_currency(txn.balance, precision: 2)%></td>
+            <td style="width: 9%;text-align: right!important;">Actions</td>
+          </tr>
         <%end%>
       </table>
     </div>
+
+  </div></div>
     <div class="row" id="import-preview-footer">
       <div class="col-md-1">
         <%= link_to "Cancel",import_transactions_cancel_path(), class: "btn btn-default", style: "height: 100%;"%>

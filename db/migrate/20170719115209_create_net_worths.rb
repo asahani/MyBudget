@@ -1,4 +1,4 @@
-class CreateNetWorths < ActiveRecord::Migration
+class CreateNetWorths < ActiveRecord::Migration[4.2]
   def change
     create_table :net_worths do |t|
       t.integer :account_id

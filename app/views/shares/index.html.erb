@@ -1,11 +1,17 @@
 <div class="row" style="padding-top: 60px;">
   <%
-    @share = Share.find(1)
-    @share.set_share_details
-    change_value = @share.get_percent_change_value
-    purchase_cost = @share.get_purchase_cost
-    profit_loss_value = @share.get_profit_loss_value
-    profit_loss_percentage = @share.get_profit_loss_percentage
+    change_value = 0
+    purchase_cost = 0
+    profit_loss_value = 0
+    profit_loss_percentage = 0
+    @share = Share.first
+    unless @share.nil?
+      @share.set_share_details
+      change_value = @share.get_percent_change_value
+      purchase_cost = @share.get_purchase_cost
+      profit_loss_value = @share.get_profit_loss_value
+      profit_loss_percentage = @share.get_profit_loss_percentage
+    end
   %>
   <div class="col-md-3">
 
@@ -107,7 +113,7 @@
                 <td style="padding:8px;text-align:right;border-bottom: 1px solid #ddd;"><%=number_to_currency(share_detail['market_value'],pricision: 2)%></td>
                 <td style="padding:8px;text-align:right;border-bottom: 1px solid #ddd;" class="<%= share_detail['profit_loss_value'] > 0 ? 'text-success' : 'text-danger' %>">
                   <%=number_to_currency(share_detail['profit_loss_value'],pricision: 2)%>&nbsp;
-                  (<%=number_to_currency(share_detail['profit_loss_percentage'],pricision: 2)%>)
+                  (<%=share_detail['profit_loss_percentage'].round(2)%>%)
                 </td>
             </tr>
             <%end%>

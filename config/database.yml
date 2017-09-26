@@ -19,6 +19,7 @@ default: &default
 
 development:
   <<: *default
+  # database: MyBudget_production
   database: MyBudget_development
 
 # Warning: The database defined as "test" will be erased and

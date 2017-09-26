@@ -10,6 +10,7 @@ class SharesController < ApplicationController
     @total_market_value = 0
     @total_change_value = 0
     @total_proft_loss = 0
+    @total_daily_movement_percentage = 0
 
     @shares.each do |share|
       share.set_share_details
@@ -28,7 +29,9 @@ class SharesController < ApplicationController
       details['daily_movement_percentage'] = share.share_details.percent_change.to_f unless share.share_details.nil?
       @shares_with_details << details
     end
-    @total_daily_movement_percentage = ((@total_change_value/@total_market_value)*100).to_f.round(2)
+    if @total_change_value > 0
+      @total_daily_movement_percentage = ((@total_change_value/@total_market_value)*100).to_f.round(2)
+    end
   end
 
   # GET /shares/1
