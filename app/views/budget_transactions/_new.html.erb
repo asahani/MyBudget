@@ -309,15 +309,15 @@
 														<label class="col-md-3 col-xs-5 control-label">To Account</label>
 														<div class="col-md-9 col-xs-7">
 																<div class="input-group">
-																		<%= f.collection_select :account_id, Account.for_budget.active, :id, :name, {prompt: true}, {class: "form-control select"} %>
+																		<%= f.collection_select :account_id, Account.for_transfer.active, :id, :name, {prompt: true}, {class: "form-control select"} %>
 																</div>
 														</div>
 												</div>
 												<div class="form-group">
-														<label class="col-md-3 col-xs-5 control-label">From Payee</label>
+														<label class="col-md-3 col-xs-5 control-label">From Account</label>
 														<div class="col-md-9 col-xs-7">
 																<div class="input-group">
-																		<%= f.collection_select :payee_id, Payee.account_payees, :id, :name, {prompt: true}, {class: "form-control select"} %>
+																		<%= f.collection_select :payee_id, Payee.transfer_account_payees, :id, :name, {prompt: true}, {class: "form-control select"} %>
 																</div>
 														</div>
 												</div>

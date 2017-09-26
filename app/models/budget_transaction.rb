@@ -185,24 +185,42 @@ class BudgetTransaction < ApplicationRecord
       self.budget_item.update_spend_and_balance
     end
   end
-  #Deprecated : Use update_budget_accounts_and_account_balance
+
   def update_budget_account
     # Loop through all budget_accounts for self.account and update the balance
     budget_account = BudgetAccount.find_by_budget_id_and_account_id(self.budget.id, self.account.id)
     unless budget_account.nil?
+      puts '-----------------Update Account with BudgetAccount'
       budget_account.update_balance
       budget_account.update_future_budget_accounts
+    else
+      if !self.account.nil?
+        puts '-----------------Update Non Budget Account'
+        update_account_balance_for_non_budget_accounts(self.account,self.debit_before_last_save,self.debit,self.credit_before_last_save,self.credit)
+        self.account.save!
+      end
     end
   end
 
-  #Deprecated : Use update_account_payees_and_account_balance
   def update_account_payee
     if self.payee.is_account
       puts 'payee is account'
       budget_account = BudgetAccount.find_by_budget_id_and_account_id(self.budget.id, self.payee.account.id)
       unless budget_account.nil?
+        puts '-----------------Update Payee with BudgetAccount'
         budget_account.update_balance
         budget_account.update_future_budget_accounts
+      else
+        if !self.payee.nil?
+          puts '-----------------Update Payee'
+          unless self.payee.account.nil?
+            unless self.payee.account.account_type.name == "Mortgage"
+              #if payee is receiving money then add the debit amount because the amount is debited from the account and needs to be added to the payee and vice-versa.
+              update_account_balance_for_non_budget_accounts(self.payee.account,self.credit_before_last_save,self.credit,self.debit_before_last_save,self.debit)
+            end
+            self.payee.account.save!
+          end
+        end
       end
     end
   end
@@ -215,17 +233,24 @@ class BudgetTransaction < ApplicationRecord
     unless self.payee.account.nil?
       if self.payee.account.account_type.name == "Mortgage"
         if !self.debit.nil? && self.debit > 0
-          house = House.where('mortgage_account_id = ?',self.payee.account.id).first()
-          interest = house.get_interest_payable_for_month.to_f
-          principal = self.debit.to_f - interest
-          update_account_balance_for_non_budget_accounts(self.payee.account,self.mortgage_principal,principal,self.credit_was,self.credit)
 
-          unless self.destroyed?
-            self.mortgage_interest = interest
-            self.mortgage_principal = principal
+          house = House.where('mortgage_account_id = ?',self.payee.account.id).first()
+          unless house.nil?
+            interest = house.get_interest_payable_for_month.to_f
+            principal = self.debit.to_f - interest
+            update_account_balance_for_non_budget_accounts(self.payee.account,self.mortgage_principal,principal,self.credit_before_last_save,self.credit)
+
+            unless self.destroyed?
+              self.mortgage_interest = interest
+              self.mortgage_principal = principal
+            end
+          else
+            #if payee is receiving money then add the debit amount because the amount is debited from the account and needs to be added to the payee and vice-versa.
+            update_account_balance_for_non_budget_accounts(self.payee.account,self.credit_before_last_save,self.credit,self.debit_before_last_save,self.debit)
           end
         elsif !self.credit.nil? && self.credit > 0
-          update_account_balance_for_non_budget_accounts(self.payee.account,self.debit_was,self.debit,self.credit_was,self.credit)
+          #if payee is receiving money then add the debit amount because the amount is debited from the account and needs to be added to the payee and vice-versa.
+          update_account_balance_for_non_budget_accounts(self.payee.account,self.credit_before_last_save,self.credit,self.debit_before_last_save,self.debit)
         end
       end
     end
@@ -235,15 +260,40 @@ class BudgetTransaction < ApplicationRecord
 
   def update_account_balance_for_non_budget_accounts(account,old_debit_amount,debit_amount,old_credit_amount,credit_amount)
     if !debit_amount.nil? && debit_amount > 0
+      puts 'account debit amount was = '+ old_debit_amount.to_s
+      puts 'account opening balance was = '+ account.balance.to_s
       account.balance += old_debit_amount if !old_debit_amount.nil? && old_debit_amount > 0
+      puts 'account opening balance after removing old charge = '+ account.balance.to_s
       account.balance -= debit_amount unless self.destroyed?
+      puts 'account amount added = '+ debit_amount.to_s
+      puts 'account opening balance is = '+ account.balance.to_s
+
     elsif !credit_amount.nil? && credit_amount > 0
+
+      puts 'account credit amount was = '+ old_credit_amount.to_s
+      puts 'account opening balance was = '+ account.balance.to_s
       account.balance -=  old_credit_amount if !old_credit_amount.nil? && old_credit_amount > 0
+      puts 'account opening balance after removing old charge = '+ account.balance.to_s
       account.balance += credit_amount unless self.destroyed?
+      puts 'account amount added = '+ credit_amount.to_s
+      puts 'account opening balance is = '+ account.balance.to_s
     end
 
     account.save!
   end
+
+  #Deprecated :  Use new method above
+  # def update_account_balance_for_non_budget_accounts(account,old_debit_amount,debit_amount,old_credit_amount,credit_amount)
+  #   if !debit_amount.nil? && debit_amount > 0
+  #     account.balance += old_debit_amount if !old_debit_amount.nil? && old_debit_amount > 0
+  #     account.balance -= debit_amount unless self.destroyed?
+  #   elsif !credit_amount.nil? && credit_amount > 0
+  #     account.balance -=  old_credit_amount if !old_credit_amount.nil? && old_credit_amount > 0
+  #     account.balance += credit_amount unless self.destroyed?
+  #   end
+  #
+  #   account.save!
+  # end
 
   def update_goals
     if self.savings
