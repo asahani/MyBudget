@@ -26,7 +26,9 @@ class SharesController < ApplicationController
       details['profit_loss_value'] = share.get_profit_loss_value
       @total_proft_loss += details['profit_loss_value']
       details['profit_loss_percentage'] = share.get_profit_loss_percentage
-      details['daily_movement_percentage'] = share.share_details.percent_change.to_f unless share.share_details.nil?
+      percentage_change = 0
+      percentage_change = share.share_details.percent_change.to_f unless share.share_details.nil?
+      details['daily_movement_percentage'] = percentage_change
       @shares_with_details << details
     end
     if @total_change_value > 0
