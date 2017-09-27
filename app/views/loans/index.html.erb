@@ -113,22 +113,22 @@ total_balances = Array.new
                   <%budget_name = transaction.budget.nil? ? "" : (I18n.t("date.abbr_month_names")[transaction.budget.month] +" "+ transaction.budget.year.to_s) %>
                   <td style="padding:6px;"><%=budget_name%></td>
                   <td style="padding:6px;"><%=transaction.account.name%></td>
-                  <td style="padding:6px;text-align:right;"><%=number_to_currency(transaction.amount, precision: 2)%></td>
-                  <td style="padding:6px;text-align:right;">&nbsp;</td>
+                  <td style="padding:6px;text-align:right;"><%=number_to_currency(transaction.debit, precision: 2)%></td>
+                  <td style="padding:6px;text-align:right;"><%=number_to_currency(transaction.credit, precision: 2)%></td>
               </tr>
               <%end%>
 
-              <%loan_account_detail.account_transactions.each do |transaction|%>
+              <!-- <%loan_account_detail.account_transactions.each do |transaction|%>
               <tr>
                   <td style="padding:6px;"><%=transaction.transaction_date%></td>
                   <%budget_name = transaction.budget.nil? ? "" : (I18n.t("date.abbr_month_names")[transaction.budget.month] +" "+ transaction.budget.year.to_s) %>
                   <td style="padding:6px;"><%=budget_name%></td>
                   <td style="padding:6px;"><%=transaction.payee.account.name%></td>
                   <td style="padding:6px;text-align:right;">&nbsp;</td>
-                  <td style="padding:6px;text-align:right;"><%=number_to_currency(transaction.amount, precision: 2)%></td>
+                  <td style="padding:6px;text-align:right;"><%=number_to_currency(transaction.credit, precision: 2)%></td>
 
               </tr>
-              <%end%>
+              <%end%> -->
               <%
                 total_loaned = loan_account_detail.total_loaned
                 total_received = loan_account_detail.total_received

@@ -1,5 +1,8 @@
 class BudgetTransaction < ApplicationRecord
   attr_accessor :transaction_type
+  attr_accessor :historical_loan_transaction #no cash to be exchanged
+  attr_accessor :historical_account_transaction #no cash to be exchanged
+
   acts_as_taggable
   ##################################
   # Relationships
@@ -22,9 +25,9 @@ class BudgetTransaction < ApplicationRecord
   # Callbacks
   ##################################
   before_save :update_mortgage_account_balance
-  after_create :update_budget_item, :update_budget_account, :update_account_payee, :add_category_tag, :update_goals
-  after_update :update_budget_item, :update_budget_account, :update_account_payee
-  after_destroy :update_budget_item, :update_budget_account, :update_account_payee,:update_mortgage_account_balance
+  after_create :update_budget_item, :update_accounts, :add_category_tag, :update_goals
+  after_update :update_budget_item, :update_accounts
+  after_destroy :update_budget_item, :update_accounts, :update_mortgage_account_balance
 
 
   ##################################
@@ -42,6 +45,8 @@ class BudgetTransaction < ApplicationRecord
   def amounts_greater_than_zero
     if self.debit == 0 && self.credit == 0
       errors.add(:debit, "and credit, both can't be Zero")
+    elsif self.debit > 0 && self.credit > 0
+      errors.add(:debit, "and credit, both can't be greater than Zero")
     end
   end
 
@@ -166,7 +171,6 @@ class BudgetTransaction < ApplicationRecord
     # txns.group_by { |t| t.category.name}
   end
 
-
   def self.total_miscellaneous_grouped_by_category(budget_id, limit=10)
     txns = where(budget_id: budget_id)
     txns = txns.miscellaneous_transactions
@@ -193,6 +197,16 @@ class BudgetTransaction < ApplicationRecord
       self.budget_item.update_spend_and_balance
     elsif self.miscellaneous
       self.budget_item.update_spend_and_balance
+    end
+  end
+
+  def update_accounts
+    unless historical_loan_transaction == "1"
+      update_budget_account
+    end
+
+    unless historical_account_transaction == "1"
+      update_account_payee
     end
   end
 

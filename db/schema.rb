@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170906141759) do
+ActiveRecord::Schema.define(version: 20170927141358) do
 
   create_table "account_transactions", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer "account_id"
     t.integer "payee_id"
     t.integer "budget_id"
     t.integer "category_id"
-    t.decimal "amount", precision: 10
+    t.decimal "amount", precision: 10, scale: 2
     t.date "transaction_date"
     t.string "comments"
     t.boolean "reconciled"
@@ -131,6 +131,14 @@ ActiveRecord::Schema.define(version: 20170906141759) do
     t.decimal "mortgage_interest", precision: 10, scale: 2, default: "0.0"
     t.decimal "mortgage_principal", precision: 10, scale: 2, default: "0.0"
     t.boolean "flagged", default: false
+    t.integer "house_id"
+    t.integer "share_id"
+    t.boolean "historical", default: false
+    t.boolean "account_transfer", default: false
+    t.boolean "loan", default: false
+    t.boolean "share", default: false
+    t.boolean "house", default: false
+    t.boolean "superannuation", default: false
     t.index ["account_id"], name: "index_budget_transactions_on_account_id"
     t.index ["budget_id"], name: "index_budget_transactions_on_budget_id"
     t.index ["budget_item_id"], name: "index_budget_transactions_on_budget_item_id"

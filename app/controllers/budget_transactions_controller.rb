@@ -37,8 +37,15 @@ respond_to :js, :html
     @budget_transaction.scheduled = false
     @budget_transaction.manual = true
 
-    unless params[:budget_id].nil?
+    if !params[:budget_id].nil?
       @budget_transaction.budget_id = params[:budget_id].to_i
+    elsif !session[:budget_id].nil?
+      @budget_transaction.budget_id = session[:budget_id]
+    else
+      budget = Budget.where('start_date <= ? and end_date >= ?',Date.today,Date.today).first
+      unless budget.nil?
+        @budget_transaction.budget_id = budget.id
+      end
     end
 
     #TODO
@@ -77,6 +84,10 @@ respond_to :js, :html
       @budget_transaction.category_id = Category.find_by_name("Lending").id
     else
       @budget_transaction.category_id = @budget_transaction.payee.category.id
+    end
+
+    if budget_transaction_params[:historical_loan_transaction] == "1" || budget_transaction_params[:historical_account_transaction] == "1"
+      @budget_transaction.historical = true
     end
 
     if @budget_transaction.credit.nil?
@@ -192,6 +203,7 @@ respond_to :js, :html
     # Never trust parameters from the scary internet, only allow the white list through.
     def budget_transaction_params
       params.require(:budget_transaction).permit(:credit, :debit, :transaction_date, :comments, :manual, :scheduled, :budgeted,
-        :miscellaneous, :savings, :account_id, :budget_item_id, :budget_id,:payee_id,:category_id,:transaction_type,:reconciled,:tag_list,:flagged)
+        :miscellaneous, :savings, :account_id, :budget_item_id, :budget_id,:payee_id,:category_id,:transaction_type,:reconciled,
+        :tag_list,:flagged,:historical_loan_transaction,:historical_account_transaction,:historical,:account_transfer,:loan,:share,:house,:superannuation)
     end
 end
