@@ -53,14 +53,6 @@ class BudgetAccount < ApplicationRecord
       end
     end
 
-    puts 'Total Spend for budget transactions in update balance = '+ total_spend.to_s
-    atxns = AccountTransaction.where('budget_id = ? and account_id = ?',self.budget.id, self.account.id)
-
-    atxns.each do |atxn|
-      total_spend -= atxn.amount
-    end
-    puts 'Total Spend for Account transactions in update balance = '+ total_spend.to_s
-
     self.balance = total_spend
     puts 'Total Spend = '+self.balance.to_s
     self.update_withdrawal_balance
@@ -73,13 +65,6 @@ class BudgetAccount < ApplicationRecord
 
     txns.each do |txn|
       self.balance += txn.debit - txn.credit
-    end
-    puts 'Total Spend for budget transactions in update withdrawal balance = '+ self.balance.to_s
-
-    atxns = AccountTransaction.where('budget_id = ? and payee_id = ?',self.budget.id, self.account.payee.id)
-
-    atxns.each do |atxn|
-      self.balance += atxn.amount
     end
     puts 'Total Spend for budget transactions in update withdrawal balance = '+ self.balance.to_s
   end
