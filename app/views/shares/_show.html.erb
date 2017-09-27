@@ -64,7 +64,7 @@
         </span>
         <p>Day Gain/Loss</p>
         <div class="<%= change_value > 0 ? 'informer informer-success' : 'informer informer-danger' %>">
-          <%=@share.share_details.percent_change%>
+          <%=@share.share_details.percent_change unless @share.share_details.nil?%>
         </div>
         <div class="<%= change_value > 0 ? 'informer informer-success dir-tr' : 'informer informer-danger dir-tr' %>">
           <span class="<%= change_value > 0 ? 'fa fa-caret-up' : 'fa fa-caret-down'%>"></span>
@@ -118,7 +118,7 @@
             </tr>
             <tr>
                 <td style="padding:6px;">Exchange:</td>
-                <td style="padding:6px;"><%=@share.share_details.stock_exchange%></td>
+                <td style="padding:6px;"><%=@share.share_details.stock_exchange unless @share.share_details.nil?%></td>
                 <td style="padding:6px;">Units:</td>
                 <td style="padding:6px;"><%=@share.units%></td>
             </tr>
@@ -130,7 +130,7 @@
             </tr>
             <tr>
                 <td style="padding:6px;">Ex Dividend Date:</td>
-                <td style="padding:6px;"><%=@share.share_details.ex_dividend_date%></td>
+                <td style="padding:6px;"><%=@share.share_details.ex_dividend_date unless @share.share_details.nil?%></td>
                 <td style="padding:6px;">Market Value:</td>
                 <td style="padding:6px;"><%=number_to_currency(@share.get_holding_value,pricision: 2)%></td>
             </tr>
