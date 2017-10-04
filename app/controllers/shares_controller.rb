@@ -27,7 +27,7 @@ class SharesController < ApplicationController
       @total_proft_loss += details['profit_loss_value']
       details['profit_loss_percentage'] = share.get_profit_loss_percentage
       percentage_change = 0
-      percentage_change = share.share_details.percent_change.to_f unless share.share_details.nil?
+      percentage_change = share.share_details["cp"].to_f unless share.share_details.nil?
       details['daily_movement_percentage'] = percentage_change
       @shares_with_details << details
     end
@@ -106,11 +106,17 @@ class SharesController < ApplicationController
 
             total_sale_price = @share.units * params[:share][:sell_price].to_f
             comment = "Sold "+@share.units.to_s+ " "+@share.name+" shares for $"+total_sale_price.to_s
-            brokerage_account_payee = Account.find(@share.brokerage_account.id).payee
 
-            AccountTransaction.create!(account_id: nil,payee_id: brokerage_account_payee.id,
-              budget_id: nil,category_id: Category.find_by_name("Investment").id, amount: total_sale_price,
-              transaction_date: params[:share][:sell_date], comments: comment,reconciled: true, share_id: @share.id)
+            budget_id = nil
+            if !session[:budget_id].nil?
+              budget_id = session[:budget_id]
+            end
+
+            # brokerage_account_payee = Account.find(@share.brokerage_account.id).payee
+
+            BudgetTransaction.create!(account_id: @share.brokerage_account.id,payee_id: nil,
+              budget_id: budget_id,category_id: Category.find_by_name("Investment").id, amount: total_sale_price,
+              transaction_date: params[:share][:sell_date], comments: comment,reconciled: true, share_id: @share.id,share: true)
 
             unless @share.update(share_params)
               raise 'unable to undate share record for sale'

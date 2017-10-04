@@ -14,7 +14,7 @@
         <%else%>
           SOLD
         <%end%>
-        <p><%=@share.share_details.nil? ? @share.name : @share.share_details.name%></p>
+        <p><%=@share.share_details.nil? ? @share.name : @share.share_details["name"]%></p>
     </a>
 
   </div>
@@ -64,7 +64,7 @@
         </span>
         <p>Day Gain/Loss</p>
         <div class="<%= change_value > 0 ? 'informer informer-success' : 'informer informer-danger' %>">
-          <%=@share.share_details.percent_change unless @share.share_details.nil?%>
+          <%=@share.share_details["cp"] unless @share.share_details.nil?%>
         </div>
         <div class="<%= change_value > 0 ? 'informer informer-success dir-tr' : 'informer informer-danger dir-tr' %>">
           <span class="<%= change_value > 0 ? 'fa fa-caret-up' : 'fa fa-caret-down'%>"></span>
@@ -118,7 +118,7 @@
             </tr>
             <tr>
                 <td style="padding:6px;">Exchange:</td>
-                <td style="padding:6px;"><%=@share.share_details.stock_exchange unless @share.share_details.nil?%></td>
+                <td style="padding:6px;"><%=@share.share_details["exchange"] unless @share.share_details.nil?%></td>
                 <td style="padding:6px;">Units:</td>
                 <td style="padding:6px;"><%=@share.units%></td>
             </tr>
@@ -130,7 +130,7 @@
             </tr>
             <tr>
                 <td style="padding:6px;">Ex Dividend Date:</td>
-                <td style="padding:6px;"><%=@share.share_details.ex_dividend_date unless @share.share_details.nil?%></td>
+                <td style="padding:6px;">N/A</td>
                 <td style="padding:6px;">Market Value:</td>
                 <td style="padding:6px;"><%=number_to_currency(@share.get_holding_value,pricision: 2)%></td>
             </tr>
@@ -156,33 +156,33 @@
           <table class="table table-striped">
             <tr>
                 <td style="padding:6px;">Days High:</td>
-                <td style="padding:6px;"><%=number_to_currency(@share.share_details.days_high,pricision: 2)%></td>
+                <td style="padding:6px;"><%=number_to_currency(@share.share_details["hi"],pricision: 2)%></td>
                 <td style="padding:6px;">Days Low:</td>
-                <td style="padding:6px;"><%=number_to_currency(@share.share_details.days_low,pricision: 2)%></td>
+                <td style="padding:6px;"><%=number_to_currency(@share.share_details["lo"],pricision: 2)%></td>
             </tr>
             <tr>
                 <td style="padding:6px;">Year High:</td>
-                <td style="padding:6px;"><%=number_to_currency(@share.share_details.year_high,pricision: 2)%></td>
+                <td style="padding:6px;"><%=number_to_currency(@share.share_details["hi52"],pricision: 2)%></td>
                 <td style="padding:6px;">Year Low:</td>
-                <td style="padding:6px;"><%=number_to_currency(@share.share_details.year_low,pricision: 2)%></td>
+                <td style="padding:6px;"><%=number_to_currency(@share.share_details["lo52"],pricision: 2)%></td>
             </tr>
             <tr>
                 <td style="padding:6px;">Market Cap:</td>
-                <td style="padding:6px;">$<%=@share.share_details.market_capitalization%></td>
+                <td style="padding:6px;">$<%=@share.share_details["mc"]%></td>
                 <td style="padding:6px;">EBITDA:</td>
-                <td style="padding:6px;">$<%=@share.share_details.ebitda%></td>
+                <td style="padding:6px;">N/A Put some ratios</td>
             </tr>
             <tr>
                 <td style="padding:6px;">EPS:</td>
-                <td style="padding:6px;"><%=number_to_currency(@share.share_details.earnings_share,pricision: 2)%></td>
+                <td style="padding:6px;"><%=number_to_currency(@share.share_details["eps"],pricision: 2)%></td>
                 <td style="padding:6px;">PE Ratio:</td>
-                <td style="padding:6px;"><%=@share.share_details.pe_ratio%></td>
+                <td style="padding:6px;"><%=@share.share_details["pe"]%></td>
             </tr>
             <tr>
                 <td style="padding:6px;">Last Trade Date:</td>
-                <td style="padding:6px;"><%=@share.share_details.last_trade_date%></td>
+                <td style="padding:6px;">N/A</td>
                 <td style="padding:6px;">Last Trade Time:</td>
-                <td style="padding:6px;"><%=@share.share_details.last_trade_time%></td>
+                <td style="padding:6px;">N/A</td>
             </tr>
           </table>
 
@@ -211,13 +211,13 @@
               <th style="text-align:right;">Amount</th>
               <th style="text-align:right;">Comments</th>
             </thead>
-            <%@share.account_transactions.each do |account_transaction|%>
+            <%@share.budget_transactions.each do |account_transaction|%>
             <tr>
                 <td style="padding:6px;"><%=account_transaction.transaction_date.to_date%></td>
                 <td style="padding:6px;text-align:right;">Sale/Purchase</td>
                 <td style="padding:6px;text-align:right;"><%=account_transaction.account.name unless account_transaction.account.nil? %></td>
                 <td style="padding:6px;text-align:right;"><%=account_transaction.payee.name unless account_transaction.payee.nil?%></td>
-                <td style="padding:6px;text-align:right;"><%=account_transaction.amount%></td>
+                <td style="padding:6px;text-align:right;"><%=account_transaction.debit%> | <%=account_transaction.debit%></td>
                 <td style="padding:6px;text-align:right;"><%=account_transaction.comments%></td>
             </tr>
             <%end%>

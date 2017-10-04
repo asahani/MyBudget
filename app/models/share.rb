@@ -5,7 +5,7 @@ class Share < ActiveRecord::Base
   ##################################
   belongs_to :brokerage_account, :class_name => 'Account', :foreign_key => 'brokerage_account_id'
   has_many :dividened_incomes, :class_name => 'BudgetIncome', :foreign_key => 'dividend_income_share_id'
-  has_many :account_transactions, :class_name => 'AccountTransaction', :foreign_key => 'share_id'
+  has_many :budget_transactions, :class_name => 'BudgetTransaction', :foreign_key => 'share_id'
 
   ##################################
   # Validations
@@ -39,15 +39,17 @@ class Share < ActiveRecord::Base
   end
 
   def deduct_amount_from_brokerage_account
+    puts 'IN DEDUCTION'
     unless self.no_cash_transaction
       total_purchase_price = self.units * self.purchase_price.to_f
       comment = "Purchased "+self.units.to_s+ " "+self.name+" shares for $"+total_purchase_price.to_s
 
-      account_txn = AccountTransaction.new(account_id: self.brokerage_account.id,payee_id: nil,
-        budget_id: nil,category_id: Category.find_by_name("Investment").id, amount: total_purchase_price,
-        transaction_date: Date.today, comments: comment,reconciled: true, share_id: self.id)
-
-      account_txn.save!
+      budget_txn = BudgetTransaction.new(account_id: self.brokerage_account.id,payee_id: nil,
+        budget_item_id: nil, budget_id: nil,category_id: Category.find_by_name("Investment").id, credit: total_purchase_price,
+        transaction_date: Date.today, comments: comment,reconciled: true, share_id: self.id,share: true)
+      puts 'IN BUDGET TXN'
+      budget_txn.save
+      puts 'IN BUDGET TXN SAVE'
     end
   end
 
@@ -55,7 +57,8 @@ class Share < ActiveRecord::Base
     @share_details = get_share_details
 
     unless self.share_details.nil?
-      self.last_price = self.share_details.last_trade_price_only
+      # self.last_price = self.share_details.last_trade_price_only
+      self.last_price = self.share_details["l"]
       self.save!
     end
   end
@@ -76,31 +79,20 @@ class Share < ActiveRecord::Base
     (self.get_profit_loss_value/self.get_purchase_cost).to_f*100
   end
 
-  def get_share_details
-    begin
-      details = StockQuote::Stock.quote(self.code)
-
-      details = (details.response_code == 200) ? details : nil
-
-      return details
-    rescue
-      puts 'Unable to get stock details'
-      self.errors.add(:base, "Unable to get stock details")
-      return nil
-    end
-  end
-
   def get_holding_value
+    puts 'IN GET HILDING VALUE'
     if self.last_price.nil?
       self.set_share_details
+      puts 'IN GET HILDING VALUE: Set share details'
     end
-    (self.last_price * self.units).to_f.round(2) unless self.last_price.nil?
+    puts self.last_price
+    return (self.last_price * self.units).to_f.round(2) unless self.last_price.nil?
   end
 
   def get_percent_change_value
     change_value = 0
     change_percent = 0
-    change_percent = self.share_details.percent_change.to_f unless self.share_details.nil?
+    change_percent = self.share_details["cp"].to_f unless self.share_details.nil?
 
     change_value = ((self.get_holding_value * change_percent)/100).to_f.round(2)
 
@@ -116,4 +108,44 @@ class Share < ActiveRecord::Base
       return []
     end
   end
+
+  def get_google_data
+    uri = URI('https://finance.google.com/finance?q=DWS.AX&output=json')
+
+    nhttp = Net::HTTP.new(uri.host, uri.port)
+    nhttp.use_ssl=true
+    nhttp.verify_mode=OpenSSL::SSL::VERIFY_NONE
+
+    request = Net::HTTP::Post.new(uri, {'Content-Type' => 'application/json'})
+
+    response = nhttp.start do |http|
+      http.request(request)
+    end
+
+    resp = response.body
+    resp.gsub!(/[\n]/,'')
+    resp.gsub!(/[\"]/,'"')
+    json = resp[2,1000000000000000].to_json
+    hash = JSON.parse(json, :quirks_mode => true)
+    hash = JSON.parse(hash, :quirks_mode => true)
+    hh = hash[0]
+    return hh
+  end
+
+  def get_share_details
+    begin
+      # details = StockQuote::Stock.quote(self.code)
+
+      # details = (details.response_code == 200) ? details : nil
+
+      # return details
+
+      return get_google_data
+    rescue
+      puts 'Unable to get stock details'
+      self.errors.add(:base, "Unable to get stock details")
+      return nil
+    end
+  end
+
 end
