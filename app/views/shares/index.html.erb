@@ -70,7 +70,7 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <div class="col-md-12" style="height:300px;">
-          
+
         </div>
       </div>
     </div>
@@ -81,7 +81,7 @@
 		<div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading chart-heading">
-            <h4 class="panel-title">Stock Holdings</h4>
+            <h4 class="panel-title">Current Stock Holdings</h4>
             <ul class="panel-controls">
                 <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
                 <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
@@ -123,4 +123,51 @@
 		</div>
 
 </div>
+
+<div class="row">
+		<div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading chart-heading">
+            <h4 class="panel-title">Sold Stock Holdings</h4>
+            <ul class="panel-controls">
+                <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+                <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+            </ul>
+        </div>
+          <table class="table table-striped">
+            <thead>
+              <th style="text-align:left;width:40%;">Stock</th>
+              <th style="text-align:right;">Symbol</th>
+              <th style="text-align:right;">Sale Date</th>
+              <th style="text-align:right;">Units</th>
+              <th style="text-align:right;">Purchase Price</th>
+              <th style="text-align:right;">Sold Price</th>
+              <th style="text-align:right;">Total Gain/Loss</th>
+            </thead>
+
+            <%@sold_shares.each do |share|%>
+            <%profit_loss = (share.units * share.sell_price) - (share.units * share.purchase_price)%>
+            <tr>
+                <td style="padding:8px;text-align:left;border-bottom: 1px solid #ddd;">
+                  <%= link_to share.name, share %>
+                </td>
+                <td style="padding:8px;text-align:right;border-bottom: 1px solid #ddd;"><%=share.code%></td>
+                <td style="padding:8px;text-align:right;border-bottom: 1px solid #ddd;"><%=share.sell_date%></td>
+                <td style="padding:8px;text-align:right;border-bottom: 1px solid #ddd;"><%=share.units%></td>
+
+                <td style="padding:8px;text-align:right;border-bottom: 1px solid #ddd;"><%=number_to_currency(share.purchase_price,pricision: 2)%></td>
+                <td style="padding:8px;text-align:right;border-bottom: 1px solid #ddd;"><%=number_to_currency(share.sell_price,pricision: 2)%></td>
+
+                <td style="padding:8px;text-align:right;border-bottom: 1px solid #ddd;" class="<%= profit_loss > 0 ? 'text-success' : 'text-danger' %>">
+                  <%=number_to_currency(profit_loss,pricision: 2)%>
+                </td>
+            </tr>
+            <%end%>
+          </table>
+
+      </div>
+		</div>
+
+</div>
+
 <%= link_to 'New Share', new_share_path %>

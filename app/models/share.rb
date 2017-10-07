@@ -25,7 +25,7 @@ class Share < ActiveRecord::Base
   # Scoped Methods
   ##################################
   scope :active, -> { where('sell_price IS NULL')}
-
+  scope :sold, -> { where('sell_price > 0')}
   ##################################
   # Class Methods
   ##################################
