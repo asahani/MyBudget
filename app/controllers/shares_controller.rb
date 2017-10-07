@@ -13,7 +13,7 @@ class SharesController < ApplicationController
     @total_daily_movement_percentage = 0
 
     @shares.each do |share|
-      share.set_share_details
+      # share.set_share_details
       details = Hash.new
       details['share'] = share
       puts details['share'].name
@@ -39,7 +39,7 @@ class SharesController < ApplicationController
   # GET /shares/1
   # GET /shares/1.json
   def show
-    @share.set_share_details
+    # @share.set_share_details
   end
 
   # GET /shares/new
@@ -57,7 +57,7 @@ class SharesController < ApplicationController
     @share = Share.new(share_params)
 
     respond_to do |format|
-      if @share.save
+      if @share.save!
         format.html { redirect_to @share, notice: 'Share was successfully created.' }
         format.json { render :show, status: :created, location: @share }
       else
@@ -113,14 +113,14 @@ class SharesController < ApplicationController
             end
 
             # brokerage_account_payee = Account.find(@share.brokerage_account.id).payee
-
-            BudgetTransaction.create!(account_id: @share.brokerage_account.id,payee_id: nil,
-              budget_id: budget_id,category_id: Category.find_by_name("Investment").id, amount: total_sale_price,
-              transaction_date: params[:share][:sell_date], comments: comment,reconciled: true, share_id: @share.id,share: true)
+            payee = Payee.find_by_name("Share Purchase")
+            BudgetTransaction.create!(account_id: @share.brokerage_account.id,payee_id: payee.id,
+              budget_id: budget_id,category_id: Category.find_by_name("Investment").id, credit: total_sale_price,
+              transaction_date: params[:share][:sell_date], comments: comment,reconciled: true, share_id: @share.id,share: true,miscellaneous: false)
 
             unless @share.update(share_params)
               raise 'unable to undate share record for sale'
-              @share.errors.add(:name, "Unable to undate share record for sale")
+              @share.errors.add(:name, "Unable to update share record for sale")
             end
 
             @share.set_share_details

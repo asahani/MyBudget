@@ -89,6 +89,8 @@ Payee.create!(name: 'Savings', description: 'Savings', category_id: 3,is_system:
 Payee.create!(name: 'Cash', description: 'Cash', category_id: 5,is_system: true) #Should always be Third
 Payee.create!(name: 'Miscellaneous', description: 'Miscellaneous', category_id: 4,is_system: true) #Should always be Fourth
 Payee.create!(name: 'Unknown', description: 'Unknown', category_id: 8,is_system: true) #Should always be Fifth
+Payee.create!(name: 'Share Purchase', description: 'Share Purchase', category_id: 7,is_system: true) #Should always be Fifth
+Payee.create!(name: 'House Purchase', description: 'House Purchase', category_id: 7,is_system: true) #Should always be Fifth
 #---------------------------
 
 # Mandatory Account Types

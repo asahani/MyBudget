@@ -212,7 +212,11 @@ class BudgetTransaction < ApplicationRecord
 
   def update_budget_account
     # Loop through all budget_accounts for self.account and update the balance
-    budget_account = BudgetAccount.find_by_budget_id_and_account_id(self.budget.id, self.account.id)
+    budget_account = nil
+    unless self.budget.nil?
+      budget_account = BudgetAccount.find_by_budget_id_and_account_id(self.budget.id, self.account.id)
+    end
+    
     unless budget_account.nil?
       puts '-----------------Update Account with BudgetAccount'
       budget_account.update_balance

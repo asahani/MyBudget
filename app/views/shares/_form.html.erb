@@ -2,7 +2,7 @@
 <% if @share.errors.any? %>
   <div class="alert alert-danger" role="alert">
       <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <strong>Warning!</strong> <%= pluralize(@share.errors.count, "error") %> prohibited this house from being saved:
+      <strong>Warning!</strong> <%= pluralize(@share.errors.count, "error") %> prohibited this share from being saved:
       <ul>
       <% @share.errors.full_messages.each do |message| %>
         <li><%= message %></li>

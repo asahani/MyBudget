@@ -92,7 +92,7 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <div class="col-md-12" style="height:300px;">
-          <%= content_tag :div," ",id: "sharechart", data: {sharepricehistory: share_price_history_data}%>
+
         </div>
       </div>
     </div>
@@ -217,7 +217,11 @@
                 <td style="padding:6px;text-align:right;">Sale/Purchase</td>
                 <td style="padding:6px;text-align:right;"><%=account_transaction.account.name unless account_transaction.account.nil? %></td>
                 <td style="padding:6px;text-align:right;"><%=account_transaction.payee.name unless account_transaction.payee.nil?%></td>
-                <td style="padding:6px;text-align:right;"><%=account_transaction.debit%> | <%=account_transaction.debit%></td>
+                <%if account_transaction.debit > account_transaction.credit%>
+                  <td style="padding:6px;text-align:right;">- <%=number_to_currency(account_transaction.debit, precision: 2)%>
+                <%else%>
+                  <td style="padding:6px;text-align:right;"><%=number_to_currency(account_transaction.credit, precision: 2)%></td>
+                <%end%>
                 <td style="padding:6px;text-align:right;"><%=account_transaction.comments%></td>
             </tr>
             <%end%>

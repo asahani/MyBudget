@@ -17,7 +17,7 @@ class Share < ActiveRecord::Base
   ##################################
   # Callbacks
   ##################################
-  # after_initialize :set_share_details
+  after_initialize :set_share_details
   # after_find :set_share_details
   after_create :deduct_amount_from_brokerage_account
 
@@ -39,22 +39,21 @@ class Share < ActiveRecord::Base
   end
 
   def deduct_amount_from_brokerage_account
-    puts 'IN DEDUCTION'
     unless self.no_cash_transaction
       total_purchase_price = self.units * self.purchase_price.to_f
       comment = "Purchased "+self.units.to_s+ " "+self.name+" shares for $"+total_purchase_price.to_s
+      payee = Payee.find_by_name("Share Purchase")
 
-      budget_txn = BudgetTransaction.new(account_id: self.brokerage_account.id,payee_id: nil,
-        budget_item_id: nil, budget_id: nil,category_id: Category.find_by_name("Investment").id, credit: total_purchase_price,
-        transaction_date: Date.today, comments: comment,reconciled: true, share_id: self.id,share: true)
-      puts 'IN BUDGET TXN'
-      budget_txn.save
-      puts 'IN BUDGET TXN SAVE'
+      budget_txn = BudgetTransaction.new(account_id: self.brokerage_account.id,payee_id: payee.id,
+        budget_item_id: nil, budget_id: nil,category_id: Category.find_by_name("Investment").id, debit: total_purchase_price,
+        transaction_date: Date.today, comments: comment,reconciled: true, share_id: self.id,share: true,miscellaneous: false)
+
+      budget_txn.save!
     end
   end
 
   def set_share_details
-    @share_details = get_share_details
+    self.share_details = get_share_details
 
     unless self.share_details.nil?
       # self.last_price = self.share_details.last_trade_price_only
@@ -80,12 +79,10 @@ class Share < ActiveRecord::Base
   end
 
   def get_holding_value
-    puts 'IN GET HILDING VALUE'
     if self.last_price.nil?
       self.set_share_details
-      puts 'IN GET HILDING VALUE: Set share details'
     end
-    puts self.last_price
+
     return (self.last_price * self.units).to_f.round(2) unless self.last_price.nil?
   end
 
@@ -109,8 +106,9 @@ class Share < ActiveRecord::Base
     end
   end
 
-  def get_google_data
-    uri = URI('https://finance.google.com/finance?q=DWS.AX&output=json')
+  def get_google_data(share_code)
+    uri_string = 'https://finance.google.com/finance?q='+ share_code + '&output=json'
+    uri = URI(uri_string)
 
     nhttp = Net::HTTP.new(uri.host, uri.port)
     nhttp.use_ssl=true
@@ -123,12 +121,18 @@ class Share < ActiveRecord::Base
     end
 
     resp = response.body
+
     resp.gsub!(/[\n]/,'')
     resp.gsub!(/[\"]/,'"')
-    json = resp[2,1000000000000000].to_json
+
+    json = resp[2,1000000000000000]
+    json = json.encode('utf-8', :invalid => :replace, :undef => :replace, :replace => '_')
+    json = json.to_json
+
     hash = JSON.parse(json, :quirks_mode => true)
-    hash = JSON.parse(hash, :quirks_mode => true)
-    hh = hash[0]
+    hash2 = JSON.parse(hash, :quirks_mode => true)
+    hh = hash2[0]
+
     return hh
   end
 
@@ -140,7 +144,7 @@ class Share < ActiveRecord::Base
 
       # return details
 
-      return get_google_data
+      return get_google_data(self.code)
     rescue
       puts 'Unable to get stock details'
       self.errors.add(:base, "Unable to get stock details")
