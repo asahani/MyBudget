@@ -216,7 +216,7 @@ class BudgetTransaction < ApplicationRecord
     unless self.budget.nil?
       budget_account = BudgetAccount.find_by_budget_id_and_account_id(self.budget.id, self.account.id)
     end
-    
+
     unless budget_account.nil?
       puts '-----------------Update Account with BudgetAccount'
       budget_account.update_balance
@@ -264,8 +264,15 @@ class BudgetTransaction < ApplicationRecord
 
           house = House.where('mortgage_account_id = ?',self.payee.account.id).first()
           unless house.nil?
-            interest = house.get_interest_payable_for_month.to_f
+            # this is is ensure that when interest and principal are updated manual they are not recalculated
+            interest = self.mortgage_interest
+            if self.mortgage_interest == 0  && self.mortgage_principal == 0
+              interest = house.get_interest_payable_for_month.to_f
+            end
+            # end section
+
             principal = self.debit.to_f - interest
+
             update_account_balance_for_non_budget_accounts(self.payee.account,self.mortgage_principal,principal,self.credit_before_last_save,self.credit)
 
             unless self.destroyed?

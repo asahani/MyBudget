@@ -204,6 +204,6 @@ respond_to :js, :html
     def budget_transaction_params
       params.require(:budget_transaction).permit(:credit, :debit, :transaction_date, :comments, :manual, :scheduled, :budgeted,
         :miscellaneous, :savings, :account_id, :budget_item_id, :budget_id,:payee_id,:category_id,:transaction_type,:reconciled,
-        :tag_list,:flagged,:historical_loan_transaction,:historical_account_transaction,:historical,:account_transfer,:loan,:share,:house,:superannuation)
+        :tag_list,:flagged,:historical_loan_transaction,:historical_account_transaction,:historical,:account_transfer,:loan,:share,:house,:superannuation,:mortgage_interest)
     end
 end

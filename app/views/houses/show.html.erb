@@ -381,6 +381,7 @@
               <th style="text-align:right;">Payment</th>
               <th style="text-align:right;">Principal</th>
               <th style="text-align:right;">Interest</th>
+              <th style="text-align:right;">Actions</th>
             </thead>
             <%BudgetTransaction.where('payee_id = ?',Payee.find_by_account_id(@house.mortgage_account.id)).each do |transaction|%>
             <tr>
@@ -388,6 +389,10 @@
                 <td style="padding:6px;text-align:right;"><%=number_to_currency(transaction.debit, precision: 2)%></td>
                 <td style="padding:6px;text-align:right;"><%=number_to_currency(transaction.mortgage_principal, precision: 2)%></td>
                 <td style="padding:6px;text-align:right;"><%=number_to_currency(transaction.mortgage_interest, precision: 2)%></td>
+                <td style="padding:6px;text-align:right;">
+                  <%= link_to raw("<span class='fa fa-pencil-square-o fa-lg' style='color: #999;' aria-hidden='true'></span>"),
+  									edit_budget_transaction_path(transaction,transaction_type: 'mortgage'), {:remote => true, class: 'new-transaction-modal-link'} %>
+                </td>
             </tr>
             <%end%>
           </table>

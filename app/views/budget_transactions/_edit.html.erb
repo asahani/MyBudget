@@ -82,7 +82,7 @@
 						</div>
 						<%end%>
 
-						<%unless @transaction_type == 'savings_expense'%>
+						<%unless @transaction_type == 'savings_expense' || @transaction_type == 'mortgage'%>
 						<div class="form-group">
 								<label class="col-md-3 col-xs-5 control-label">Credit</label>
 								<div class="col-md-9 col-xs-7">
@@ -133,7 +133,17 @@
 									</label>
 								</div>
 						</div>
-
+						<%if @transaction_type == 'mortgage'%>
+							<div class="form-group">
+									<label class="col-md-3 col-xs-5 control-label">Interest Charged</label>
+									<div class="col-md-9 col-xs-7">
+										<div class="input-group">
+											<%= f.number_field :mortgage_interest, step: :any, class: "form-control" %>
+											<span class="input-group-addon"><span class="fa fa-usd"></span></span>
+										</div>
+									</div>
+							</div>
+						<%end%>
 						<div class="form-group">
 								<div class="col-md-12 col-xs-5">
 										<%= f.submit class: "btn btn-primary btn-rounded pull-right" %>
