@@ -43,7 +43,7 @@ class BudgetsController < ApplicationController
     @savings = @budget.savings
 
     @expenses = @budget.expenses
-    @miscellaneous_expenses = @budget.miscellaneous_expenses
+    @miscellaneous_expenses = @misc_budget_item.expenses #@budget.miscellaneous_expenses
     @savings_expenses = @budget.savings_expenses
 
     @income_remaining = @budget.income_remaining

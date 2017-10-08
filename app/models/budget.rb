@@ -48,7 +48,7 @@ class Budget < ApplicationRecord
   end
 
   def miscellaneous_expenses
-     self.budget_transactions.miscellaneous_transactions.sum(:debit) - self.budget_transactions.miscellaneous_transactions.sum(:credit)
+     self.budget_transactions.miscellaneous_transactions.non_budget_transactions.sum(:debit) - self.budget_transactions.miscellaneous_transactions.non_budget_transactions.sum(:credit)
   end
 
   def savings_expenses

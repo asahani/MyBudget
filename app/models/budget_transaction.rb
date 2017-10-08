@@ -34,6 +34,7 @@ class BudgetTransaction < ApplicationRecord
   # Scoped Methods
   ##################################
   scope :miscellaneous_transactions, -> { where(miscellaneous: true)}
+  scope :non_budget_transactions, -> { where('budget_item_id IS NULL')}
   scope :savings_transactions, -> { where('savings = ? && credit > ?',true,0)}
   scope :savings_expense_transactions, -> { where('savings = ? && debit > ?',true,0)}
   scope :reconciled_transactions, -> { where('reconciled = ?',true)}
