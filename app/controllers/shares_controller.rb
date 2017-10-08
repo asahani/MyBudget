@@ -7,7 +7,7 @@ class SharesController < ApplicationController
   def index
     @shares = Share.all.active
     @sold_shares = Share.all.sold
-    
+
     @shares_with_details = Array.new
     @total_market_value = 0
     @total_change_value = 0
@@ -15,7 +15,7 @@ class SharesController < ApplicationController
     @total_daily_movement_percentage = 0
 
     @shares.each do |share|
-      # share.set_share_details
+      share.set_share_details
       details = Hash.new
       details['share'] = share
       details['market_value'] = share.get_holding_value
@@ -39,7 +39,7 @@ class SharesController < ApplicationController
   # GET /shares/1
   # GET /shares/1.json
   def show
-    # @share.set_share_details
+    @share.set_share_details
   end
 
   # GET /shares/new

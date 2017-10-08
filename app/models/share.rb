@@ -17,7 +17,7 @@ class Share < ActiveRecord::Base
   ##################################
   # Callbacks
   ##################################
-  after_initialize :set_share_details
+  # after_initialize :set_share_details
   # after_find :set_share_details
   after_create :deduct_amount_from_brokerage_account
 
